@@ -5,268 +5,289 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IBRON INDUSTRIES</title>
     <style>
-        /* === ZMIENNE KOLORYSTYCZNE (Jasny, sterylny motyw) === */
+        /* === ZMIENNE === */
         :root {
             --bg-main: #ffffff;
-            --bg-secondary: #f5f5f7; /* Delikatny szary a'la Apple */
-            --bg-sidebar: #fafafa;
-            --text-main: #1d1d1f;
-            --text-muted: #86868b;
-            --accent-blue: #0066cc; /* Elegancki, korporacyjny niebieski */
-            --accent-hover: #0077ed;
-            --border-color: #e5e5ea;
-            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --bg-card: #f8f8fb;
+            --text-main: #111111;
+            --text-muted: #666666;
+            --accent-blue: #005bb5;
+            --accent-light: rgba(0, 91, 181, 0.1);
+            --border-color: #eaeaea;
+            --shadow-soft: 0 20px 40px rgba(0,0,0,0.06);
+            --shadow-hover: 0 30px 60px rgba(0, 91, 181, 0.15);
+            --transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.5; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+
+        /* === AUDIO UI === */
+        .audio-controls { position: fixed; top: 25px; right: 40px; z-index: 2000; display: flex; align-items: center; gap: 10px; }
+        .audio-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; letter-spacing: 1px; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .audio-btn:hover { background: var(--accent-light); color: var(--accent-blue); border-color: var(--accent-blue); }
+        .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: red; transition: 0.3s; }
+        .audio-indicator.playing { background: #00cc44; box-shadow: 0 0 10px #00cc44; }
 
         /* === NAWIGACJA GŁÓWNA === */
-        nav {
-            position: fixed; top: 0; width: 100%; height: 70px;
-            background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(15px);
-            border-bottom: 1px solid var(--border-color); z-index: 1000;
-            display: flex; align-items: center; padding: 0 5%;
-        }
-
-        .logo { font-size: 22px; font-weight: 800; letter-spacing: -0.5px; color: var(--text-main); text-decoration: none; cursor: pointer; display: flex; align-items: center; gap: 5px; }
+        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(255, 255, 255, 0.9); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
+        .logo { font-size: 26px; font-weight: 900; letter-spacing: -1px; color: var(--text-main); text-decoration: none; cursor: pointer; }
         .logo span { color: var(--accent-blue); }
 
-        .nav-links { margin-left: auto; display: flex; gap: 30px; height: 100%; }
+        /* === GŁÓWNY KONTENER WIDOKÓW === */
+        .view { display: none; min-height: 100vh; padding: 120px 5% 80px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.6s ease forwards; }
+        .view.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* === WIDOK: HOME === */
+        .hero-section { text-align: center; margin-bottom: 80px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-section h1 { font-size: clamp(35px, 5vw, 60px); font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; line-height: 1.1; }
+        .hero-section p { font-size: 18px; color: var(--text-muted); font-weight: 400; }
+        .highlight { color: var(--accent-blue); font-weight: 600; }
+
+        /* KAFELKI NACHODZĄCE NA SIEBIE */
+        .tiles-container { display: flex; justify-content: center; align-items: center; padding: 40px 0; perspective: 1000px; }
         
-        /* Czułe Menu Dropdown */
-        .nav-item { position: relative; display: flex; align-items: center; height: 100%; cursor: pointer; color: var(--text-main); font-weight: 500; font-size: 15px; transition: color 0.2s; }
-        .nav-item:hover { color: var(--accent-blue); }
-        
-        .dropdown-menu {
-            position: absolute; top: 70px; left: -20px; background: #fff;
-            border: 1px solid var(--border-color); border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08);
-            width: 220px; opacity: 0; visibility: hidden; transform: translateY(10px);
-            transition: all 0.3s ease; display: flex; flex-direction: column; padding: 10px;
+        .tile { 
+            position: relative; width: 260px; height: 350px; background: var(--bg-card); 
+            border: 1px solid var(--border-color); border-radius: 24px; 
+            margin-left: -50px; /* To tworzy nakładanie się! */
+            box-shadow: var(--shadow-soft); transition: var(--transition); cursor: pointer;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px;
         }
         
-        /* Hitbox połączony z menu, żeby myszka nie "spadała" */
-        .nav-item::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 20px; transform: translateY(100%); }
-        .nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; transform: translateY(0); }
+        .tile:first-child { margin-left: 0; } /* Pierwszy nie ma marginesu */
 
-        .dropdown-item { padding: 12px 15px; border-radius: 8px; color: var(--text-main); font-weight: 500; transition: 0.2s; display: flex; align-items: center; gap: 10px; }
-        .dropdown-item:hover { background: var(--bg-secondary); color: var(--accent-blue); padding-left: 20px; }
-
-        /* === UKŁAD STRONY (SPLIT-SCREEN) === */
-        .app-container { display: flex; width: 100vw; height: 100vh; padding-top: 70px; }
-
-        /* LEWY PASEK (Kategorie po kliknięciu) */
-        .sidebar {
-            width: 0; /* Domyślnie ukryty na stronie głównej */
-            background: var(--bg-sidebar); border-right: 1px solid var(--border-color);
-            overflow-y: auto; transition: width 0.5s ease; opacity: 0; white-space: nowrap;
+        /* Interakcja Hover */
+        .tile:hover { 
+            transform: translateY(-30px) scale(1.05); 
+            z-index: 10; 
+            border-color: var(--accent-blue);
+            box-shadow: var(--shadow-hover);
+            background: #ffffff;
         }
-        .app-container.split-mode .sidebar { width: 300px; opacity: 1; padding: 30px 20px; }
+        /* Odsunięcie sąsiadów na boki przy najechaniu */
+        .tile:hover ~ .tile { transform: translateX(40px); }
 
-        .sidebar-title { font-size: 12px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 15px; padding-left: 10px; font-weight: 600; }
-        .sidebar-link { display: block; padding: 12px 15px; margin-bottom: 5px; border-radius: 8px; cursor: pointer; font-weight: 500; transition: 0.2s; color: var(--text-main); border: 1px solid transparent; }
-        .sidebar-link:hover { background: var(--bg-main); border-color: var(--border-color); }
-        .sidebar-link.active { background: var(--accent-blue); color: #fff; box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3); }
+        .hologram-icon { font-size: 60px; margin-bottom: 20px; animation: holoPulse 3s infinite alternate; text-shadow: 0 0 20px rgba(0, 91, 181, 0.4); }
+        @keyframes holoPulse { 0% { filter: drop-shadow(0 0 5px var(--accent-blue)); transform: scale(1); } 100% { filter: drop-shadow(0 0 15px var(--accent-blue)); transform: scale(1.05); } }
 
-        /* PRAWA STRONA (Główny kontent / Detale) */
-        .main-content { flex: 1; overflow-y: auto; position: relative; background: var(--bg-main); transition: padding 0.5s; }
+        .tile h3 { font-size: 22px; font-weight: 700; margin-bottom: 10px; }
+        .tile p { font-size: 14px; color: var(--text-muted); }
+
+        /* === STYLE DETALI (O NAS, APLIKACJE) === */
+        .btn-back { background: transparent; border: none; color: var(--accent-blue); font-size: 16px; font-weight: 600; cursor: pointer; margin-bottom: 40px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
+        .btn-back:hover { transform: translateX(-5px); }
+
+        .content-header { border-bottom: 2px solid var(--accent-light); padding-bottom: 30px; margin-bottom: 40px; }
+        .content-header h1 { font-size: 48px; font-weight: 900; letter-spacing: -1.5px; }
+        .content-header .badge { display: inline-block; background: var(--text-main); color: #fff; padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+
+        .manifesto-text { font-size: 20px; line-height: 1.8; color: var(--text-main); font-weight: 500; margin-bottom: 40px; }
         
-        /* Widoki (Sekcje) */
-        .view-section { position: absolute; top: 0; left: 0; width: 100%; min-height: 100%; padding: 60px 8%; opacity: 0; visibility: hidden; transform: translateY(20px); transition: all 0.4s ease; }
-        .view-section.active { opacity: 1; visibility: visible; transform: translateY(0); position: relative; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 50px; }
+        .feature-box { background: var(--bg-card); padding: 40px; border-radius: 24px; border: 1px solid var(--border-color); }
+        .feature-box h4 { font-size: 22px; margin-bottom: 15px; color: var(--accent-blue); display: flex; align-items: center; gap: 10px; }
+        .feature-box p { color: var(--text-muted); font-size: 16px; line-height: 1.6; }
 
-        /* === WYGLĄD WNĘTRZA (HOME) === */
-        .hero { display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; height: 80vh; }
-        .hero h1 { font-size: clamp(40px, 6vw, 70px); font-weight: 800; letter-spacing: -1.5px; margin-bottom: 20px; }
-        .hero p { font-size: 20px; color: var(--text-muted); max-width: 600px; margin-bottom: 40px; }
-        .btn-primary { background: var(--accent-blue); color: #fff; padding: 15px 30px; border-radius: 30px; text-decoration: none; font-weight: 600; transition: 0.3s; border: none; cursor: pointer; font-size: 16px; }
-        .btn-primary:hover { background: var(--accent-hover); transform: translateY(-2px); box-shadow: 0 10px 20px rgba(0,102,204,0.2); }
-
-        /* === WYGLĄD WNĘTRZA (DETALE APLIKACJI) === */
-        .app-header { display: flex; align-items: center; gap: 30px; margin-bottom: 50px; border-bottom: 1px solid var(--border-color); padding-bottom: 40px; }
-        .app-icon { width: 100px; height: 100px; background: var(--bg-secondary); border-radius: 22px; display: flex; justify-content: center; align-items: center; font-size: 24px; font-weight: bold; color: var(--accent-blue); box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .app-title h2 { font-size: 40px; font-weight: 800; letter-spacing: -1px; margin-bottom: 5px; }
-        .app-badge { display: inline-block; background: rgba(0, 102, 204, 0.1); color: var(--accent-blue); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: 700; letter-spacing: 1px; }
-
-        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-bottom: 60px; }
-        .feature-box { background: var(--bg-secondary); padding: 30px; border-radius: 16px; transition: 0.3s; border: 1px solid transparent; }
-        .feature-box:hover { background: #fff; border-color: var(--border-color); box-shadow: 0 10px 30px rgba(0,0,0,0.05); transform: translateY(-5px); }
-        .feature-box h3 { font-size: 20px; margin-bottom: 15px; color: var(--text-main); display: flex; align-items: center; gap: 10px; }
-        .feature-box h3::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent-blue); border-radius: 50%; }
-        .feature-box p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
-
-        /* Galeria Screenów */
-        .screenshot-gallery { display: flex; gap: 20px; overflow-x: auto; padding-bottom: 20px; }
-        .screenshot { min-width: 250px; height: 500px; background: #fff; border: 1px solid var(--border-color); border-radius: 20px; box-shadow: 0 15px 35px rgba(0,0,0,0.05); display: flex; align-items: center; justify-content: center; color: var(--text-muted); font-weight: bold; }
+        .example-box { background: var(--text-main); color: #fff; padding: 40px; border-radius: 24px; position: relative; overflow: hidden; }
+        .example-box::before { content: ''; position: absolute; top: 0; left: 0; width: 6px; height: 100%; background: var(--accent-blue); }
+        .example-box h4 { color: var(--accent-blue); font-size: 14px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 10px; }
+        .example-box p { font-size: 18px; font-style: italic; line-height: 1.6; }
 
     </style>
 </head>
 <body>
 
+    <!-- ELEMENTY AUDIO -->
+    <audio id="bg-music" loop>
+        <source src="bg-music.mp3" type="audio/mpeg">
+    </audio>
+    <audio id="hover-sound">
+        <source src="hover.mp3" type="audio/mpeg">
+    </audio>
+
+    <div class="audio-controls">
+        <button class="audio-btn" onclick="toggleMusic()">
+            <div class="audio-indicator" id="audio-dot"></div>
+            SYS.AUDIO
+        </button>
+    </div>
+
+    <!-- NAWIGACJA -->
     <nav>
-        <div class="logo" onclick="openHome()">IBRON<span>.</span></div>
-        
-        <div class="nav-links">
-            <div class="nav-item">
-                Aplikacje
-                <div class="dropdown-menu">
-                    <div class="dropdown-item" onclick="openApp('exo')">🛡️ IbronEXO</div>
-                    <div class="dropdown-item" onclick="openApp('clock')">⏱️ IbronCLOCK</div>
-                </div>
-            </div>
-
-            <div class="nav-item">
-                Hardware
-                <div class="dropdown-menu">
-                    <div class="dropdown-item" onclick="openApp('watch')">⌚ Ibron WATCH (Mark I)</div>
-                    <div class="dropdown-item" onclick="openApp('hook')">🌡️ WeatherHook</div>
-                </div>
-            </div>
-
-            <div class="nav-item" onclick="openApp('about')">
-                O nas
-            </div>
-        </div>
+        <div class="logo" onclick="switchView('home')">IBRON<span>INDUSTRIES</span></div>
     </nav>
 
-    <div class="app-container" id="mainContainer">
+    <!-- ===================================== -->
+    <!-- WIDOK: STRONA GŁÓWNA (HOME) -->
+    <!-- ===================================== -->
+    <div id="home" class="view active">
         
-        <div class="sidebar">
-            <div class="sidebar-title">Nasze Aplikacje</div>
-            <div class="sidebar-link" id="link-exo" onclick="openApp('exo')">IbronEXO</div>
-            <div class="sidebar-link" id="link-clock" onclick="openApp('clock')">IbronCLOCK</div>
-            
-            <div class="sidebar-title" style="margin-top: 30px;">Hardware</div>
-            <div class="sidebar-link" id="link-watch" onclick="openApp('watch')">Ibron WATCH</div>
-            <div class="sidebar-link" id="link-hook" onclick="openApp('hook')">WeatherHook</div>
-
-            <div class="sidebar-title" style="margin-top: 30px;">Firma</div>
-            <div class="sidebar-link" id="link-about" onclick="openApp('about')">O nas & Misja</div>
+        <div class="hero-section">
+            <h1>Prywatność to nie opcja.<br>To fundament.</h1>
+            <p>Odrzucamy chmurę. Odrzucamy zbieranie danych. Tworzymy oprogramowanie i sprzęt, które działają w <span class="highlight">100% lokalnie</span>. Twoje dane pozostają na Twoim urządzeniu. Zawsze.</p>
         </div>
 
-        <div class="main-content">
+        <!-- NACHODZĄCE KAFELKI -->
+        <div class="tiles-container">
             
-            <div class="view-section active" id="view-home">
-                <div class="hero">
-                    <h1>Tworzymy Technologie<br>Przyszłości.</h1>
-                    <p>Zaawansowane oprogramowanie offline i bezkompromisowy hardware. Odkryj nowy standard bezpieczeństwa i designu.</p>
-                    <button class="btn-primary" onclick="openApp('exo')">Poznaj IbronEXO</button>
-                </div>
+            <div class="tile hover-trigger" onclick="switchView('about')">
+                <div class="hologram-icon">ℹ️</div>
+                <h3>O nas</h3>
+                <p>Nasz manifest, wizja i plan zniszczenia cyfrowego ekshibicjonizmu.</p>
             </div>
 
-            <div class="view-section" id="view-exo">
-                <div class="app-header">
-                    <div class="app-icon">EXO</div>
-                    <div class="app-title">
-                        <h2>IbronEXO</h2>
-                        <div class="app-badge">Oprogramowanie Klasy Premium</div>
-                    </div>
-                </div>
-                
-                <div class="grid-2">
-                    <div class="feature-box">
-                        <h3>Kryptosejf z Fałszywą Przestrzenią</h3>
-                        <p>Jeśli zostaniesz zmuszony do podania kodu, wpisujesz "Hasło Bezpieczne". Aplikacja ukazuje w pełni funkcjonalną, ale fałszywą przestrzeń. Twoje prawdziwe dane pozostają głęboko ukryte.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h3>Brak Połączenia z Chmurą</h3>
-                        <p>Brak ryzyka wycieku. Aplikacja w ogóle nie posiada kodu pozwalającego na łączenie z internetem. Twoje notatki nigdy nie opuszczają układów scalonych urządzenia.</p>
-                    </div>
-                </div>
-
-                <h3 style="margin-bottom: 20px;">Interfejs Aplikacji</h3>
-                <div class="screenshot-gallery">
-                    <div class="screenshot">Zrzut Ekranu 1</div>
-                    <div class="screenshot">Zrzut Ekranu 2</div>
-                    <div class="screenshot">Zrzut Ekranu 3</div>
-                </div>
+            <div class="tile hover-trigger" onclick="switchView('exo')">
+                <div class="hologram-icon">🛡️</div>
+                <h3>Ibron EXO</h3>
+                <p>Kryptosejf z protokołem Fałszywego Sektora. Twierdza offline.</p>
             </div>
 
-            <div class="view-section" id="view-clock">
-                <div class="app-header">
-                    <div class="app-icon">CLK</div>
-                    <div class="app-title">
-                        <h2>IbronCLOCK</h2>
-                        <div class="app-badge">W Fazie Rozwoju</div>
-                    </div>
-                </div>
-                <div class="grid-2">
-                    <div class="feature-box">
-                        <h3>System Override</h3>
-                        <p>CLOCK ignoruje tryb cichy Twojego telefonu. Zapewnia wybudzenie poprzez narzucenie maksymalnej głośności, której nie da się zmniejszyć bocznymi przyciskami.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h3>Weryfikacja Terminalowa</h3>
-                        <p>Zamiast przycisku "Drzemka", musisz rozwiązać zadanie logiczne lub zeskanować kod QR w innym pokoju, aby wyłączyć sygnał.</p>
-                    </div>
-                </div>
+            <div class="tile hover-trigger" onclick="switchView('clock')">
+                <div class="hologram-icon">⏱️</div>
+                <h3>Ibron CLOCK</h3>
+                <p>System override dla snu. Weryfikacja terminalowa wybudzania.</p>
             </div>
 
-            <div class="view-section" id="view-watch">
-                <div class="app-header">
-                    <div class="app-icon">⌚</div>
-                    <div class="app-title">
-                        <h2>Ibron WATCH</h2>
-                        <div class="app-badge">Hardware (Projekt Mark I)</div>
-                    </div>
-                </div>
-                <div class="grid-2">
-                    <div class="feature-box">
-                        <h3>Architektura Autorska</h3>
-                        <p>Budowany od podstaw smartwatch wykorzystujący mikrokontroler ESP32-C3 oraz matrycę IPS o rozdzielczości 240x240px. Pełna kontrola nad kodem i sprzętem.</p>
-                    </div>
-                    <div class="feature-box">
-                        <h3>Niezależność</h3>
-                        <p>Brak zbędnych powiadomień. Skupienie na prywatności, integracji z systemami Ibron i minimalistycznym, "sterylnym" interfejsie.</p>
-                    </div>
-                </div>
-            </div>
-
-            <div class="view-section" id="view-about">
-                <h2 style="font-size: 40px; margin-bottom: 20px;">O nas</h2>
-                <div class="grid-2">
-                    <div class="feature-box">
-                        <h3>Nasza Misja</h3>
-                        <p>Tworzymy narzędzia, z których sami chcemy korzystać. Odrzucamy mikropłatności, zbieranie danych i powielanie schematów. Inżynieria ponad marketingiem.</p>
-                    </div>
-                </div>
+            <div class="tile hover-trigger" onclick="switchView('watch')">
+                <div class="hologram-icon">⌚</div>
+                <h3>Hardware</h3>
+                <p>Nasze fizyczne projekty. Ibron WATCH Mark I i inne.</p>
             </div>
 
         </div>
     </div>
 
+    <!-- ===================================== -->
+    <!-- WIDOK: O NAS (MANIFEST) -->
+    <!-- ===================================== -->
+    <div id="about" class="view">
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
+        
+        <div class="content-header">
+            <div class="badge">Ściśle Tajne / Jawne</div>
+            <h1>Świat oszalał.<br>My przywracamy kontrolę.</h1>
+        </div>
+
+        <p class="manifesto-text">
+            Żyjemy w epoce cyfrowego ekshibicjonizmu. Wielkie korporacje przekonały nas, że wygoda musi kosztować naszą prywatność. Że każdy nasz krok, notatka, a nawet sen, muszą być wysyłane na ich serwery, analizowane i sprzedawane. Nie zgadzamy się na to.
+        </p>
+
+        <div class="feature-grid">
+            <div class="feature-box">
+                <h4>1. Architektura Zero-Data</h4>
+                <p>Ibron Industries nie jest kolejną firmą software'ową. Jesteśmy tarczą. Kod, który piszemy, nigdy nie opuszcza krzemu Twojego urządzenia. Nie mamy serwerów z Twoimi danymi. Nie wiemy, co wpisujesz w nasze aplikacje. Ponieważ najlepszą formą ochrony danych jest ich nieposiadanie.</p>
+            </div>
+            <div class="feature-box">
+                <h4>2. Zero Mikropłatności</h4>
+                <p>Nienawidzimy modelu subskrypcyjnego równie mocno jak Ty. Tworzymy narzędzia, z których sami, jako inżynierowie, chcemy na co dzień korzystać. Płacisz za hardware. Oprogramowanie obronne musi być dostępne i wolne od ukrytych kosztów.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- WIDOK: IBRON EXO -->
+    <!-- ===================================== -->
+    <div id="exo" class="view">
+        <button class="btn-back" onclick="switchView('home')">← Powrót</button>
+        
+        <div class="content-header">
+            <div class="badge">Moduł Aktywny</div>
+            <h1>IbronEXO. Kryptosejf Nowej Generacji.</h1>
+        </div>
+
+        <p class="manifesto-text">Standardowe aplikacje do notatek chronią Cię tylko do momentu, aż ktoś fizycznie nie zażąda od Ciebie hasła. EXO rozwiązuje problem wymuszeń za pomocą inżynierii społecznej i zaawansowanej izolacji pamięci.</p>
+
+        <div class="feature-grid">
+            <div class="feature-box">
+                <h4>Protokół: False Sector</h4>
+                <p>Gdy wpiszesz swój prawdziwy PIN, masz dostęp do swoich sekretów. Jeśli jednak zostaniesz zmuszony do otwarcia telefonu, wpisujesz zaprogramowany wcześniej "PIN Fałszywy". Aplikacja otwiera się błyskawicznie, układ graficzny jest identyczny, ale wyświetla <strong>zupełnie inne, sfabrykowane przez Ciebie dane</strong>.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Absolutne Offline</h4>
+                <p>Aplikacja używa 256-bitowego szyfrowania sprzętowego telefonu. Nawet gdyby ktoś skopiował pliki z Twojego urządzenia, bez algorytmu deszyfrującego nie odczyta niczego. Brak synchronizacji z chmurą całkowicie eliminuje ataki zdalne.</p>
+            </div>
+        </div>
+
+        <div class="example-box">
+            <h4>Scenariusz Taktyczny (Use-Case)</h4>
+            <p>"Zostajesz zatrzymany lub dochodzi do fizycznego wymuszenia na ulicy. Napastnik każe Ci otworzyć sejf z hasłami do giełdy krypto. Zachowujesz spokój. Wpisujesz PIN '9999' zamiast '1111'. Napastnik widzi sejf, w którym są stare, nieaktywne hasła do mało ważnych portali. Jest przekonany, że złamał system. Ty odchodzisz wolny, a Twoje miliony pozostają nienaruszone, schowane w niewidocznej partii pamięci."</p>
+        </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- WIDOK: IBRON CLOCK -->
+    <!-- ===================================== -->
+    <div id="clock" class="view">
+        <button class="btn-back" onclick="switchView('home')">← Powrót</button>
+        
+        <div class="content-header">
+            <div class="badge">Faza Projektowa</div>
+            <h1>IbronCLOCK. Koniec Pamięci Mięśniowej.</h1>
+        </div>
+
+        <p class="manifesto-text">Zwykłe budziki poniosły porażkę. Twój mózg w fazie półsnu potrafi wyłączyć alarm bez uruchamiania świadomości. IbronCLOCK to brutalny, ale skuteczny system przywracania produktywności, który wymusza aktywność kory przedczołowej mózgu.</p>
+
+        <div class="feature-grid">
+            <div class="feature-box">
+                <h4>System Override</h4>
+                <p>Aplikacja przejmuje kontrolę nad uprawnieniami audio. Czasowo blokuje tryb wyciszenia telefonu. Sygnał alarmowy rośnie logarytmicznie, a przyciski głośności na obudowie telefonu zostają całkowicie zignorowane przez oprogramowanie.</p>
+            </div>
+            <div class="feature-box">
+                <h4>Weryfikacja Terminalowa</h4>
+                <p>Zapomnij o przycisku "Drzemka". Aby uciszyć sygnał, musisz udowodnić, że jesteś w pełni świadomy. Rozwiązanie równania matematycznego, przepisanie ciągu losowych znaków, lub konieczność zeskanowania kodu QR wydrukowanego i przyklejonego na lustrze w łazience.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================================== -->
+    <!-- SKRYPTY (SYSTEM JARVIS) -->
+    <!-- ===================================== -->
     <script>
-        // Funkcja do powrotu na stronę główną (ukrywa pasek boczny)
-        function openHome() {
-            document.getElementById('mainContainer').classList.remove('split-mode');
-            
-            // Ukryj wszystkie widoki
-            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-            // Pokaż tylko Home
-            document.getElementById('view-home').classList.add('active');
-            
-            // Odznacz linki w pasku bocznym
-            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
+        // 1. ZARZĄDZANIE WIDOKAMI
+        function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // Funkcja otwierająca aplikację w trybie Split-Screen
-        function openApp(appId) {
-            // 1. Włącz tryb podziału ekranu (Sidebar wyjeżdża)
-            document.getElementById('mainContainer').classList.add('split-mode');
+        // 2. SYSTEM AUDIO
+        const bgMusic = document.getElementById('bg-music');
+        const hoverSound = document.getElementById('hover-sound');
+        const audioIndicator = document.getElementById('audio-dot');
+        let isMusicPlaying = false;
+        let userInteracted = false;
 
-            // 2. Przełącz widok głównej zawartości
-            document.querySelectorAll('.view-section').forEach(view => view.classList.remove('active'));
-            document.getElementById('view-' + appId).classList.add('active');
+        // Obejście blokady przeglądarki - muzyka startuje po pierwszym kliknięciu w cokolwiek
+        document.body.addEventListener('click', () => {
+            if(!userInteracted && !isMusicPlaying) {
+                toggleMusic(); // Uruchom automatycznie
+                userInteracted = true;
+            }
+        }, { once: true });
 
-            // 3. Zaznacz odpowiedni przycisk w panelu bocznym na niebiesko
-            document.querySelectorAll('.sidebar-link').forEach(link => link.classList.remove('active'));
-            const activeLink = document.getElementById('link-' + appId);
-            if(activeLink) activeLink.classList.add('active');
-
-            // Przewiń zawartość na samą górę
-            document.querySelector('.main-content').scrollTop = 0;
+        // Przycisk ON/OFF
+        function toggleMusic() {
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                audioIndicator.classList.remove('playing');
+            } else {
+                bgMusic.volume = 0.2; // Cicha muzyka w tle (20%)
+                bgMusic.play().catch(e => console.log("Przeglądarka zablokowała audio."));
+                audioIndicator.classList.add('playing');
+            }
+            isMusicPlaying = !isMusicPlaying;
         }
+
+        // 3. EFEKT "STRZELANIA" DŹWIĘKIEM NA KAFELKACH
+        document.querySelectorAll('.hover-trigger').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                hoverSound.currentTime = 0; // Przewiń dźwięk do początku (pozwala na szybkie powtarzanie)
+                hoverSound.volume = 0.4; // Głośność hovera
+                hoverSound.play().catch(e => {}); // Ignore errors if not interacted yet
+            });
+        });
     </script>
-
 </body>
 </html>
