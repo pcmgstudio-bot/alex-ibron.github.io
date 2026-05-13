@@ -7,15 +7,15 @@
     <style>
         /* === ZMIENNE === */
         :root {
-            --bg-main: #f4f5f7; /* Chłodny, bardzo jasny szary - by karty zyskały kontrast */
-            --bg-card: #ffffff; /* Czysta biel dla wyrazistych kart */
-            --text-main: #0a0a0a;
-            --text-muted: #555555;
-            --accent-blue: #0066cc;
-            --accent-neon: rgba(0, 102, 204, 0.4);
-            --border-color: #e0e2e7;
-            --shadow-base: 0 10px 30px rgba(0,0,0,0.04);
-            --shadow-hover: 0 0 20px var(--accent-neon), 0 15px 40px rgba(0,0,0,0.08); /* CLEAN NEON EFFECT */
+            --bg-main: #eef0f4; /* Lekko ciemniejszy, chłodny szary dla lepszego kontrastu kart */
+            --bg-card: #ffffff;
+            --text-main: #0f1115;
+            --text-muted: #5a606e;
+            --accent-blue: #004dd6; /* Głębszy, bardziej nasycony błękit technologiczny */
+            --accent-neon: rgba(0, 77, 214, 0.3);
+            --border-color: #d1d5db; /* Wyraźniejsze ramki domyślne */
+            --shadow-base: 0 6px 15px rgba(0,0,0,0.06); /* Karty są lekko uniesione na start */
+            --shadow-hover: 0 15px 35px var(--accent-neon), 0 5px 15px rgba(0,0,0,0.05);
             --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
         }
 
@@ -29,9 +29,8 @@
         .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: #ff3333; transition: 0.3s; }
         .audio-indicator.playing { background: #00e676; box-shadow: 0 0 10px #00e676; }
 
-        /* === NAWIGACJA GŁÓWNA & NOWE LOGO === */
-        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(244, 245, 247, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
-        
+        /* === NAWIGACJA GŁÓWNA === */
+        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(238, 240, 244, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
         .logo { display: flex; align-items: center; text-decoration: none; cursor: pointer; user-select: none; }
         .logo-part-1 { font-size: 28px; font-weight: 900; letter-spacing: -1px; color: var(--text-main); }
         .logo-part-2 { font-size: 28px; font-weight: 300; letter-spacing: 3px; color: var(--accent-blue); margin-left: 2px; }
@@ -41,15 +40,14 @@
         .view.active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* === WIDOK: HOME === */
+        /* === HOME === */
         .hero-section { text-align: center; margin-bottom: 80px; max-width: 800px; margin-left: auto; margin-right: auto; }
         .hero-section h1 { font-size: clamp(35px, 5vw, 60px); font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; line-height: 1.1; }
         .hero-section p { font-size: 18px; color: var(--text-muted); font-weight: 400; }
         .highlight { color: var(--accent-blue); font-weight: 600; }
 
-        /* KAFELKI NACHODZĄCE NA SIEBIE (CLEAN NEON) */
+        /* KAFELKI */
         .tiles-container { display: flex; justify-content: center; align-items: center; padding: 40px 0; perspective: 1000px; }
-        
         .tile { 
             position: relative; width: 260px; height: 350px; background: var(--bg-card); 
             border: 1px solid var(--border-color); border-radius: 20px; 
@@ -57,62 +55,70 @@
             box-shadow: var(--shadow-base); transition: var(--transition); cursor: pointer;
             display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px;
         }
-        
         .tile:first-child { margin-left: 0; }
-
         .tile:hover { 
-            transform: translateY(-25px) scale(1.02); 
-            z-index: 10; 
-            border-color: var(--accent-blue);
-            box-shadow: var(--shadow-hover); /* Efekt Clean Neon */
+            transform: translateY(-25px) scale(1.03); 
+            z-index: 10; border-color: var(--accent-blue); box-shadow: var(--shadow-hover);
         }
-        .tile:hover ~ .tile { transform: translateX(30px); }
-
+        .tile:hover ~ .tile { transform: translateX(35px); }
         .hologram-icon { font-size: 55px; margin-bottom: 20px; transition: 0.3s; filter: drop-shadow(0 0 2px rgba(0,0,0,0.1)); }
         .tile:hover .hologram-icon { filter: drop-shadow(0 0 15px var(--accent-blue)); transform: scale(1.1); }
-
         .tile h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
         .tile p { font-size: 14px; color: var(--text-muted); }
 
         /* === STYLE DETALI === */
-        .btn-back { background: transparent; border: none; color: var(--accent-blue); font-size: 15px; font-weight: 600; cursor: pointer; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 8px; transition: 0.2s; }
-        .btn-back:hover { transform: translateX(-5px); text-shadow: 0 0 10px var(--accent-neon); }
+        .btn-back { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--accent-blue); font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 30px; transition: 0.2s; box-shadow: var(--shadow-base); }
+        .btn-back:hover { border-color: var(--accent-blue); transform: translateX(-5px); box-shadow: 0 5px 15px var(--accent-neon); }
 
-        .content-header { margin-bottom: 30px; }
-        .content-header h1 { font-size: 46px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 10px; }
-        .content-header .badge { display: inline-block; background: #111; color: #fff; padding: 6px 16px; border-radius: 20px; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
+        /* NOWY NAGŁÓWEK APLIKACJI (Logo obok tytułu) */
+        .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 30px; }
+        .app-header-logo { width: 90px; height: 90px; background: #000; border-radius: 20px; display: flex; justify-content: center; align-items: center; padding: 10px; box-shadow: var(--shadow-base); border: 1px solid var(--border-color); flex-shrink: 0; }
+        .app-header-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .content-header h1 { font-size: 44px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 5px; line-height: 1.1; }
+        .content-header .badge { display: inline-block; background: #111; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
 
-        /* === SHOWCASE (LOGO + SCREENSHOTY) === */
-        .app-showcase { display: flex; align-items: center; gap: 30px; padding: 30px 0; border-top: 1px solid var(--border-color); border-bottom: 1px solid var(--border-color); margin-bottom: 40px; overflow-x: auto; scroll-behavior: smooth; }
-        .app-showcase::-webkit-scrollbar { height: 6px; }
-        .app-showcase::-webkit-scrollbar-thumb { background: #ccc; border-radius: 10px; }
-        
-        .showcase-logo { flex-shrink: 0; width: 140px; height: 140px; background: var(--bg-card); border-radius: 24px; border: 1px solid var(--border-color); display: flex; justify-content: center; align-items: center; padding: 20px; box-shadow: var(--shadow-base); }
-        .showcase-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        /* TABELA SPECYFIKACJI (Jak w MediaExpert) */
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); }
+        .spec-item { display: flex; flex-direction: column; }
+        .spec-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 4px; }
+        .spec-value { font-size: 16px; font-weight: 700; color: var(--text-main); }
 
-        .showcase-gallery { display: flex; gap: 15px; flex-shrink: 0; padding: 10px 5px; }
-        .screen-card { width: 160px; height: 320px; background: var(--bg-card); border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); overflow: hidden; position: relative; transition: var(--transition); display: flex; justify-content: center; align-items: center; color: #aaa; font-size: 12px; cursor: pointer; }
-        .screen-card img { width: 100%; height: 100%; object-fit: cover; }
+        /* GALERIA SCREENÓW */
+        .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; margin-bottom: 20px; }
+        .showcase-gallery::-webkit-scrollbar { height: 8px; }
+        .showcase-gallery::-webkit-scrollbar-thumb { background: #b0b5c0; border-radius: 10px; }
+        .screen-card { min-width: 180px; height: 380px; background: #000; border-radius: 16px; border: 2px solid var(--border-color); box-shadow: var(--shadow-base); overflow: hidden; position: relative; transition: var(--transition); cursor: zoom-in; }
+        .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
         .screen-card:hover { transform: translateY(-10px); border-color: var(--accent-blue); box-shadow: var(--shadow-hover); }
+        .screen-card:hover img { opacity: 0.9; }
 
-        /* === TEKSTY I FUNKCJE === */
-        .manifesto-text { font-size: 19px; line-height: 1.8; color: var(--text-main); font-weight: 400; margin-bottom: 50px; max-width: 900px; }
-        
+        /* LIGHTBOX (MODAL DO ZDJĘĆ) */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .lightbox.active img { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
+        .lightbox-close:hover { color: var(--accent-blue); transform: scale(1.1); }
+
+        /* KARTY FUNKCJI */
+        .manifesto-text { font-size: 19px; line-height: 1.8; color: var(--text-main); font-weight: 400; margin-bottom: 40px; max-width: 900px; }
         .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px; }
         .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); transition: var(--transition); }
         .feature-box:hover { border-color: var(--accent-blue); box-shadow: var(--shadow-hover); transform: translateY(-5px); }
-        .feature-box h4 { font-size: 20px; margin-bottom: 12px; color: var(--accent-blue); font-weight: 700; }
+        .feature-box h4 { font-size: 22px; margin-bottom: 12px; color: var(--accent-blue); font-weight: 800; display: flex; align-items: center; gap: 10px; }
         .feature-box p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 
-        .example-box { background: #111; color: #fff; padding: 40px; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        /* ANALIZA (CIEMNA KARTA) */
+        .example-box { background: #0f1115; color: #fff; padding: 40px; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
         .example-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-blue); box-shadow: 0 0 15px var(--accent-blue); }
         .example-box h4 { color: var(--accent-blue); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .example-box p { font-size: 17px; font-style: italic; line-height: 1.7; color: #ddd; }
+        .example-box p { font-size: 18px; font-style: italic; line-height: 1.7; color: #d1d5db; }
 
     </style>
 </head>
 <body>
 
+    <!-- SYSTEM AUDIO -->
     <audio id="bg-music" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
     <audio id="hover-sound"><source src="hover.mp3" type="audio/mpeg"></audio>
 
@@ -121,6 +127,12 @@
             <div class="audio-indicator" id="audio-dot"></div>
             SYS.AUDIO
         </button>
+    </div>
+
+    <!-- LIGHTBOX (POWIĘKSZANIE ZDJĘĆ) -->
+    <div class="lightbox" id="image-lightbox" onclick="closeLightbox(event)">
+        <span class="lightbox-close">&times;</span>
+        <img id="lightbox-img" src="" alt="Powiększenie">
     </div>
 
     <nav>
@@ -133,126 +145,159 @@
     <!-- === HOME === -->
     <div id="home" class="view active">
         <div class="hero-section">
-            <h1>Potęga poprzez izolację.</h1>
-            <p>W świecie stałej łączności, prawdziwym luksusem jest absolutna suwerenność. Architektura naszych systemów opiera się na tym, czego nie posiadają: <span class="highlight">zewnętrznych punktów dostępu</span>. Twoje dane istnieją wyłącznie w fizycznym urządzeniu.</p>
+            <h1>Twoje sekrety.<br>Twoje zasady. Zero chmury.</h1>
+            <p>Nie musisz ufać wielkim serwerom, jeśli ich nie używasz. Tworzymy oprogramowanie i sprzęt odcięte od sieci, stawiając na absolutną prywatność i inżynierię odporną na inwigilację.</p>
         </div>
 
         <div class="tiles-container">
             <div class="tile hover-trigger" onclick="switchView('about')">
                 <div class="hologram-icon">🏛️</div>
-                <h3>O nas</h3>
-                <p>Filozofia projektowa, wizja suwerenności danych i architektura Zero-Data.</p>
+                <h3>Nasza Misja</h3>
+                <p>Dlaczego odrzucamy stałą łączność i jak budujemy systemy Zero-Data.</p>
             </div>
             <div class="tile hover-trigger" onclick="switchView('exo')">
                 <div class="hologram-icon">🛡️</div>
                 <h3>Ibron EXO</h3>
-                <p>Kryptosejf nowej generacji z zaimplementowanym Fałszywym Sektorem.</p>
+                <p>Notatnik, który potrafi kłamać. Ochrona przed fizycznym wymuszeniem hasła.</p>
             </div>
             <div class="tile hover-trigger" onclick="switchView('clock')">
                 <div class="hologram-icon">⏱️</div>
                 <h3>Ibron CLOCK</h3>
-                <p>System weryfikacji terminalowej wybudzania.</p>
+                <p>System bezkompromisowego wybudzania. Koniec z "jeszcze 5 minut".</p>
             </div>
             <div class="tile hover-trigger" onclick="switchView('watch')">
                 <div class="hologram-icon">⌚</div>
                 <h3>Hardware</h3>
-                <p>Autorskie platformy fizyczne. Mark I, wskaźniki i sensory.</p>
+                <p>Ibron WATCH Mark I. Zegarek, który kontrolujesz co do linijki kodu.</p>
             </div>
         </div>
     </div>
 
     <!-- === O NAS === -->
     <div id="about" class="view">
-        <button class="btn-back" onclick="switchView('home')">← Powrót</button>
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
         <div class="content-header">
             <div class="badge">Doktryna Firmy</div>
-            <h1>Architektura zamkniętego środowiska.</h1>
+            <h1>Brak połączenia to najlepsza tarcza.</h1>
         </div>
-        <p class="manifesto-text">Podejście branży technologicznej do prywatności opiera się na zaufaniu do firm trzecich. Ibron Industries eliminuje czynnik zaufania. Przenosimy odpowiedzialność z odległych serwerów bezpośrednio do układów scalonych, które trzymasz w dłoni.</p>
+        <p class="manifesto-text">Większość aplikacji wygodnie synchronizuje Twoje dane w tle. My uważamy, że wygoda nie może być wymówką dla obnażania swojej prywatności. Skupiamy się na aplikacjach, które nie posiadają kodu do łączenia się z internetem.</p>
         
         <div class="feature-grid">
             <div class="feature-box">
-                <h4>Fizyczna bariera</h4>
-                <p>Nasze oprogramowanie z definicji pozbawione jest bibliotek sieciowych. Procesy analityczne, autoryzacja oraz zapis odbywają się bez jakiejkolwiek zewnętrznej synchronizacji sieciowej.</p>
+                <h4>Fizyczna Twierdza</h4>
+                <p>Nasze oprogramowanie działa w 100% na procesorze Twojego telefonu. Nie mamy serwerów. Nie zbieramy statystyk użytkowania. Nie wiemy, kim jesteś.</p>
             </div>
             <div class="feature-box">
-                <h4>Suwerenność użytkownika</h4>
-                <p>Odrzucamy modele oparte na strumieniowaniu danych i weryfikacji konta w chmurze. Kod wykonuje się precyzyjnie w ograniczonym, lokalnym środowisku sprzętowym. To, co zapisujesz, zostaje z Tobą.</p>
+                <h4>Niezależność</h4>
+                <p>Płacisz raz, posiadasz na zawsze. Odrzucamy modele abonamentowe. Dostarczamy potężne narzędzia inżynieryjne bez ukrytych opłat i reklam.</p>
             </div>
         </div>
     </div>
 
     <!-- === IBRON EXO === -->
     <div id="exo" class="view">
-        <button class="btn-back" onclick="switchView('home')">← Powrót</button>
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
         
-        <div class="content-header">
-            <div class="badge">Moduł Aktywny</div>
-            <h1>IbronEXO. Kryptosejf Nowej Generacji.</h1>
-        </div>
-
-        <!-- NOWA SEKCJA SHOWCASE (Logo + Screenshoty) -->
-        <div class="app-showcase">
-            <div class="showcase-logo">
-                <img src="logoexo.png" alt="EXO Logo">
+        <!-- NAGŁÓWEK (Logo zintegrowane) -->
+        <div class="app-header-container">
+            <div class="app-header-logo">
+                <img src="logoexo.png" alt="EXO" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#fff; font-weight:bold; font-size:24px;\'>EXO</span>';">
             </div>
-            <div class="showcase-gallery">
-                <div class="screen-card"><img src="screen1.png" alt="Screen 1" onerror="this.style.display='none'; this.parentElement.innerText='Zrzut ekranu 1';"></div>
-                <div class="screen-card"><img src="screen2.png" alt="Screen 2" onerror="this.style.display='none'; this.parentElement.innerText='Zrzut ekranu 2';"></div>
-                <div class="screen-card"><img src="screen3.png" alt="Screen 3" onerror="this.style.display='none'; this.parentElement.innerText='Zrzut ekranu 3';"></div>
-                <div class="screen-card"><img src="screen4.png" alt="Screen 4" onerror="this.style.display='none'; this.parentElement.innerText='Zrzut ekranu 4';"></div>
-                <div class="screen-card"><img src="screen5.png" alt="Screen 5" onerror="this.style.display='none'; this.parentElement.innerText='Zrzut ekranu 5';"></div>
+            <div class="content-header" style="margin-bottom: 0;">
+                <div class="badge">Aplikacja Zabezpieczająca</div>
+                <h1>IbronEXO. Kryptosejf Nowej Generacji.</h1>
             </div>
         </div>
 
-        <p class="manifesto-text">Zabezpieczenia biometryczne i silne hasła stają się bezużyteczne w momencie, w którym tracisz fizyczną kontrolę nad urządzeniem. IbronEXO rozwiązuje problem autoryzacji pod presją, wykorzystując mechanikę izolacji pamięci operacyjnej.</p>
+        <!-- SPECYFIKACJA (MediaExpert Style) -->
+        <div class="specs-grid">
+            <div class="spec-item">
+                <span class="spec-label">Wersja Systemu</span>
+                <span class="spec-value">1.4.2 (Stabilna)</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Ostatnia Aktualizacja</span>
+                <span class="spec-value">12.05.2026</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Architektura</span>
+                <span class="spec-value">100% Offline / Zero-Data</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Typ Szyfrowania</span>
+                <span class="spec-value">Sprzętowe 256-bit</span>
+            </div>
+        </div>
+
+        <p class="manifesto-text">Zwykłe aplikacje do notatek chronią Cię tylko do momentu, aż ktoś siłą nie zażąda od Ciebie hasła. IbronEXO to sejf stworzony dla najgorszego scenariusza. Pozwala zabezpieczyć najważniejsze dane, kontakty i notatki tak głęboko, że nikt – nawet osoba patrząca Ci w ekran – nie dowie się o ich istnieniu.</p>
+
+        <!-- GALERIA SCREENÓW -->
+        <div class="showcase-gallery">
+            <div class="screen-card" onclick="openLightbox('screen1.png')">
+                <img src="screen1.png" alt="Ekran Główny" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+            <div class="screen-card" onclick="openLightbox('screen2.png')">
+                <img src="screen2.png" alt="Kryptosejf" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+            <div class="screen-card" onclick="openLightbox('screen3.png')">
+                <img src="screen3.png" alt="Ustawienia" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+            <div class="screen-card" onclick="openLightbox('screen4.png')">
+                <img src="screen4.png" alt="Fałszywy Sektor" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+            <div class="screen-card" onclick="openLightbox('screen5.png')">
+                <img src="screen5.png" alt="Notatki" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+        </div>
 
         <div class="feature-grid">
             <div class="feature-box">
-                <h4>Protokół: False Sector</h4>
-                <p>System przyjmuje dwa niezależne kody dostępu. Podanie głównego PIN-u otwiera dostęp do zabezpieczonych danych. Podanie zaprogramowanego wcześniej "PIN-u Zastępczego" uruchamia równoległą, całkowicie sfabrykowaną strukturę folderów.</p>
+                <h4>⚠️ Tryb Fałszywego Sejfu (Decoy PIN)</h4>
+                <p>To nasza najpotężniejsza broń. Ustawiasz dwa hasła. Główne hasło otwiera prawdziwy sejf. Jeśli wpiszesz "Hasło Ratunkowe", aplikacja płynnie otwiera fałszywy, w pełni działający sejf wypełniony nieistotnymi notatkami. Napastnik myśli, że złamał system. Prawdziwe sekrety znikają.</p>
             </div>
             <div class="feature-box">
-                <h4>Absolutne Offline</h4>
-                <p>Nawet przy próbie fizycznego sklonowania pamięci urządzenia, brak algorytmów deszyfrujących oraz całkowite odcięcie procesu od połączeń zewnętrznych uniemożliwia zdalne wyodrębnienie kluczy bezpieczeństwa.</p>
+                <h4>🧨 Zegar Autodestrukcji</h4>
+                <p>Posiadasz informacje, które nie mogą wpaść w niepowołane ręce? Przypisz notatce licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia, nadpisany zerami, uniemożliwiając jego odzyskanie nawet w laboratorium policyjnym.</p>
+            </div>
+            <div class="feature-box">
+                <h4>📞 Tajna Baza Kontaktów</h4>
+                <p>Twórz własną książkę adresową wewnątrz sejfu. Kontakty, które tutaj wprowadzisz, nigdy nie pojawią się w standardowej aplikacji "Telefon" na Twoim smartfonie. Chronisz tożsamość swoich rozmówców.</p>
+            </div>
+            <div class="feature-box">
+                <h4>🎨 Pełny Kamuflaż</h4>
+                <p>Dostosuj aplikację do siebie. Zmieniaj kolory interfejsu, układ przycisków i sposób wyświetlania list, by EXO wyglądało jak zwykła, nudna aplikacja systemowa, nie budząc żadnych podejrzeń u osób trzecich.</p>
             </div>
         </div>
 
         <div class="example-box">
-            <h4>Analiza Zdarzenia (Use-Case)</h4>
-            <p>"Użytkownik zostaje zmuszony do podania kodu odblokowującego urządzenie. Pod presją wpisuje ciąg znaków autoryzujących False Sector. Oprogramowanie natychmiast generuje interfejs wypełniony przygotowanymi wcześniej, nieistotnymi danymi (np. starymi notatkami). Napastnik uzyskuje pozornie pełny dostęp do zawartości, podczas gdy główna warstwa szyfrująca pozostaje głęboko ukryta i nietknięta w strukturze dysku."</p>
+            <h4>Analiza Zdarzenia: Próba Wymuszenia</h4>
+            <p>"Zostajesz zatrzymany, a Twój telefon skonfiskowany. Ktoś żąda podania kodu PIN do notatnika, w którym trzymasz klucze dostępu do portfela krypto. Zachowujesz pełen spokój. Podajesz PIN Ratunkowy (np. 1234). Aplikacja otwiera się błyskawicznie, pokazując foldery z przepisami na obiad i listą zakupów. Atakujący jest przekonany, że to wszystko. Tymczasem Twoje kryptowaluty są bezpieczne w sektorze, do którego otwiera drogę tylko PIN Główny (np. 9999)."</p>
         </div>
     </div>
 
-    <!-- === IBRON CLOCK (Z miejscem na galerię) === -->
+    <!-- === IBRON CLOCK === -->
     <div id="clock" class="view">
-        <button class="btn-back" onclick="switchView('home')">← Powrót</button>
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
         <div class="content-header">
-            <div class="badge">Faza Projektowa</div>
-            <h1>IbronCLOCK. System Weryfikacji.</h1>
+            <div class="badge">Wczesny Dostęp (BETA)</div>
+            <h1>IbronCLOCK. Nie ma drzemki.</h1>
         </div>
 
-        <div class="app-showcase">
-            <div class="showcase-logo">
-                <span style="font-size: 30px; font-weight: bold; color: var(--accent-blue);">CLK</span>
-            </div>
-            <div class="showcase-gallery">
-                <div class="screen-card">Zrzut ekranu 1</div>
-                <div class="screen-card">Zrzut ekranu 2</div>
-                <div class="screen-card">Zrzut ekranu 3</div>
-            </div>
+        <div class="specs-grid">
+            <div class="spec-item"><span class="spec-label">Status</span><span class="spec-value">Prototyp / Zamknięte Testy</span></div>
+            <div class="spec-item"><span class="spec-label">Rdzeń</span><span class="spec-value">System Override</span></div>
         </div>
 
-        <p class="manifesto-text">Standardowe algorytmy budzików ulegają odruchom warunkowym. IbronCLOCK to system przywracania koncentracji, który wymusza aktywność kory przedczołowej mózgu, neutralizując pamięć mięśniową.</p>
+        <p class="manifesto-text">Twój mózg potrafi wyłączyć zwykły budzik bez wybudzania świadomości. IbronCLOCK niszczy ten odruch. To brutalny system, który po wyzwoleniu alarmu żąda weryfikacji logicznej, zanim pozwoli Ci wrócić do snu.</p>
 
         <div class="feature-grid">
             <div class="feature-box">
-                <h4>Ominięcie Systemu Audio</h4>
-                <p>Aplikacja ignoruje globalne ustawienia trybu cichego. Sygnał narzuca najwyższy priorytet głośności na poziomie sprzętowym urządzenia.</p>
+                <h4>Przejęcie Głośnika</h4>
+                <p>Wyciszyłeś telefon na noc? CLOCK to zignoruje. Aplikacja narzuca najwyższy poziom głośności systemowej i blokuje fizyczne przyciski ściszania z boku telefonu. Musisz podjąć akcję na ekranie.</p>
             </div>
             <div class="feature-box">
-                <h4>Protokół Terminalowy</h4>
-                <p>Odcięcie sygnału następuje wyłącznie po potwierdzeniu stanu świadomości. Zwykłe dotknięcie ekranu jest niewystarczające – system wymaga przetworzenia ciągu logicznego lub fizycznej autoryzacji poprzez kod w innym pomieszczeniu.</p>
+                <h4>Weryfikacja Terminalowa</h4>
+                <p>Żeby wyłączyć alarm, musisz udowodnić aplikacji, że jesteś przytomny. Rozwiąż proste zadanie matematyczne na ekranie, albo – w trybie hard – udaj się do łazienki, by zeskanować wydrukowany kod QR. Gwarancja wstania z łóżka.</p>
             </div>
         </div>
     </div>
@@ -264,6 +309,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        /* SYSTEM AUDIO */
         const bgMusic = document.getElementById('bg-music');
         const hoverSound = document.getElementById('hover-sound');
         const audioIndicator = document.getElementById('audio-dot');
@@ -283,19 +329,34 @@
                 audioIndicator.classList.remove('playing');
             } else {
                 bgMusic.volume = 0.2;
-                bgMusic.play().catch(e => console.log("Audio wstrzymane."));
+                bgMusic.play().catch(e => console.log("Audio zablokowane."));
                 audioIndicator.classList.add('playing');
             }
             isMusicPlaying = !isMusicPlaying;
         }
 
-        document.querySelectorAll('.hover-trigger, .screen-card').forEach(item => {
+        document.querySelectorAll('.hover-trigger, .screen-card, .btn-back').forEach(item => {
             item.addEventListener('mouseenter', () => {
                 hoverSound.currentTime = 0;
                 hoverSound.volume = 0.4;
                 hoverSound.play().catch(e => {});
             });
         });
+
+        /* SYSTEM LIGHTBOX (POWIĘKSZANIE SCREENÓW) */
+        function openLightbox(imgSrc) {
+            const lightbox = document.getElementById('image-lightbox');
+            const lightboxImg = document.getElementById('lightbox-img');
+            lightboxImg.src = imgSrc;
+            lightbox.classList.add('active');
+        }
+
+        function closeLightbox(event) {
+            // Zamknij tylko jeśli kliknięto w tło (czarne) lub w krzyżyk, a nie w samo zdjęcie
+            if (event.target.id === 'image-lightbox' || event.target.className === 'lightbox-close') {
+                document.getElementById('image-lightbox').classList.remove('active');
+            }
+        }
     </script>
 </body>
 </html>
