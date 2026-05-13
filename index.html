@@ -1,121 +1,277 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBRON INDUSTRIES</title>
+    <title>Ibron Industries | Advanced Mobile Architecture</title>
     <style>
+        /* Apple/Stark Minimalist Theme */
         :root {
-            --bg: #050505;
-            --card-bg: #111;
-            --accent: #8B5CF6; /* Ibron Violet */
-            --danger: #EF4444; /* Blood Red */
-            --text-main: #f3f4f6;
-            --text-muted: #666;
-            --font-mono: 'Courier New', Courier, monospace;
-            --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            --bg-color: #000000;
+            --text-primary: #f5f5f7;
+            --text-secondary: #86868b;
+            --glass-bg: rgba(28, 28, 30, 0.5);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --accent-glow: radial-gradient(circle, rgba(0,210,255,0.15) 0%, rgba(0,0,0,0) 70%);
         }
 
-        body, html { margin: 0; padding: 0; background-color: var(--bg); color: var(--text-main); font-family: var(--font-sans); scroll-behavior: smooth; }
-        
-        /* HEADER */
-        header { padding: 30px 20px; border-bottom: 1px solid #222; display: flex; justify-content: space-between; align-items: center; background-color: rgba(5,5,5,0.9); position: sticky; top: 0; z-index: 100; }
-        .logo { font-size: 24px; font-weight: 900; letter-spacing: 4px; color: #fff; text-decoration: none; }
-        .logo span { color: var(--accent); font-weight: 300; }
-        nav a { color: var(--text-muted); text-decoration: none; margin-left: 20px; font-size: 14px; font-weight: bold; letter-spacing: 1px; transition: color 0.3s; }
-        nav a:hover { color: var(--accent); }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, "Helvetica Neue", Helvetica, Arial, sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
 
-        /* HERO SECTION */
-        .hero { padding: 100px 20px; text-align: center; }
-        .terminal-box { background-color: #000; border: 1px solid #333; padding: 20px; border-radius: 10px; display: inline-block; text-align: left; max-width: 600px; width: 100%; box-shadow: 0 10px 30px rgba(139, 92, 246, 0.1); }
-        .terminal-header { border-bottom: 1px solid #222; padding-bottom: 10px; margin-bottom: 15px; display: flex; gap: 8px; }
-        .dot { width: 10px; height: 10px; border-radius: 50%; }
-        .dot.red { background-color: var(--danger); }
-        .dot.yellow { background-color: #F59E0B; }
-        .dot.green { background-color: #10B981; }
-        .terminal-text { font-family: var(--font-mono); color: #10B981; font-size: 14px; line-height: 1.6; }
-        .terminal-text span { color: var(--text-muted); }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            line-height: 1.5;
+            overflow-x: hidden;
+        }
 
-        /* MODULES */
-        .section-title { text-align: center; font-size: 12px; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 40px; margin-top: 60px; }
-        .modules-grid { display: flex; flex-wrap: wrap; justify-content: center; gap: 20px; max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-        .card { background-color: var(--card-bg); border: 1px solid #222; border-radius: 15px; padding: 30px; width: 100%; max-width: 400px; transition: transform 0.3s, border-color 0.3s; }
-        .card:hover { transform: translateY(-5px); border-color: var(--accent); }
-        .card h3 { margin-top: 0; color: #fff; font-size: 20px; letter-spacing: 2px; }
-        .card h3 span { color: var(--accent); font-weight: 300; }
-        .card p { color: var(--text-muted); font-size: 14px; line-height: 1.6; }
-        .status { display: inline-block; padding: 5px 10px; background-color: rgba(16, 185, 129, 0.1); color: #10B981; border: 1px solid #10B981; border-radius: 20px; font-size: 10px; font-weight: bold; letter-spacing: 1px; margin-bottom: 15px; }
+        /* Ambient Glow Background (Stark Reactor Vibe) */
+        .ambient-glow {
+            position: fixed;
+            top: -20vh;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100vw;
+            height: 100vh;
+            background: var(--accent-glow);
+            z-index: -1;
+            pointer-events: none;
+        }
 
-        /* PRIVACY POLICY */
-        .privacy-section { max-width: 800px; margin: 80px auto; padding: 40px 20px; border-top: 1px solid #222; }
-        .privacy-section h2 { color: var(--accent); letter-spacing: 2px; }
-        .privacy-section p { color: var(--text-muted); line-height: 1.8; font-size: 14px; }
-        .privacy-box { background-color: var(--card-bg); border-left: 4px solid var(--danger); padding: 20px; border-radius: 0 10px 10px 0; margin-top: 20px; }
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: saturate(180%) blur(20px);
+            -webkit-backdrop-filter: saturate(180%) blur(20px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 100;
+        }
 
-        /* FOOTER */
-        footer { border-top: 1px solid #222; padding: 30px; text-align: center; margin-top: 50px; }
-        footer p { color: #444; font-size: 12px; letter-spacing: 2px; }
+        .logo {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            color: var(--text-primary);
+            text-decoration: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-size: 14px;
+            margin-left: 30px;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 0 20px;
+            animation: fadeIn 2s ease-out;
+        }
+
+        .hero h1 {
+            font-size: clamp(40px, 8vw, 80px);
+            font-weight: 700;
+            letter-spacing: -1px;
+            margin-bottom: 20px;
+            background: linear-gradient(180deg, #fff 0%, #a1a1a6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero p {
+            font-size: clamp(18px, 2vw, 24px);
+            color: var(--text-secondary);
+            max-width: 600px;
+            font-weight: 400;
+        }
+
+        /* Modules Section */
+        .section {
+            padding: 120px 5%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 80px;
+        }
+
+        .section-header h2 {
+            font-size: 40px;
+            font-weight: 600;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 40px;
+            backdrop-filter: blur(10px);
+            transition: transform 0.4s ease, border-color 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .card-icon {
+            font-size: 12px;
+            font-weight: 600;
+            color: #00d2ff;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .card h3 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .card p {
+            color: var(--text-secondary);
+            font-size: 16px;
+            line-height: 1.6;
+        }
+
+        /* Privacy Policy */
+        .privacy {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .privacy-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px;
+        }
+
+        .privacy-content h3 {
+            font-size: 24px;
+            margin-bottom: 20px;
+            font-weight: 500;
+        }
+
+        .privacy-content p, .privacy-content li {
+            color: var(--text-secondary);
+            font-size: 16px;
+            margin-bottom: 15px;
+        }
+
+        .privacy-content ul {
+            padding-left: 20px;
+            margin-bottom: 30px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-secondary);
+            font-size: 12px;
+            margin-top: 50px;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="#" class="logo">IBRON<span>IND.</span></a>
-        <nav>
-            <a href="#modules">MODULES</a>
-            <a href="#privacy">PRIVACY POLICY</a>
-        </nav>
-    </header>
+    <div class="ambient-glow"></div>
 
-    <div class="hero">
-        <div class="terminal-box">
-            <div class="terminal-header">
-                <div class="dot red"></div><div class="dot yellow"></div><div class="dot green"></div>
+    <nav>
+        <a href="#" class="logo">IBRON.</a>
+        <div class="nav-links">
+            <a href="#ecosystem">Ecosystem</a>
+            <a href="#privacy">Privacy</a>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>Engineering the Future.</h1>
+        <p>Uncompromising security. Seamless performance. Welcome to the Ibron Ecosystem.</p>
+    </section>
+
+    <section id="ecosystem" class="section">
+        <div class="section-header">
+            <h2>Active Modules</h2>
+        </div>
+        <div class="grid">
+            <!-- IbronEXO Card -->
+            <div class="card">
+                <span class="card-icon">System 01</span>
+                <h3>IbronEXO</h3>
+                <p>Next-generation encrypted local vault. Featuring the proprietary "False Sector" protocol, providing a secondary decoy environment for unauthorized access attempts. 100% offline.</p>
             </div>
-            <div class="terminal-text">
-                <p>root@ibron-server:~$ init_system --level max</p>
-                <p><span>[SYSTEM]</span> Initializing IBRON OS...</p>
-                <p><span>[SYSTEM]</span> Loading Zero-Data Architecture... OK</p>
-                <p><span>[SYSTEM]</span> Encrypted connections verified.</p>
-                <p style="color: #fff; margin-top: 20px;">> Ibron Industries focuses on offline, high-security mobile utilities. No tracking. No cloud. Just raw performance.</p>
+            <!-- IbronCLOCK Card -->
+            <div class="card">
+                <span class="card-icon">System 02</span>
+                <h3>IbronCLOCK</h3>
+                <p>Advanced chronobiological management. Utilizing native system-level overrides to ensure mandatory wake protocols, integrating complex mathematical and terminal verifications.</p>
             </div>
         </div>
-    </div>
+    </section>
 
-    <div id="modules">
-        <h2 class="section-title">ACTIVE MODULES</h2>
-        <div class="modules-grid">
-            <div class="card">
-                <div class="status">V 1.0 - ACTIVE</div>
-                <h3>IBRON<span>EXO</span></h3>
-                <p>Kryptosejf nowej generacji. Moduł notatnika zabezpieczony protokołem "False Sector". Pozwala na tworzenie fałszywych przestrzeni dla niepowołanych osób. Działa w 100% offline.</p>
-            </div>
-            <div class="card">
-                <div class="status">V 13.0 - PENDING</div>
-                <h3>IBRON<span>CLOCK</span></h3>
-                <p>Zaawansowany system zarządzania czasem. Wykorzystuje natywne uprawnienia systemu Android do przełamywania ekranu blokady. Posiada protokoły Extreme Wake-Up (Math & Terminal).</p>
-            </div>
+    <section id="privacy" class="section privacy">
+        <div class="section-header">
+            <h2>Privacy & Security</h2>
         </div>
-    </div>
-
-    <div id="privacy" class="privacy-section">
-        <h2 class="section-title" style="text-align: left; margin-top: 0;">PRIVACY POLICY</h2>
-        <p>Effective Date: January 2025</p>
-        <div class="privacy-box">
-            <h3 style="color: #fff; margin-top: 0;">Zero-Data Architecture</h3>
-            <p>Ibron Industries (including apps like IbronEXO and IbronCLOCK) operates on a strict Zero-Data policy. We believe your data belongs to you.</p>
-            <ul style="color: var(--text-muted); font-size: 14px; line-height: 1.8;">
-                <li><strong>No Data Collection:</strong> We do not collect, store, or transmit any personal information, location data, or usage analytics.</li>
-                <li><strong>100% Offline:</strong> Our applications function completely independently of internet servers. All your notes, alarms, and settings are saved locally in the encrypted storage of your device via AsyncStorage.</li>
-                <li><strong>Third Parties:</strong> Since we do not collect any data, we have absolutely nothing to share with or sell to third-party services.</li>
-                <li><strong>Permissions:</strong> Any permissions requested (such as "Display over other apps" in IbronCLOCK) are used solely to trigger local system functions (like waking up the screen).</li>
+        <div class="privacy-content">
+            <h3>Zero-Data Architecture</h3>
+            <p>At Ibron Industries, privacy is not a feature. It is the foundation of our engineering. We operate strictly on a Zero-Data policy.</p>
+            <ul>
+                <li><strong>Local Execution:</strong> All operations, data storage, and encrypted vaults reside solely on your device's physical memory.</li>
+                <li><strong>No Telemetry:</strong> We do not track, collect, or transmit analytics, location, or usage data.</li>
+                <li><strong>Total Independence:</strong> Ibron software functions flawlessly without an active internet connection.</li>
             </ul>
+            <p>Your device. Your data. Absolute control.</p>
+            <p style="margin-top: 40px; font-size: 14px;">Contact engineering: privacy@ibronindustries.pl</p>
         </div>
-        <p style="margin-top: 30px;">For any inquiries regarding privacy or security protocols, contact system administrator at: alex@ibronindustries.pl</p>
-    </div>
+    </section>
 
     <footer>
-        <p>&copy; 2025 IBRON INDUSTRIES. ALL RIGHTS RESERVED.</p>
+        &copy; 2026 Ibron Industries. Designed for absolute security.
     </footer>
 
 </body>
