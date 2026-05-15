@@ -32,15 +32,11 @@
             background-size: 50px 50px; z-index: -1; pointer-events: none;
         }
 
-        /* === SYSTEM JĘZYKOWY === */
-        .lang-en { display: none; }
-        .lang-pl { display: inline; }
-        body.en-active .lang-pl { display: none; }
-        body.en-active .lang-en { display: inline; }
-        body.en-active div.lang-en, body.en-active p.lang-en, body.en-active h1.lang-en, body.en-active h2.lang-en, body.en-active h3.lang-en, body.en-active h4.lang-en, body.en-active li.lang-en { display: block; }
-        div.lang-en, p.lang-en, h1.lang-en, h2.lang-en, h3.lang-en, h4.lang-en, li.lang-en { display: none; }
-        div.lang-pl, p.lang-pl, h1.lang-pl, h2.lang-pl, h3.lang-pl, h4.lang-pl, li.lang-pl { display: block; }
-        body.en-active div.lang-pl, body.en-active p.lang-pl, body.en-active h1.lang-pl, body.en-active h2.lang-pl, body.en-active h3.lang-pl, body.en-active h4.lang-pl, body.en-active li.lang-pl { display: none; }
+        /* === NOWY, BEZBŁĘDNY SYSTEM JĘZYKOWY === */
+        /* Domyślnie (polski aktywny) ukrywamy angielski */
+        body:not(.en-active) [data-lang="en"] { display: none !important; }
+        /* Gdy angielski aktywny, ukrywamy polski */
+        body.en-active [data-lang="pl"] { display: none !important; }
 
         /* === TOP BAR === */
         .top-controls { position: fixed; top: 25px; right: 40px; z-index: 2000; display: flex; align-items: center; gap: 15px; }
@@ -75,7 +71,11 @@
         .main-card:hover::before { opacity: 0.3; }
         .main-card h2 { font-size: 28px; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; position: relative; z-index: 2; }
         .main-card p { color: var(--text-muted); font-size: 14px; position: relative; z-index: 2; }
+        
+        /* Zmiana emotek na czyste symbole Unicode */
+        .main-icon { font-size: 65px; margin-bottom: 20px; color: var(--text-muted); position: relative; z-index: 2; transition: 0.4s; font-weight: 100; }
         .main-logo-img { height: 75px; width: auto; max-width: 150px; object-fit: contain; margin-bottom: 20px; position: relative; z-index: 2; transition: 0.4s; }
+        .main-card:hover .main-icon { transform: scale(1.1); color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
         .main-card:hover .main-logo-img { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-glow)); }
 
         .btn-back { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; cursor: pointer; margin-bottom: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; transition: var(--transition); }
@@ -159,113 +159,112 @@
 
     <div id="home" class="view active">
         <div class="hero-section">
-            <h1 class="lang-pl">Odzyskaj <span class="highlight">kontrolę.</span></h1>
-            <h1 class="lang-en">Regain <span class="highlight">Control.</span></h1>
-            <p class="lang-pl">Oprogramowanie inżynieryjne nowej generacji. Zero chmury. Zero śledzenia. Płacisz raz, posiadasz na zawsze. Dołącz do cyfrowego ruchu oporu.</p>
-            <p class="lang-en">Next-gen engineering software. Zero cloud. Zero tracking. Pay once, own forever. Join the digital resistance.</p>
+            <h1 data-lang="pl">Odzyskaj <span class="highlight">kontrolę.</span></h1>
+            <h1 data-lang="en">Regain <span class="highlight">Control.</span></h1>
+            
+            <p data-lang="pl">Oprogramowanie inżynieryjne nowej generacji. Zero ukrytych opłat, zero subskrypcji. Skupiamy się na aplikacjach chroniących Twoją prywatność. Dołącz do cyfrowego ruchu oporu.</p>
+            <p data-lang="en">Next-gen engineering software. Zero hidden fees, zero subscriptions. We focus on apps that protect your privacy. Join the digital resistance.</p>
         </div>
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('about')">
-                <div class="main-logo-img">👁️‍🗨️</div>
-                <h2 class="lang-pl">O NAS</h2>
-                <h2 class="lang-en">ABOUT US</h2>
-                <p class="lang-pl">Doktryna IBRON i brak subskrypcji.</p>
-                <p class="lang-en">IBRON doctrine and no subscriptions.</p>
+                <div class="main-icon">◈</div> <h2 data-lang="pl">O NAS</h2>
+                <h2 data-lang="en">ABOUT US</h2>
+                <p data-lang="pl">Doktryna IBRON i brak ukrytych opłat.</p>
+                <p data-lang="en">IBRON doctrine and no hidden fees.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('apps-hub')">
-                <div class="main-logo-img">🎛️</div>
-                <h2 class="lang-pl">APLIKACJE</h2>
-                <h2 class="lang-en">APPLICATIONS</h2>
-                <p class="lang-pl">Wejdź do ekosystemu oprogramowania.</p>
-                <p class="lang-en">Enter the software ecosystem.</p>
+                <div class="main-icon">⎈</div> <h2 data-lang="pl">APLIKACJE</h2>
+                <h2 data-lang="en">APPLICATIONS</h2>
+                <p data-lang="pl">Wejdź do ekosystemu oprogramowania.</p>
+                <p data-lang="en">Enter the software ecosystem.</p>
             </div>
         </div>
     </div>
 
     <div id="about" class="view">
-        <button class="btn-back hover-trigger lang-pl" onclick="switchView('home')">← Powrót do rdzenia</button>
-        <button class="btn-back hover-trigger lang-en" onclick="switchView('home')">← Return to Core</button>
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
         
         <div class="content-header">
-            <div class="badge lang-pl">Manifest Transparentności</div>
-            <div class="badge lang-en">Transparency Manifesto</div>
-            <h1 class="lang-pl">Ruch Oporu IT.</h1>
-            <h1 class="lang-en">The IT Resistance.</h1>
+            <div class="badge" data-lang="pl">Manifest Transparentności</div>
+            <div class="badge" data-lang="en">Transparency Manifesto</div>
+            <h1 data-lang="pl">Ruch Oporu IT.</h1>
+            <h1 data-lang="en">The IT Resistance.</h1>
         </div>
         
-        <p class="lang-pl" style="margin-bottom: 40px; font-size: 18px;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze aplikacje nie wymagają kont, nie zbierają danych i nie oferują subskrypcji. Płacisz raz – narzędzie należy do Ciebie, bez ukrytych drzwi.</p>
-        <p class="lang-en" style="margin-bottom: 40px; font-size: 18px;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. Our apps require no accounts, collect no data, and offer no subscriptions. Pay once – the tool is yours, with no backdoors.</p>
+        <p data-lang="pl" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze oprogramowanie z definicji nie posiada ukrytych opłat ani modelu subskrypcyjnego. Prawdziwa wolność powinna być dostępna dla każdego.</p>
+        <p data-lang="en" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. By definition, our software has no hidden fees or subscription models. True freedom should be accessible to everyone.</p>
 
         <div class="trust-banner">
             <div style="font-size: 40px;">🛡️</div>
             <div>
-                <h4 class="lang-pl">Fizyczny brak uprawnień sieciowych</h4>
-                <h4 class="lang-en">Physical lack of network permissions</h4>
-                <p class="lang-pl" style="color: #d1d5db; font-size: 14px;">Sprawdź nas w ustawieniach systemu Android/iOS. Lista żądanych uprawnień to równe ZERO. Nasze aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym.</p>
-                <p class="lang-en" style="color: #d1d5db; font-size: 14px;">Check us in Android/iOS settings. The list of requested permissions is ZERO. Our apps physically lack any code for external communication.</p>
+                <h4 data-lang="pl">Moduły Bezpieczeństwa (Zero Uprawnień)</h4>
+                <h4 data-lang="en">Security Modules (Zero Permissions)</h4>
+                <p data-lang="pl" style="color: #d1d5db; font-size: 14px;">Nasze dedykowane narzędzia szyfrujące (np. IbronEXO) nie żądają żadnych uprawnień sieciowych w systemach Android/iOS. Te aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym. Pełna blokada (Sandbox).</p>
+                <p data-lang="en" style="color: #d1d5db; font-size: 14px;">Our dedicated encryption tools (e.g., IbronEXO) request ZERO network permissions on Android/iOS. These apps physically lack any code to communicate with the outside world. Full Sandbox lock.</p>
             </div>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Zero Subskrypcji</h4>
-                <h4 class="lang-en">Zero Subscriptions</h4>
-                <p class="lang-pl">Model "Pay-Once-Own-Forever". Nigdy nie wprowadzimy opłat miesięcznych. Raz zakupiona aplikacja działa dożywotnio offline.</p>
-                <p class="lang-en">"Pay-Once-Own-Forever" model. We will never introduce monthly fees. Once purchased, the app works lifetime offline.</p>
+                <h4 data-lang="pl">Zero Subskrypcji</h4>
+                <h4 data-lang="en">Zero Subscriptions</h4>
+                <p data-lang="pl">Nigdy nie będziemy żądać miesięcznych opłat za korzystanie z podstawowych funkcji naszych aplikacji. Narzędzia inżynieryjne są po to, by Ci służyć, a nie drenować Twój portfel.</p>
+                <p data-lang="en">We will never demand monthly fees for using the core features of our apps. Engineering tools are meant to serve you, not drain your wallet.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Bez Backdoorów</h4>
-                <h4 class="lang-en">No Backdoors</h4>
-                <p class="lang-pl">Nie mamy wglądu do Twoich danych. Nie mamy funkcji "Odzyskaj hasło". Tylko Ty masz klucz. Matematycznie i fizycznie.</p>
-                <p class="lang-en">We have no access to your data. There is no "Recover Password" function. Only you have the key. Mathematically and physically.</p>
+                <h4 data-lang="pl">Ekosystem Przyszłości</h4>
+                <h4 data-lang="en">Ecosystem of the Future</h4>
+                <p data-lang="pl">Nasze aplikacje operacyjne wkrótce zaczną się ze sobą komunikować, potęgując Twoją prywatność i optymalizując czas. Zbuduj z nami własną, zdecentralizowaną sieć narzędzi.</p>
+                <p data-lang="en">Our operational apps will soon communicate with each other, multiplying your privacy and optimizing time. Build your own decentralized network of tools with us.</p>
             </div>
         </div>
     </div>
 
     <div id="apps-hub" class="view">
-        <button class="btn-back hover-trigger lang-pl" onclick="switchView('home')">← Powrót do rdzenia</button>
-        <button class="btn-back hover-trigger lang-en" onclick="switchView('home')">← Return to Core</button>
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
         <div class="hero-section">
-            <h1 class="lang-pl">Ekosystem <span class="highlight">IBR</span></h1>
-            <h1 class="lang-en">IBR <span class="highlight">Ecosystem</span></h1>
-            <p class="lang-pl">Wybierz moduł operacyjny.</p>
-            <p class="lang-en">Select an operational module.</p>
+            <h1 data-lang="pl">Ekosystem <span class="highlight">IBR</span></h1>
+            <h1 data-lang="en">IBR <span class="highlight">Ecosystem</span></h1>
+            <p data-lang="pl">Wybierz moduł operacyjny.</p>
+            <p data-lang="en">Select an operational module.</p>
         </div>
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('exo')">
                 <img src="logoexo.png" alt="EXO Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
                 <h2>IbronEXO</h2>
-                <p class="lang-pl">Kryptosejf z BIP-39 Recovery.</p>
-                <p class="lang-en">Crypto-vault with BIP-39 Recovery.</p>
+                <p data-lang="pl">Kryptosejf z BIP-39 Recovery.</p>
+                <p data-lang="en">Crypto-vault with BIP-39 Recovery.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('chronos')">
                 <img src="logoclock.png" alt="CHRONOS Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=CHR';">
                 <h2>IbronCHRONOS</h2>
-                <p class="lang-pl">Silnik optymalizacji czasu.</p>
-                <p class="lang-en">Time optimization engine.</p>
+                <p data-lang="pl">Silnik zarządzania operacyjnego.</p>
+                <p data-lang="en">Operational management engine.</p>
             </div>
         </div>
     </div>
 
     <div id="exo" class="view">
-        <button class="btn-back hover-trigger lang-pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
-        <button class="btn-back hover-trigger lang-en" onclick="switchView('apps-hub')">← Back to Apps</button>
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
         
         <div class="app-header-container">
             <div class="app-header-logo"><img src="logoexo.png" alt="EXO" onerror="this.style.display='none';"></div>
             <div class="content-header">
-                <div class="badge lang-pl">Moduł Zabezpieczeń</div>
-                <div class="badge lang-en">Security Module</div>
+                <div class="badge" data-lang="pl">Moduł Zabezpieczeń</div>
+                <div class="badge" data-lang="en">Security Module</div>
                 <h1>IbronEXO.</h1>
             </div>
         </div>
 
         <div class="specs-grid">
-            <div class="spec-item"><span class="spec-label lang-pl">Standard Odzyskiwania</span><span class="spec-label lang-en">Recovery Standard</span><span class="spec-value">BIP-39 (Seed Phrase)</span></div>
-            <div class="spec-item"><span class="spec-label lang-pl">Szyfrowanie</span><span class="spec-label lang-en">Encryption</span><span class="spec-value">AES-256-GCM / Argon2id</span></div>
-            <div class="spec-item"><span class="spec-label lang-pl">Architektura</span><span class="spec-label lang-en">Architecture</span><span class="spec-value">Zero-Knowledge / Offline</span></div>
+            <div class="spec-item"><span class="spec-label" data-lang="pl">Standard Odzyskiwania</span><span class="spec-label" data-lang="en">Recovery Standard</span><span class="spec-value">BIP-39 (Seed Phrase)</span></div>
+            <div class="spec-item"><span class="spec-label" data-lang="pl">Szyfrowanie</span><span class="spec-label" data-lang="en">Encryption</span><span class="spec-value">AES-256-GCM / Argon2id</span></div>
+            <div class="spec-item"><span class="spec-label" data-lang="pl">Uprawnienia Sieciowe</span><span class="spec-label" data-lang="en">Network Permissions</span><span class="spec-value" style="color: #00e676;">ZERO</span></div>
         </div>
 
         <div class="showcase-gallery">
@@ -277,90 +276,96 @@
         </div>
 
         <div class="terminal-box">
-            <h4 class="lang-pl">> DOKUMENTACJA RECOVERY (BIP-39)</h4>
-            <h4 class="lang-en">> RECOVERY DOCUMENTATION (BIP-39)</h4>
-            <p class="lang-pl">
+            <h4 data-lang="pl">> DOKUMENTACJA RECOVERY (BIP-39)</h4>
+            <h4 data-lang="en">> RECOVERY DOCUMENTATION (BIP-39)</h4>
+            <p data-lang="pl">
                 > Status: <span class="code">No Recovery Questions.</span><br>
                 > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
-                > <span class="warn">UWAGA:</span> Podczas inicjalizacji system generuje unikalną frazę. Jest to jedyny sposób na odtworzenie klucza głównego w przypadku utraty PINu. <span class="code">IBR nie posiada kopii Twojej frazy.</span>
+                > <span class="warn">UWAGA:</span> Podczas inicjalizacji system generuje unikalną frazę. Jest to jedyny sposób na odtworzenie klucza głównego w przypadku utraty PINu. <span class="code">IBR nie posiada kopii Twojej frazy.</span> Zgubienie jej oznacza koniec.
             </p>
-            <p class="lang-en">
+            <p data-lang="en">
                 > Status: <span class="code">No Recovery Questions.</span><br>
                 > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
-                > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span>
+                > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span> Losing it means it's over.
             </p>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Dual-PIN Security</h4>
-                <h4 class="lang-en">Dual-PIN Security</h4>
-                <p class="lang-pl">Dwa PINy, dwie rzeczywistości. Główny otwiera Twoje sekrety. PIN Ratunkowy otwiera pusty interfejs (Decoy), chroniąc Cię przed przymusem fizycznym.</p>
-                <p class="lang-en">Two PINs, two realities. The Main PIN opens your secrets. The Rescue PIN opens an empty interface (Decoy), protecting you from physical coercion.</p>
+                <h4 data-lang="pl">Multi-Layered Decoy (Wielowarstwowa Iluzja)</h4>
+                <h4 data-lang="en">Multi-Layered Decoy</h4>
+                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Każdy zdefiniowany przez Ciebie PIN otwiera zupełnie inny, automatycznie wygenerowany, realistyczny profil użytkownika. Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
+                <p data-lang="en">EXO doesn't limit you to one fake code. You can create an entire grid of fake identities. Each PIN you define opens a completely different, automatically generated, realistic user profile. An attacker will never know how many layers your fortress has.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Gamifikacja Operacyjna</h4>
-                <h4 class="lang-en">Operational Gamification</h4>
-                <p class="lang-pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
-                <p class="lang-en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
+                <h4 data-lang="pl">Zegar Autodestrukcji</h4>
+                <h4 data-lang="en">Auto-Destruct Timers</h4>
+                <p data-lang="pl">Przypisz plikom licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia i nadpisany zerami.</p>
+                <p data-lang="en">Assign countdown timers to files. When time expires, the file is permanently wiped from the device's memory and overwritten with zeros.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Tajne Raporty PDF</h4>
-                <h4 class="lang-en">Classified PDF Reports</h4>
-                <p class="lang-pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
-                <p class="lang-en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
+                <h4 data-lang="pl">Gamifikacja Operacyjna</h4>
+                <h4 data-lang="en">Operational Gamification</h4>
+                <p data-lang="pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
+                <p data-lang="en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4 data-lang="pl">Tajne Raporty PDF</h4>
+                <h4 data-lang="en">Classified PDF Reports</h4>
+                <p data-lang="pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
+                <p data-lang="en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
             </div>
         </div>
 
-        <h3 style="margin-bottom: 20px;" class="lang-pl">FAQ (Zasady Bezwzględne)</h3>
-        <h3 style="margin-bottom: 20px;" class="lang-en">FAQ (Strict Rules)</h3>
+        <h3 style="margin-bottom: 20px;" data-lang="pl">FAQ (Zasady Bezwzględne)</h3>
+        <h3 style="margin-bottom: 20px;" data-lang="en">FAQ (Strict Rules)</h3>
         
         <div class="faq-item">
             <div class="faq-question hover-trigger" onclick="toggleFaq(this)">
-                <span class="lang-pl">Co jeśli zapomnę PINu i Frazy Seed?</span>
-                <span class="lang-en">What if I forget my PIN and Seed Phrase?</span>
+                <span data-lang="pl">Co jeśli zapomnę PINu i Frazy Seed?</span>
+                <span data-lang="en">What if I forget my PIN and Seed Phrase?</span>
                 <span>▼</span>
             </div>
             <div class="faq-answer">
-                <span class="lang-pl">Twoje dane przepadają bezpowrotnie. Brak chmury i brak backdoorów oznacza, że nikt na świecie (łącznie z nami) nie może odblokować Twojej bazy.</span>
-                <span class="lang-en">Your data is lost forever. No cloud and no backdoors mean no one in the world (including us) can unlock your database.</span>
+                <span data-lang="pl">Twoje dane przepadają bezpowrotnie. Brak zewnętrznych serwerów i brak backdoorów oznacza, że nikt na świecie (łącznie z nami) nie może odblokować Twojej bazy.</span>
+                <span data-lang="en">Your data is lost forever. No external servers and no backdoors mean no one in the world (including us) can unlock your database.</span>
             </div>
         </div>
         <div class="faq-item">
             <div class="faq-question hover-trigger" onclick="toggleFaq(this)">
-                <span class="lang-pl">Dlaczego usunęliście pytania awaryjne?</span>
-                <span class="lang-en">Why did you remove security questions?</span>
+                <span data-lang="pl">Dlaczego usunęliście pytania awaryjne?</span>
+                <span data-lang="en">Why did you remove security questions?</span>
                 <span>▼</span>
             </div>
             <div class="faq-answer">
-                <span class="lang-pl">Pytania awaryjne są najsłabszym ogniwem w sytuacjach przymusu. Napastnik może zmusić Cię do odpowiedzi na nie. Seed Phrase BIP-39 to standard wojskowy, który trzymasz zapasowo w bezpiecznym miejscu, a nie w swojej pamięci.</span>
-                <span class="lang-en">Security questions are the weakest link in coercion scenarios. An attacker can force you to answer them. BIP-39 Seed Phrase is a military standard that you keep in a safe place, not in your memory.</span>
+                <span data-lang="pl">Pytania awaryjne są najsłabszym ogniwem w sytuacjach przymusu. Napastnik może zmusić Cię do odpowiedzi na nie. Seed Phrase BIP-39 to standard bezwzględny, który trzymasz w bezpiecznym miejscu, a nie w swojej głowie.</span>
+                <span data-lang="en">Security questions are the weakest link in coercion scenarios. An attacker can force you to answer them. BIP-39 Seed Phrase is a strict standard that you keep in a safe place, not in your head.</span>
             </div>
         </div>
     </div>
 
     <div id="chronos" class="view">
-        <button class="btn-back hover-trigger lang-pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
-        <button class="btn-back hover-trigger lang-en" onclick="switchView('apps-hub')">← Back to Apps</button>
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
         
         <div class="app-header-container">
             <div class="app-header-logo"><img src="logoclock.png" alt="CHR" onerror="this.style.display='none';"></div>
             <div class="content-header">
-                <div class="badge lang-pl">Moduł Optymalizacji</div>
-                <div class="badge lang-en">Efficiency Module</div>
+                <div class="badge" data-lang="pl">Moduł Operacyjny</div>
+                <div class="badge" data-lang="en">Operational Module</div>
                 <h1>IbronCHRONOS.</h1>
             </div>
         </div>
 
-        <p class="manifesto-text lang-pl">To nie jest kalendarz. To bezwzględny silnik do zarządzania czasem operacyjnym. Przekuj swoje cele w matematyczną wydajność.</p>
-        <p class="manifesto-text lang-en">This is not a calendar. It's a ruthless operational time management engine. Turn your goals into mathematical efficiency.</p>
+        <p class="manifesto-text" data-lang="pl" style="color: var(--text-muted);">To nie jest kalendarz. To bezwzględny silnik do zarządzania czasem i produktywnością. Przekuj swoje cele w matematyczną wydajność i zintegruj proces z naszym ekosystemem.</p>
+        <p class="manifesto-text" data-lang="en" style="color: var(--text-muted);">This is not a calendar. It's a ruthless operational time and productivity management engine. Turn your goals into mathematical efficiency and integrate the process with our ecosystem.</p>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Diagnostyka Rdzenia</h4>
-                <h4 class="lang-en">Core Diagnostics</h4>
-                <p class="lang-pl">Terminal monitorujący "zużycie matrycy" Twojego czasu. Wizualizacja marnotrawstwa i postępów w czasie rzeczywistym.</p>
-                <p class="lang-en">Terminal monitoring the "matrix degradation" of your time. Visualization of waste and progress in real-time.</p>
+                <h4 data-lang="pl">Diagnostyka Rdzenia</h4>
+                <h4 data-lang="en">Core Diagnostics</h4>
+                <p data-lang="pl">Terminal monitorujący "zużycie matrycy" Twojego czasu. Wizualizacja marnotrawstwa i postępów w czasie rzeczywistym.</p>
+                <p data-lang="en">Terminal monitoring the "matrix degradation" of your time. Visualization of waste and progress in real-time.</p>
             </div>
         </div>
     </div>
@@ -403,13 +408,19 @@
             if (e.target.id === 'image-lightbox' || e.target.className === 'lightbox-close') { document.getElementById('image-lightbox').classList.remove('active'); }
         }
 
-        /* JĘZYK */
+        /* ZOPTYMALIZOWANY JĘZYK */
         let currentLang = 'pl';
         function toggleLanguage() {
             currentLang = currentLang === 'pl' ? 'en' : 'pl';
             document.body.classList.toggle('en-active');
-            document.getElementById('lang-en-btn').classList.toggle('active');
-            document.getElementById('lang-pl-btn').classList.toggle('active');
+            
+            if(currentLang === 'en') {
+                document.getElementById('lang-en-btn').classList.add('active');
+                document.getElementById('lang-pl-btn').classList.remove('active');
+            } else {
+                document.getElementById('lang-pl-btn').classList.add('active');
+                document.getElementById('lang-en-btn').classList.remove('active');
+            }
 
             document.querySelectorAll('.dyn-img').forEach(img => {
                 const base = img.getAttribute('data-base');
