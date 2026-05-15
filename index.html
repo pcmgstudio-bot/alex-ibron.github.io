@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBRON INDUSTRIES</title>
+    <title>IBRON INDUSTRIES | Absolute Privacy</title>
     <style>
         /* === ZMIENNE PREMIUM DARK === */
         :root {
@@ -32,19 +32,17 @@
             background-size: 50px 50px; z-index: -1; pointer-events: none;
         }
 
-        /* === SYSTEM JĘZYKOWY (CSS) === */
+        /* === SYSTEM JĘZYKOWY === */
         .lang-en { display: none; }
         .lang-pl { display: inline; }
-        
         body.en-active .lang-pl { display: none; }
         body.en-active .lang-en { display: inline; }
-        
         body.en-active div.lang-en, body.en-active p.lang-en, body.en-active h1.lang-en, body.en-active h2.lang-en, body.en-active h3.lang-en, body.en-active h4.lang-en, body.en-active li.lang-en { display: block; }
         div.lang-en, p.lang-en, h1.lang-en, h2.lang-en, h3.lang-en, h4.lang-en, li.lang-en { display: none; }
         div.lang-pl, p.lang-pl, h1.lang-pl, h2.lang-pl, h3.lang-pl, h4.lang-pl, li.lang-pl { display: block; }
         body.en-active div.lang-pl, body.en-active p.lang-pl, body.en-active h1.lang-pl, body.en-active h2.lang-pl, body.en-active h3.lang-pl, body.en-active h4.lang-pl, body.en-active li.lang-pl { display: none; }
 
-        /* === TOP BAR (AUDIO + JĘZYK) === */
+        /* === TOP BAR === */
         .top-controls { position: fixed; top: 25px; right: 40px; z-index: 2000; display: flex; align-items: center; gap: 15px; }
         .audio-btn, .lang-toggle { background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: bold; letter-spacing: 2px; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
         .audio-btn:hover, .lang-toggle:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--shadow-glow); }
@@ -77,9 +75,8 @@
         .main-card:hover::before { opacity: 0.3; }
         .main-card h2 { font-size: 28px; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; position: relative; z-index: 2; }
         .main-card p { color: var(--text-muted); font-size: 14px; position: relative; z-index: 2; }
-        .main-icon { font-size: 60px; margin-bottom: 20px; position: relative; z-index: 2; transition: 0.4s; }
-        .main-logo-img { height: 75px; width: auto; max-width: 150px; object-fit: contain; margin-bottom: 20px; position: relative; z-index: 2; transition: 0.4s; filter: drop-shadow(0 0 10px rgba(0,0,0,0.5)); }
-        .main-card:hover .main-icon, .main-card:hover .main-logo-img { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-glow)); }
+        .main-logo-img { height: 75px; width: auto; max-width: 150px; object-fit: contain; margin-bottom: 20px; position: relative; z-index: 2; transition: 0.4s; }
+        .main-card:hover .main-logo-img { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--accent-glow)); }
 
         .btn-back { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; cursor: pointer; margin-bottom: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; transition: var(--transition); }
         .btn-back:hover { border-color: var(--accent); color: var(--text-main); background: rgba(0,240,255,0.05); transform: translateX(-5px); box-shadow: var(--shadow-glow); }
@@ -87,12 +84,10 @@
         .content-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
         .content-header h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
         .badge { display: inline-block; background: rgba(0, 240, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
-        .manifesto-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); margin-bottom: 40px; max-width: 900px; font-weight: 300; }
 
         .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
         .app-header-logo { width: 90px; height: 90px; background: rgba(0,0,0,0.6); border-radius: 20px; display: flex; justify-content: center; align-items: center; padding: 15px; border: 1px solid var(--border-color); box-shadow: inset 0 0 20px rgba(0,240,255,0.05); flex-shrink: 0; }
         .app-header-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-        .app-header-container .content-header { margin-bottom: 0; border-bottom: none; padding-bottom: 0; }
 
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
         .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); transition: var(--transition); backdrop-filter: blur(10px); }
@@ -111,29 +106,27 @@
         .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
         .screen-card { min-width: 220px; height: 450px; background: #000; border-radius: 20px; border: 1px solid var(--border-color); overflow: hidden; position: relative; transition: var(--transition); cursor: zoom-in; scroll-snap-align: start; }
         .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s, transform 0.4s; opacity: 0.7; }
-        .screen-card:hover { border-color: var(--accent); box-shadow: var(--shadow-glow); transform: translateY(-10px); }
         .screen-card:hover img { opacity: 1; transform: scale(1.05); }
 
         .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(10px); }
         .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
         .lightbox.active img { transform: scale(1); }
         .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--text-muted); font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
-        .lightbox-close:hover { color: var(--danger); transform: scale(1.1); }
+        .lightbox-close:hover { color: var(--danger); }
 
-        /* === SEKCJA ZAUFANIA I FAQ === */
-        .trust-banner { border: 1px solid var(--danger); background: rgba(255, 59, 48, 0.05); padding: 25px; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; }
+        /* === SEKCJA ZAUFANIA === */
+        .trust-banner { border: 1px solid var(--danger); background: rgba(255, 59, 48, 0.05); padding: 25px; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; border-left-width: 5px; }
         .trust-banner h4 { color: var(--danger); font-size: 18px; margin-bottom: 5px; text-transform: uppercase; }
         
         .faq-item { border-bottom: 1px solid var(--border-color); padding: 20px 0; }
         .faq-question { font-size: 18px; font-weight: bold; cursor: pointer; color: var(--text-main); display: flex; justify-content: space-between; align-items: center; }
-        .faq-question:hover { color: var(--accent); }
         .faq-answer { font-size: 15px; color: var(--text-muted); margin-top: 15px; display: none; line-height: 1.6; border-left: 2px solid var(--accent); padding-left: 15px; }
 
-        .terminal-box { background: #0A0F1A; color: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; }
+        .terminal-box { background: #0A0F1A; color: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; border-top: 3px solid var(--accent); }
         .terminal-box h4 { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .terminal-box p { font-size: 14px; line-height: 1.7; color: var(--text-muted); }
         .terminal-box span.code { color: #00e676; }
+        .terminal-box span.warn { color: var(--danger); }
     </style>
 </head>
 <body>
@@ -168,25 +161,24 @@
         <div class="hero-section">
             <h1 class="lang-pl">Odzyskaj <span class="highlight">kontrolę.</span></h1>
             <h1 class="lang-en">Regain <span class="highlight">Control.</span></h1>
-            
-            <p class="lang-pl">Zdecentralizowane oprogramowanie inżynieryjne. Zero chmury. Zero śledzenia. Tworzymy narzędzia odporne na inwigilację, dające absolutną prywatność i optymalizację czasu za jednorazową opłatą.</p>
-            <p class="lang-en">Decentralized engineering software. Zero cloud. Zero tracking. We build surveillance-resistant tools granting absolute privacy and time optimization with no subscription fees.</p>
+            <p class="lang-pl">Oprogramowanie inżynieryjne nowej generacji. Zero chmury. Zero śledzenia. Płacisz raz, posiadasz na zawsze. Dołącz do cyfrowego ruchu oporu.</p>
+            <p class="lang-en">Next-gen engineering software. Zero cloud. Zero tracking. Pay once, own forever. Join the digital resistance.</p>
         </div>
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('about')">
-                <div class="main-icon">👁️‍🗨️</div>
+                <div class="main-logo-img">👁️‍🗨️</div>
                 <h2 class="lang-pl">O NAS</h2>
                 <h2 class="lang-en">ABOUT US</h2>
-                <p class="lang-pl">Doktryna Zero-Data, brak subskrypcji i nasza filozofia prywatności.</p>
-                <p class="lang-en">Zero-Data doctrine, no subscriptions, and our privacy philosophy.</p>
+                <p class="lang-pl">Doktryna IBRON i brak subskrypcji.</p>
+                <p class="lang-en">IBRON doctrine and no subscriptions.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('apps-hub')">
-                <div class="main-icon">🎛️</div>
+                <div class="main-logo-img">🎛️</div>
                 <h2 class="lang-pl">APLIKACJE</h2>
                 <h2 class="lang-en">APPLICATIONS</h2>
-                <p class="lang-pl">Wejdź do ekosystemu oprogramowania IBRON.</p>
-                <p class="lang-en">Enter the IBRON software ecosystem.</p>
+                <p class="lang-pl">Wejdź do ekosystemu oprogramowania.</p>
+                <p class="lang-en">Enter the software ecosystem.</p>
             </div>
         </div>
     </div>
@@ -202,43 +194,31 @@
             <h1 class="lang-en">The IT Resistance.</h1>
         </div>
         
-        <p class="manifesto-text lang-pl">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą, za którą płacisz swoimi danymi. IBRON to technologiczny ruch oporu. Płacisz raz, posiadasz na zawsze. Nie tworzymy systemów subskrypcyjnych.</p>
-        <p class="manifesto-text lang-en">In the era of mass corporate surveillance, convenience has become the currency paid with your data. IBRON is a technological resistance. Pay once, own forever. We do not build subscription systems.</p>
+        <p class="lang-pl" style="margin-bottom: 40px; font-size: 18px;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze aplikacje nie wymagają kont, nie zbierają danych i nie oferują subskrypcji. Płacisz raz – narzędzie należy do Ciebie, bez ukrytych drzwi.</p>
+        <p class="lang-en" style="margin-bottom: 40px; font-size: 18px;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. Our apps require no accounts, collect no data, and offer no subscriptions. Pay once – the tool is yours, with no backdoors.</p>
 
         <div class="trust-banner">
             <div style="font-size: 40px;">🛡️</div>
             <div>
-                <h4 class="lang-pl">Fizyczny brak uprawnień (Dowód 0)</h4>
-                <h4 class="lang-en">Physical lack of permissions (Proof 0)</h4>
-                <p class="lang-pl" style="color: #d1d5db; font-size: 14px;">Sprawdź nas w ustawieniach telefonu przed instalacją. Lista żądanych uprawnień sieciowych to równe ZERO. Nasze aplikacje fizycznie nie posiadają kodu do łączenia się z internetem.</p>
-                <p class="lang-en" style="color: #d1d5db; font-size: 14px;">Check us in your phone settings before installing. The list of requested network permissions is exactly ZERO. Our apps physically lack the code to connect to the internet.</p>
+                <h4 class="lang-pl">Fizyczny brak uprawnień sieciowych</h4>
+                <h4 class="lang-en">Physical lack of network permissions</h4>
+                <p class="lang-pl" style="color: #d1d5db; font-size: 14px;">Sprawdź nas w ustawieniach systemu Android/iOS. Lista żądanych uprawnień to równe ZERO. Nasze aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym.</p>
+                <p class="lang-en" style="color: #d1d5db; font-size: 14px;">Check us in Android/iOS settings. The list of requested permissions is ZERO. Our apps physically lack any code for external communication.</p>
             </div>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Zero Telemetrii</h4>
-                <h4 class="lang-en">Zero Telemetry</h4>
-                <p class="lang-pl">Nie zbieramy logów, nie analizujemy Twojego zachowania, nie używamy Google Analytics. Twoje dane są wyłącznie Twoje.</p>
-                <p class="lang-en">We do not collect logs, analyze your behavior, or use Google Analytics. Your data is exclusively yours.</p>
+                <h4 class="lang-pl">Zero Subskrypcji</h4>
+                <h4 class="lang-en">Zero Subscriptions</h4>
+                <p class="lang-pl">Model "Pay-Once-Own-Forever". Nigdy nie wprowadzimy opłat miesięcznych. Raz zakupiona aplikacja działa dożywotnio offline.</p>
+                <p class="lang-en">"Pay-Once-Own-Forever" model. We will never introduce monthly fees. Once purchased, the app works lifetime offline.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Zero Trackerów</h4>
-                <h4 class="lang-en">Zero Trackers</h4>
-                <p class="lang-pl">Nasz kod jest czysty. Nie zawiera żadnych zewnętrznych bibliotek śledzących (SDK) ani ukrytych reklam.</p>
-                <p class="lang-en">Our code is clean. It contains no external tracking libraries (SDKs) or hidden advertisements.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Brak Backdoorów</h4>
+                <h4 class="lang-pl">Bez Backdoorów</h4>
                 <h4 class="lang-en">No Backdoors</h4>
-                <p class="lang-pl">Nie ma funkcji "Przypomnij hasło". Jeśli zgubisz swój PIN, stracisz dostęp. Nie mamy tylnych drzwi do Twoich danych.</p>
-                <p class="lang-en">There is no "Forgot Password" function. If you lose your PIN, you lose access. We have no backdoors to your data.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Jeden Ekosystem</h4>
-                <h4 class="lang-en">One Ecosystem</h4>
-                <p class="lang-pl">Rozwijamy autorski hardware i technologie, które w przyszłości zintegrują się z naszym oprogramowaniem offline.</p>
-                <p class="lang-en">We are developing proprietary hardware and technologies that will integrate with our offline software in the future.</p>
+                <p class="lang-pl">Nie mamy wglądu do Twoich danych. Nie mamy funkcji "Odzyskaj hasło". Tylko Ty masz klucz. Matematycznie i fizycznie.</p>
+                <p class="lang-en">We have no access to your data. There is no "Recover Password" function. Only you have the key. Mathematically and physically.</p>
             </div>
         </div>
     </div>
@@ -247,26 +227,24 @@
         <button class="btn-back hover-trigger lang-pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger lang-en" onclick="switchView('home')">← Return to Core</button>
         <div class="hero-section">
-            <h1 class="lang-pl">Ekosystem <span class="highlight">Oprogramowania</span></h1>
-            <h1 class="lang-en">Software <span class="highlight">Ecosystem</span></h1>
-            <p class="lang-pl">Wybierz moduł, aby uzyskać dostęp do specyfikacji technicznej i weryfikacji kodu.</p>
-            <p class="lang-en">Select a module to access technical specifications and code verification.</p>
+            <h1 class="lang-pl">Ekosystem <span class="highlight">IBR</span></h1>
+            <h1 class="lang-en">IBR <span class="highlight">Ecosystem</span></h1>
+            <p class="lang-pl">Wybierz moduł operacyjny.</p>
+            <p class="lang-en">Select an operational module.</p>
         </div>
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('exo')">
-                <img src="logoexo.png" alt="EXO Logo" class="main-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <div class="main-icon" style="display:none;">🛡️</div> 
+                <img src="logoexo.png" alt="EXO Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
                 <h2>IbronEXO</h2>
-                <p class="lang-pl">Kryptosejf z systemem podwójnego logowania (Dual-PIN).</p>
-                <p class="lang-en">Crypto-vault with Dual-PIN authentication system.</p>
+                <p class="lang-pl">Kryptosejf z BIP-39 Recovery.</p>
+                <p class="lang-en">Crypto-vault with BIP-39 Recovery.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('chronos')">
-                <img src="logoclock.png" alt="CHRONOS Logo" class="main-logo-img" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
-                <div class="main-icon" style="display:none;">⏱️</div>
+                <img src="logoclock.png" alt="CHRONOS Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=CHR';">
                 <h2>IbronCHRONOS</h2>
-                <p class="lang-pl">Bezwzględny silnik do zarządzania czasem operacyjnym.</p>
-                <p class="lang-en">Ruthless operational time management engine.</p>
+                <p class="lang-pl">Silnik optymalizacji czasu.</p>
+                <p class="lang-en">Time optimization engine.</p>
             </div>
         </div>
     </div>
@@ -276,9 +254,7 @@
         <button class="btn-back hover-trigger lang-en" onclick="switchView('apps-hub')">← Back to Apps</button>
         
         <div class="app-header-container">
-            <div class="app-header-logo">
-                <img src="logoexo.png" alt="EXO" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:var(--accent); font-weight:bold; font-size:20px;\'>EXO</span>';">
-            </div>
+            <div class="app-header-logo"><img src="logoexo.png" alt="EXO" onerror="this.style.display='none';"></div>
             <div class="content-header">
                 <div class="badge lang-pl">Moduł Zabezpieczeń</div>
                 <div class="badge lang-en">Security Module</div>
@@ -287,89 +263,78 @@
         </div>
 
         <div class="specs-grid">
-            <div class="spec-item"><span class="spec-label lang-pl">Klucz Główny (KDF)</span><span class="spec-label lang-en">Key Derivation</span><span class="spec-value">Argon2id</span></div>
-            <div class="spec-item"><span class="spec-label lang-pl">Szyfrowanie Bazy</span><span class="spec-label lang-en">Database Encryption</span><span class="spec-value">AES-256-GCM</span></div>
-            <div class="spec-item"><span class="spec-label lang-pl">Przechowywanie</span><span class="spec-label lang-en">Key Storage</span><span class="spec-value">Secure Enclave / Keystore</span></div>
+            <div class="spec-item"><span class="spec-label lang-pl">Standard Odzyskiwania</span><span class="spec-label lang-en">Recovery Standard</span><span class="spec-value">BIP-39 (Seed Phrase)</span></div>
+            <div class="spec-item"><span class="spec-label lang-pl">Szyfrowanie</span><span class="spec-label lang-en">Encryption</span><span class="spec-value">AES-256-GCM / Argon2id</span></div>
+            <div class="spec-item"><span class="spec-label lang-pl">Architektura</span><span class="spec-label lang-en">Architecture</span><span class="spec-value">Zero-Knowledge / Offline</span></div>
         </div>
 
-        <p class="manifesto-text lang-pl">IbronEXO to sejf stworzony dla najgorszego scenariusza wymuszenia fizycznego. Architektura Zero-Data z matematycznie odizolowanym środowiskiem ratunkowym.</p>
-        <p class="manifesto-text lang-en">IbronEXO is a vault designed for the worst-case scenario of physical coercion. Zero-Data architecture with a mathematically isolated decoy environment.</p>
-
         <div class="showcase-gallery">
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen1" src="screen1pl.png" alt="EXO Screen 1" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen2" src="screen2pl.png" alt="EXO Screen 2" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen3" src="screen3pl.png" alt="EXO Screen 3" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen4" src="screen4pl.png" alt="EXO Screen 4" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen5" src="screen5pl.png" alt="EXO Screen 5" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
+            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen1" src="screen1pl.png" alt="EXO 1"></div>
+            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen2" src="screen2pl.png" alt="EXO 2"></div>
+            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen3" src="screen3pl.png" alt="EXO 3"></div>
+            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen4" src="screen4pl.png" alt="EXO 4"></div>
+            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen5" src="screen5pl.png" alt="EXO 5"></div>
         </div>
 
         <div class="terminal-box">
-            <h4 class="lang-pl">Jak działa szyfrowanie? (Konsola)</h4>
-            <h4 class="lang-en">How encryption works? (Console)</h4>
+            <h4 class="lang-pl">> DOKUMENTACJA RECOVERY (BIP-39)</h4>
+            <h4 class="lang-en">> RECOVERY DOCUMENTATION (BIP-39)</h4>
             <p class="lang-pl">
-                > Inicjalizacja KDF: <span class="code">Argon2id</span><br>
-                > Twój PIN nigdy nie jest zapisywany. Służy jedynie jako entropia do wygenerowania 256-bitowego klucza.<br>
-                > Izolacja Decoy PIN: Wywołanie PINu Ratunkowego tworzy <span class="code">zupełnie niezależny klucz</span>, który fizycznie nie potrafi odszyfrować partycji głównej.<br>
-                > Storage: Baza danych jest zabezpieczona standardem <span class="code">SQLCipher AES-256</span>.
+                > Status: <span class="code">No Recovery Questions.</span><br>
+                > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
+                > <span class="warn">UWAGA:</span> Podczas inicjalizacji system generuje unikalną frazę. Jest to jedyny sposób na odtworzenie klucza głównego w przypadku utraty PINu. <span class="code">IBR nie posiada kopii Twojej frazy.</span>
             </p>
             <p class="lang-en">
-                > KDF Initialization: <span class="code">Argon2id</span><br>
-                > Your PIN is never stored. It serves only as entropy to generate a 256-bit key.<br>
-                > Decoy PIN Isolation: Calling the Rescue PIN creates a <span class="code">completely independent key</span> that physically cannot decrypt the main partition.<br>
-                > Storage: The database is secured with the <span class="code">SQLCipher AES-256</span> standard.
+                > Status: <span class="code">No Recovery Questions.</span><br>
+                > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
+                > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span>
             </p>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Tryb Fałszywego Sejfu</h4>
-                <h4 class="lang-en">Decoy Vault System</h4>
-                <p class="lang-pl">Podaj napastnikowi "Hasło Ratunkowe", a system płynnie otworzy fałszywy sejf pełen nieistotnych notatek. Prawdziwe sekrety stają się matematycznie niedostępne.</p>
-                <p class="lang-en">Provide the attacker with the "Rescue PIN," and the system will smoothly open a fake vault full of trivial notes. Real secrets become mathematically inaccessible.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Zegar Autodestrukcji</h4>
-                <h4 class="lang-en">Auto-Destruct Timers</h4>
-                <p class="lang-pl">Przypisz plikom licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia i nadpisany zerami.</p>
-                <p class="lang-en">Assign countdown timers to files. When time expires, the file is permanently wiped from the device's memory and overwritten with zeros.</p>
+                <h4 class="lang-pl">Dual-PIN Security</h4>
+                <h4 class="lang-en">Dual-PIN Security</h4>
+                <p class="lang-pl">Dwa PINy, dwie rzeczywistości. Główny otwiera Twoje sekrety. PIN Ratunkowy otwiera pusty interfejs (Decoy), chroniąc Cię przed przymusem fizycznym.</p>
+                <p class="lang-en">Two PINs, two realities. The Main PIN opens your secrets. The Rescue PIN opens an empty interface (Decoy), protecting you from physical coercion.</p>
             </div>
             <div class="feature-box hover-trigger">
                 <h4 class="lang-pl">Gamifikacja Operacyjna</h4>
                 <h4 class="lang-en">Operational Gamification</h4>
-                <p class="lang-pl">Za każdą akcję, tworzenie projektów i szyfrowanie danych zdobywasz punkty XP. Wbijaj kolejne Poziomy Operatora Ibron i pnij się w hierarchii bezpieczeństwa.</p>
-                <p class="lang-en">Earn XP for every action, project creation, and data encryption. Level up your Ibron Operator status and climb the security hierarchy.</p>
+                <p class="lang-pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
+                <p class="lang-en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
             </div>
             <div class="feature-box hover-trigger">
                 <h4 class="lang-pl">Tajne Raporty PDF</h4>
                 <h4 class="lang-en">Classified PDF Reports</h4>
-                <p class="lang-pl">Zmień swoje notatki i kontakty w profesjonalne akta operacyjne. System potrafi lokalnie wygenerować raport PDF gotowy do bezpiecznego udostępnienia offline.</p>
-                <p class="lang-en">Turn your notes and contacts into professional operational dossiers. The system can locally generate a PDF report ready for secure offline sharing.</p>
+                <p class="lang-pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
+                <p class="lang-en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
             </div>
         </div>
 
-        <h3 style="margin-bottom: 20px;" class="lang-pl">Najczęstsze pytania (FAQ)</h3>
-        <h3 style="margin-bottom: 20px;" class="lang-en">Frequently Asked Questions (FAQ)</h3>
+        <h3 style="margin-bottom: 20px;" class="lang-pl">FAQ (Zasady Bezwzględne)</h3>
+        <h3 style="margin-bottom: 20px;" class="lang-en">FAQ (Strict Rules)</h3>
         
         <div class="faq-item">
             <div class="faq-question hover-trigger" onclick="toggleFaq(this)">
-                <span class="lang-pl">Czy napastnik zorientuje się, że wpisałem PIN Ratunkowy?</span>
-                <span class="lang-en">Will an attacker realize I entered the Decoy PIN?</span>
+                <span class="lang-pl">Co jeśli zapomnę PINu i Frazy Seed?</span>
+                <span class="lang-en">What if I forget my PIN and Seed Phrase?</span>
                 <span>▼</span>
             </div>
             <div class="faq-answer">
-                <span class="lang-pl">Nie. System reaguje w 100% identycznie. Interfejs fałszywego sejfu wygląda tak samo, działa płynnie i pozwala na dodawanie fałszywych notatek. Brak jakichkolwiek "błędów".</span>
-                <span class="lang-en">No. The system reacts 100% identically. The decoy vault interface looks the same, runs smoothly, and allows adding fake notes. Zero "error" indicators.</span>
+                <span class="lang-pl">Twoje dane przepadają bezpowrotnie. Brak chmury i brak backdoorów oznacza, że nikt na świecie (łącznie z nami) nie może odblokować Twojej bazy.</span>
+                <span class="lang-en">Your data is lost forever. No cloud and no backdoors mean no one in the world (including us) can unlock your database.</span>
             </div>
         </div>
         <div class="faq-item">
             <div class="faq-question hover-trigger" onclick="toggleFaq(this)">
-                <span class="lang-pl">Gdzie fizycznie leżą moje dane?</span>
-                <span class="lang-en">Where physically is my data stored?</span>
+                <span class="lang-pl">Dlaczego usunęliście pytania awaryjne?</span>
+                <span class="lang-en">Why did you remove security questions?</span>
                 <span>▼</span>
             </div>
             <div class="faq-answer">
-                <span class="lang-pl">Znajdują się w chronionym, niedostępnym folderze systemowym Sandbox na pamięci Flash Twojego urządzenia. Tylko lokalnie.</span>
-                <span class="lang-en">They reside in a protected, inaccessible Sandbox system folder on your device's Flash memory. Locally only.</span>
+                <span class="lang-pl">Pytania awaryjne są najsłabszym ogniwem w sytuacjach przymusu. Napastnik może zmusić Cię do odpowiedzi na nie. Seed Phrase BIP-39 to standard wojskowy, który trzymasz zapasowo w bezpiecznym miejscu, a nie w swojej pamięci.</span>
+                <span class="lang-en">Security questions are the weakest link in coercion scenarios. An attacker can force you to answer them. BIP-39 Seed Phrase is a military standard that you keep in a safe place, not in your memory.</span>
             </div>
         </div>
     </div>
@@ -379,50 +344,35 @@
         <button class="btn-back hover-trigger lang-en" onclick="switchView('apps-hub')">← Back to Apps</button>
         
         <div class="app-header-container">
-            <div class="app-header-logo">
-                <img src="logoclock.png" alt="CHRONOS" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:var(--accent); font-weight:bold; font-size:20px;\'>CHR</span>';">
-            </div>
+            <div class="app-header-logo"><img src="logoclock.png" alt="CHR" onerror="this.style.display='none';"></div>
             <div class="content-header">
                 <div class="badge lang-pl">Moduł Optymalizacji</div>
-                <div class="badge lang-en">Optimization Module</div>
+                <div class="badge lang-en">Efficiency Module</div>
                 <h1>IbronCHRONOS.</h1>
             </div>
         </div>
 
-        <p class="manifesto-text lang-pl">Chronos Protocol to nie jest zwykły kalendarz. To zaawansowany silnik do manipulacji czasem operacyjnym. Zamienia Twoje cele w czystą, wykonalną matematykę.</p>
-        <p class="manifesto-text lang-en">Chronos Protocol is not a standard calendar. It's an advanced engine for operational time manipulation. It turns your goals into pure, executable math.</p>
-
-        <div class="showcase-gallery">
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen_chr1" src="screen_chr1pl.png" alt="CHR Screen 1" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-            <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen_chr2" src="screen_chr2pl.png" alt="CHR Screen 2" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=SCREEN';"></div>
-        </div>
+        <p class="manifesto-text lang-pl">To nie jest kalendarz. To bezwzględny silnik do zarządzania czasem operacyjnym. Przekuj swoje cele w matematyczną wydajność.</p>
+        <p class="manifesto-text lang-en">This is not a calendar. It's a ruthless operational time management engine. Turn your goals into mathematical efficiency.</p>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
                 <h4 class="lang-pl">Diagnostyka Rdzenia</h4>
                 <h4 class="lang-en">Core Diagnostics</h4>
-                <p class="lang-pl">Wbudowany terminal pozwala na monitorowanie "zużycia matrycy" (czasu) bez wychodzenia z aplikacji.</p>
-                <p class="lang-en">Built-in terminal allows monitoring "matrix degradation" (time) without leaving the application.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 class="lang-pl">Protokół ZERO</h4>
-                <h4 class="lang-en">ZERO Protocol</h4>
-                <p class="lang-pl">Czerwony przycisk bezpieczeństwa. Trwale formatuje całe archiwum i przywraca system do ustawień fabrycznych w ułamku sekundy.</p>
-                <p class="lang-en">Red security button. Permanently formats the entire archive and restores the system to factory settings in a split second.</p>
+                <p class="lang-pl">Terminal monitorujący "zużycie matrycy" Twojego czasu. Wizualizacja marnotrawstwa i postępów w czasie rzeczywistym.</p>
+                <p class="lang-en">Terminal monitoring the "matrix degradation" of your time. Visualization of waste and progress in real-time.</p>
             </div>
         </div>
     </div>
 
     <script>
-        // SYSTEM NAWIGACJI
         function switchView(viewId) {
             document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
-            const target = document.getElementById(viewId);
-            target.classList.add('active');
+            document.getElementById(viewId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'auto' });
         }
 
-        // SYSTEM AUDIO
+        /* AUDIO */
         const bgMusic = document.getElementById('bg-music');
         const hoverSound = document.getElementById('hover-sound');
         const audioIndicator = document.getElementById('audio-dot');
@@ -430,81 +380,47 @@
         let userInteracted = false;
 
         document.body.addEventListener('click', () => {
-            if(!userInteracted && !isMusicPlaying) {
-                toggleMusic();
-                userInteracted = true;
-            }
+            if(!userInteracted && !isMusicPlaying) { toggleMusic(); userInteracted = true; }
         }, { once: true });
 
         function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
-                audioIndicator.classList.remove('playing');
-            } else {
-                bgMusic.volume = 0.2;
-                bgMusic.play().catch(e => console.log("Audio blocked"));
-                audioIndicator.classList.add('playing');
-            }
+            if (isMusicPlaying) { bgMusic.pause(); audioIndicator.classList.remove('playing'); } 
+            else { bgMusic.volume = 0.2; bgMusic.play().catch(e => {}); audioIndicator.classList.add('playing'); }
             isMusicPlaying = !isMusicPlaying;
         }
 
         document.querySelectorAll('.hover-trigger, .screen-card, .btn-back').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                hoverSound.currentTime = 0;
-                hoverSound.volume = 0.2;
-                hoverSound.play().catch(e => {});
-            });
+            item.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.volume = 0.2; hoverSound.play().catch(e => {}); });
         });
 
-        // LIGHTBOX
-        function openLightbox(imgSrc) {
-            const lightbox = document.getElementById('image-lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
-            lightbox.classList.add('active');
+        /* LIGHTBOX */
+        function openLightbox(src) {
+            const lb = document.getElementById('image-lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.classList.add('active');
+        }
+        function closeLightbox(e) {
+            if (e.target.id === 'image-lightbox' || e.target.className === 'lightbox-close') { document.getElementById('image-lightbox').classList.remove('active'); }
         }
 
-        function closeLightbox(event) {
-            if (event.target.id === 'image-lightbox' || event.target.className === 'lightbox-close') {
-                document.getElementById('image-lightbox').classList.remove('active');
-            }
-        }
-
-        // SYSTEM JĘZYKOWY I ZMIANA ZDJĘĆ
-        let currentLang = 'pl'; // Domyślnie Polski
-        
+        /* JĘZYK */
+        let currentLang = 'pl';
         function toggleLanguage() {
             currentLang = currentLang === 'pl' ? 'en' : 'pl';
-            
-            if(currentLang === 'en') {
-                document.body.classList.add('en-active');
-                document.getElementById('lang-en-btn').classList.add('active');
-                document.getElementById('lang-pl-btn').classList.remove('active');
-            } else {
-                document.body.classList.remove('en-active');
-                document.getElementById('lang-pl-btn').classList.add('active');
-                document.getElementById('lang-en-btn').classList.remove('active');
-            }
+            document.body.classList.toggle('en-active');
+            document.getElementById('lang-en-btn').classList.toggle('active');
+            document.getElementById('lang-pl-btn').classList.toggle('active');
 
-            // Automatyczna zmiana src w zdjęciach (np. screen1pl.png -> screen1.png)
             document.querySelectorAll('.dyn-img').forEach(img => {
-                const baseName = img.getAttribute('data-base');
-                if(currentLang === 'pl') {
-                    img.src = baseName + "pl.png";
-                } else {
-                    img.src = baseName + ".png";
-                }
+                const base = img.getAttribute('data-base');
+                img.src = currentLang === 'pl' ? base + "pl.png" : base + ".png";
             });
         }
 
-        // SYSTEM FAQ (Akordeon)
-        function toggleFaq(element) {
-            const answer = element.nextElementSibling;
-            if(answer.style.display === "block") {
-                answer.style.display = "none";
-            } else {
-                answer.style.display = "block";
-            }
+        /* FAQ */
+        function toggleFaq(el) {
+            const ans = el.nextElementSibling;
+            ans.style.display = ans.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
