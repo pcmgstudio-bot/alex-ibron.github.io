@@ -23,16 +23,16 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; padding-bottom: 60px; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; padding-bottom: 80px; }
 
-        /* TŁO GRID */
+        /* === TŁO GRID === */
         body::before {
             content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
             background-size: 50px 50px; z-index: -1; pointer-events: none;
         }
 
-        /* === NOWY, BEZBŁĘDNY SYSTEM JĘZYKOWY === */
+        /* === SYSTEM JĘZYKOWY === */
         body:not(.en-active) [data-lang="en"] { display: none !important; }
         body.en-active [data-lang="pl"] { display: none !important; }
 
@@ -62,14 +62,14 @@
         .hero-section p { font-size: 16px; color: var(--text-muted); font-weight: 400; letter-spacing: 1px; margin-bottom: 25px; }
         .highlight { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
 
-        /* STATUS SYSTEMU (Brak śledzenia) */
+        /* === STATUS SYSTEMU (Brak Śledzenia) === */
         .live-status { display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 8px 16px; border-radius: 20px; font-family: monospace; font-size: 11px; letter-spacing: 1px; color: var(--accent); margin-bottom: 20px; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00e676; animation: pulse 2s infinite; box-shadow: 0 0 8px #00e676; }
-        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00e676; animation: pulseStatus 2s infinite; box-shadow: 0 0 8px #00e676; }
+        @keyframes pulseStatus { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* GRID APLIKACJI - 2 W RZĘDZIE NA SZTYWNO */
+        /* === GRID 2 W RZĘDZIE === */
         .main-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
-        @media (max-width: 768px) { .main-menu-grid { grid-template-columns: 1fr; } } /* Na telefonach 1 w rzędzie */
+        @media (max-width: 768px) { .main-menu-grid { grid-template-columns: 1fr; } }
 
         .main-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; cursor: pointer; transition: var(--transition); backdrop-filter: blur(10px); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .main-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 70%); opacity: 0; transition: var(--transition); }
@@ -90,25 +90,32 @@
         .btn-back:hover { border-color: var(--accent); color: var(--text-main); background: rgba(0,240,255,0.05); transform: translateX(-5px); box-shadow: var(--shadow-glow); }
 
         .content-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
-        .content-header h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        .content-header h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; text-transform: uppercase; }
         .badge { display: inline-block; background: rgba(0, 240, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
 
+        /* === O NAS - STYLIZACJA BLOKÓW === */
+        .philosophy-section { margin-bottom: 50px; }
+        .philosophy-section h3 { font-size: 24px; color: var(--text-main); margin-bottom: 20px; font-weight: 800; border-left: 3px solid var(--accent); padding-left: 15px; }
+        .philosophy-text { font-size: 17px; color: var(--text-muted); line-height: 1.8; margin-bottom: 30px; }
+        .philosophy-grid { display: grid; grid-template-columns: 1fr; gap: 20px; margin-bottom: 40px; }
+        .philosophy-box { background: var(--bg-card); padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .philosophy-box h4 { color: var(--accent); font-size: 18px; margin-bottom: 12px; font-weight: 800; }
+        .philosophy-box p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
+
+        /* === SPECYFIKACJA EXO === */
         .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
         .app-header-logo { width: 90px; height: 90px; background: rgba(0,0,0,0.6); border-radius: 20px; display: flex; justify-content: center; align-items: center; padding: 15px; border: 1px solid var(--border-color); box-shadow: inset 0 0 20px rgba(0,240,255,0.05); flex-shrink: 0; }
         .app-header-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
-
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
         .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); transition: var(--transition); backdrop-filter: blur(10px); }
         .feature-box:hover { border-color: var(--border-hover); transform: translateY(-5px); background: var(--bg-card-hover); }
         .feature-box h4 { font-size: 18px; margin-bottom: 15px; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .feature-box h4::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
         .feature-box p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
-
         .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); }
         .spec-item { display: flex; flex-direction: column; border-left: 2px solid var(--accent); padding-left: 15px; }
         .spec-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 5px; }
         .spec-value { font-size: 16px; font-weight: 700; color: var(--text-main); font-family: monospace; }
-
         .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; margin-bottom: 40px; scroll-snap-type: x mandatory; }
         .showcase-gallery::-webkit-scrollbar { height: 4px; }
         .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
@@ -116,33 +123,18 @@
         .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s, transform 0.4s; opacity: 0.7; }
         .screen-card:hover img { opacity: 1; transform: scale(1.05); }
 
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(10px); }
-        .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
-        .lightbox.active img { transform: scale(1); }
-        .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--text-muted); font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
-        .lightbox-close:hover { color: var(--danger); }
-
-        /* === SEKCJA PROTOKOŁÓW === */
+        /* === PROTOKOŁY - KARTY === */
         .protocol-intro { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 40px; padding: 25px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color); }
         .protocol-card { background: #07090D; border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 40px; overflow: hidden; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .protocol-card:nth-child(2) { animation-delay: 0.1s; }
-        .protocol-card:nth-child(3) { animation-delay: 0.2s; }
-        .protocol-card:nth-child(4) { animation-delay: 0.3s; }
         @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        
         .protocol-header { background: rgba(0, 240, 255, 0.05); padding: 20px 25px; border-bottom: 1px solid var(--border-color); }
         .protocol-header h2 { color: var(--accent); font-size: 16px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
         .protocol-body { padding: 30px 25px; }
         .protocol-rule { margin-bottom: 30px; }
         .protocol-rule:last-child { margin-bottom: 0; }
-        .protocol-rule h4 { color: var(--text-main); font-size: 15px; margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px; font-weight: 800; }
-        .protocol-rule p { color: var(--text-muted); font-size: 14px; line-height: 1.8; padding-left: 0px; margin: 0; }
+        .protocol-rule p { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin: 0; }
 
-        /* COOKIE BANNER (Zgodnie z wytyczną) */
-        .no-cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 7, 10, 0.98); backdrop-filter: blur(15px); border-top: 1px solid var(--accent); padding: 15px 25px; font-size: 12px; text-align: center; color: var(--text-muted); z-index: 9999; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
-
-        /* TERMINAL BOX */
+        /* === TERMINAL BOX === */
         .terminal-box { background: #0A0F1A; color: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; border-top: 3px solid var(--accent); }
         .terminal-box h4 { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
         .terminal-box span.code { color: #00e676; }
@@ -159,6 +151,17 @@
         @keyframes scan { 0% { transform: translateX(-50%); width: 20%; } 100% { transform: translateX(350%); width: 20%; } }
         .blinking-text { font-family: monospace; color: var(--accent); font-size: 12px; letter-spacing: 2px; animation: blink 1s infinite; }
         @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+        /* === LIGHTBOX === */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(10px); }
+        .lightbox.active { opacity: 1; visibility: visible; }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .lightbox.active img { transform: scale(1); }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--text-muted); font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
+        .lightbox-close:hover { color: var(--danger); }
+
+        /* === COOKIE BANNER === */
+        .no-cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 7, 10, 0.98); backdrop-filter: blur(15px); border-top: 1px solid var(--accent); padding: 15px 25px; font-size: 12px; text-align: center; color: var(--text-muted); z-index: 9999; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
     </style>
 </head>
 <body>
@@ -206,8 +209,8 @@
             <div class="main-card hover-trigger" onclick="switchView('about')">
                 <div class="main-icon">◈</div>
                 <h2 data-lang="pl">O NAS</h2><h2 data-lang="en">ABOUT US</h2>
-                <p data-lang="pl">Doktryna IBRON i brak ukrytych opłat.</p>
-                <p data-lang="en">IBRON doctrine and no hidden fees.</p>
+                <p data-lang="pl">Nasza filozofia i zasady działania.</p>
+                <p data-lang="en">Our philosophy and rules of operation.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('apps-hub')">
                 <div class="main-icon">⎈</div>
@@ -230,15 +233,93 @@
         </div>
     </div>
 
+    <div id="about" class="view">
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
+        
+        <div class="content-header">
+            <div class="badge" data-lang="pl">Misja & Wizja</div>
+            <div class="badge" data-lang="en">Mission & Vision</div>
+            <h1 data-lang="pl">O NAS / NASZA FILOZOFIA</h1>
+            <h1 data-lang="en">ABOUT US / OUR PHILOSOPHY</h1>
+        </div>
+        
+        <div data-lang="pl">
+            <div class="philosophy-section">
+                <h3>Powrót do uczciwych zasad.</h3>
+                <p class="philosophy-text">Wierzymy, że nowoczesna technologia powinna służyć człowiekowi, a nie na odwrót. Dzisiejszy rynek cyfrowy przyzwyczaił nas do niezdrowego kompromisu: za darmowe programy płacimy swoimi prywatnymi danymi, a codzienne narzędzia są skomplikowane i przeładowane reklamami.<br><br>
+                IBRON powstał, aby przywrócić normalność. Jesteśmy niezależnym studiem technologicznym. Nie interesuje nas zbieranie Twoich logów, analiza Twoich zachowań czy handel Twoją prywatnością. Chcemy po prostu dostarczać oprogramowanie i rozwiązania, które działają dokładnie tak, jak powinny od samego początku.</p>
+            </div>
+
+            <div class="philosophy-section">
+                <h3>Technologia, która ułatwia życie (i szanuje Twoje granice).</h3>
+                <p class="philosophy-text">Projektujemy zaawansowane narzędzia oraz fizyczną elektronikę, które wykonują najcięższą pracę za Ciebie. Udowadniamy, że ułatwianie i automatyzacja codziennych zadań nie muszą wiązać się z utratą prywatności.</p>
+                
+                <div class="philosophy-grid">
+                    <div class="philosophy-box">
+                        <h4>To, co niezbędne – oddajemy za darmo</h4>
+                        <p>Uważamy, że poczucie bezpieczeństwa w cyfrowym świecie to fundament, a nie luksus. Dlatego potężne, lokalne mechanizmy ochronne naszych flagowych aplikacji (takich jak IbronEXO) oddajemy w Twoje ręce całkowicie bezpłatnie, bez ukrytych opłat i bez reklam.</p>
+                    </div>
+                    <div class="philosophy-box">
+                        <h4>Odpowiedzialna Architektura</h4>
+                        <p>Nasze produkty projektujemy tak, aby ułatwiały Ci życie w sposób maksymalnie dyskretny. Tam, gdzie to możliwe, działamy w 100% lokalnie na Twoim urządzeniu. Tam, gdzie łączność sieciowa jest niezbędna do działania przyszłych gadżetów czy synchronizacji, stosujemy bezkompromisowe szyfrowanie. Pomagamy w zadaniach, ale nie wglądamy w ich treść.</p>
+                    </div>
+                    <div class="philosophy-box">
+                        <h4>Użyteczny ekosystem</h4>
+                        <p>Prowadzimy zrównoważony biznes. Zarabiamy na fizycznym sprzęcie, nowoczesnych gadżetach oraz zaawansowanych funkcjach premium dla najbardziej wymagających. Płacisz raz za konkretny produkt, który realnie usprawnia Twoje codzienne funkcjonowanie.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="philosophy-section">
+                <h3>Dla kogo tworzymy?</h3>
+                <p class="philosophy-text">Dla każdego, kto szuka solidnych, intuicyjnych narzędzi do codziennej pracy, organizacji czasu czy ochrony kapitału. Dostarczamy czystą, praktyczną technologię, która po prostu robi to, do czego została stworzona.</p>
+            </div>
+        </div>
+
+        <div data-lang="en">
+            <div class="philosophy-section">
+                <h3>A return to fair rules.</h3>
+                <p class="philosophy-text">We believe that modern technology should serve humanity, not the other way around. Today's digital market has conditioned us to accept an unhealthy compromise: we pay for free apps with our private data, while everyday tools remain overly complex and cluttered with ads.<br><br>
+                IBRON was founded to restore normalcy. We are an independent technology studio. We have no interest in collecting your logs, analyzing your behavior, or trading your privacy. We simply want to deliver software and solutions that work exactly as they should from day one.</p>
+            </div>
+
+            <div class="philosophy-section">
+                <h3>Technology that simplifies life (and respects your boundaries).</h3>
+                <p class="philosophy-text">We design advanced tools and physical electronics that do the heavy lifting for you. We prove that simplifying and automating everyday tasks does not have to come at the cost of your privacy.</p>
+                
+                <div class="philosophy-grid">
+                    <div class="philosophy-box">
+                        <h4>The essentials – delivered for free</h4>
+                        <p>We believe that a sense of security in the digital world is a fundamental right, not a luxury. That is why we provide the powerful, local protection mechanisms of our flagship apps (like IbronEXO) completely free of charge, with no hidden fees and no ads.</p>
+                    </div>
+                    <div class="philosophy-box">
+                        <h4>Responsible Architecture</h4>
+                        <p>Our products are designed to make your life easier in the most discreet way possible. Wherever possible, we operate 100% locally on your device. Where network connectivity is required for future gadgets or synchronization, we implement uncompromising encryption. We assist with your tasks, but we never peek into their content.</p>
+                    </div>
+                    <div class="philosophy-box">
+                        <h4>A useful ecosystem</h4>
+                        <p>We run a sustainable business. We generate revenue through physical hardware, modern gadgets, and advanced premium features for power users. You pay once for a tangible product that genuinely streamlines your daily routine.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="philosophy-section">
+                <h3>Who do we build for?</h3>
+                <p class="philosophy-text">For anyone looking for reliable, intuitive tools for daily workflow, time management, or capital protection. We deliver clean, practical technology that simply does what it was built to do.</p>
+            </div>
+        </div>
+    </div>
+
     <div id="apps-hub" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
         
-        <div class="hero-section">
-            <h1 data-lang="pl">Ekosystem <span class="highlight">Oprogramowania</span></h1>
-            <h1 data-lang="en">Software <span class="highlight">Ecosystem</span></h1>
-            <p data-lang="pl">Wybierz autoryzowany moduł.</p>
-            <p data-lang="en">Select authorized module.</p>
+        <div class="content-header">
+            <div class="badge" data-lang="pl">Oprogramowanie IBRON</div>
+            <div class="badge" data-lang="en">IBRON Software</div>
+            <h1 data-lang="pl">Ekosystem Aplikacji.</h1>
+            <h1 data-lang="en">Application Ecosystem.</h1>
         </div>
 
         <div class="main-menu-grid">
@@ -305,6 +386,33 @@
                 > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
                 > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span> Losing it means it's over.
             </p>
+        </div>
+
+        <div class="feature-grid">
+            <div class="feature-box hover-trigger">
+                <h4 data-lang="pl">Multi-Layered Decoy (Wielowarstwowa Iluzja)</h4>
+                <h4 data-lang="en">Multi-Layered Decoy</h4>
+                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Każdy zdefiniowany przez Ciebie PIN otwiera zupełnie inny, automatycznie wygenerowany, realistyczny profil użytkownika. Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
+                <p data-lang="en">EXO doesn't limit you to one fake code. You can create an entire grid of fake identities. Each PIN you define opens a completely different, automatically generated, realistic user profile. An attacker will never know how many layers your fortress has.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4 data-lang="pl">Zegar Autodestrukcji</h4>
+                <h4 data-lang="en">Auto-Destruct Timers</h4>
+                <p data-lang="pl">Przypisz plikom licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia i nadpisany zerami.</p>
+                <p data-lang="en">Assign countdown timers to files. When time expires, the file is permanently wiped from the device's memory and overwritten with zeros.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4 data-lang="pl">Gamifikacja Operacyjna</h4>
+                <h4 data-lang="en">Operational Gamification</h4>
+                <p data-lang="pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
+                <p data-lang="en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4 data-lang="pl">Tajne Raporty PDF</h4>
+                <h4 data-lang="en">Classified PDF Reports</h4>
+                <p data-lang="pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
+                <p data-lang="en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
+            </div>
         </div>
     </div>
 
@@ -376,7 +484,7 @@
             </span>
             <span data-lang="en">
                 <strong>SECURITY, PRIVACY AND LIABILITY LIMITATION PROTOCOLS (IBRON)</strong><br><br>
-                This document sets out the rules for using the website and free mobile applications published under the IBRON brand (including IbronEXO and future projects, e.g., offline calendar). By using our products, you fully accept the protocols below.
+                This document sets out the rules for using the website and free mobile applications published under the IBRON brand (including the IbronEXO application and future projects, e.g., offline calendar). By using our products, you fully accept the protocols below.
             </span>
         </div>
 
@@ -393,7 +501,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>1. Software Delivery Terms ("As-Is"):</strong><br>
-                        All applications are provided "As-Is", without any warranty of any kind, express or implied. The creator does not guarantee that the software will function correctly after OS updates or on all device models.
+                        All applications are provided "As-Is", without any warranty – express or implied – including, without limitation, the warranty of fitness for a particular purpose, error-free operation, or uninterrupted service. The creator does not guarantee that the software will function correctly after operating system (Android/iOS) updates or on every device model.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -403,7 +511,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>2. Responsibility for Data Loss and Crashes:</strong><br>
-                        The developer bears no responsibility for direct or indirect damages, including data loss, database corruption, or system crashes resulting from the use or inability to use the application.
+                        The application creator bears no responsibility for any direct, indirect, accidental, or intentional damages, including the loss of data, notes, calendar appointments, information, database corruption, or operating system crash resulting from the use or inability to use the application.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -413,7 +521,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>3. Responsibility for Capital and Cryptocurrency Loss:</strong><br>
-                        IBRON apps are general-purpose tools. If the user stores sensitive info like Seed Phrases or bank passwords, they do so at their own risk. The developer is not liable for financial losses.
+                        IBRON applications are general-purpose tools (notepad, calendar). If the user decides to store sensitive information in them, such as private keys (Seed Phrase) for cryptocurrency wallets, bank passwords, or access data, they do so at their own risk. The creator is not liable for any financial losses or loss of the user's capital.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -423,7 +531,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>4. Lack of Emergency Mechanisms (No Backdoors):</strong><br>
-                        IBRON apps have no central servers or password reset functions. If you forget your PIN or lose your Seed Phrase, data is permanently locked. We cannot recover it for you.
+                        IBRON applications do not have central servers, administrator panels, or email password reset functions. Cryptographic keys are generated exclusively locally. If the user forgets the PIN code or loses their personal recovery phrase (Seed Phrase), the data is permanently and mathematically locked. The creator has no technical ability to recover access for the user and bears no responsibility for the consequences of forgetting login data.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -433,7 +541,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>5. Security Breach by Third Parties (Cyberattacks):</strong><br>
-                        No digital security is impenetrable. The developer is not responsible for device theft, malware infections, or advanced forensic hacking directed at the user's device.
+                        No digital security is impenetrable. The creator bears no responsibility for the consequences of physical theft of the user's device, phone infection with malicious software (malware/spyware), or advanced digital forensics techniques and hacker attacks targeted at the user's device by third parties.
                     </p>
                 </div>
             </div>
@@ -452,7 +560,7 @@
                     </p>
                     <p data-lang="en">
                         <strong>1. Data Controller:</strong><br>
-                        The publisher is an individual operating under the IBRON brand. Contact: [YOUR_EMAIL]. The project is currently non-commercial.
+                        The publisher of the applications and the owner of the information service is an individual operating under the IBRON brand. Contact is possible exclusively via email: [YOUR_EMAIL]. The project is currently non-commercial and hobbyist in nature.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -462,8 +570,9 @@
                         Wymagania systemowe: Lokalne powiadomienia (przypomnienia w kalendarzu) są generowane bezpośrednio przez procesor urządzenia za pomocą wbudowanych mechanizmów systemu operacyjnego (Android/iOS) i nie wymagają transmisji sieciowej.
                     </p>
                     <p data-lang="en">
-                        <strong>2. Data Processing in Offline Apps:</strong><br>
-                        IBRON apps operate on a Zero-Data model. They do not collect or transmit any data to external servers. Local notifications are generated directly by the device processor.
+                        <strong>2. Data Processing in Offline Applications:</strong><br>
+                        The IbronEXO application and local companion applications (e.g., offline calendar) operate in a Zero-Data model. They do not collect, store, profile, or transmit any user data to external servers.<br>
+                        System requirements: Local notifications (calendar reminders) are generated directly by the device's processor using the operating system's built-in mechanisms (Android/iOS) and do not require network transmission.
                     </p>
                 </div>
                 <div class="protocol-rule">
@@ -472,8 +581,8 @@
                         Strona internetowa ma charakter wyłącznie informacyjny. Nie zbieramy tutaj Twoich danych osobowych, nie prowadzimy rejestracji użytkowników i świadomie rezygnujemy z marketingowych oraz śledzących plików cookies (brak skryptów Google Analytics, Meta Pixel itp.).
                     </p>
                     <p data-lang="en">
-                        <strong>3. Website Policy:</strong><br>
-                        The website is purely informational. We do not collect your personal data and we opt out of marketing and tracking cookies (no Google Analytics).
+                        <strong>3. Website:</strong><br>
+                        The website is strictly informational. We do not collect your personal data here, we do not register users, and we consciously opt out of marketing and tracking cookies (no Google Analytics scripts, Meta Pixel, etc.).
                     </p>
                 </div>
             </div>
@@ -482,7 +591,7 @@
         <div class="protocol-card">
             <div class="protocol-header">
                 <h2 data-lang="pl">PROTOKÓŁ 3: STATUS KOMERCYJNY I ROZWÓJ (Oświadczenie e-commerce)</h2>
-                <h2 data-lang="en">PROTOCOL 3: COMMERCIAL STATUS AND DEVELOPMENT</h2>
+                <h2 data-lang="en">PROTOCOL 3: COMMERCIAL STATUS AND DEVELOPMENT (E-commerce Statement)</h2>
             </div>
             <div class="protocol-body">
                 <div class="protocol-rule">
@@ -492,36 +601,11 @@
                         <strong>Zapewnienie zgodności:</strong> Z chwilą uruchomienia sprzedaży komercyjnej, w niniejszej sekcji zostanie opublikowany pełny Regulamin Sklepu, określający prawa konsumenta do zwrotu towaru (14 dni) oraz identyfikację prawną sprzedawcy zgodnie z przepisami prawa Rzeczypospolitej Polskiej.
                     </p>
                     <p data-lang="en">
-                        <strong>Free Distribution:</strong> Apps published in Google Play / App Store are completely free, with no ads or hidden microtransactions. The site does not currently conduct direct sales.<br><br>
-                        <strong>Development Plans:</strong> In the future, the brand's portfolio will expand to include physical gadgets and premium software.<br><br>
-                        <strong>Compliance Assurance:</strong> Upon the launch of commercial sales, a full Store Regulation defining consumer rights will be published in this section in accordance with the law.
+                        <strong>Free Distribution:</strong> All applications currently available in the Google Play / App Store are completely free, devoid of ads, and hidden microtransactions. The website does not conduct direct sales at this time.<br><br>
+                        <strong>Development Plans:</strong> In the future, it is planned to expand the brand's portfolio with physical gadgets, consumer electronics, and premium software.<br><br>
+                        <strong>Compliance Assurance:</strong> Upon launching commercial sales, a full Store Regulation will be published in this section, specifying the consumer's right to return goods (14 days) and the legal identification of the seller in accordance with the laws of the Republic of Poland.
                     </p>
                 </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="about" class="view">
-        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
-        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
-        
-        <div class="content-header">
-            <div class="badge" data-lang="pl">Informacje o nas</div>
-            <div class="badge" data-lang="en">About Us</div>
-            <h1 data-lang="pl">Ruch Oporu IT.</h1>
-            <h1 data-lang="en">The IT Resistance.</h1>
-        </div>
-        
-        <p data-lang="pl" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze oprogramowanie z definicji nie posiada ukrytych opłat ani modelu subskrypcyjnego. Prawdziwa wolność powinna być dostępna dla każdego.</p>
-        <p data-lang="en" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. By definition, our software has no hidden fees or subscription models. True freedom should be accessible to everyone.</p>
-
-        <div style="border: 1px solid var(--accent); background: rgba(0, 240, 255, 0.05); padding: 25px; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; border-left-width: 5px;">
-            <div style="font-size: 40px;">🛡️</div>
-            <div>
-                <h4 data-lang="pl" style="color: var(--accent); font-size: 18px; margin-bottom: 5px; text-transform: uppercase;">Moduły Bezpieczeństwa (Zero Uprawnień)</h4>
-                <h4 data-lang="en" style="color: var(--accent); font-size: 18px; margin-bottom: 5px; text-transform: uppercase;">Security Modules (Zero Permissions)</h4>
-                <p data-lang="pl" style="color: #d1d5db; font-size: 14px;">Nasze dedykowane narzędzia szyfrujące (np. IbronEXO) nie żądają żadnych uprawnień sieciowych w systemach Android/iOS. Te aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym. Pełna blokada (Sandbox).</p>
-                <p data-lang="en" style="color: #d1d5db; font-size: 14px;">Our dedicated encryption tools (e.g., IbronEXO) request ZERO network permissions on Android/iOS. These apps physically lack any code to communicate with the outside world. Full Sandbox lock.</p>
             </div>
         </div>
     </div>
