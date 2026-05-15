@@ -23,7 +23,7 @@
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, sans-serif; }
-        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; padding-bottom: 40px; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; padding-bottom: 60px; }
 
         /* TŁO GRID */
         body::before {
@@ -62,12 +62,14 @@
         .hero-section p { font-size: 16px; color: var(--text-muted); font-weight: 400; letter-spacing: 1px; margin-bottom: 25px; }
         .highlight { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
 
-        .live-status { display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 230, 118, 0.05); border: 1px solid rgba(0, 230, 118, 0.3); padding: 8px 16px; border-radius: 20px; font-family: monospace; font-size: 11px; letter-spacing: 1px; color: #00e676; margin-bottom: 20px; }
-        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00e676; animation: blink 1.5s infinite; box-shadow: 0 0 8px #00e676; }
+        /* STATUS SYSTEMU (Brak śledzenia) */
+        .live-status { display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 8px 16px; border-radius: 20px; font-family: monospace; font-size: 11px; letter-spacing: 1px; color: var(--accent); margin-bottom: 20px; }
+        .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00e676; animation: pulse 2s infinite; box-shadow: 0 0 8px #00e676; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* GRID APLIKACJI - WYMUSZENIE 2 W RZĘDZIE */
+        /* GRID APLIKACJI - 2 W RZĘDZIE NA SZTYWNO */
         .main-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
-        @media (max-width: 768px) { .main-menu-grid { grid-template-columns: 1fr; } } /* Na telefonach 1 w rzędzie dla czytelności */
+        @media (max-width: 768px) { .main-menu-grid { grid-template-columns: 1fr; } } /* Na telefonach 1 w rzędzie */
 
         .main-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; cursor: pointer; transition: var(--transition); backdrop-filter: blur(10px); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .main-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 70%); opacity: 0; transition: var(--transition); }
@@ -121,35 +123,42 @@
         .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--text-muted); font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
         .lightbox-close:hover { color: var(--danger); }
 
-        .trust-banner { border: 1px solid var(--danger); background: rgba(255, 59, 48, 0.05); padding: 25px; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; border-left-width: 5px; }
-        .trust-banner h4 { color: var(--danger); font-size: 18px; margin-bottom: 5px; text-transform: uppercase; }
+        /* === SEKCJA PROTOKOŁÓW === */
+        .protocol-intro { font-size: 15px; color: var(--text-muted); line-height: 1.8; margin-bottom: 40px; padding: 25px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color); }
+        .protocol-card { background: #07090D; border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 40px; overflow: hidden; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        .protocol-card:nth-child(2) { animation-delay: 0.1s; }
+        .protocol-card:nth-child(3) { animation-delay: 0.2s; }
+        .protocol-card:nth-child(4) { animation-delay: 0.3s; }
+        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
         
+        .protocol-header { background: rgba(0, 240, 255, 0.05); padding: 20px 25px; border-bottom: 1px solid var(--border-color); }
+        .protocol-header h2 { color: var(--accent); font-size: 16px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin: 0; }
+        .protocol-body { padding: 30px 25px; }
+        .protocol-rule { margin-bottom: 30px; }
+        .protocol-rule:last-child { margin-bottom: 0; }
+        .protocol-rule h4 { color: var(--text-main); font-size: 15px; margin-bottom: 12px; display: flex; align-items: baseline; gap: 10px; font-weight: 800; }
+        .protocol-rule p { color: var(--text-muted); font-size: 14px; line-height: 1.8; padding-left: 0px; margin: 0; }
+
+        /* COOKIE BANNER (Zgodnie z wytyczną) */
+        .no-cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 7, 10, 0.98); backdrop-filter: blur(15px); border-top: 1px solid var(--accent); padding: 15px 25px; font-size: 12px; text-align: center; color: var(--text-muted); z-index: 9999; box-shadow: 0 -10px 30px rgba(0,0,0,0.8); }
+
+        /* TERMINAL BOX */
         .terminal-box { background: #0A0F1A; color: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; border-top: 3px solid var(--accent); }
         .terminal-box h4 { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
         .terminal-box span.code { color: #00e676; }
         .terminal-box span.warn { color: var(--danger); }
 
-        /* === SEKCJA PROTOKOŁÓW (KARTY ANIMOWANE) === */
-        .protocol-intro { font-size: 16px; color: var(--text-muted); line-height: 1.8; margin-bottom: 40px; padding: 20px; background: rgba(255,255,255,0.02); border-radius: 12px; border: 1px solid var(--border-color); }
-        .protocol-card { background: #07090D; border: 1px solid var(--border-color); border-radius: 16px; margin-bottom: 30px; overflow: hidden; opacity: 0; transform: translateY(20px); animation: slideUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
-        .protocol-card:nth-child(1) { animation-delay: 0.1s; }
-        .protocol-card:nth-child(2) { animation-delay: 0.2s; }
-        .protocol-card:nth-child(3) { animation-delay: 0.3s; }
-        @keyframes slideUp { to { opacity: 1; transform: translateY(0); } }
-        
-        .protocol-header { background: rgba(0, 240, 255, 0.05); padding: 20px 25px; border-bottom: 1px solid var(--border-color); display: flex; align-items: center; gap: 15px; }
-        .protocol-header h2 { color: var(--accent); font-size: 18px; font-weight: 800; letter-spacing: 1px; margin: 0; text-transform: uppercase; }
-        .protocol-body { padding: 30px 25px; }
-        
-        .protocol-rule { margin-bottom: 25px; }
-        .protocol-rule:last-child { margin-bottom: 0; }
-        .protocol-rule h4 { color: var(--text-main); font-size: 15px; margin-bottom: 8px; display: flex; align-items: center; gap: 8px; }
-        .protocol-rule h4::before { content: '>'; color: var(--accent); font-family: monospace; font-weight: bold; }
-        .protocol-rule p { color: var(--text-muted); font-size: 14px; line-height: 1.7; padding-left: 20px; border-left: 1px solid rgba(255,255,255,0.05); }
-
-        /* === COOKIE MANIFESTO (Zawsze na dole) === */
-        .no-cookie-banner { position: fixed; bottom: 0; left: 0; width: 100%; background: rgba(5, 7, 10, 0.95); backdrop-filter: blur(10px); border-top: 1px solid var(--accent); padding: 12px 20px; font-size: 12px; text-align: center; color: var(--text-muted); z-index: 9999; box-shadow: 0 -5px 20px rgba(0,0,0,0.5); }
-        .no-cookie-banner strong { color: var(--accent); }
+        /* === ANIMACJE "W BUDOWIE" === */
+        .construction-box { text-align: center; padding: 80px 20px; border: 1px dashed var(--border-color); background: rgba(0, 0, 0, 0.5); border-radius: 20px; margin-top: 20px; position: relative; overflow: hidden; }
+        .construction-box::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.05), transparent); transform: skewX(-20deg); animation: shine 3s infinite; }
+        @keyframes shine { 100% { left: 200%; } }
+        .glitch-icon { font-size: 50px; margin-bottom: 20px; animation: pulseIcon 2s infinite alternate; color: var(--accent); }
+        @keyframes pulseIcon { 0% { opacity: 0.5; text-shadow: 0 0 5px var(--accent); } 100% { opacity: 1; text-shadow: 0 0 25px var(--accent); } }
+        .loading-bar { width: 100%; max-width: 400px; height: 4px; background: rgba(255,255,255,0.1); margin: 30px auto 10px; position: relative; overflow: hidden; border-radius: 2px; }
+        .loading-fill { width: 30%; height: 100%; background: var(--accent); animation: scan 2s ease-in-out infinite alternate; box-shadow: 0 0 10px var(--accent); }
+        @keyframes scan { 0% { transform: translateX(-50%); width: 20%; } 100% { transform: translateX(350%); width: 20%; } }
+        .blinking-text { font-family: monospace; color: var(--accent); font-size: 12px; letter-spacing: 2px; animation: blink 1s infinite; }
+        @keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
     </style>
 </head>
 <body>
@@ -167,17 +176,12 @@
     </div>
 
     <div class="no-cookie-banner">
-        <span data-lang="pl">🛡️ <strong>Brak śledzenia.</strong> Ta strona nie korzysta z marketingowych plików cookie. Ciasteczka techniczne są używane wyłącznie do obsługi koszyka zakupowego i wygasają po sfinalizowaniu zamówienia. Udanych i bezpiecznych zakupów.</span>
-        <span data-lang="en">🛡️ <strong>No tracking.</strong> This site does not use marketing cookies. Technical cookies are used exclusively for your shopping cart and expire upon checkout completion. Welcome to the free internet.</span>
+        <span data-lang="pl">🛡️ Brak śledzenia. Ta strona nie używa marketingowych ani analitycznych plików cookie. Świadomie rezygnujemy z widgetów śledzących i systemów reklamowych. Bezpiecznego przeglądania.</span>
+        <span data-lang="en">🛡️ No tracking. This site does not use marketing or analytical cookies. We consciously opt out of tracking widgets and advertising systems. Safe browsing.</span>
     </div>
 
     <audio id="bg-music" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
     <audio id="hover-sound"><source src="hover.mp3" type="audio/mpeg"></audio>
-
-    <div class="lightbox" id="image-lightbox" onclick="closeLightbox(event)">
-        <span class="lightbox-close">&times;</span>
-        <img id="lightbox-img" src="" alt="Zoom">
-    </div>
 
     <nav>
         <div class="logo hover-trigger" onclick="switchView('home')">
@@ -189,85 +193,39 @@
         <div class="hero-section">
             <div class="live-status">
                 <div class="status-dot"></div>
-                <span data-lang="pl">SYS.ONLINE // UPTIME: <span id="uptime-clock">00:00:00</span></span>
-                <span data-lang="en">SYS.ONLINE // UPTIME: <span id="uptime-clock-en">00:00:00</span></span>
+                <span data-lang="pl">ENCRYPTION: AES-256-GCM // SHIELD: ACTIVE</span>
+                <span data-lang="en">ENCRYPTION: AES-256-GCM // SHIELD: ACTIVE</span>
             </div>
-            
             <h1 data-lang="pl">Odzyskaj <span class="highlight">kontrolę.</span></h1>
             <h1 data-lang="en">Regain <span class="highlight">Control.</span></h1>
-            
-            <p data-lang="pl">Oprogramowanie inżynieryjne nowej generacji. Zero ukrytych opłat, zero subskrypcji. Skupiamy się na technologiach chroniących Twoją prywatność. Dołącz do cyfrowego ruchu oporu.</p>
-            <p data-lang="en">Next-gen engineering software. Zero hidden fees, zero subscriptions. We focus on tech that protects your privacy. Join the digital resistance.</p>
+            <p data-lang="pl">Zdecentralizowane oprogramowanie inżynieryjne. Zero śledzenia. Zero subskrypcji. Dołącz do cyfrowego ruchu oporu.</p>
+            <p data-lang="en">Decentralized engineering software. Zero tracking. Zero subscriptions. Join the digital resistance.</p>
         </div>
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('about')">
                 <div class="main-icon">◈</div>
-                <h2 data-lang="pl">O NAS</h2>
-                <h2 data-lang="en">ABOUT US</h2>
+                <h2 data-lang="pl">O NAS</h2><h2 data-lang="en">ABOUT US</h2>
                 <p data-lang="pl">Doktryna IBRON i brak ukrytych opłat.</p>
                 <p data-lang="en">IBRON doctrine and no hidden fees.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('apps-hub')">
                 <div class="main-icon">⎈</div>
-                <h2 data-lang="pl">APLIKACJE</h2>
-                <h2 data-lang="en">SOFTWARE</h2>
+                <h2 data-lang="pl">APLIKACJE</h2><h2 data-lang="en">SOFTWARE</h2>
                 <p data-lang="pl">Wejdź do ekosystemu operacyjnego.</p>
                 <p data-lang="en">Enter the operational ecosystem.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('hardware-hub')">
                 <div class="main-icon">⏣</div>
-                <h2 data-lang="pl">HARDWARE</h2>
-                <h2 data-lang="en">HARDWARE</h2>
+                <h2 data-lang="pl">HARDWARE</h2><h2 data-lang="en">HARDWARE</h2>
                 <p data-lang="pl">Dywizja fizycznego sprzętu taktycznego.</p>
                 <p data-lang="en">Physical tactical gear division.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('protocols')">
                 <div class="main-icon">⎚</div>
-                <h2 data-lang="pl">PROTOKOŁY</h2>
-                <h2 data-lang="en">PROTOCOLS</h2>
-                <p data-lang="pl">Zasady, regulaminy i szyfrowanie.</p>
-                <p data-lang="en">Rules, regulations, and encryption.</p>
-            </div>
-        </div>
-    </div>
-
-    <div id="about" class="view">
-        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
-        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
-        
-        <div class="content-header">
-            <div class="badge" data-lang="pl">Manifest Transparentności</div>
-            <div class="badge" data-lang="en">Transparency Manifesto</div>
-            <h1 data-lang="pl">Ruch Oporu IT.</h1>
-            <h1 data-lang="en">The IT Resistance.</h1>
-        </div>
-        
-        <p data-lang="pl" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze oprogramowanie z definicji nie posiada ukrytych opłat ani modelu subskrypcyjnego. Prawdziwa wolność powinna być dostępna dla każdego.</p>
-        <p data-lang="en" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. By definition, our software has no hidden fees or subscription models. True freedom should be accessible to everyone.</p>
-
-        <div class="trust-banner">
-            <div style="font-size: 40px;">🛡️</div>
-            <div>
-                <h4 data-lang="pl">Moduły Bezpieczeństwa (Zero Uprawnień)</h4>
-                <h4 data-lang="en">Security Modules (Zero Permissions)</h4>
-                <p data-lang="pl" style="color: #d1d5db; font-size: 14px;">Nasze dedykowane narzędzia szyfrujące (np. IbronEXO) nie żądają żadnych uprawnień sieciowych w systemach Android/iOS. Te aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym. Pełna blokada (Sandbox).</p>
-                <p data-lang="en" style="color: #d1d5db; font-size: 14px;">Our dedicated encryption tools (e.g., IbronEXO) request ZERO network permissions on Android/iOS. These apps physically lack any code to communicate with the outside world. Full Sandbox lock.</p>
-            </div>
-        </div>
-
-        <div class="feature-grid">
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Zero Subskrypcji</h4>
-                <h4 data-lang="en">Zero Subscriptions</h4>
-                <p data-lang="pl">Nigdy nie będziemy żądać miesięcznych opłat za korzystanie z podstawowych funkcji naszych aplikacji. Narzędzia inżynieryjne są po to, by Ci służyć, a nie drenować Twój portfel.</p>
-                <p data-lang="en">We will never demand monthly fees for using the core features of our apps. Engineering tools are meant to serve you, not drain your wallet.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Ekosystem Przyszłości</h4>
-                <h4 data-lang="en">Ecosystem of the Future</h4>
-                <p data-lang="pl">Nasze aplikacje operacyjne wkrótce zaczną się ze sobą komunikować, potęgując Twoją prywatność i optymalizując czas. Zbuduj z nami własną, zdecentralizowaną sieć narzędzi.</p>
-                <p data-lang="en">Our operational apps will soon communicate with each other, multiplying your privacy and optimizing time. Build your own decentralized network of tools with us.</p>
+                <h2 data-lang="pl">PROTOKOŁY</h2><h2 data-lang="en">PROTOCOLS</h2>
+                <p data-lang="pl">Zasady, regulaminy i bezpieczeństwo.</p>
+                <p data-lang="en">Rules, regulations, and safety.</p>
             </div>
         </div>
     </div>
@@ -275,6 +233,7 @@
     <div id="apps-hub" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
+        
         <div class="hero-section">
             <h1 data-lang="pl">Ekosystem <span class="highlight">Oprogramowania</span></h1>
             <h1 data-lang="en">Software <span class="highlight">Ecosystem</span></h1>
@@ -284,66 +243,25 @@
 
         <div class="main-menu-grid">
             <div class="main-card hover-trigger" onclick="switchView('exo')">
-                <img src="logoexo.png" alt="EXO Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
+                <img src="logoexo.png" alt="EXO" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
                 <h2>IbronEXO</h2>
                 <p data-lang="pl">Kryptosejf z BIP-39 Recovery.</p>
                 <p data-lang="en">Crypto-vault with BIP-39 Recovery.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('chronos')">
-                <img src="logoclock.png" alt="CHRONOS Logo" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=CHR';">
+                <img src="logoclock.png" alt="CHR" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=CHR';">
                 <h2>IbronCHRONOS</h2>
                 <p data-lang="pl">Silnik zarządzania operacyjnego.</p>
                 <p data-lang="en">Operational management engine.</p>
             </div>
-
-            <div class="main-card locked">
-                <div class="main-icon">⎊</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Brak autoryzacji poziomu 3.</p>
-                <p data-lang="en" style="color: var(--danger);">Clearance Level 3 required.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">⎗</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Brak autoryzacji poziomu 3.</p>
-                <p data-lang="en" style="color: var(--danger);">Clearance Level 3 required.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">Ⱗ</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Moduł w kwarantannie.</p>
-                <p data-lang="en" style="color: var(--danger);">Module in quarantine.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">ⱋ</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Moduł w kwarantannie.</p>
-                <p data-lang="en" style="color: var(--danger);">Module in quarantine.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">Ⲭ</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Brak połączenia z rdzeniem.</p>
-                <p data-lang="en" style="color: var(--danger);">No connection to core.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">ⴵ</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Brak połączenia z rdzeniem.</p>
-                <p data-lang="en" style="color: var(--danger);">No connection to core.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">⎘</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Baza danych zamknięta.</p>
-                <p data-lang="en" style="color: var(--danger);">Database closed.</p>
-            </div>
-            <div class="main-card locked">
-                <div class="main-icon">⎅</div>
-                <h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2>
-                <p data-lang="pl" style="color: var(--danger);">Baza danych zamknięta.</p>
-                <p data-lang="en" style="color: var(--danger);">Database closed.</p>
-            </div>
+            <div class="main-card locked"><div class="main-icon">⎊</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">⎗</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">Ⱗ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">ⱋ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">Ⲭ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">ⴵ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">⎘</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
+            <div class="main-card locked"><div class="main-icon">⎅</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
         </div>
     </div>
 
@@ -388,32 +306,31 @@
                 > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span> Losing it means it's over.
             </p>
         </div>
+    </div>
 
-        <div class="feature-grid">
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Multi-Layered Decoy (Wielowarstwowa Iluzja)</h4>
-                <h4 data-lang="en">Multi-Layered Decoy</h4>
-                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Każdy zdefiniowany przez Ciebie PIN otwiera zupełnie inny, automatycznie wygenerowany, realistyczny profil użytkownika. Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
-                <p data-lang="en">EXO doesn't limit you to one fake code. You can create an entire grid of fake identities. Each PIN you define opens a completely different, automatically generated, realistic user profile. An attacker will never know how many layers your fortress has.</p>
+    <div id="chronos" class="view">
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
+        
+        <div class="app-header-container">
+            <div class="app-header-logo"><img src="logoclock.png" alt="CHR" onerror="this.style.display='none';"></div>
+            <div class="content-header">
+                <div class="badge" data-lang="pl">Moduł Operacyjny</div>
+                <div class="badge" data-lang="en">Operational Module</div>
+                <h1>IbronCHRONOS.</h1>
             </div>
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Zegar Autodestrukcji</h4>
-                <h4 data-lang="en">Auto-Destruct Timers</h4>
-                <p data-lang="pl">Przypisz plikom licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia i nadpisany zerami.</p>
-                <p data-lang="en">Assign countdown timers to files. When time expires, the file is permanently wiped from the device's memory and overwritten with zeros.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Gamifikacja Operacyjna</h4>
-                <h4 data-lang="en">Operational Gamification</h4>
-                <p data-lang="pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
-                <p data-lang="en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
-            </div>
-            <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Tajne Raporty PDF</h4>
-                <h4 data-lang="en">Classified PDF Reports</h4>
-                <p data-lang="pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
-                <p data-lang="en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
-            </div>
+        </div>
+
+        <div class="construction-box">
+            <div class="glitch-icon">⎔</div>
+            <h2 data-lang="pl" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h2>
+            <h2 data-lang="en" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODULE IN CLOSED BETA TESTING</h2>
+            
+            <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany.</p>
+            <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted.</p>
+            
+            <div class="loading-bar"><div class="loading-fill"></div></div>
+            <p class="blinking-text">> SYSTEM.DEPLOYMENT = PENDING...</p>
         </div>
     </div>
 
@@ -428,13 +345,16 @@
             <h1 data-lang="en">R&D Laboratory.</h1>
         </div>
 
-        <div style="text-align: center; padding: 80px 20px; border: 1px dashed var(--border-color); background: rgba(0, 0, 0, 0.5); border-radius: 20px;">
-            <div style="font-size: 50px; margin-bottom: 20px; color: var(--accent);">⏣</div>
+        <div class="construction-box" style="border-color: var(--accent);">
+            <div class="glitch-icon" style="animation: none;">⏣</div>
             <h2 data-lang="pl" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">PROJEKTY FIZYCZNE</h2>
             <h2 data-lang="en" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">PHYSICAL PROJECTS</h2>
-            <p data-lang="pl" style="color: var(--text-muted);">Budujemy fizyczne nośniki bezpieczeństwa. Szczegóły tajne.</p>
-            <p data-lang="en" style="color: var(--text-muted);">We are building physical security tokens. Details classified.</p>
-            <p style="font-family: monospace; color: var(--accent); margin-top: 30px;">> HARDWARE.DESIGN = IN_PROGRESS...</p>
+            
+            <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa. Szczegóły tajne.</p>
+            <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Decentralized software requires independent hardware. We are building physical security tokens. Details classified.</p>
+            
+            <div class="loading-bar"><div class="loading-fill" style="animation-duration: 4s;"></div></div>
+            <p class="blinking-text">> HARDWARE.DESIGN = IN_PROGRESS...</p>
         </div>
     </div>
 
@@ -443,92 +363,165 @@
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
         
         <div class="content-header">
-            <div class="badge" data-lang="pl">Zasady & Dokumentacja</div>
-            <div class="badge" data-lang="en">Rules & Documentation</div>
-            <h1 data-lang="pl">Protokoły IBRON.</h1>
-            <h1 data-lang="en">IBRON Protocols.</h1>
+            <div class="badge" data-lang="pl">Zasady Bezpieczeństwa</div>
+            <div class="badge" data-lang="en">Security Protocols</div>
+            <h1 data-lang="pl">Dokumentacja Operacyjna.</h1>
+            <h1 data-lang="en">Operational Documentation.</h1>
         </div>
 
-        <div class="protocol-intro" data-lang="pl">Niniejszy dokument określa zasady korzystania z serwisu internetowego oraz darmowych aplikacji mobilnych wydawanych pod marką IBRON (w tym aplikacji IbronEXO oraz przyszłych projektów). Korzystając z naszych produktów, w pełni akceptujesz poniższe protokoły.</div>
-        <div class="protocol-intro" data-lang="en">This document defines the rules for using the website and free mobile applications published under the IBRON brand (including IbronEXO and future projects). By using our products, you fully accept the protocols below.</div>
-
-        <div class="protocol-card">
-            <div class="protocol-header">
-                <div style="color: var(--accent); font-size: 24px;">[1]</div>
-                <h2 data-lang="pl">CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI (DISCLAIMER)</h2>
-                <h2 data-lang="en">COMPLETE LIABILITY DISCLAIMER</h2>
-            </div>
-            <div class="protocol-body">
-                <div class="protocol-rule">
-                    <h4 data-lang="pl">Warunki dostarczenia ("As-Is")</h4><h4 data-lang="en">Delivery Terms ("As-Is")</h4>
-                    <p data-lang="pl">Wszystkie aplikacje dostarczane są w stanie takim, w jakim się znajdują („As-Is”), bez jakiejkolwiek gwarancji przydatności do określonego celu czy nieprzerwanego działania po aktualizacjach systemów operacyjnych.</p>
-                    <p data-lang="en">All applications are provided "As-Is", without any warranty of fitness for a particular purpose or uninterrupted operation following operating system updates.</p>
-                </div>
-                <div class="protocol-rule">
-                    <h4 data-lang="pl">Utrata Danych i Awarie (Crashes)</h4><h4 data-lang="en">Data Loss and Crashes</h4>
-                    <p data-lang="pl">Twórca nie ponosi żadnej odpowiedzialności za jakiekolwiek szkody, w tym za utratę notatek, uszkodzenie bazy danych lub awarię systemu wynikającą z użytkowania aplikacji.</p>
-                    <p data-lang="en">The creator bears no responsibility for any damages, including loss of notes, database corruption, or system crashes resulting from the use of the application.</p>
-                </div>
-                <div class="protocol-rule">
-                    <h4 data-lang="pl">Kryptowaluty i Kapitał</h4><h4 data-lang="en">Cryptocurrencies and Capital</h4>
-                    <p data-lang="pl">Jeśli użytkownik decyduje się przechowywać klucze prywatne (Seed Phrase) do portfeli kryptowalutowych, robi to na własne ryzyko. Twórca nie ponosi odpowiedzialności za straty finansowe.</p>
-                    <p data-lang="en">If the user chooses to store private keys (Seed Phrases) for crypto wallets, they do so at their own risk. The creator is not liable for financial losses.</p>
-                </div>
-                <div class="protocol-rule">
-                    <h4 data-lang="pl">Brak Backdoorów</h4><h4 data-lang="en">No Backdoors</h4>
-                    <p data-lang="pl">Aplikacje IBRON nie posiadają funkcji resetowania hasła. Jeśli użytkownik zapomni kodu PIN lub utraci Seed Phrase, dane zostają trwale zablokowane. Twórca nie ma technicznej możliwości odzyskania dostępu.</p>
-                    <p data-lang="en">IBRON apps lack password reset functions. If the user forgets the PIN or loses the Seed Phrase, the data is permanently locked. The creator has no technical means to recover access.</p>
-                </div>
-                <div class="protocol-rule">
-                    <h4 data-lang="pl">Cyberataki i Wirusy</h4><h4 data-lang="en">Cyberattacks and Malware</h4>
-                    <p data-lang="pl">Twórca nie ponosi odpowiedzialności za skutki kradzieży fizycznej urządzenia, infekcji malware/spyware czy zaawansowanych technik informatyki śledczej.</p>
-                    <p data-lang="en">The creator is not responsible for the consequences of physical device theft, malware/spyware infections, or advanced digital forensics.</p>
-                </div>
-            </div>
+        <div class="protocol-intro">
+            <span data-lang="pl">
+                <strong>PROTOKOŁY BEZPIECZEŃSTWA, PRYWATNOŚCI I OGRANICZENIA ODPOWIEDZIALNOŚCI (IBRON)</strong><br><br>
+                Niniejszy dokument określa zasady korzystania z serwisu internetowego oraz darmowych aplikacji mobilnych wydawanych pod marką IBRON (w tym aplikacji IbronEXO oraz przyszłych projektów, np. kalendarza offline). Korzystając z naszych produktów, w pełni akceptujesz poniższe protokoły.
+            </span>
+            <span data-lang="en">
+                <strong>SECURITY, PRIVACY AND LIABILITY LIMITATION PROTOCOLS (IBRON)</strong><br><br>
+                This document sets out the rules for using the website and free mobile applications published under the IBRON brand (including IbronEXO and future projects, e.g., offline calendar). By using our products, you fully accept the protocols below.
+            </span>
         </div>
 
         <div class="protocol-card">
             <div class="protocol-header">
-                <div style="color: var(--accent); font-size: 24px;">[2]</div>
-                <h2 data-lang="pl">ARCHITEKTURA I PRYWATNOŚĆ (RODO)</h2>
-                <h2 data-lang="en">ARCHITECTURE AND PRIVACY (GDPR)</h2>
+                <h2 data-lang="pl">PROTOKÓŁ 1: CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI (DISCLAIMER)</h2>
+                <h2 data-lang="en">PROTOCOL 1: COMPLETE LIABILITY DISCLAIMER</h2>
             </div>
             <div class="protocol-body">
                 <div class="protocol-rule">
-                    <h4 data-lang="pl">Administrator Danych</h4><h4 data-lang="en">Data Controller</h4>
-                    <p data-lang="pl">Wydawcą aplikacji jest osoba fizyczna działająca pod marką IBRON. Kontakt: contact@ibron.net. Projekt ma obecnie charakter hobbystyczny.</p>
-                    <p data-lang="en">The publisher is an individual operating under the IBRON brand. Contact: contact@ibron.net. The project is currently non-commercial.</p>
+                    <p data-lang="pl">
+                        <strong>1. Warunki dostarczenia oprogramowania ("As-Is"):</strong><br>
+                        Wszystkie aplikacje dostarczane są w stanie takim, w jakim się znajdują („As-Is”), bez jakiejkolwiek gwarancji – wyraźnej lub dorozumianej – w tym, bez ograniczeń, gwarancji przydatności do określonego celu, bezbłędności czy nieprzerwanego działania. Twórca nie gwarantuje, że oprogramowanie będzie działać prawidłowo po aktualizacjach systemów operacyjnych (Android/iOS) lub na każdym modelu urządzenia.
+                    </p>
+                    <p data-lang="en">
+                        <strong>1. Software Delivery Terms ("As-Is"):</strong><br>
+                        All applications are provided "As-Is", without any warranty of any kind, express or implied. The creator does not guarantee that the software will function correctly after OS updates or on all device models.
+                    </p>
                 </div>
                 <div class="protocol-rule">
-                    <h4 data-lang="pl">Aplikacje Offline (Zero-Data)</h4><h4 data-lang="en">Offline Apps (Zero-Data)</h4>
-                    <p data-lang="pl">Aplikacje IBRON działają w modelu Zero-Data. Nie zbierają i nie przesyłają żadnych danych na zewnętrzne serwery. Powiadomienia są generowane lokalnie przez procesor urządzenia.</p>
-                    <p data-lang="en">IBRON apps operate on a Zero-Data model. They do not collect or transmit any data to external servers. Notifications are generated locally by the device processor.</p>
+                    <p data-lang="pl">
+                        <strong>2. Odpowiedzialność za utratę danych i awarie (Crashes):</strong><br>
+                        Twórca aplikacji nie ponosi żadnej odpowiedzialności za jakiekolwiek szkody bezpośrednie, pośrednie, przypadkowe lub celowe, w tym za utratę danych, notatek, terminów w kalendarzu, informacji, uszkodzenie bazy danych lub awarię systemu operacyjnego wynikającą z użytkowania lub niemożliwości użytkowania aplikacji.
+                    </p>
+                    <p data-lang="en">
+                        <strong>2. Responsibility for Data Loss and Crashes:</strong><br>
+                        The developer bears no responsibility for direct or indirect damages, including data loss, database corruption, or system crashes resulting from the use or inability to use the application.
+                    </p>
                 </div>
                 <div class="protocol-rule">
-                    <h4 data-lang="pl">Serwis Internetowy</h4><h4 data-lang="en">Website Policy</h4>
-                    <p data-lang="pl">Strona ma charakter informacyjny. Nie zbieramy Twoich danych osobowych i rezygnujemy z marketingowych oraz śledzących plików cookies (brak Google Analytics).</p>
-                    <p data-lang="en">The website is purely informational. We do not collect your personal data and we opt out of marketing and tracking cookies (no Google Analytics).</p>
+                    <p data-lang="pl">
+                        <strong>3. Odpowiedzialność za utratę kapitału i kryptowalut:</strong><br>
+                        Aplikacje IBRON są narzędziami ogólnego przeznaczenia (notatnik, kalendarz). Jeśli użytkownik decyduje się przechowywać w nich wrażliwe informacje, takie jak klucze prywatne (Seed Phrase) do portfeli kryptowalutowych, hasła bankowe czy dane dostępowe, robi to na własne ryzyko. Twórca nie ponosi odpowiedzialności za jakiekolwiek straty finansowe lub utratę kapitału użytkownika.
+                    </p>
+                    <p data-lang="en">
+                        <strong>3. Responsibility for Capital and Cryptocurrency Loss:</strong><br>
+                        IBRON apps are general-purpose tools. If the user stores sensitive info like Seed Phrases or bank passwords, they do so at their own risk. The developer is not liable for financial losses.
+                    </p>
+                </div>
+                <div class="protocol-rule">
+                    <p data-lang="pl">
+                        <strong>4. Brak mechanizmów awaryjnych (Brak Backdoorów):</strong><br>
+                        Aplikacje IBRON nie posiadają centralnych serwerów, paneli administratora ani funkcji resetowania hasła przez e-mail. Klucze kryptograficzne są generowane wyłącznie lokalnie. Jeśli użytkownik zapomni kodu PIN lub utraci osobistą frazę odzyskiwania (Seed Phrase), dane zostają trwale i matematycznie zablokowane. Twórca nie ma technicznej możliwości odzyskania dostępu dla użytkownika i nie ponosi odpowiedzialności za skutki zapomnienia danych logowania.
+                    </p>
+                    <p data-lang="en">
+                        <strong>4. Lack of Emergency Mechanisms (No Backdoors):</strong><br>
+                        IBRON apps have no central servers or password reset functions. If you forget your PIN or lose your Seed Phrase, data is permanently locked. We cannot recover it for you.
+                    </p>
+                </div>
+                <div class="protocol-rule">
+                    <p data-lang="pl">
+                        <strong>5. Złamanie zabezpieczeń przez osoby trzecie (Cyberataki):</strong><br>
+                        Żadne zabezpieczenie cyfrowe nie jest nienaruszalne. Twórca nie ponosi odpowiedzialności za skutki fizycznej kradzieży urządzenia użytkownika, infekcji telefonu złośliwym oprogramowaniem (malware/spyware), czy zaawansowanych technik informatyki śledczej i ataków hakerskich wymierzonych w urządzenie użytkownika przez osoby trzecie.
+                    </p>
+                    <p data-lang="en">
+                        <strong>5. Security Breach by Third Parties (Cyberattacks):</strong><br>
+                        No digital security is impenetrable. The developer is not responsible for device theft, malware infections, or advanced forensic hacking directed at the user's device.
+                    </p>
                 </div>
             </div>
         </div>
 
         <div class="protocol-card">
             <div class="protocol-header">
-                <div style="color: var(--accent); font-size: 24px;">[3]</div>
-                <h2 data-lang="pl">STATUS KOMERCYJNY I ROZWÓJ</h2>
-                <h2 data-lang="en">COMMERCIAL STATUS AND DEV</h2>
+                <h2 data-lang="pl">PROTOKÓŁ 2: ARCHITEKTURA I PRYWATNOŚĆ (RODO)</h2>
+                <h2 data-lang="en">PROTOCOL 2: ARCHITECTURE AND PRIVACY (GDPR)</h2>
             </div>
             <div class="protocol-body">
                 <div class="protocol-rule">
-                    <h4 data-lang="pl">Dystrybucja Bezpłatna</h4><h4 data-lang="en">Free Distribution</h4>
-                    <p data-lang="pl">Aplikacje udostępniane w Google Play / App Store są całkowicie darmowe, pozbawione reklam oraz ukrytych mikropłatności. Witryna nie prowadzi obecnie sprzedaży.</p>
-                    <p data-lang="en">Apps published in Google Play / App Store are completely free, with no ads or hidden microtransactions. The site does not currently conduct direct sales.</p>
+                    <p data-lang="pl">
+                        <strong>1. Administrator Danych:</strong><br>
+                        Wydawcą aplikacji oraz właścicielem serwisu informacyjnego jest osoba fizyczna działająca pod marką IBRON. Kontakt jest możliwy wyłącznie pod adresem e-mail: [TWÓJ_EMAIL]. Projekt ma obecnie charakter hobbystyczny i niekomercyjny.
+                    </p>
+                    <p data-lang="en">
+                        <strong>1. Data Controller:</strong><br>
+                        The publisher is an individual operating under the IBRON brand. Contact: [YOUR_EMAIL]. The project is currently non-commercial.
+                    </p>
                 </div>
                 <div class="protocol-rule">
-                    <h4 data-lang="pl">Zapewnienie Zgodności</h4><h4 data-lang="en">Compliance Assurance</h4>
-                    <p data-lang="pl">Z chwilą uruchomienia sprzedaży komercyjnej (hardware/oprogramowanie premium), w tej sekcji zostanie opublikowany pełny Regulamin Sklepu zgodnie z prawem polskim.</p>
-                    <p data-lang="en">Upon the launch of commercial sales, a full Store Regulation defining consumer rights will be published in this section in accordance with the law.</p>
+                    <p data-lang="pl">
+                        <strong>2. Przetwarzanie danych w aplikacjach offline:</strong><br>
+                        Aplikacja IbronEXO oraz lokalne aplikacje towarzyszące (np. kalendarz offline) działają w modelu Zero-Data. Nie zbierają, nie przechowują, nie profilują i nie przesyłają żadnych danych użytkownika na zewnętrzne serwery.<br>
+                        Wymagania systemowe: Lokalne powiadomienia (przypomnienia w kalendarzu) są generowane bezpośrednio przez procesor urządzenia za pomocą wbudowanych mechanizmów systemu operacyjnego (Android/iOS) i nie wymagają transmisji sieciowej.
+                    </p>
+                    <p data-lang="en">
+                        <strong>2. Data Processing in Offline Apps:</strong><br>
+                        IBRON apps operate on a Zero-Data model. They do not collect or transmit any data to external servers. Local notifications are generated directly by the device processor.
+                    </p>
                 </div>
+                <div class="protocol-rule">
+                    <p data-lang="pl">
+                        <strong>3. Serwis Internetowy:</strong><br>
+                        Strona internetowa ma charakter wyłącznie informacyjny. Nie zbieramy tutaj Twoich danych osobowych, nie prowadzimy rejestracji użytkowników i świadomie rezygnujemy z marketingowych oraz śledzących plików cookies (brak skryptów Google Analytics, Meta Pixel itp.).
+                    </p>
+                    <p data-lang="en">
+                        <strong>3. Website Policy:</strong><br>
+                        The website is purely informational. We do not collect your personal data and we opt out of marketing and tracking cookies (no Google Analytics).
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="protocol-card">
+            <div class="protocol-header">
+                <h2 data-lang="pl">PROTOKÓŁ 3: STATUS KOMERCYJNY I ROZWÓJ (Oświadczenie e-commerce)</h2>
+                <h2 data-lang="en">PROTOCOL 3: COMMERCIAL STATUS AND DEVELOPMENT</h2>
+            </div>
+            <div class="protocol-body">
+                <div class="protocol-rule">
+                    <p data-lang="pl">
+                        <strong>Dystrybucja bezpłatna:</strong> Wszystkie aplikacje udostępniane obecnie w sklepie Google Play / App Store są całkowicie darmowe, pozbawione reklam oraz ukrytych mikropłatności. Witryna nie prowadzi w tym momencie sprzedaży bezpośredniej.<br><br>
+                        <strong>Plany rozwojowe:</strong> W przyszłości planowane jest rozszerzenie portfolio marki o fizyczne gadżety, elektronikę użytkową oraz oprogramowanie premium.<br><br>
+                        <strong>Zapewnienie zgodności:</strong> Z chwilą uruchomienia sprzedaży komercyjnej, w niniejszej sekcji zostanie opublikowany pełny Regulamin Sklepu, określający prawa konsumenta do zwrotu towaru (14 dni) oraz identyfikację prawną sprzedawcy zgodnie z przepisami prawa Rzeczypospolitej Polskiej.
+                    </p>
+                    <p data-lang="en">
+                        <strong>Free Distribution:</strong> Apps published in Google Play / App Store are completely free, with no ads or hidden microtransactions. The site does not currently conduct direct sales.<br><br>
+                        <strong>Development Plans:</strong> In the future, the brand's portfolio will expand to include physical gadgets and premium software.<br><br>
+                        <strong>Compliance Assurance:</strong> Upon the launch of commercial sales, a full Store Regulation defining consumer rights will be published in this section in accordance with the law.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="about" class="view">
+        <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
+        <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
+        
+        <div class="content-header">
+            <div class="badge" data-lang="pl">Informacje o nas</div>
+            <div class="badge" data-lang="en">About Us</div>
+            <h1 data-lang="pl">Ruch Oporu IT.</h1>
+            <h1 data-lang="en">The IT Resistance.</h1>
+        </div>
+        
+        <p data-lang="pl" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą. IBRON to wybór świadomy. Nasze oprogramowanie z definicji nie posiada ukrytych opłat ani modelu subskrypcyjnego. Prawdziwa wolność powinna być dostępna dla każdego.</p>
+        <p data-lang="en" style="margin-bottom: 40px; font-size: 18px; color: var(--text-muted); line-height: 1.8;">In the age of corporate surveillance, convenience has become currency. IBRON is a conscious choice. By definition, our software has no hidden fees or subscription models. True freedom should be accessible to everyone.</p>
+
+        <div style="border: 1px solid var(--accent); background: rgba(0, 240, 255, 0.05); padding: 25px; border-radius: 16px; margin-bottom: 40px; display: flex; align-items: center; gap: 20px; border-left-width: 5px;">
+            <div style="font-size: 40px;">🛡️</div>
+            <div>
+                <h4 data-lang="pl" style="color: var(--accent); font-size: 18px; margin-bottom: 5px; text-transform: uppercase;">Moduły Bezpieczeństwa (Zero Uprawnień)</h4>
+                <h4 data-lang="en" style="color: var(--accent); font-size: 18px; margin-bottom: 5px; text-transform: uppercase;">Security Modules (Zero Permissions)</h4>
+                <p data-lang="pl" style="color: #d1d5db; font-size: 14px;">Nasze dedykowane narzędzia szyfrujące (np. IbronEXO) nie żądają żadnych uprawnień sieciowych w systemach Android/iOS. Te aplikacje fizycznie nie posiadają kodu do komunikacji ze światem zewnętrznym. Pełna blokada (Sandbox).</p>
+                <p data-lang="en" style="color: #d1d5db; font-size: 14px;">Our dedicated encryption tools (e.g., IbronEXO) request ZERO network permissions on Android/iOS. These apps physically lack any code to communicate with the outside world. Full Sandbox lock.</p>
             </div>
         </div>
     </div>
@@ -539,17 +532,6 @@
             document.getElementById(viewId).classList.add('active');
             window.scrollTo({ top: 0, behavior: 'auto' });
         }
-
-        /* ZEGAR TERMINALA (UPTIME) */
-        let uptimeSeconds = 0;
-        setInterval(() => {
-            uptimeSeconds++;
-            const h = String(Math.floor(uptimeSeconds / 3600)).padStart(2, '0');
-            const m = String(Math.floor((uptimeSeconds % 3600) / 60)).padStart(2, '0');
-            const s = String(uptimeSeconds % 60).padStart(2, '0');
-            document.getElementById('uptime-clock').innerText = `${h}:${m}:${s}`;
-            document.getElementById('uptime-clock-en').innerText = `${h}:${m}:${s}`;
-        }, 1000);
 
         /* AUDIO */
         const bgMusic = document.getElementById('bg-music');
@@ -568,7 +550,7 @@
             isMusicPlaying = !isMusicPlaying;
         }
 
-        document.querySelectorAll('.hover-trigger, .screen-card, .btn-back, .faq-question').forEach(item => {
+        document.querySelectorAll('.hover-trigger, .main-card, .btn-back').forEach(item => {
             item.addEventListener('mouseenter', () => { hoverSound.currentTime = 0; hoverSound.volume = 0.2; hoverSound.play().catch(e => {}); });
         });
 
@@ -587,25 +569,13 @@
         function toggleLanguage() {
             currentLang = currentLang === 'pl' ? 'en' : 'pl';
             document.body.classList.toggle('en-active');
-            
-            if(currentLang === 'en') {
-                document.getElementById('lang-en-btn').classList.add('active');
-                document.getElementById('lang-pl-btn').classList.remove('active');
-            } else {
-                document.getElementById('lang-pl-btn').classList.add('active');
-                document.getElementById('lang-en-btn').classList.remove('active');
-            }
+            document.getElementById('lang-en-btn').classList.toggle('active');
+            document.getElementById('lang-pl-btn').classList.toggle('active');
 
             document.querySelectorAll('.dyn-img').forEach(img => {
                 const base = img.getAttribute('data-base');
                 img.src = currentLang === 'pl' ? base + "pl.png" : base + ".png";
             });
-        }
-
-        /* FAQ */
-        function toggleFaq(el) {
-            const ans = el.nextElementSibling;
-            ans.style.display = ans.style.display === "block" ? "none" : "block";
         }
     </script>
 </body>
