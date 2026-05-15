@@ -1,152 +1,226 @@
+@@ -1,124 +1,122 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IBRON INDUSTRIES | Zero Data</title>
+    <title>IBRON INDUSTRIES</title>
+    <title>IBRON</title>
     <style>
-        /* === ZMIENNE (DARK TECH THEME) === */
+        /* === ZMIENNE === */
+        /* === ZMIENNE PREMIUM DARK === */
         :root {
-            --bg-main: #090a0f; /* Bardzo głęboki, chłodny grafit/czerń */
-            --bg-card: #12141d;
-            --text-main: #f3f4f6;
-            --text-muted: #9ca3af;
-            --accent-blue: #00f0ff; /* Neonowy cyjan (hacker/tech vibe) */
-            --accent-neon: rgba(0, 240, 255, 0.2);
-            --border-color: #262b3d;
-            --shadow-base: 0 4px 20px rgba(0,0,0,0.5);
-            --shadow-hover: 0 0 25px var(--accent-neon), 0 10px 30px rgba(0,0,0,0.8);
-            --transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+            --bg-main: #eef0f4; /* Lekko ciemniejszy, chłodny szary dla lepszego kontrastu kart */
+            --bg-card: #ffffff;
+            --text-main: #0f1115;
+            --text-muted: #5a606e;
+            --accent-blue: #004dd6; /* Głębszy, bardziej nasycony błękit technologiczny */
+            --accent-neon: rgba(0, 77, 214, 0.3);
+            --border-color: #d1d5db; /* Wyraźniejsze ramki domyślne */
+            --shadow-base: 0 6px 15px rgba(0,0,0,0.06); /* Karty są lekko uniesione na start */
+            --shadow-hover: 0 15px 35px var(--accent-neon), 0 5px 15px rgba(0,0,0,0.05);
+            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --bg-main: #05070A;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --bg-card-hover: rgba(255, 255, 255, 0.05);
+            --text-main: #FFFFFF;
+            --text-muted: #A1A1AA;
+            --accent: #00F0FF;
+            --accent-glow: rgba(0, 240, 255, 0.3);
+            --danger: #FF3B30;
+            --border-color: rgba(255, 255, 255, 0.1);
+            --border-hover: rgba(0, 240, 255, 0.5);
+            --shadow-base: 0 10px 30px rgba(0,0,0,0.5);
+            --shadow-glow: 0 0 20px var(--accent-glow);
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        
-        body { 
-            background-color: var(--bg-main); 
-            background-image: 
-                radial-gradient(circle at 50% 0%, #1a1e2d 0%, transparent 50%),
-                linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 100% 100%, 30px 30px, 30px 30px;
-            color: var(--text-main); 
-            overflow-x: hidden; 
-            line-height: 1.7;
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, Helvetica, sans-serif; }
+        body { background-color: var(--bg-main); color: var(--text-main); overflow-x: hidden; line-height: 1.6; }
+
+        /* === TŁO (SUBTELNY GRID) === */
+        body::before {
+            content: ''; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+            background-size: 50px 50px; z-index: -1; pointer-events: none;
         }
 
         /* === AUDIO UI === */
         .audio-controls { position: fixed; top: 25px; right: 40px; z-index: 2000; display: flex; align-items: center; gap: 10px; }
-        .audio-btn { background: rgba(18, 20, 29, 0.8); backdrop-filter: blur(5px); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 15px; border-radius: 4px; cursor: pointer; font-size: 11px; font-weight: 700; font-family: monospace; letter-spacing: 2px; transition: var(--transition); display: flex; align-items: center; gap: 8px; text-transform: uppercase; }
-        .audio-btn:hover { border-color: var(--accent-blue); box-shadow: inset 0 0 10px var(--accent-neon); color: var(--accent-blue); }
-        .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: #ff3333; transition: 0.3s; box-shadow: 0 0 8px #ff3333; }
-        .audio-indicator.playing { background: var(--accent-blue); box-shadow: 0 0 12px var(--accent-blue); }
+        .audio-btn { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--text-main); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 12px; font-weight: bold; letter-spacing: 1px; transition: var(--transition); display: flex; align-items: center; gap: 8px; box-shadow: var(--shadow-base); }
+        .audio-btn:hover { border-color: var(--accent-blue); box-shadow: 0 0 15px var(--accent-neon); }
+        .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: #ff3333; transition: 0.3s; }
+        .audio-indicator.playing { background: #00e676; box-shadow: 0 0 10px #00e676; }
+        .audio-btn { background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); border: 1px solid var(--border-color); color: var(--text-muted); padding: 8px 15px; border-radius: 20px; cursor: pointer; font-size: 11px; font-weight: bold; letter-spacing: 2px; transition: var(--transition); display: flex; align-items: center; gap: 8px; }
+        .audio-btn:hover { border-color: var(--accent); color: var(--accent); box-shadow: var(--shadow-glow); }
+        .audio-indicator { width: 6px; height: 6px; border-radius: 50%; background: var(--danger); transition: 0.3s; }
+        .audio-indicator.playing { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
         /* === NAWIGACJA GŁÓWNA === */
-        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(9, 10, 15, 0.85); backdrop-filter: blur(15px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
+        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(238, 240, 244, 0.85); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
+        nav { position: fixed; top: 0; width: 100%; height: 80px; background: rgba(5, 7, 10, 0.8); backdrop-filter: blur(20px); border-bottom: 1px solid var(--border-color); z-index: 1000; display: flex; align-items: center; padding: 0 5%; }
         .logo { display: flex; align-items: center; text-decoration: none; cursor: pointer; user-select: none; }
-        .logo-part-1 { font-size: 26px; font-weight: 900; letter-spacing: 1px; color: var(--text-main); }
-        .logo-part-2 { font-size: 26px; font-weight: 300; letter-spacing: 4px; color: var(--accent-blue); margin-left: 5px; }
+        .logo-part-1 { font-size: 28px; font-weight: 900; letter-spacing: -1px; color: var(--text-main); }
+        .logo-part-2 { font-size: 28px; font-weight: 300; letter-spacing: 3px; color: var(--accent-blue); margin-left: 2px; }
 
         /* === GŁÓWNY KONTENER WIDOKÓW === */
-        .view { display: none; min-height: 100vh; padding: 140px 5% 80px; max-width: 1200px; margin: 0 auto; animation: glitchFade 0.5s ease forwards; }
+        .view { display: none; min-height: 100vh; padding: 130px 5% 80px; max-width: 1200px; margin: 0 auto; animation: fadeIn 0.6s ease forwards; }
         .view.active { display: block; }
-        @keyframes glitchFade { 
-            0% { opacity: 0; transform: scale(0.98) translateY(10px); filter: blur(4px); } 
-            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); } 
-        }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
 
         /* === HOME === */
-        .hero-section { text-align: center; margin-bottom: 90px; max-width: 850px; margin-left: auto; margin-right: auto; }
-        .hero-section h1 { font-size: clamp(40px, 6vw, 70px); font-weight: 900; letter-spacing: -2px; margin-bottom: 25px; line-height: 1.1; text-shadow: 0 0 30px rgba(255,255,255,0.1); }
-        .hero-section p { font-size: 20px; color: var(--text-muted); font-weight: 300; }
-        .highlight { color: var(--accent-blue); text-shadow: 0 0 15px var(--accent-neon); }
+        .hero-section { text-align: center; margin-bottom: 80px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-section h1 { font-size: clamp(35px, 5vw, 60px); font-weight: 800; letter-spacing: -1px; margin-bottom: 20px; line-height: 1.1; }
+        .hero-section p { font-size: 18px; color: var(--text-muted); font-weight: 400; }
+        .highlight { color: var(--accent-blue); font-weight: 600; }
 
         /* KAFELKI */
-        .tiles-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; padding: 20px 0; perspective: 1000px; }
+        .tiles-container { display: flex; justify-content: center; align-items: center; padding: 40px 0; perspective: 1000px; }
         .tile { 
-            position: relative; background: var(--bg-card); 
-            border: 1px solid var(--border-color); border-radius: 12px; 
+            position: relative; width: 260px; height: 350px; background: var(--bg-card); 
+            border: 1px solid var(--border-color); border-radius: 20px; 
+            margin-left: -30px; 
             box-shadow: var(--shadow-base); transition: var(--transition); cursor: pointer;
-            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 40px 30px;
-            overflow: hidden;
+            display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 30px;
         }
-        .tile::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px; background: transparent; transition: var(--transition); }
-        .tile:hover { transform: translateY(-10px); border-color: #3b425b; box-shadow: var(--shadow-hover); }
-        .tile:hover::before { background: var(--accent-blue); box-shadow: 0 0 15px var(--accent-blue); }
-        .hologram-icon { font-size: 50px; margin-bottom: 20px; transition: 0.3s; opacity: 0.8; }
-        .tile:hover .hologram-icon { transform: scale(1.15); opacity: 1; filter: drop-shadow(0 0 15px var(--accent-neon)); }
-        .tile h3 { font-size: 20px; font-weight: 700; margin-bottom: 15px; color: var(--text-main); letter-spacing: 1px; }
-        .tile p { font-size: 14px; color: var(--text-muted); line-height: 1.5; }
+        .tile:first-child { margin-left: 0; }
+        .tile:hover { 
+            transform: translateY(-25px) scale(1.03); 
+            z-index: 10; border-color: var(--accent-blue); box-shadow: var(--shadow-hover);
+        .logo-part-1 { font-size: 24px; font-weight: 900; letter-spacing: 4px; color: var(--text-main); }
+        .logo-dot { color: var(--accent); font-size: 30px; line-height: 0; margin-left: 2px; text-shadow: 0 0 10px var(--accent); }
+
+        /* === SYSTEM WIDOKÓW I ANIMACJI === */
+        .view { display: none; min-height: 100vh; padding: 130px 5% 80px; max-width: 1200px; margin: 0 auto; opacity: 0; transform: scale(0.98) translateY(20px); transition: opacity 0.5s ease, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1); }
+        .view.active { display: block; opacity: 1; transform: scale(1) translateY(0); animation: viewEnter 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+        
+        @keyframes viewEnter {
+            0% { opacity: 0; transform: scale(0.96) translateY(30px); filter: blur(5px); }
+            100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0); }
+        }
+        .tile:hover ~ .tile { transform: translateX(35px); }
+        .hologram-icon { font-size: 55px; margin-bottom: 20px; transition: 0.3s; filter: drop-shadow(0 0 2px rgba(0,0,0,0.1)); }
+        .tile:hover .hologram-icon { filter: drop-shadow(0 0 15px var(--accent-blue)); transform: scale(1.1); }
+        .tile h3 { font-size: 20px; font-weight: 700; margin-bottom: 10px; color: var(--text-main); }
+        .tile p { font-size: 14px; color: var(--text-muted); }
 
         /* === STYLE DETALI === */
-        .btn-back { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: 2px; font-family: monospace; cursor: pointer; margin-bottom: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 4px; transition: 0.2s; }
-        .btn-back:hover { border-color: var(--accent-blue); color: var(--accent-blue); background: var(--accent-neon); transform: translateX(-5px); }
+        .btn-back { background: var(--bg-card); border: 1px solid var(--border-color); color: var(--accent-blue); font-size: 14px; font-weight: 600; cursor: pointer; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 30px; transition: 0.2s; box-shadow: var(--shadow-base); }
+        .btn-back:hover { border-color: var(--accent-blue); transform: translateX(-5px); box-shadow: 0 5px 15px var(--accent-neon); }
 
-        /* NAGŁÓWKI STRON */
-        .app-header-container { display: flex; align-items: center; gap: 30px; margin-bottom: 40px; flex-wrap: wrap; }
-        .app-header-logo { width: 100px; height: 100px; background: #000; border-radius: 16px; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 30px rgba(0,0,0,0.8); border: 1px solid #333; flex-shrink: 0; position: relative; overflow: hidden; }
-        .app-header-logo::after { content:''; position:absolute; top:0; left:-100%; width:50%; height:100%; background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent); transform: skewX(-20deg); animation: shine 3s infinite; }
-        @keyframes shine { 100% { left: 200%; } }
+        /* NOWY NAGŁÓWEK APLIKACJI (Logo obok tytułu) */
+        .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 30px; }
+        .app-header-logo { width: 90px; height: 90px; background: #000; border-radius: 20px; display: flex; justify-content: center; align-items: center; padding: 10px; box-shadow: var(--shadow-base); border: 1px solid var(--border-color); flex-shrink: 0; }
+        .app-header-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .content-header h1 { font-size: 44px; font-weight: 900; letter-spacing: -1.5px; margin-bottom: 5px; line-height: 1.1; }
+        .content-header .badge { display: inline-block; background: #111; color: #fff; padding: 5px 14px; border-radius: 20px; font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; margin-bottom: 5px; }
+
+        /* TABELA SPECYFIKACJI (Jak w MediaExpert) */
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); }
+        .spec-item { display: flex; flex-direction: column; }
+        .spec-label { font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 600; margin-bottom: 4px; }
+
+        /* === GŁÓWNE NAGŁÓWKI === */
+        .hero-section { text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+        .hero-section h1 { font-size: clamp(35px, 5vw, 55px); font-weight: 900; letter-spacing: -1px; margin-bottom: 20px; line-height: 1.1; text-transform: uppercase; }
+        .hero-section p { font-size: 16px; color: var(--text-muted); font-weight: 400; letter-spacing: 1px; }
+        .highlight { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
+
+        /* === NOWE GŁÓWNE KAFELKI (DUŻE) === */
+        .main-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 900px; margin: 0 auto; }
+        .main-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 24px; padding: 50px 40px; text-align: center; cursor: pointer; transition: var(--transition); backdrop-filter: blur(10px); overflow: hidden; }
+        .main-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 70%); opacity: 0; transition: var(--transition); }
+        .main-card:hover { transform: translateY(-10px); border-color: var(--accent); box-shadow: var(--shadow-glow); }
+        .main-card:hover::before { opacity: 0.3; }
+        .main-card h2 { font-size: 28px; font-weight: 800; letter-spacing: 2px; margin-bottom: 15px; position: relative; z-index: 2; }
+        .main-card p { color: var(--text-muted); font-size: 14px; position: relative; z-index: 2; }
+        .main-icon { font-size: 60px; margin-bottom: 20px; position: relative; z-index: 2; display: inline-block; transition: 0.4s; }
+        .main-card:hover .main-icon { transform: scale(1.1); text-shadow: 0 0 20px var(--accent); }
+
+        /* === PRZYCISK WSTECZ === */
+        .btn-back { background: transparent; border: 1px solid var(--border-color); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; cursor: pointer; margin-bottom: 40px; display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px; border-radius: 30px; transition: var(--transition); }
+        .btn-back:hover { border-color: var(--accent); color: var(--text-main); background: rgba(0,240,255,0.05); transform: translateX(-5px); box-shadow: var(--shadow-glow); }
+
+        /* === LAYOUT PODSTRON === */
+        .content-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
+        .content-header h1 { font-size: 40px; font-weight: 900; letter-spacing: -1px; margin-bottom: 10px; }
+        .badge { display: inline-block; background: rgba(0, 240, 255, 0.1); color: var(--accent); border: 1px solid var(--accent); padding: 6px 16px; border-radius: 20px; font-size: 10px; font-weight: 800; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; }
         
-        .content-header h1 { font-size: 48px; font-weight: 900; letter-spacing: -1px; margin-bottom: 5px; line-height: 1.1; }
-        .content-header .badge { display: inline-block; background: rgba(0, 240, 255, 0.1); border: 1px solid var(--accent-blue); color: var(--accent-blue); padding: 6px 16px; border-radius: 4px; font-size: 11px; font-weight: bold; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 15px; font-family: monospace; }
+        .manifesto-text { font-size: 18px; line-height: 1.8; color: var(--text-muted); margin-bottom: 40px; max-width: 900px; font-weight: 300; }
 
-        /* TABELA SPECYFIKACJI */
-        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1px; margin-bottom: 50px; background: var(--border-color); border: 1px solid var(--border-color); border-radius: 8px; overflow: hidden; }
-        .spec-item { display: flex; flex-direction: column; background: var(--bg-card); padding: 25px; transition: var(--transition); }
-        .spec-item:hover { background: #161a25; }
-        .spec-label { font-size: 11px; color: var(--accent-blue); text-transform: uppercase; font-family: monospace; letter-spacing: 1.5px; margin-bottom: 8px; opacity: 0.8; }
-        .spec-value { font-size: 17px; font-weight: 700; color: var(--text-main); }
+        /* === KARTY FUNKCJI (GRID) === */
+        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
+        .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); transition: var(--transition); backdrop-filter: blur(10px); }
+        .feature-box:hover { border-color: var(--border-hover); transform: translateY(-5px); background: var(--bg-card-hover); }
+        .feature-box h4 { font-size: 18px; margin-bottom: 15px; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 10px; }
+        .feature-box h4::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
+        .feature-box p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+
+        /* === SPECYFIKACJA === */
+        .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); }
+        .spec-item { display: flex; flex-direction: column; border-left: 2px solid var(--accent); padding-left: 15px; }
+        .spec-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 5px; }
+        .spec-value { font-size: 16px; font-weight: 700; color: var(--text-main); }
 
         /* GALERIA SCREENÓW */
-        .showcase-gallery { display: flex; gap: 25px; overflow-x: auto; padding: 10px 10px 40px; margin-bottom: 30px; scroll-snap-type: x mandatory; }
-        .showcase-gallery::-webkit-scrollbar { height: 6px; }
-        .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
-        .showcase-gallery::-webkit-scrollbar-thumb:hover { background: var(--accent-blue); }
-        .screen-card { min-width: 220px; height: 450px; background: #000; border-radius: 12px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); overflow: hidden; position: relative; transition: var(--transition); cursor: zoom-in; scroll-snap-align: center; }
-        .screen-card img { width: 100%; height: 100%; object-fit: cover; opacity: 0.7; transition: opacity 0.3s; }
-        .screen-card::after { content: 'Powiększ'; position: absolute; bottom: -40px; left: 50%; transform: translateX(-50%); background: var(--accent-blue); color: #000; font-size: 11px; font-weight: bold; text-transform: uppercase; padding: 5px 15px; border-radius: 4px; transition: 0.3s; opacity: 0; }
+        .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; margin-bottom: 20px; }
+        .showcase-gallery::-webkit-scrollbar { height: 8px; }
+        .showcase-gallery::-webkit-scrollbar-thumb { background: #b0b5c0; border-radius: 10px; }
+        .screen-card { min-width: 180px; height: 380px; background: #000; border-radius: 16px; border: 2px solid var(--border-color); box-shadow: var(--shadow-base); overflow: hidden; position: relative; transition: var(--transition); cursor: zoom-in; }
+        .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
         .screen-card:hover { transform: translateY(-10px); border-color: var(--accent-blue); box-shadow: var(--shadow-hover); }
-        .screen-card:hover img { opacity: 1; }
-        .screen-card:hover::after { bottom: 20px; opacity: 1; }
+        .screen-card:hover img { opacity: 0.9; }
+
+        /* LIGHTBOX (MODAL DO ZDJĘĆ) */
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.9); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(5px); }
+        /* === GALERIA SCREENÓW === */
+        .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; margin-bottom: 20px; scroll-snap-type: x mandatory; }
+        .showcase-gallery::-webkit-scrollbar { height: 4px; }
+        .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
+        .screen-card { min-width: 220px; height: 450px; background: #000; border-radius: 20px; border: 1px solid var(--border-color); overflow: hidden; position: relative; transition: var(--transition); cursor: zoom-in; scroll-snap-align: start; }
+        .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.4s, transform 0.4s; opacity: 0.7; }
+        .screen-card:hover { border-color: var(--accent); box-shadow: var(--shadow-glow); transform: translateY(-10px); }
+        .screen-card:hover img { opacity: 1; transform: scale(1.05); }
 
         /* LIGHTBOX */
-        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; backdrop-filter: blur(10px); }
+        .lightbox { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.95); z-index: 3000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: all 0.4s ease; backdrop-filter: blur(10px); }
         .lightbox.active { opacity: 1; visibility: visible; }
-        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 8px; transform: scale(0.95); transition: transform 0.4s ease; border: 1px solid #333; }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 50px rgba(0,0,0,0.5); }
+        .lightbox img { max-width: 90%; max-height: 90vh; object-fit: contain; border-radius: 12px; transform: scale(0.9); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); box-shadow: 0 0 50px rgba(0,0,0,0.8); }
         .lightbox.active img { transform: scale(1); }
-        .lightbox-close { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; cursor: pointer; font-weight: 100; transition: 0.2s; user-select: none; }
-        .lightbox-close:hover { color: var(--accent-blue); transform: rotate(90deg); }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: #fff; font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
+        .lightbox-close:hover { color: var(--accent-blue); transform: scale(1.1); }
 
         /* KARTY FUNKCJI */
-        .manifesto-text { font-size: 20px; line-height: 1.8; color: #d1d5db; font-weight: 300; margin-bottom: 50px; max-width: 900px; border-left: 3px solid var(--accent-blue); padding-left: 25px; }
-        .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 60px; }
-        .feature-box { background: rgba(18, 20, 29, 0.5); padding: 40px; border-radius: 12px; border: 1px solid var(--border-color); transition: var(--transition); position: relative; overflow: hidden; }
-        .feature-box:hover { border-color: rgba(0, 240, 255, 0.4); background: rgba(18, 20, 29, 0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
-        .feature-box h4 { font-size: 20px; margin-bottom: 15px; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 12px; }
-        .feature-box h4 span { color: var(--accent-blue); font-size: 24px; }
-        .feature-box p { color: var(--text-muted); font-size: 15px; line-height: 1.7; }
+        .manifesto-text { font-size: 19px; line-height: 1.8; color: var(--text-main); font-weight: 400; margin-bottom: 40px; max-width: 900px; }
+        .feature-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; margin-bottom: 50px; }
+        .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); box-shadow: var(--shadow-base); transition: var(--transition); }
+        .feature-box:hover { border-color: var(--accent-blue); box-shadow: var(--shadow-hover); transform: translateY(-5px); }
+        .feature-box h4 { font-size: 22px; margin-bottom: 12px; color: var(--accent-blue); font-weight: 800; display: flex; align-items: center; gap: 10px; }
+        .feature-box p { color: var(--text-muted); font-size: 15px; line-height: 1.6; }
 
-        /* ANALIZA (TERMINAL STYLE) */
-        .example-box { background: #050508; padding: 40px; border-radius: 8px; border: 1px solid #1f2937; position: relative; font-family: monospace; box-shadow: inset 0 0 30px rgba(0,0,0,0.8); }
-        .example-box::before { content: 'TERMINAL_LOG'; position: absolute; top: -10px; left: 20px; background: var(--bg-main); padding: 0 10px; color: var(--accent-blue); font-size: 11px; letter-spacing: 2px; font-weight: bold; }
-        .example-box h4 { color: #fff; font-size: 14px; text-transform: uppercase; margin-bottom: 20px; letter-spacing: 1px; }
-        .example-box p { font-size: 15px; line-height: 1.8; color: #00e676; }
-        .example-box p::before { content: '> '; color: var(--text-muted); }
+        /* ANALIZA (CIEMNA KARTA) */
+        .example-box { background: #0f1115; color: #fff; padding: 40px; border-radius: 20px; position: relative; overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+        .example-box::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--accent-blue); box-shadow: 0 0 15px var(--accent-blue); }
+        .example-box h4 { color: var(--accent-blue); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
+        .example-box p { font-size: 18px; font-style: italic; line-height: 1.7; color: #d1d5db; }
+        .lightbox-close { position: absolute; top: 30px; right: 40px; color: var(--text-muted); font-size: 40px; cursor: pointer; font-weight: 300; transition: 0.2s; user-select: none; }
+        .lightbox-close:hover { color: var(--danger); transform: scale(1.1); }
+
     </style>
 </head>
 <body>
 
+    <!-- SYSTEM AUDIO -->
     <audio id="bg-music" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
     <audio id="hover-sound"><source src="hover.mp3" type="audio/mpeg"></audio>
 
-    <div class="audio-controls">
-        <button class="audio-btn" onclick="toggleMusic()">
-            <div class="audio-indicator" id="audio-dot"></div>
-            SYS.AUDIO
+@@ -129,184 +127,163 @@
         </button>
     </div>
 
+    <!-- LIGHTBOX (POWIĘKSZANIE ZDJĘĆ) -->
     <div class="lightbox" id="image-lightbox" onclick="closeLightbox(event)">
         <span class="lightbox-close">&times;</span>
         <img id="lightbox-img" src="" alt="Powiększenie">
@@ -156,13 +230,17 @@
         <div class="logo" onclick="switchView('home')">
             <span class="logo-part-1">IBRON</span>
             <span class="logo-part-2">INDUSTRIES</span>
+            <span class="logo-part-1">IBRON</span><span class="logo-dot">.</span>
         </div>
     </nav>
 
+    <!-- === HOME === -->
     <div id="home" class="view active">
         <div class="hero-section">
-            <h1>Twoje sekrety.<br>Twoje zasady. <span class="highlight">Zero chmury.</span></h1>
-            <p>Nie musisz ufać wielkim korporacjom. Tworzymy oprogramowanie i sprzęt odcięte od sieci, stawiając na absolutną prywatność i inżynierię odporną na inwigilację.</p>
+            <h1>Twoje sekrety.<br>Twoje zasady. Zero chmury.</h1>
+            <p>Nie musisz ufać wielkim serwerom, jeśli ich nie używasz. Tworzymy oprogramowanie i sprzęt odcięte od sieci, stawiając na absolutną prywatność i inżynierię odporną na inwigilację.</p>
+            <h1>Odzyskaj <span class="highlight">kontrolę.</span></h1>
+            <p>Zdecentralizowane oprogramowanie inżynieryjne. Zero chmury. Zero śledzenia. Tworzymy narzędzia odporne na inwigilację, dające absolutną prywatność i optymalizację czasu.</p>
         </div>
 
         <div class="tiles-container">
@@ -175,6 +253,11 @@
                 <div class="hologram-icon">🛡️</div>
                 <h3>Ibron EXO</h3>
                 <p>Notatnik, który potrafi kłamać. Ochrona przed fizycznym wymuszeniem hasła.</p>
+        <div class="main-menu-grid">
+            <div class="main-card hover-trigger" onclick="switchView('about')">
+                <div class="main-icon">👁️‍🗨️</div>
+                <h2>O NAS</h2>
+                <p>Doktryna Zero-Data i nasza filozofia prywatności.</p>
             </div>
             <div class="tile hover-trigger" onclick="switchView('clock')">
                 <div class="hologram-icon">⏱️</div>
@@ -185,184 +268,259 @@
                 <div class="hologram-icon">⌚</div>
                 <h3>Hardware</h3>
                 <p>Ibron WATCH Mark I. Zegarek, który kontrolujesz co do linijki kodu.</p>
+            <div class="main-card hover-trigger" onclick="switchView('apps-hub')">
+                <div class="main-icon">🎛️</div>
+                <h2>APLIKACJE</h2>
+                <p>Wejdź do ekosystemu oprogramowania IBRON.</p>
             </div>
         </div>
     </div>
 
+    <!-- === O NAS === -->
     <div id="about" class="view">
-        <button class="btn-back" onclick="switchView('home')">< Powrót do bazy</button>
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
+        <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót do rdzenia</button>
         <div class="content-header">
             <div class="badge">Doktryna Firmy</div>
             <h1>Brak połączenia to najlepsza tarcza.</h1>
+            <div class="badge">Doktryna IBRON</div>
+            <h1>Ruch Oporu IT.</h1>
         </div>
-        <p class="manifesto-text">Większość aplikacji wygodnie synchronizuje Twoje dane w tle. My uważamy, że wygoda nie może być wymówką dla obnażania swojej prywatności. Skupiamy się na technologii pozbawionej funkcji sieciowych.</p>
-        
+        <p class="manifesto-text">Większość aplikacji wygodnie synchronizuje Twoje dane w tle. My uważamy, że wygoda nie może być wymówką dla obnażania swojej prywatności. Skupiamy się na aplikacjach, które nie posiadają kodu do łączenia się z internetem.</p>
+        <p class="manifesto-text">W dobie masowej inwigilacji korporacyjnej, wygoda stała się walutą, za którą płacisz swoimi danymi. IBRON to technologiczny ruch oporu. Skupiamy się na budowaniu oprogramowania, które z definicji nie potrafi łączyć się z zewnętrznymi serwerami.</p>
+
         <div class="feature-grid">
             <div class="feature-box">
-                <h4><span>🔒</span> Fizyczna Twierdza</h4>
-                <p>Nasze oprogramowanie działa w 100% na procesorze Twojego urządzenia. Nie mamy serwerów. Nie zbieramy statystyk użytkowania. Nie wiemy, kim jesteś.</p>
+            <div class="feature-box hover-trigger">
+                <h4>Fizyczna Twierdza</h4>
+                <p>Nasze oprogramowanie działa w 100% na procesorze Twojego telefonu. Nie mamy serwerów. Nie zbieramy statystyk użytkowania. Nie wiemy, kim jesteś.</p>
+                <p>Nasze oprogramowanie działa w 100% na procesorze Twojego urządzenia. Wszystkie bazy danych zapisywane są szyfrowanym ciągiem znaków lokalnie. Nie wiemy, kim jesteś.</p>
             </div>
             <div class="feature-box">
-                <h4><span>⚡</span> Niezależność</h4>
+                <h4>Niezależność</h4>
                 <p>Płacisz raz, posiadasz na zawsze. Odrzucamy modele abonamentowe. Dostarczamy potężne narzędzia inżynieryjne bez ukrytych opłat i reklam.</p>
+            <div class="feature-box hover-trigger">
+                <h4>Odmowa Dostępu</h4>
+                <p>Brak chmury to brak wycieków. Jeśli ktoś chce dostać się do Twoich danych, musi fizycznie przejąć Twoje urządzenie i złamać nasze protokoły zabezpieczeń.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- === IBRON EXO === -->
+    <div id="exo" class="view">
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
+        
+        <!-- NAGŁÓWEK (Logo zintegrowane) -->
+        <div class="app-header-container">
+            <div class="app-header-logo">
+                <img src="logoexo.png" alt="EXO" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:#fff; font-weight:bold; font-size:24px;\'>EXO</span>';">
+    <div id="apps-hub" class="view">
+        <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót do rdzenia</button>
+        <div class="hero-section">
+            <h1>Ekosystem <span class="highlight">Oprogramowania</span></h1>
+            <p>Wybierz moduł, aby uzyskać dostęp do specyfikacji technicznej.</p>
+        </div>
+
+        <div class="main-menu-grid">
+            <div class="main-card hover-trigger" onclick="switchView('exo')">
+                <div class="main-icon">🛡️</div>
+                <h2>IbronEXO</h2>
+                <p>Kryptosejf z systemem podwójnego logowania (Dual-PIN).</p>
+            </div>
+            <div class="content-header" style="margin-bottom: 0;">
+                <div class="badge">Aplikacja Zabezpieczająca</div>
+                <h1>IbronEXO. Kryptosejf Nowej Generacji.</h1>
+            <div class="main-card hover-trigger" onclick="switchView('chronos')">
+                <div class="main-icon">⏱️</div>
+                <h2>IbronCHRONOS</h2>
+                <p>Bezwzględny silnik do zarządzania czasem operacyjnym.</p>
             </div>
         </div>
     </div>
 
     <div id="exo" class="view">
-        <button class="btn-back" onclick="switchView('home')">< Powrót do bazy</button>
+        <button class="btn-back hover-trigger" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
         
-        <div class="app-header-container">
-            <div class="app-header-logo">
-                <img src="logoexo.png" alt="EXO" onerror="this.style.display='none'; this.parentElement.innerHTML='<span style=\'color:var(--accent-blue); font-weight:bold; font-size:24px; font-family:monospace;\'>[EXO]</span>';">
-            </div>
-            <div class="content-header" style="margin-bottom: 0;">
-                <div class="badge">Aplikacja Zabezpieczająca</div>
-                <h1>Ibron EXO. Kryptosejf.</h1>
-            </div>
+        <div class="content-header">
+            <div class="badge">Moduł Zabezpieczeń</div>
+            <h1>IbronEXO. Kryptosejf.</h1>
         </div>
 
+        <!-- SPECYFIKACJA (MediaExpert Style) -->
         <div class="specs-grid">
-            <div class="spec-item"><span class="spec-label">Wersja Systemu</span><span class="spec-value">1.4.2 (Stabilna)</span></div>
-            <div class="spec-item"><span class="spec-label">Ostatnia Aktualizacja</span><span class="spec-value">12.05.2026</span></div>
-            <div class="spec-item"><span class="spec-label">Architektura</span><span class="spec-value">100% Offline / Zero-Data</span></div>
-            <div class="spec-item"><span class="spec-label">Typ Szyfrowania</span><span class="spec-value">Sprzętowe 256-bit</span></div>
+            <div class="spec-item">
+                <span class="spec-label">Wersja Systemu</span>
+                <span class="spec-value">1.4.2 (Stabilna)</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Ostatnia Aktualizacja</span>
+                <span class="spec-value">12.05.2026</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Architektura</span>
+                <span class="spec-value">100% Offline / Zero-Data</span>
+            </div>
+            <div class="spec-item">
+                <span class="spec-label">Typ Szyfrowania</span>
+                <span class="spec-value">Sprzętowe 256-bit</span>
+            </div>
+            <div class="spec-item"><span class="spec-label">Architektura</span><span class="spec-value">Zero-Data / Offline</span></div>
+            <div class="spec-item"><span class="spec-label">Szyfrowanie</span><span class="spec-value">Lokalne 256-bit</span></div>
+            <div class="spec-item"><span class="spec-label">Ochrona K&R</span><span class="spec-value">Decoy PIN (Fałszywy Sejf)</span></div>
         </div>
 
-        <p class="manifesto-text">Zwykłe aplikacje chronią Cię tylko do momentu, aż ktoś siłą nie zażąda hasła. Ibron EXO to sejf stworzony dla najgorszego scenariusza. Pozwala zabezpieczyć najważniejsze dane tak głęboko, że nikt nie dowie się o ich istnieniu.</p>
+        <p class="manifesto-text">Zwykłe aplikacje do notatek chronią Cię tylko do momentu, aż ktoś siłą nie zażąda od Ciebie hasła. IbronEXO to sejf stworzony dla najgorszego scenariusza. Pozwala zabezpieczyć najważniejsze dane, kontakty i notatki tak głęboko, że nikt – nawet osoba patrząca Ci w ekran – nie dowie się o ich istnieniu.</p>
+        <p class="manifesto-text">Zwykłe aplikacje chronią Cię tylko do momentu, aż ktoś siłą nie zażąda od Ciebie hasła. IbronEXO to sejf stworzony dla najgorszego scenariusza wymuszenia fizycznego.</p>
 
+        <!-- GALERIA SCREENÓW -->
         <div class="showcase-gallery">
             <div class="screen-card" onclick="openLightbox('screen1.png')">
-                <img src="screen1.png" alt="Ekran Główny" onerror="this.src='https://via.placeholder.com/220x450/111/333?text=Brak+zdjęcia';">
+                <img src="screen1.png" alt="Ekran Główny" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
             </div>
             <div class="screen-card" onclick="openLightbox('screen2.png')">
-                <img src="screen2.png" alt="Kryptosejf" onerror="this.src='https://via.placeholder.com/220x450/111/333?text=Brak+zdjęcia';">
+                <img src="screen2.png" alt="Kryptosejf" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
             </div>
             <div class="screen-card" onclick="openLightbox('screen3.png')">
-                <img src="screen3.png" alt="Ustawienia" onerror="this.src='https://via.placeholder.com/220x450/111/333?text=Brak+zdjęcia';">
+                <img src="screen3.png" alt="Ustawienia" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
             </div>
             <div class="screen-card" onclick="openLightbox('screen4.png')">
-                <img src="screen4.png" alt="Fałszywy Sektor" onerror="this.src='https://via.placeholder.com/220x450/111/333?text=Brak+zdjęcia';">
+                <img src="screen4.png" alt="Fałszywy Sektor" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
             </div>
+            <div class="screen-card" onclick="openLightbox('screen5.png')">
+                <img src="screen5.png" alt="Notatki" onerror="this.src='https://via.placeholder.com/200x400/000/333?text=Brak+zdjęcia';">
+            </div>
+            <div class="screen-card" onclick="openLightbox('screen_exo1.png')"><img src="screen_exo1.png" alt="EXO Screen 1" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+1';"></div>
+            <div class="screen-card" onclick="openLightbox('screen_exo2.png')"><img src="screen_exo2.png" alt="EXO Screen 2" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+2';"></div>
+            <div class="screen-card" onclick="openLightbox('screen_exo3.png')"><img src="screen_exo3.png" alt="EXO Screen 3" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+3';"></div>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box">
-                <h4><span>⚠️</span> Tryb Fałszywego Sejfu</h4>
-                <p>Ustawiasz dwa hasła. Główne otwiera prawdziwy sejf. "Hasło Ratunkowe" płynnie otwiera fałszywy, działający sejf wypełniony nieistotnymi notatkami. Napastnik myśli, że złamał system.</p>
+                <h4>⚠️ Tryb Fałszywego Sejfu (Decoy PIN)</h4>
+                <p>To nasza najpotężniejsza broń. Ustawiasz dwa hasła. Główne hasło otwiera prawdziwy sejf. Jeśli wpiszesz "Hasło Ratunkowe", aplikacja płynnie otwiera fałszywy, w pełni działający sejf wypełniony nieistotnymi notatkami. Napastnik myśli, że złamał system. Prawdziwe sekrety znikają.</p>
             </div>
             <div class="feature-box">
-                <h4><span>🧨</span> Zegar Autodestrukcji</h4>
-                <p>Przypisz notatce licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia, nadpisany zerami, uniemożliwiając jego odzyskanie w jakimkolwiek laboratorium.</p>
+                <h4>🧨 Zegar Autodestrukcji</h4>
+                <p>Posiadasz informacje, które nie mogą wpaść w niepowołane ręce? Przypisz notatce licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia, nadpisany zerami, uniemożliwiając jego odzyskanie nawet w laboratorium policyjnym.</p>
+            <div class="feature-box hover-trigger">
+                <h4>Tryb Fałszywego Sejfu</h4>
+                <p>Podaj napastnikowi "Hasło Ratunkowe", a system płynnie otworzy fałszywy sejf pełen nieistotnych notatek. Prawdziwe sekrety znikają w tle.</p>
             </div>
             <div class="feature-box">
-                <h4><span>📞</span> Tajna Baza Kontaktów</h4>
-                <p>Twórz własną książkę adresową wewnątrz sejfu. Kontakty nigdy nie pojawią się w standardowej aplikacji na smartfonie. Chronisz tożsamość swoich rozmówców.</p>
+                <h4>📞 Tajna Baza Kontaktów</h4>
+                <p>Twórz własną książkę adresową wewnątrz sejfu. Kontakty, które tutaj wprowadzisz, nigdy nie pojawią się w standardowej aplikacji "Telefon" na Twoim smartfonie. Chronisz tożsamość swoich rozmówców.</p>
+            <div class="feature-box hover-trigger">
+                <h4>Zegar Autodestrukcji</h4>
+                <p>Przypisz notatce licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci i nadpisany zerami, uniemożliwiając odzyskanie danych.</p>
             </div>
             <div class="feature-box">
-                <h4><span>🎨</span> Pełny Kamuflaż</h4>
-                <p>Zmieniaj kolory interfejsu i układ, by EXO wyglądało jak zwykła, nudna aplikacja systemowa (np. kalkulator lub pogoda), nie budząc podejrzeń osób trzecich.</p>
+                <h4>🎨 Pełny Kamuflaż</h4>
+                <p>Dostosuj aplikację do siebie. Zmieniaj kolory interfejsu, układ przycisków i sposób wyświetlania list, by EXO wyglądało jak zwykła, nudna aplikacja systemowa, nie budząc żadnych podejrzeń u osób trzecich.</p>
             </div>
         </div>
 
         <div class="example-box">
             <h4>Analiza Zdarzenia: Próba Wymuszenia</h4>
-            <p>Zostajesz zatrzymany, a Twój telefon skonfiskowany. Ktoś żąda podania kodu PIN do notatnika.<br>
-            Zachowujesz pełen spokój. Podajesz PIN Ratunkowy (np. 1234). Aplikacja otwiera się błyskawicznie, pokazując foldery z przepisami na obiad.<br>
-            Atakujący jest przekonany, że to wszystko. Twoje prawdziwe dane są zabezpieczone w ukrytym sektorze z własnym PIN-em.</p>
+            <p>"Zostajesz zatrzymany, a Twój telefon skonfiskowany. Ktoś żąda podania kodu PIN do notatnika, w którym trzymasz klucze dostępu do portfela krypto. Zachowujesz pełen spokój. Podajesz PIN Ratunkowy (np. 1234). Aplikacja otwiera się błyskawicznie, pokazując foldery z przepisami na obiad i listą zakupów. Atakujący jest przekonany, że to wszystko. Tymczasem Twoje kryptowaluty są bezpieczne w sektorze, do którego otwiera drogę tylko PIN Główny (np. 9999)."</p>
         </div>
     </div>
 
+    <!-- === IBRON CLOCK === -->
     <div id="clock" class="view">
-        <button class="btn-back" onclick="switchView('home')">< Powrót do bazy</button>
+        <button class="btn-back" onclick="switchView('home')">← Powrót do bazy</button>
+    <div id="chronos" class="view">
+        <button class="btn-back hover-trigger" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
+        
         <div class="content-header">
             <div class="badge">Wczesny Dostęp (BETA)</div>
-            <h1>Ibron CLOCK. Nie ma drzemki.</h1>
+            <h1>IbronCLOCK. Nie ma drzemki.</h1>
+            <div class="badge">Moduł Optymalizacji</div>
+            <h1>IbronCHRONOS. Silnik Czasu.</h1>
         </div>
 
         <div class="specs-grid">
             <div class="spec-item"><span class="spec-label">Status</span><span class="spec-value">Prototyp / Zamknięte Testy</span></div>
             <div class="spec-item"><span class="spec-label">Rdzeń</span><span class="spec-value">System Override</span></div>
+            <div class="spec-item"><span class="spec-label">Przeznaczenie</span><span class="spec-value">Mikrozarządzanie Zadaniami</span></div>
+            <div class="spec-item"><span class="spec-label">Analityka</span><span class="spec-value">Lokalne Raporty PDF</span></div>
+            <div class="spec-item"><span class="spec-label">Powiadomienia</span><span class="spec-value">Kaskadowe API Push</span></div>
         </div>
 
-        <p class="manifesto-text">Twój mózg potrafi wyłączyć zwykły budzik bez wybudzania świadomości. Ibron CLOCK niszczy ten odruch. To brutalny system, który żąda weryfikacji logicznej, zanim pozwoli Ci wrócić do snu.</p>
+        <p class="manifesto-text">Twój mózg potrafi wyłączyć zwykły budzik bez wybudzania świadomości. IbronCLOCK niszczy ten odruch. To brutalny system, który po wyzwoleniu alarmu żąda weryfikacji logicznej, zanim pozwoli Ci wrócić do snu.</p>
+        <p class="manifesto-text">Chronos Protocol to nie jest zwykły kalendarz. To zaawansowany silnik do manipulacji czasem operacyjnym. Zamienia Twoje cele w czystą, wykonalną matematykę i bezlitośnie śledzi wydajność.</p>
+
+        <div class="showcase-gallery">
+            <div class="screen-card" onclick="openLightbox('screen_chr1.png')"><img src="screen_chr1.png" alt="Chronos Screen 1" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+1';"></div>
+            <div class="screen-card" onclick="openLightbox('screen_chr2.png')"><img src="screen_chr2.png" alt="Chronos Screen 2" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+2';"></div>
+            <div class="screen-card" onclick="openLightbox('screen_chr3.png')"><img src="screen_chr3.png" alt="Chronos Screen 3" onerror="this.src='https://via.placeholder.com/400x800/0A0F1A/00F0FF?text=ZDJĘCIE+3';"></div>
+        </div>
 
         <div class="feature-grid">
             <div class="feature-box">
-                <h4><span>🔊</span> Przejęcie Głośnika</h4>
-                <p>Wyciszyłeś telefon na noc? CLOCK to zignoruje. Narzuca najwyższy poziom głośności systemowej i blokuje fizyczne przyciski z boku telefonu. Musisz podjąć akcję na ekranie.</p>
+                <h4>Przejęcie Głośnika</h4>
+                <p>Wyciszyłeś telefon na noc? CLOCK to zignoruje. Aplikacja narzuca najwyższy poziom głośności systemowej i blokuje fizyczne przyciski ściszania z boku telefonu. Musisz podjąć akcję na ekranie.</p>
+            <div class="feature-box hover-trigger">
+                <h4>System Kategoryzacji</h4>
+                <p>Dziel zadania na sektory operacyjne. Oznaczaj kluczowe misje jako Krytyczne i izoluj je od codziennego szumu informacyjnego.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4>Raporty Wydajności</h4>
+                <p>Aplikacja generuje zaawansowane, matematyczne podsumowania Twojego czasu. Wyniki jednym kliknięciem eksportujesz do bezpiecznego pliku PDF.</p>
             </div>
             <div class="feature-box">
-                <h4><span>🧠</span> Weryfikacja Terminalowa</h4>
-                <p>Udowodnij, że jesteś przytomny. Rozwiąż zadanie matematyczne na ekranie, albo – w trybie hard – udaj się do łazienki, by zeskanować wydrukowany kod QR.</p>
+                <h4>Weryfikacja Terminalowa</h4>
+                <p>Żeby wyłączyć alarm, musisz udowodnić aplikacji, że jesteś przytomny. Rozwiąż proste zadanie matematyczne na ekranie, albo – w trybie hard – udaj się do łazienki, by zeskanować wydrukowany kod QR. Gwarancja wstania z łóżka.</p>
+            <div class="feature-box hover-trigger">
+                <h4>Diagnostyka Rdzenia</h4>
+                <p>Wbudowany terminal pozwala na monitorowanie "zużycia matrycy" i testowanie połączeń telemetrycznych bez wychodzenia z aplikacji.</p>
+            </div>
+            <div class="feature-box hover-trigger">
+                <h4>Protokół ZERO</h4>
+                <p>Czerwony przycisk bezpieczeństwa. Autoryzacja komendą "ZERO" trwale formatuje całe archiwum i przywraca system do ustawień fabrycznych w ułamku sekundy.</p>
             </div>
         </div>
     </div>
 
     <script>
+        // System obsługi zakładek (SPA) z płynnym powrotem na górę strony
         function switchView(viewId) {
+            document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
             document.querySelectorAll('.view').forEach(v => {
                 v.classList.remove('active');
-                v.style.animation = 'none'; // reset animacji
             });
-            
-            const activeView = document.getElementById(viewId);
-            activeView.classList.add('active');
-            
-            // Wymuszenie ponownego narysowania przeglądarki, by odpalić animację wejścia
-            void activeView.offsetWidth; 
-            activeView.style.animation = 'glitchFade 0.5s ease forwards';
-            
-            window.scrollTo({ top: 0, behavior: 'smooth' });
+            const target = document.getElementById(viewId);
+            target.classList.add('active');
+            window.scrollTo({ top: 0, behavior: 'auto' });
         }
 
         /* SYSTEM AUDIO */
-        const bgMusic = document.getElementById('bg-music');
-        const hoverSound = document.getElementById('hover-sound');
-        const audioIndicator = document.getElementById('audio-dot');
-        let isMusicPlaying = false;
-        let userInteracted = false;
-
-        document.body.addEventListener('click', () => {
-            if(!userInteracted && !isMusicPlaying) {
-                toggleMusic();
-                userInteracted = true;
-            }
-        }, { once: true });
-
-        function toggleMusic() {
-            if (isMusicPlaying) {
-                bgMusic.pause();
+@@ -329,16 +306,17 @@
                 audioIndicator.classList.remove('playing');
             } else {
                 bgMusic.volume = 0.2;
                 bgMusic.play().catch(e => console.log("Audio zablokowane."));
+                bgMusic.play().catch(e => console.log("Audio zablokowane przez przeglądarkę."));
                 audioIndicator.classList.add('playing');
             }
             isMusicPlaying = !isMusicPlaying;
         }
 
-        document.querySelectorAll('.hover-trigger, .screen-card, .btn-back, .tile').forEach(item => {
+        // Dodanie dźwięku do wszystkich elementów z klasą .hover-trigger
+        document.querySelectorAll('.hover-trigger, .screen-card, .btn-back').forEach(item => {
             item.addEventListener('mouseenter', () => {
                 hoverSound.currentTime = 0;
                 hoverSound.volume = 0.4;
+                hoverSound.volume = 0.3;
                 hoverSound.play().catch(e => {});
             });
         });
-
-        /* SYSTEM LIGHTBOX */
-        function openLightbox(imgSrc) {
-            const lightbox = document.getElementById('image-lightbox');
-            const lightboxImg = document.getElementById('lightbox-img');
-            lightboxImg.src = imgSrc;
-            lightbox.classList.add('active');
+@@ -352,7 +330,6 @@
         }
 
         function closeLightbox(event) {
+            // Zamknij tylko jeśli kliknięto w tło (czarne) lub w krzyżyk, a nie w samo zdjęcie
             if (event.target.id === 'image-lightbox' || event.target.className === 'lightbox-close') {
                 document.getElementById('image-lightbox').classList.remove('active');
             }
-        }
-    </script>
-</body>
-</html>
