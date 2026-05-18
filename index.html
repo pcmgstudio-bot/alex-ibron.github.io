@@ -62,15 +62,14 @@
         .hero-section p { font-size: 16px; color: var(--text-muted); font-weight: 400; letter-spacing: 1px; margin-bottom: 25px; }
         .highlight { color: var(--accent); text-shadow: 0 0 20px var(--accent-glow); }
 
-        /* === STATUS SYSTEMU (Brak Śledzenia) === */
+        /* === STATUS SYSTEMU === */
         .live-status { display: inline-flex; align-items: center; gap: 10px; background: rgba(0, 240, 255, 0.05); border: 1px solid rgba(0, 240, 255, 0.3); padding: 8px 16px; border-radius: 20px; font-family: monospace; font-size: 11px; letter-spacing: 1px; color: var(--accent); margin-bottom: 20px; }
         .status-dot { width: 8px; height: 8px; border-radius: 50%; background: #00e676; animation: pulseStatus 2s infinite; box-shadow: 0 0 8px #00e676; }
         @keyframes pulseStatus { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
 
-        /* === GRID 2 W RZĘDZIE === */
+        /* === MENU GRID === */
         .main-menu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 1000px; margin: 0 auto; }
         @media (max-width: 768px) { .main-menu-grid { grid-template-columns: 1fr; } }
-
         .main-card { position: relative; background: var(--bg-card); border: 1px solid var(--border-color); border-radius: 20px; padding: 40px 30px; text-align: center; cursor: pointer; transition: var(--transition); backdrop-filter: blur(10px); overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; }
         .main-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 70%); opacity: 0; transition: var(--transition); }
         .main-card:hover { transform: translateY(-8px); border-color: var(--accent); box-shadow: var(--shadow-glow); }
@@ -103,19 +102,31 @@
         .philosophy-box p { font-size: 15px; color: var(--text-muted); line-height: 1.7; }
 
         /* === SPECYFIKACJA EXO === */
-        .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 40px; border-bottom: 1px solid var(--border-color); padding-bottom: 30px; }
-        .app-header-logo { width: 90px; height: 90px; background: rgba(0,0,0,0.6); border-radius: 20px; display: flex; justify-content: center; align-items: center; padding: 15px; border: 1px solid var(--border-color); box-shadow: inset 0 0 20px rgba(0,240,255,0.05); flex-shrink: 0; }
+        .app-header-container { display: flex; align-items: center; gap: 25px; margin-bottom: 30px; }
+        .app-header-logo { width: 100px; height: 100px; background: rgba(0,0,0,0.6); border-radius: 24px; display: flex; justify-content: center; align-items: center; padding: 15px; border: 1px solid var(--border-color); box-shadow: inset 0 0 20px rgba(0,240,255,0.05); flex-shrink: 0; }
         .app-header-logo img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        
+        /* METADANE APLIKACJI */
+        .app-metadata { display: flex; flex-wrap: wrap; gap: 15px; margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid var(--border-color); }
+        .meta-tag { display: inline-flex; align-items: center; gap: 8px; background: var(--bg-card); padding: 8px 16px; border-radius: 12px; font-family: monospace; font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-color); }
+        .meta-tag strong { color: var(--text-main); }
+        
+        .download-btn { display: inline-flex; align-items: center; gap: 12px; background: var(--text-main); color: #000; font-weight: 900; letter-spacing: 1px; padding: 12px 25px; border-radius: 30px; text-decoration: none; cursor: not-allowed; opacity: 0.6; transition: var(--transition); border: none; }
+        .download-btn.active { opacity: 1; cursor: pointer; }
+        .download-btn.active:hover { background: var(--accent); box-shadow: var(--shadow-glow); transform: translateY(-2px); }
+
         .feature-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin-bottom: 50px; }
         .feature-box { background: var(--bg-card); padding: 35px; border-radius: 20px; border: 1px solid var(--border-color); transition: var(--transition); backdrop-filter: blur(10px); }
         .feature-box:hover { border-color: var(--border-hover); transform: translateY(-5px); background: var(--bg-card-hover); }
         .feature-box h4 { font-size: 18px; margin-bottom: 15px; color: var(--text-main); font-weight: 700; display: flex; align-items: center; gap: 10px; }
         .feature-box h4::before { content: ''; display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent); }
         .feature-box p { color: var(--text-muted); font-size: 14px; line-height: 1.7; }
+        
         .specs-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 40px; background: var(--bg-card); padding: 25px; border-radius: 16px; border: 1px solid var(--border-color); }
         .spec-item { display: flex; flex-direction: column; border-left: 2px solid var(--accent); padding-left: 15px; }
         .spec-label { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 5px; }
         .spec-value { font-size: 16px; font-weight: 700; color: var(--text-main); font-family: monospace; }
+        
         .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; margin-bottom: 40px; scroll-snap-type: x mandatory; }
         .showcase-gallery::-webkit-scrollbar { height: 4px; }
         .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-color); border-radius: 10px; }
@@ -233,7 +244,7 @@
         </div>
     </div>
 
-    <!-- === ZAKTUALIZOWANA SEKCJA O NAS === -->
+    <!-- === O NAS === -->
     <div id="about" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
@@ -306,6 +317,7 @@
         </div>
     </div>
 
+    <!-- === APLIKACJE HUB === -->
     <div id="apps-hub" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
@@ -332,26 +344,45 @@
             </div>
             <div class="main-card locked"><div class="main-icon">⎊</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
             <div class="main-card locked"><div class="main-icon">⎗</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">Ⱗ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">ⱋ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">Ⲭ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">ⴵ</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">⎘</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
-            <div class="main-card locked"><div class="main-icon">⎅</div><h2 data-lang="pl">[ ZASZYFROWANE ]</h2><h2 data-lang="en">[ ENCRYPTED ]</h2><p data-lang="pl" style="color:var(--danger);">Brak autoryzacji.</p><p data-lang="en" style="color:var(--danger);">Unauthorized.</p></div>
         </div>
     </div>
 
+    <!-- === IBRON EXO (ZAKTUALIZOWANA KARTA PRODUKTU) === -->
     <div id="exo" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
         
         <div class="app-header-container">
             <div class="app-header-logo"><img src="logoexo.png" alt="EXO" onerror="this.style.display='none';"></div>
-            <div class="content-header">
-                <div class="badge" data-lang="pl">Moduł Zabezpieczeń</div>
-                <div class="badge" data-lang="en">Security Module</div>
-                <h1>IbronEXO.</h1>
+            <div>
+                <h1 style="font-size: 40px; font-weight: 900; margin-bottom: 5px; text-transform: uppercase;">IbronEXO.</h1>
+                <p data-lang="pl" style="color: var(--text-muted); font-size: 16px;">Twój hermetyczny kryptosejf offline.</p>
+                <p data-lang="en" style="color: var(--text-muted); font-size: 16px;">Your hermetic offline crypto-vault.</p>
             </div>
+        </div>
+
+        <div class="app-metadata">
+            <div class="meta-tag" data-lang="pl">Wersja: <strong>1.0.0</strong></div>
+            <div class="meta-tag" data-lang="en">Version: <strong>1.0.0</strong></div>
+            
+            <div class="meta-tag" data-lang="pl">Wydawca: <strong>IbronIndustries</strong></div>
+            <div class="meta-tag" data-lang="en">Publisher: <strong>IbronIndustries</strong></div>
+
+            <div class="meta-tag" data-lang="pl">Data wydania: <strong>Wkrótce (Maj 2026)</strong></div>
+            <div class="meta-tag" data-lang="en">Release date: <strong>Soon (May 2026)</strong></div>
+
+            <div class="meta-tag" data-lang="pl">Licencja: <strong>Darmowa (Brak Reklam)</strong></div>
+            <div class="meta-tag" data-lang="en">License: <strong>Free (No Ads)</strong></div>
+        </div>
+
+        <div style="margin-bottom: 50px;">
+            <a href="#" class="download-btn" onclick="alert('System weryfikacji Google Play w toku. Oprogramowanie będzie dostępne wkrótce.'); return false;">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                <span data-lang="pl">POBIERZ Z GOOGLE PLAY</span>
+                <span data-lang="en">DOWNLOAD ON GOOGLE PLAY</span>
+            </a>
+            <p data-lang="pl" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: monospace; letter-spacing: 1px;">> STATUS: OCZEKUJE NA CERTYFIKACJĘ SKLEPU</p>
+            <p data-lang="en" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: monospace; letter-spacing: 1px;">> STATUS: PENDING STORE CERTIFICATION</p>
         </div>
 
         <div class="specs-grid">
@@ -369,17 +400,15 @@
         </div>
 
         <div class="terminal-box">
-            <h4 data-lang="pl">> DOKUMENTACJA RECOVERY (BIP-39)</h4>
-            <h4 data-lang="en">> RECOVERY DOCUMENTATION (BIP-39)</h4>
-            <p data-lang="pl">
-                > Status: <span class="code">No Recovery Questions.</span><br>
-                > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
-                > <span class="warn">UWAGA:</span> Podczas inicjalizacji system generuje unikalną frazę. Jest to jedyny sposób na odtworzenie klucza głównego w przypadku utraty PINu. <span class="code">IBR nie posiada kopii Twojej frazy.</span> Zgubienie jej oznacza koniec.
+            <h4 data-lang="pl">> OPIS OPERACYJNY IBRON EXO</h4>
+            <h4 data-lang="en">> IBRON EXO OPERATIONAL BRIEF</h4>
+            <p data-lang="pl" style="color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.8;">
+                <strong>IbronEXO</strong> to Twój osobisty, w pełni bezpieczny cyfrowy sejf działający całkowicie offline. Został stworzony z pasji do prywatności, aby chronić Twoje najważniejsze notatki, pliki, zdjęcia i kontakty.<br><br>
+                Aplikacja działa w modelu <strong>Zero-Data</strong> – nie posiada żadnego połączenia z zewnętrznymi serwerami IbronIndustries, nie wysyła Twoich plików w tle i nie wyświetla żadnych reklam.
             </p>
-            <p data-lang="en">
-                > Status: <span class="code">No Recovery Questions.</span><br>
-                > Standard: <span class="code">24-word Mnemonic Seed.</span><br>
-                > <span class="warn">WARNING:</span> During initialization, the system generates a unique phrase. This is the ONLY way to reconstruct the master key if the PIN is lost. <span class="code">IBR has no copy of your phrase.</span> Losing it means it's over.
+            <p data-lang="en" style="color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.8;">
+                <strong>IbronEXO</strong> is your personal, highly secure digital vault operating entirely offline. Built out of passion for privacy, it protects your most vital notes, files, photos, and contacts.<br><br>
+                The application operates on a <strong>Zero-Data</strong> model – it has no connection to external IbronIndustries servers, does not transmit your files in the background, and displays no ads.
             </p>
         </div>
 
@@ -387,30 +416,31 @@
             <div class="feature-box hover-trigger">
                 <h4 data-lang="pl">Multi-Layered Decoy (Wielowarstwowa Iluzja)</h4>
                 <h4 data-lang="en">Multi-Layered Decoy</h4>
-                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Każdy zdefiniowany przez Ciebie PIN otwiera zupełnie inny, automatycznie wygenerowany, realistyczny profil użytkownika. Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
-                <p data-lang="en">EXO doesn't limit you to one fake code. You can create an entire grid of fake identities. Each PIN you define opens a completely different, automatically generated, realistic user profile. An attacker will never know how many layers your fortress has.</p>
+                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Główny PIN otwiera prawdziwe dane. "Decoy PIN" otwiera fałszywy sejf (przydatne w sytuacji wymuszenia). Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
+                <p data-lang="en">EXO doesn't limit you to one fake code. Create a grid of fake identities. The Main PIN opens real data. A "Decoy PIN" opens a fake vault (useful in forced unlock scenarios). An attacker will never know how many layers your fortress has.</p>
             </div>
             <div class="feature-box hover-trigger">
                 <h4 data-lang="pl">Zegar Autodestrukcji</h4>
                 <h4 data-lang="en">Auto-Destruct Timers</h4>
-                <p data-lang="pl">Przypisz plikom licznik czasu. Po jego upływie plik zostaje trwale wymazany z pamięci urządzenia i nadpisany zerami.</p>
-                <p data-lang="en">Assign countdown timers to files. When time expires, the file is permanently wiped from the device's memory and overwritten with zeros.</p>
+                <p data-lang="pl">Przypisz plikom licznik czasu z dokładnością do minuty. Po jego upływie plik zostaje bezpiecznie i trwale wymazany z pamięci urządzenia.</p>
+                <p data-lang="en">Assign countdown timers to files down to the minute. When time expires, the file is securely and permanently wiped from the device's memory.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Gamifikacja Operacyjna</h4>
-                <h4 data-lang="en">Operational Gamification</h4>
-                <p data-lang="pl">Każda akcja wewnątrz systemu to punkty XP. Buduj bazę danych, seryjnie generuj raporty i wbijaj kolejne Poziomy Operatora IBRON.</p>
-                <p data-lang="en">Every action inside the system earns XP. Build your database, generate reports, and level up your IBRON Operator status.</p>
+                <h4 data-lang="pl">Dead Man's Switch & Nuke</h4>
+                <h4 data-lang="en">Dead Man's Switch & Nuke</h4>
+                <p data-lang="pl">Zdefiniuj awaryjny 'Nuke PIN', którego wpisanie zrówna bazę z ziemią. Opcjonalnie włącz odliczanie (np. 30 dni) – jeśli nie wejdziesz do aplikacji przez ten czas, sama zniszczy dane.</p>
+                <p data-lang="en">Define an emergency 'Nuke PIN' to instantly wipe the database. Optionally, enable a countdown (e.g. 30 days) – if you don't log in, the app destroys the data itself.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Tajne Raporty PDF</h4>
-                <h4 data-lang="en">Classified PDF Reports</h4>
-                <p data-lang="pl">Generuj profesjonalne dokumenty operacyjne jednym kliknięciem. Eksportuj dane w formie raportów "Classified", gotowych do przekazania offline.</p>
-                <p data-lang="en">Generate professional operational documents in one click. Export data as "Classified" reports, ready for offline hand-off.</p>
+                <h4 data-lang="pl">Tajne Raporty PDF i Zdjęcia</h4>
+                <h4 data-lang="en">Classified PDF Reports & Media</h4>
+                <p data-lang="pl">Zapisuj zrobione zdjęcia i nagrania lokalnie do sejfu bez pokazywania ich w galerii systemowej. Generuj profesjonalne, operacyjne dokumenty PDF jednym kliknięciem.</p>
+                <p data-lang="en">Save photos and recordings directly to the vault without showing them in your system gallery. Generate professional, operational PDF documents in one click.</p>
             </div>
         </div>
     </div>
 
+    <!-- === CHRONOS === -->
     <div id="chronos" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
@@ -429,14 +459,15 @@
             <h2 data-lang="pl" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h2>
             <h2 data-lang="en" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODULE IN CLOSED BETA TESTING</h2>
             
-            <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany.</p>
-            <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted.</p>
+            <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany przez IbronIndustries.</p>
+            <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted by IbronIndustries.</p>
             
             <div class="loading-bar"><div class="loading-fill"></div></div>
             <p class="blinking-text">> SYSTEM.DEPLOYMENT = PENDING...</p>
         </div>
     </div>
 
+    <!-- === HARDWARE === -->
     <div id="hardware-hub" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
@@ -461,7 +492,7 @@
         </div>
     </div>
 
-    <!-- === ZAKTUALIZOWANA SEKCJA PROTOKOŁÓW === -->
+    <!-- === PROTOKOŁY === -->
     <div id="protocols" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do rdzenia</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Core</button>
