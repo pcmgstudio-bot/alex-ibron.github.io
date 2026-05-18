@@ -146,10 +146,11 @@
         .protocol-rule p { color: var(--text-muted); font-size: 14px; line-height: 1.8; margin: 0; }
 
         /* === TERMINAL BOX === */
-        .terminal-box { background: #0A0F1A; color: #fff; padding: 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; border-top: 3px solid var(--accent); }
-        .terminal-box h4 { color: var(--accent); font-size: 13px; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 15px; }
-        .terminal-box span.code { color: #00e676; }
-        .terminal-box span.warn { color: var(--danger); }
+        .terminal-box { background: #0A0F1A; color: #fff; padding: 35px 30px; border-radius: 16px; border: 1px solid var(--border-color); margin-bottom: 40px; font-family: monospace; border-top: 3px solid var(--accent); position: relative; overflow: hidden; }
+        .terminal-box::before { content: ''; position: absolute; top: 0; left: -100%; width: 50%; height: 100%; background: linear-gradient(90deg, transparent, rgba(0, 240, 255, 0.03), transparent); transform: skewX(-20deg); animation: shine 5s infinite; }
+        .terminal-box h4 { color: var(--accent); font-size: 15px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; font-weight: 900; }
+        .terminal-box span.code { color: #00e676; font-weight: bold; }
+        .terminal-box span.warn { color: var(--danger); font-weight: bold; }
 
         /* === ANIMACJE "W BUDOWIE" === */
         .construction-box { text-align: center; padding: 80px 20px; border: 1px dashed var(--border-color); background: rgba(0, 0, 0, 0.5); border-radius: 20px; margin-top: 20px; position: relative; overflow: hidden; }
@@ -203,6 +204,7 @@
         </div>
     </nav>
 
+    <!-- === HOME === -->
     <div id="home" class="view active">
         <div class="hero-section">
             <div class="live-status">
@@ -333,8 +335,8 @@
             <div class="main-card hover-trigger" onclick="switchView('exo')">
                 <img src="logoexo.png" alt="EXO" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
                 <h2>IbronEXO</h2>
-                <p data-lang="pl">Kryptosejf z BIP-39 Recovery.</p>
-                <p data-lang="en">Crypto-vault with BIP-39 Recovery.</p>
+                <p data-lang="pl">Hermetyczny kryptosejf offline.</p>
+                <p data-lang="en">Hermetic offline crypto-vault.</p>
             </div>
             <div class="main-card hover-trigger" onclick="switchView('chronos')">
                 <img src="logoclock.png" alt="CHR" class="main-logo-img" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=CHR';">
@@ -347,7 +349,7 @@
         </div>
     </div>
 
-    <!-- === IBRON EXO (ZAKTUALIZOWANA KARTA PRODUKTU) === -->
+    <!-- === IBRON EXO (ZAKTUALIZOWANA KARTA PRODUKTU MEGA OPIS) === -->
     <div id="exo" class="view">
         <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('apps-hub')">← Wróć do Aplikacji</button>
         <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('apps-hub')">← Back to Apps</button>
@@ -386,8 +388,8 @@
         </div>
 
         <div class="specs-grid">
-            <div class="spec-item"><span class="spec-label" data-lang="pl">Standard Odzyskiwania</span><span class="spec-label" data-lang="en">Recovery Standard</span><span class="spec-value">BIP-39 (Seed Phrase)</span></div>
-            <div class="spec-item"><span class="spec-label" data-lang="pl">Szyfrowanie</span><span class="spec-label" data-lang="en">Encryption</span><span class="spec-value">AES-256-GCM / Argon2id</span></div>
+            <div class="spec-item"><span class="spec-label" data-lang="pl">Standard Odzyskiwania</span><span class="spec-label" data-lang="en">Recovery Standard</span><span class="spec-value" style="color: var(--danger);">BRAK (Brak Backdoorów)</span></div>
+            <div class="spec-item"><span class="spec-label" data-lang="pl">Szyfrowanie</span><span class="spec-label" data-lang="en">Encryption</span><span class="spec-value">AES-256-GCM</span></div>
             <div class="spec-item"><span class="spec-label" data-lang="pl">Uprawnienia Sieciowe</span><span class="spec-label" data-lang="en">Network Permissions</span><span class="spec-value" style="color: #00e676;">ZERO</span></div>
         </div>
 
@@ -399,43 +401,44 @@
             <div class="screen-card" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen5" src="screen5pl.png" alt="EXO 5"></div>
         </div>
 
+        <!-- MEGA OPIS -->
         <div class="terminal-box">
             <h4 data-lang="pl">> OPIS OPERACYJNY IBRON EXO</h4>
             <h4 data-lang="en">> IBRON EXO OPERATIONAL BRIEF</h4>
             <p data-lang="pl" style="color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.8;">
-                <strong>IbronEXO</strong> to Twój osobisty, w pełni bezpieczny cyfrowy sejf działający całkowicie offline. Został stworzony z pasji do prywatności, aby chronić Twoje najważniejsze notatki, pliki, zdjęcia i kontakty.<br><br>
-                Aplikacja działa w modelu <strong>Zero-Data</strong> – nie posiada żadnego połączenia z zewnętrznymi serwerami IbronIndustries, nie wysyła Twoich plików w tle i nie wyświetla żadnych reklam.
+                <strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf, zaprojektowany do bezkompromisowej ochrony najważniejszych informacji w świecie permanentnej inwigilacji.<br><br>
+                Zbudowany od zera w architekturze <span class="code">offline (Zero-Data)</span>, daje Ci absolutną pewność, że Twoje sekrety – pliki, zdjęcia i dokumenty operacyjne – nigdy nie opuszczą Twojego urządzenia. Brak zewnętrznych serwerów IbronIndustries, brak połączenia z chmurą, zero reklam. Zaledwie Ty i Twoje zaszyfrowane środowisko operacyjne.
             </p>
             <p data-lang="en" style="color: var(--text-muted); font-family: -apple-system, BlinkMacSystemFont, sans-serif; font-size: 15px; line-height: 1.8;">
-                <strong>IbronEXO</strong> is your personal, highly secure digital vault operating entirely offline. Built out of passion for privacy, it protects your most vital notes, files, photos, and contacts.<br><br>
-                The application operates on a <strong>Zero-Data</strong> model – it has no connection to external IbronIndustries servers, does not transmit your files in the background, and displays no ads.
+                <strong>IbronEXO is not just a notepad.</strong> It is your private, hermetic crypto-vault, designed for uncompromising protection of critical information in a world of permanent surveillance.<br><br>
+                Built from the ground up in an <span class="code">offline (Zero-Data)</span> architecture, it gives you absolute certainty that your secrets – files, photos, and operational documents – will never leave your device. No external IbronIndustries servers, no cloud connection, zero ads. Just you and your encrypted operational environment.
             </p>
         </div>
 
         <div class="feature-grid">
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Multi-Layered Decoy (Wielowarstwowa Iluzja)</h4>
-                <h4 data-lang="en">Multi-Layered Decoy</h4>
-                <p data-lang="pl">EXO nie ogranicza Cię do jednego fałszywego kodu. Możesz stworzyć całą siatkę fałszywych tożsamości. Główny PIN otwiera prawdziwe dane. "Decoy PIN" otwiera fałszywy sejf (przydatne w sytuacji wymuszenia). Napastnik nigdy nie dowie się, ile warstw ma Twoja twierdza.</p>
-                <p data-lang="en">EXO doesn't limit you to one fake code. Create a grid of fake identities. The Main PIN opens real data. A "Decoy PIN" opens a fake vault (useful in forced unlock scenarios). An attacker will never know how many layers your fortress has.</p>
+                <h4 data-lang="pl">Protokół "Podwójnego Dna" (Triple PIN)</h4>
+                <h4 data-lang="en">Triple PIN System</h4>
+                <p data-lang="pl">System potrójnego zamka. Główny PIN otwiera prawdziwe dane. W sytuacji zagrożenia użyj <strong>Decoy PIN</strong> – otworzy on całkowicie osobny, fałszywy sejf wypełniony zwykłymi notatkami, tworząc idealny kamuflaż. Trzeci kod, <strong>Nuke PIN</strong>, to ostateczny przycisk paniki, który natychmiast i bezpowrotnie niszczy wszystkie dane.</p>
+                <p data-lang="en">A triple-lock system. The Main PIN opens your real data. In a threat situation, use the <strong>Decoy PIN</strong> – it opens a completely separate, fake vault filled with ordinary notes, creating perfect camouflage. The third code, the <strong>Nuke PIN</strong>, is the ultimate panic button that instantly and permanently destroys all data.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Zegar Autodestrukcji</h4>
-                <h4 data-lang="en">Auto-Destruct Timers</h4>
-                <p data-lang="pl">Przypisz plikom licznik czasu z dokładnością do minuty. Po jego upływie plik zostaje bezpiecznie i trwale wymazany z pamięci urządzenia.</p>
-                <p data-lang="en">Assign countdown timers to files down to the minute. When time expires, the file is securely and permanently wiped from the device's memory.</p>
+                <h4 data-lang="pl">Niewidzialne Multimedia i PDF</h4>
+                <h4 data-lang="en">Stealth Multimedia & PDF</h4>
+                <p data-lang="pl">Wbudowany aparat i dyktafon. Zdjęcia i nagrania audio zapisywane są bezpośrednio w zaszyfrowanej pamięci aplikacji, omijając systemową galerię. Nikt, nawet po odblokowaniu telefonu, nie zobaczy Twoich poufnych plików. Generuj też zaszyfrowane raporty PDF jednym kliknięciem.</p>
+                <p data-lang="en">Built-in camera and voice recorder. Photos and audio recordings are saved directly into the app's encrypted memory, bypassing the system gallery. No one, even after unlocking your phone, will see your confidential files. Generate encrypted PDF reports with one click.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Dead Man's Switch & Nuke</h4>
-                <h4 data-lang="en">Dead Man's Switch & Nuke</h4>
-                <p data-lang="pl">Zdefiniuj awaryjny 'Nuke PIN', którego wpisanie zrówna bazę z ziemią. Opcjonalnie włącz odliczanie (np. 30 dni) – jeśli nie wejdziesz do aplikacji przez ten czas, sama zniszczy dane.</p>
-                <p data-lang="en">Define an emergency 'Nuke PIN' to instantly wipe the database. Optionally, enable a countdown (e.g. 30 days) – if you don't log in, the app destroys the data itself.</p>
+                <h4 data-lang="pl">Znikające Notatki (Timery)</h4>
+                <h4 data-lang="en">Vanishing Notes (Timers)</h4>
+                <p data-lang="pl">Ty ustalasz zasady. Ustaw licznik czasu dla konkretnej notatki lub dokumentu – gdy czas dobiegnie końca, plik bezpiecznie i bezpowrotnie wyparuje z pamięci urządzenia, zostawiając po sobie tylko nadpisane zera.</p>
+                <p data-lang="en">You set the rules. Set a countdown timer for a specific note or document – when time is up, the file securely and permanently vanishes from the device's memory, leaving behind nothing but overwritten zeros.</p>
             </div>
             <div class="feature-box hover-trigger">
-                <h4 data-lang="pl">Tajne Raporty PDF i Zdjęcia</h4>
-                <h4 data-lang="en">Classified PDF Reports & Media</h4>
-                <p data-lang="pl">Zapisuj zrobione zdjęcia i nagrania lokalnie do sejfu bez pokazywania ich w galerii systemowej. Generuj profesjonalne, operacyjne dokumenty PDF jednym kliknięciem.</p>
-                <p data-lang="en">Save photos and recordings directly to the vault without showing them in your system gallery. Generate professional, operational PDF documents in one click.</p>
+                <h4 data-lang="pl">Dead Man's Switch</h4>
+                <h4 data-lang="en">Dead Man's Switch</h4>
+                <p data-lang="pl">Zabezpieczenie na wypadek przejęcia lub utraty urządzenia. Włącz odliczanie (np. na 7, 30 lub 90 dni) – jeśli przez ten czas nie zalogujesz się prawidłowo do aplikacji, IbronEXO automatycznie zrówna całą bazę z ziemią.</p>
+                <p data-lang="en">Protection against device seizure or loss. Enable a countdown (e.g., for 7, 30, or 90 days) – if you don't log into the app successfully during this time, IbronEXO will automatically wipe the entire database.</p>
             </div>
         </div>
     </div>
