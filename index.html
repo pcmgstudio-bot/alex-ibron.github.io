@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" data-theme="cyber">
+<html lang="pl" data-global-theme="cyber">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,66 +12,113 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
 
     <style>
-        /* === SYSTEM ZMIENNYCH (DYNAMICZNA PERSONALIZACJA) === */
+        /* === SYSTEM ZMIENNYCH (GLOBAL THEMES) === */
         :root {
-            --bg-main: #030508;
-            --bg-glass: rgba(10, 15, 25, 0.6);
-            --text-main: #FFFFFF;
-            --text-muted: #8A95A5;
-            
-            --accent: #00F0FF;
-            --accent-rgb: 0, 240, 255;
-            --accent-glow: rgba(var(--accent-rgb), 0.4);
-            
-            --danger: #FF2A2A;
-            --border-glass: rgba(255, 255, 255, 0.08);
-            --border-hover: rgba(var(--accent-rgb), 0.5);
-            
             --font-head: 'Outfit', sans-serif;
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'Space Mono', monospace;
-            --transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+            --transition-theme: background-color 1.5s ease, color 1.5s ease, border-color 1.5s ease, box-shadow 1.5s ease;
+            --transition-hover: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.4s;
+        }
+
+        /* THEME 1: CYBER CORE (DOMYŚLNY) */
+        [data-global-theme="cyber"] {
+            --bg-main: #030508;
+            --bg-glass: rgba(10, 15, 25, 0.6);
+            --bg-card: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
+            --text-main: #FFFFFF;
+            --text-muted: #8A95A5;
+            --accent: #00F0FF;
+            --accent-rgb: 0, 240, 255;
+            --accent-glow: rgba(0, 240, 255, 0.4);
+            --danger: #FF2A2A;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --border-hover: rgba(0, 240, 255, 0.5);
+            --card-radius: 20px;
+        }
+
+        /* THEME 2: BIO-NATURE (JASNY, ROŚLINNY) */
+        [data-global-theme="nature"] {
+            --bg-main: #F4F7F5;
+            --bg-glass: rgba(255, 255, 255, 0.85);
+            --bg-card: linear-gradient(145deg, rgba(255,255,255,1) 0%, rgba(240,245,242,0.9) 100%);
+            --text-main: #1C3322;
+            --text-muted: #5B7A64;
+            --accent: #27AE60;
+            --accent-rgb: 39, 174, 96;
+            --accent-glow: rgba(39, 174, 96, 0.3);
+            --danger: #E74C3C;
+            --border-glass: rgba(39, 174, 96, 0.15);
+            --border-hover: rgba(39, 174, 96, 0.6);
+            --card-radius: 30px; /* Bardziej obłe kształty */
+        }
+
+        /* THEME 3: DEEP SPACE (KOSMOS) */
+        [data-global-theme="space"] {
+            --bg-main: #02010A;
+            --bg-glass: rgba(5, 2, 20, 0.7);
+            --bg-card: linear-gradient(145deg, rgba(30,20,60,0.3) 0%, rgba(10,5,25,0.4) 100%);
+            --text-main: #E6E6FA;
+            --text-muted: #847C9E;
+            --accent: #B026FF;
+            --accent-rgb: 176, 38, 255;
+            --accent-glow: rgba(176, 38, 255, 0.5);
+            --danger: #FF0055;
+            --border-glass: rgba(176, 38, 255, 0.15);
+            --border-hover: rgba(176, 38, 255, 0.8);
+            --card-radius: 20px;
+        }
+
+        /* THEME 4: STEALTH (BRUTALIZM, CZERWIEŃ I CZERŃ) */
+        [data-global-theme="stealth"] {
+            --bg-main: #000000;
+            --bg-glass: rgba(0, 0, 0, 0.9);
+            --bg-card: #050505;
+            --text-main: #FFFFFF;
+            --text-muted: #666666;
+            --accent: #FF0033;
+            --accent-rgb: 255, 0, 51;
+            --accent-glow: rgba(255, 0, 51, 0.6);
+            --danger: #FF9900;
+            --border-glass: #1A1A1A;
+            --border-hover: #FF0033;
+            --card-radius: 0px; /* Ostre, wojskowe krawędzie */
         }
 
         html, body { margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
         * { box-sizing: border-box; cursor: none !important; }
         
-        body { background-color: var(--bg-main); color: var(--text-main); font-family: var(--font-body); line-height: 1.6; }
+        body { 
+            background-color: var(--bg-main); 
+            color: var(--text-main); 
+            font-family: var(--font-body); 
+            line-height: 1.6; 
+            transition: var(--transition-theme);
+        }
+
         h1, h2, h3, h4, .logo-part-1, .logo-part-2 { font-family: var(--font-head); }
-        .gradient-text { background: linear-gradient(135deg, #FFFFFF 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .gradient-text { background: linear-gradient(135deg, var(--text-main) 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; transition: var(--transition-theme); }
 
         /* === DYNAMICZNE TŁA (21 MOTYWÓW) === */
-        .bg-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; transition: opacity 0.5s ease; opacity: 0; }
+        .bg-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; transition: opacity 1.5s ease; opacity: 0; }
         .bg-layer.active { opacity: 1; }
         
         #bg-0 { background: transparent; }
-        #bg-1 { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
-        #bg-2 { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 20px 20px; }
-        #bg-3 { background-image: radial-gradient(rgba(255,255,255,0.1) 1.5px, transparent 1.5px); background-size: 40px 40px; }
-        #bg-4 { background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 15px 15px; }
-        #bg-5 { background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px); }
-        #bg-6 { background: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px); }
-        #bg-7 { background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.02) 15px, rgba(255,255,255,0.02) 30px); }
-        #bg-8 { background: repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255,255,255,0.02) 15px, rgba(255,255,255,0.02) 30px); }
-        #bg-9 { background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.02) 75%, rgba(255,255,255,0.02)), linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.02) 75%, rgba(255,255,255,0.02)); background-size: 40px 40px; background-position: 0 0, 20px 20px; }
-        #bg-10 { background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 1px, transparent 1px), radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 1px, transparent 1px); background-size: 80px 80px; background-position: 0 0, 40px 40px; }
-        #bg-11 { background: radial-gradient(circle, transparent 20%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.02) 80%, transparent 80%, transparent); background-size: 100px 100px; }
-        #bg-12 { background-image: linear-gradient(rgba(0,240,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.05) 1px, transparent 1px); background-size: 50px 50px; }
-        #bg-13 { background: repeating-linear-gradient(45deg, #030508, #030508 5px, #0a0f18 5px, #0a0f18 10px); }
-        #bg-14 { background: repeating-linear-gradient(135deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 10px); }
-        #bg-15 { background-image: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.05) 0%, transparent 50%); background-size: 120px 120px; }
-        #bg-16 { background-image: linear-gradient(0deg, transparent 24%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.03) 26%, transparent 27%, transparent 74%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.03) 26%, transparent 27%, transparent 74%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03) 76%, transparent 77%, transparent); background-size: 50px 50px; }
-        #bg-17 { background: linear-gradient(135deg, rgba(255,255,255,0.02) 25%, transparent 25%) -25px 0, linear-gradient(225deg, rgba(255,255,255,0.02) 25%, transparent 25%) -25px 0, linear-gradient(315deg, rgba(255,255,255,0.02) 25%, transparent 25%), linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%); background-size: 50px 50px; }
-        #bg-18 { background: radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.1) 0%, transparent 30%), radial-gradient(circle at bottom right, rgba(var(--accent-rgb), 0.1) 0%, transparent 30%); }
-        #bg-19 { background-image: repeating-radial-gradient(circle, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 10px, transparent 10px, transparent 20px); }
-        #bg-20 { background-image: repeating-linear-gradient(to right, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 100px), repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 100px); background-size: 100px 100px; }
-
-        .ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 60%); opacity: 0.5; transition: background 0.5s; }
+        #bg-1 { background-image: linear-gradient(var(--border-glass) 1px, transparent 1px), linear-gradient(90deg, var(--border-glass) 1px, transparent 1px); background-size: 60px 60px; }
+        #bg-2 { background-image: radial-gradient(var(--border-glass) 2px, transparent 2px); background-size: 40px 40px; }
+        #bg-3 { background-image: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.05) 0%, transparent 50%); background-size: 150px 150px; }
+        /* Tła dla natury (Liście, czyste) */
+        #bg-nature { background-image: radial-gradient(rgba(39, 174, 96, 0.1) 1px, transparent 1px); background-size: 30px 30px; }
+        #bg-space { background-image: radial-gradient(circle, #E6E6FA 1px, transparent 1px); background-size: 80px 80px; background-position: 0 0, 40px 40px; opacity: 0.3 !important;}
+        
+        /* Pozostałe 15 teł skondensowane w JS dla optymalizacji kodu HTML */
+        
+        .ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 60%); opacity: 0.5; transition: background 1.5s ease; }
 
         /* === CUSTOM KURSOR === */
         #custom-cursor { position: fixed; top: 0; left: 0; width: 24px; height: 24px; border: 1.5px solid var(--accent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999999; transition: width 0.2s, height 0.2s, background 0.2s, border-color 0.2s; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--accent-glow); }
         #custom-cursor::after { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; transition: 0.2s; }
-        #custom-cursor.hover { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
+        #custom-cursor.hover { width: 50px; height: 50px; background: rgba(var(--accent-rgb), 0.1); border-color: rgba(var(--accent-rgb), 0.3); backdrop-filter: blur(4px); }
         #custom-cursor.hover::after { width: 0; height: 0; }
 
         /* === SYSTEM JĘZYKOWY === */
@@ -80,95 +127,89 @@
 
         /* === SPLASH SCREEN === */
         #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #010203; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease, visibility 0.8s; }
-        .arc-core { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent); animation: arcPulse 1s ease-in-out infinite alternate; }
+        .arc-core { width: 20px; height: 20px; background: #00F0FF; border-radius: 50%; box-shadow: 0 0 30px #00F0FF; animation: arcPulse 1s ease-in-out infinite alternate; }
         @keyframes arcPulse { 0% { transform: scale(0.8); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 1; } }
 
+        /* === POPUP WOLNOŚCI (FREEDOM MODAL) === */
+        #freedom-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); z-index: 5000; display: flex; justify-content: center; align-items: center; opacity: 0; visibility: hidden; transition: 0.5s; backdrop-filter: blur(15px); }
+        #freedom-modal.active { opacity: 1; visibility: visible; }
+        .freedom-content { max-width: 600px; text-align: center; border-color: var(--accent) !important; animation: popIn 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
         /* === NAWIGACJA TOP === */
-        nav { position: fixed; top: 0; left: 0; width: 100%; height: 80px; background: var(--bg-glass); backdrop-filter: blur(25px); border-bottom: 1px solid var(--border-glass); z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 80px; background: var(--bg-glass); backdrop-filter: blur(25px); border-bottom: 1px solid var(--border-glass); z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; transition: var(--transition-theme); }
         .logo { display: flex; align-items: center; text-decoration: none; user-select: none; }
-        .logo-part-1 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--text-main); }
-        .logo-part-2 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-left: 5px; transition: color 0.4s;}
+        .logo-part-1 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--text-main); transition: var(--transition-theme);}
+        .logo-part-2 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-left: 5px; transition: var(--transition-theme);}
         
         .nav-controls { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
-        .nav-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: var(--text-main); padding: 10px 20px; border-radius: 30px; font-size: 11px; font-weight: bold; letter-spacing: 1px; transition: var(--transition); display: flex; align-items: center; gap: 8px; text-transform: uppercase;}
-        .nav-btn:hover, .nav-btn.active { border-color: var(--accent); background: rgba(var(--accent-rgb), 0.05); box-shadow: 0 0 20px var(--accent-glow); color: var(--accent);}
+        .nav-btn { background: rgba(128,128,128,0.05); border: 1px solid var(--border-glass); color: var(--text-main); padding: 10px 20px; border-radius: 30px; font-size: 11px; font-weight: bold; letter-spacing: 1px; transition: var(--transition-theme); display: flex; align-items: center; gap: 8px; text-transform: uppercase;}
+        .nav-btn:hover, .nav-btn.active { border-color: var(--accent); background: rgba(var(--accent-rgb), 0.1); box-shadow: 0 0 20px var(--accent-glow); color: var(--accent);}
         .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); transition: 0.3s; }
         .audio-indicator.playing { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
-        /* === SYSTEM WIDOKÓW (PAGES) === */
+        /* === SYSTEM WIDOKÓW === */
         .view-container { padding: 120px 5% 80px; max-width: 1200px; margin: 0 auto; position: relative; }
-        .view { display: none; opacity: 0; transform: translateY(20px); animation: viewFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
-        .view.active { display: block; }
-        @keyframes viewFadeIn { 0% { opacity: 0; transform: translateY(30px) scale(0.98); filter: blur(5px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
+        .view { display: none; opacity: 0; transform: translateY(20px); }
+        .view.active { display: block; animation: viewFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes viewFadeIn { 0% { opacity: 0; transform: translateY(30px); filter: blur(5px); } 100% { opacity: 1; transform: translateY(0); filter: blur(0); } }
 
         /* === WSPÓLNE KOMPONENTY === */
-        .section-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap;}
+        .section-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; transition: var(--transition-theme);}
         .section-header h1 { font-size: clamp(28px, 5vw, 45px); font-weight: 900; text-transform: uppercase; margin: 0; line-height: 1;}
-        .section-badge { font-family: var(--font-mono); color: var(--accent); font-size: 14px; letter-spacing: 2px; }
+        .section-badge { font-family: var(--font-mono); color: var(--accent); font-size: 14px; letter-spacing: 2px; transition: var(--transition-theme); }
 
-        .btn-back { background: transparent; border: 1px solid var(--border-glass); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 30px; transition: var(--transition); }
+        .btn-back { background: transparent; border: 1px solid var(--border-glass); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 30px; transition: var(--transition-theme), var(--transition-hover); }
         .btn-back:hover { border-color: var(--accent); color: var(--text-main); box-shadow: 0 0 15px var(--accent-glow); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px 30px; backdrop-filter: blur(10px); transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; }
-        .glass-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%); opacity: 0; transition: var(--transition); pointer-events: none;}
-        .glass-card:hover { border-color: var(--border-hover); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
+        
+        .glass-card { 
+            background: var(--bg-card); border: 1px solid var(--border-glass); border-radius: var(--card-radius); 
+            padding: 40px 30px; backdrop-filter: blur(10px); 
+            transition: var(--transition-theme), var(--transition-hover); 
+            position: relative; overflow: hidden; display: flex; flex-direction: column; 
+        }
+        .glass-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%); opacity: 0; transition: opacity 0.4s; pointer-events: none;}
+        .glass-card:hover { border-color: var(--border-hover); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
         .glass-card:hover::before { opacity: 0.15; }
         
-        .card-icon { font-size: 40px; color: var(--accent); margin-bottom: 20px; display: inline-block; transition: color 0.4s;}
-        .glass-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; color: var(--text-main); }
-        .glass-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; flex-grow: 1;}
+        .card-icon { font-size: 40px; color: var(--accent); margin-bottom: 20px; display: inline-block; transition: var(--transition-theme);}
+        .glass-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; color: var(--text-main); transition: var(--transition-theme);}
+        .glass-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; flex-grow: 1; transition: var(--transition-theme);}
 
-        .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--text-main); color: var(--bg-main); font-weight: 800; letter-spacing: 1px; padding: 12px 25px; border-radius: 30px; text-decoration: none; transition: var(--transition); border: none; font-size: 12px; text-transform: uppercase; width: max-content; }
-        .btn-primary:hover { background: var(--accent); box-shadow: 0 0 25px var(--accent-glow); transform: scale(1.02); }
+        .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--bg-main); font-weight: 800; letter-spacing: 1px; padding: 12px 25px; border-radius: 30px; text-decoration: none; transition: var(--transition-theme), var(--transition-hover); border: none; font-size: 12px; text-transform: uppercase; width: max-content; }
+        .btn-primary:hover { box-shadow: 0 0 25px var(--accent-glow); transform: scale(1.02); filter: brightness(1.2);}
 
-        .status-tag { position: absolute; top: 20px; right: 20px; padding: 5px 12px; border-radius: 12px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+        .status-tag { position: absolute; top: 20px; right: 20px; padding: 5px 12px; border-radius: 12px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1px; transition: var(--transition-theme);}
         .tag-active { background: rgba(var(--accent-rgb), 0.1); color: var(--accent); border: 1px solid var(--accent); }
         .tag-locked { background: rgba(255, 42, 42, 0.1); color: var(--danger); border: 1px solid var(--danger); }
-        .tag-beta { background: rgba(255, 235, 59, 0.1); color: #ffeb3b; border: 1px solid #ffeb3b; }
 
-        /* === PANEL PERSONALIZACJI (32 KOLORY, 21 TŁA) === */
-        .settings-panel { background: rgba(0,0,0,0.4); border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px; }
-        .settings-group { margin-bottom: 40px; }
-        .settings-group h3 { font-size: 18px; color: var(--text-main); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;}
-        .settings-group h3::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-        
-        .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 15px; }
+        /* === TILE MOTYWÓW GŁÓWNYCH (PRESETY) === */
+        .template-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 20px; margin-bottom: 50px; }
+        .template-card { text-align: center; cursor: none; padding: 30px 20px; border-width: 2px;}
+        .template-card.active { border-color: var(--accent); box-shadow: 0 0 30px var(--accent-glow); transform: scale(1.02); }
+        .template-card h3 { margin-top: 15px; margin-bottom: 5px; font-size: 20px; text-transform: uppercase; letter-spacing: 2px;}
+        .template-card p { font-size: 12px; }
+
+        /* === PANEL ZAAWANSOWANE === */
+        .advanced-panel { background: rgba(128,128,128,0.05); border: 1px solid var(--border-glass); border-radius: var(--card-radius); padding: 40px; transition: var(--transition-theme);}
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(35px, 1fr)); gap: 12px; }
         .color-btn { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 2px solid transparent; transition: 0.3s; position: relative; }
         .color-btn:hover { transform: scale(1.15); z-index: 10;}
-        .color-btn.active { border-color: #fff; box-shadow: 0 0 15px currentColor; transform: scale(1.1); }
+        .color-btn.active { border-color: var(--text-main); box-shadow: 0 0 15px currentColor; transform: scale(1.1); }
         
-        .bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
-        .bg-btn { padding: 12px; border: 1px solid var(--border-glass); background: rgba(255,255,255,0.02); color: var(--text-muted); border-radius: 8px; font-family: var(--font-mono); font-size: 11px; transition: var(--transition); text-align: center; }
+        .bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); gap: 10px; }
+        .bg-btn { padding: 10px; border: 1px solid var(--border-glass); background: transparent; color: var(--text-muted); border-radius: 8px; font-family: var(--font-mono); font-size: 10px; transition: var(--transition-theme); text-align: center; }
         .bg-btn.active, .bg-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
 
         /* === DETALE KONTENTU === */
-        .terminal-box { background: rgba(0,0,0,0.6); color: #fff; padding: 40px; border-radius: 20px; border: 1px solid var(--border-glass); margin: 40px 0; font-family: var(--font-mono); border-top: 3px solid var(--accent); }
-        .terminal-box h4 { color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; }
-        .terminal-box .code { color: #00e676; font-weight: bold; }
+        .terminal-box { background: rgba(128,128,128,0.05); color: var(--text-main); padding: 40px; border-radius: var(--card-radius); border: 1px solid var(--border-glass); margin: 40px 0; font-family: var(--font-mono); border-top: 3px solid var(--accent); transition: var(--transition-theme);}
+        .terminal-box h4 { color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; transition: var(--transition-theme);}
+        .terminal-box .code { color: var(--accent); font-weight: bold; }
         
-        .app-metadata { display: flex; flex-wrap: wrap; gap: 15px; margin: 30px 0; padding-bottom: 30px; border-bottom: 1px solid var(--border-glass); }
-        .meta-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-glass); }
-        
-        .showcase-gallery { display: flex; gap: 20px; overflow-x: auto; padding: 10px 5px 30px; scroll-snap-type: x mandatory; }
-        .showcase-gallery::-webkit-scrollbar { height: 6px; }
-        .showcase-gallery::-webkit-scrollbar-thumb { background: var(--border-hover); border-radius: 10px; }
-        .screen-card { min-width: 250px; height: 500px; background: #000; border-radius: 20px; border: 1px solid var(--border-glass); overflow: hidden; scroll-snap-align: start; }
-        .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; opacity: 0.7; }
-        .screen-card:hover img { opacity: 1; transform: scale(1.05); }
-
-        .protocol-rule { margin-bottom: 30px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--border-glass); }
-        .protocol-rule h4 { color: var(--accent); margin-bottom: 15px; font-size: 18px; text-transform: uppercase;}
-
-        .construction-box { text-align: center; padding: 60px 30px; border: 1px dashed var(--border-glass); background: rgba(0, 0, 0, 0.4); border-radius: 20px; margin-top: 30px; }
-        .loading-bar { width: 100%; max-width: 400px; height: 4px; background: rgba(255,255,255,0.1); margin: 30px auto 10px; border-radius: 2px; overflow: hidden;}
-        .loading-fill { width: 30%; height: 100%; background: var(--accent); animation: scan 2s ease-in-out infinite alternate; box-shadow: 0 0 10px var(--accent); }
-        @keyframes scan { 0% { transform: translateX(-50%); width: 20%; } 100% { transform: translateX(350%); width: 20%; } }
-
-        /* Timer Beta */
-        .beta-timer-box { background: rgba(var(--accent-rgb), 0.05); border: 1px solid var(--accent); padding: 20px; border-radius: 16px; margin: 30px 0; font-family: var(--font-mono); text-align: center;}
-        .beta-timer-box h3 { color: var(--accent); font-size: 14px; margin-bottom: 15px; letter-spacing: 2px; }
-        .timer-display { font-size: clamp(20px, 4vw, 35px); font-weight: 700; color: #fff; text-shadow: 0 0 15px var(--accent-glow); display: flex; justify-content: center; gap: 15px;}
+        .beta-timer-box { background: rgba(var(--accent-rgb), 0.05); border: 1px solid var(--accent); padding: 30px; border-radius: var(--card-radius); margin: 30px 0; font-family: var(--font-mono); text-align: center; transition: var(--transition-theme);}
+        .timer-display { font-size: clamp(25px, 5vw, 45px); font-weight: 700; color: var(--text-main); text-shadow: 0 0 15px var(--accent-glow); display: flex; justify-content: center; gap: 15px; margin-top: 15px;}
         .timer-unit { display: flex; flex-direction: column; align-items: center; }
         .timer-label { font-size: 10px; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
 
@@ -185,12 +226,36 @@
 
     <!-- DYNAMICZNE TŁA -->
     <div id="bg-layers-container">
-        <!-- Generowane przez JS -->
+        <!-- Warstwy generowane w JS -->
     </div>
     <div class="ambient-glow"></div>
 
     <div id="custom-cursor"></div>
     <div id="splash-screen"><div class="arc-core"></div></div>
+
+    <!-- POPUP WOLNOŚCI -->
+    <div id="freedom-modal">
+        <div class="glass-card freedom-content" style="padding: 60px 40px;">
+            <div class="card-icon" style="font-size: 60px; animation: pulse 2s infinite;">⚙</div>
+            <h2 class="gradient-text" data-lang="pl" style="font-size: 30px; margin-bottom: 15px;">PROTOKÓŁ WOLNOŚCI ZAINICJOWANY</h2>
+            <h2 class="gradient-text" data-lang="en" style="font-size: 30px; margin-bottom: 15px;">FREEDOM PROTOCOL INITIATED</h2>
+            <p data-lang="pl" style="font-size: 16px; margin-bottom: 40px; color: var(--text-muted);">
+                Wchodzisz w strefę absolutnej kontroli. Odrzucamy narzucone ramy i korporacyjne wytyczne. Tutaj możesz się bawić, zmieniać i kształtować to środowisko całkowicie pod siebie. Wybierz swój klimat.
+            </p>
+            <p data-lang="en" style="font-size: 16px; margin-bottom: 40px; color: var(--text-muted);">
+                You are entering the zone of absolute control. We reject imposed frameworks. Here you can play, change, and shape this environment entirely to your liking. Choose your vibe.
+            </p>
+            <button class="btn-primary hover-trigger" onclick="closeFreedomModal()" style="font-size: 16px; padding: 15px 40px;">
+                <span data-lang="pl">PRZEJMIJ KONTROLĘ</span><span data-lang="en">TAKE CONTROL</span>
+            </button>
+        </div>
+    </div>
+
+    <!-- AUDIO SYSTEM (4 TRACKS) -->
+    <audio id="music-cyber" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
+    <audio id="music-nature" loop><source src="b2-music.mp3" type="audio/mpeg"></audio>
+    <audio id="music-space" loop><source src="b3-music.mp3" type="audio/mpeg"></audio>
+    <audio id="music-stealth" loop><source src="b4-music.mp3" type="audio/mpeg"></audio>
 
     <!-- NAWIGACJA -->
     <nav>
@@ -198,7 +263,7 @@
             <span class="logo-part-1">IBRON</span><span class="logo-part-2">INDUSTRIES</span>
         </a>
         <div class="nav-controls">
-            <button class="nav-btn hover-trigger" onclick="switchView('personalize')">
+            <button class="nav-btn hover-trigger" onclick="openPersonalize()">
                 <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 <span data-lang="pl">UI System</span><span data-lang="en">UI System</span>
             </button>
@@ -211,23 +276,21 @@
         </div>
     </nav>
 
-    <audio id="bg-music" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
-
     <div class="view-container">
 
         <!-- ========================================== -->
-        <!-- WIDOK 1: STRONA GŁÓWNA (DASHBOARD HUB) -->
+        <!-- WIDOK 1: STRONA GŁÓWNA -->
         <!-- ========================================== -->
         <div id="home" class="view active">
             <div style="text-align: center; padding: 40px 0 60px;">
-                <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 8px 20px; border-radius: 30px; font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 20px;">
+                <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 8px 20px; border-radius: 30px; font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 20px; transition: var(--transition-theme);">
                     <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
                     ENCRYPTION: AES-256-GCM // SHIELD: ACTIVE
                 </div>
                 <h1 data-lang="pl" style="font-size: clamp(40px, 7vw, 80px); line-height: 1.1; margin-bottom: 20px;">Odzyskaj <span class="gradient-text">kontrolę.</span></h1>
                 <h1 data-lang="en" style="font-size: clamp(40px, 7vw, 80px); line-height: 1.1; margin-bottom: 20px;">Regain <span class="gradient-text">Control.</span></h1>
-                <p data-lang="pl" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.</p>
-                <p data-lang="en" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Decentralized engineering software. Zero telemetry, absolute privacy.</p>
+                <p data-lang="pl" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto; transition: var(--transition-theme);">Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.</p>
+                <p data-lang="en" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto; transition: var(--transition-theme);">Decentralized engineering software. Zero telemetry, absolute privacy.</p>
             </div>
 
             <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); text-align: center;">
@@ -246,7 +309,7 @@
                 <div class="glass-card hover-trigger" onclick="switchView('contact')" style="align-items: center;">
                     <div class="card-icon">✉</div><h3 data-lang="pl">KONTAKT</h3><h3 data-lang="en">CONTACT</h3>
                 </div>
-                <div class="glass-card hover-trigger" onclick="switchView('personalize')" style="align-items: center; border-color: var(--accent);">
+                <div class="glass-card hover-trigger" onclick="openPersonalize()" style="align-items: center; border-color: var(--accent);">
                     <div class="status-tag tag-active">NEW</div>
                     <div class="card-icon">⚙</div><h3 data-lang="pl">SYSTEM UI</h3><h3 data-lang="en">SYSTEM UI</h3>
                 </div>
@@ -254,35 +317,61 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- WIDOK 2: PERSONALIZACJA (32 KOLORY, 21 TŁA)-->
+        <!-- WIDOK 2: PERSONALIZACJA (MASTER TEMPLATES + OVERRIDES)-->
         <!-- ========================================== -->
         <div id="personalize" class="view">
             <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
                 <div><h1 class="gradient-text">UI Framework</h1></div>
-                <div class="section-badge">SYS.PREFS_V1</div>
+                <div class="section-badge">SYS.PREFS_V2</div>
             </div>
 
-            <div class="glass-card" style="margin-bottom: 40px;">
-                <p data-lang="pl" style="font-size: 16px;"><strong>W Ibron Industries to Ty masz pełną kontrolę nad środowiskiem pracy.</strong><br>Ten panel to nasza wizja wolności – wybierz 1 z 32 barw akcentu oraz 1 z 21 topografii cyfrowego płótna.</p>
-                <p data-lang="en" style="font-size: 16px;"><strong>At Ibron Industries, you have full control over your environment.</strong><br>This panel is our vision of freedom – choose 1 of 32 accent colors and 1 of 21 digital canvas topographies.</p>
+            <div style="margin-bottom: 40px; text-align: center;">
+                <h2 data-lang="pl" style="font-size: 24px; margin-bottom: 15px;">GOTOWE SCHEMATY (MASTER TEMPLATES)</h2>
+                <h2 data-lang="en" style="font-size: 24px; margin-bottom: 15px;">READY SCHEMAS (MASTER TEMPLATES)</h2>
+                <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Wybierz jeden z przygotowanych przez nas motywów globalnych. Każdy z nich oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.</p>
+                <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto;">Choose one of our global themes. Each offers a unique soundtrack and a complete UI overhaul.</p>
             </div>
 
-            <div class="settings-panel">
-                <div class="settings-group">
-                    <h3 data-lang="pl">Główny Akcent Systemowy (32 Opcje)</h3>
-                    <h3 data-lang="en">Primary System Accent (32 Options)</h3>
-                    <div class="color-grid" id="color-grid-container">
-                        <!-- Generowane w JS (32 kolory) -->
-                    </div>
+            <div class="template-grid">
+                <div class="glass-card template-card active hover-trigger" id="tpl-cyber" onclick="applyMasterTheme('cyber', this)">
+                    <div class="card-icon" style="color: #00F0FF;">⎔</div>
+                    <h3>CYBER CORE</h3>
+                    <p data-lang="pl">Domyślny. Szkło, neon i mrok.</p><p data-lang="en">Default. Glass, neon, and dark.</p>
+                </div>
+                <div class="glass-card template-card hover-trigger" id="tpl-nature" onclick="applyMasterTheme('nature', this)">
+                    <div class="card-icon" style="color: #27AE60;">✿</div>
+                    <h3>BIO-NATURE</h3>
+                    <p data-lang="pl">Światło, zieleń i organiczne formy.</p><p data-lang="en">Light, green, and organic forms.</p>
+                </div>
+                <div class="glass-card template-card hover-trigger" id="tpl-space" onclick="applyMasterTheme('space', this)">
+                    <div class="card-icon" style="color: #B026FF;">✧</div>
+                    <h3>DEEP SPACE</h3>
+                    <p data-lang="pl">Kosmiczna otchłań, gwiezdny pył.</p><p data-lang="en">Cosmic void, stardust.</p>
+                </div>
+                <div class="glass-card template-card hover-trigger" id="tpl-stealth" onclick="applyMasterTheme('stealth', this)">
+                    <div class="card-icon" style="color: #FF0033;">✖</div>
+                    <h3>STEALTH</h3>
+                    <p data-lang="pl">Czerń, brutalizm, czerwień.</p><p data-lang="en">Pitch black, brutalism, crimson.</p>
+                </div>
+            </div>
+
+            <div class="advanced-panel">
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h3 data-lang="pl" style="font-size: 18px; color: var(--text-muted); letter-spacing: 2px;">ZAAWANSOWANE NADAWANIE BARW (OVERRIDES)</h3>
+                    <h3 data-lang="en" style="font-size: 18px; color: var(--text-muted); letter-spacing: 2px;">ADVANCED COLOR OVERRIDES</h3>
+                </div>
+                
+                <div style="margin-bottom: 40px;">
+                    <p data-lang="pl" style="font-size: 14px; margin-bottom: 15px;">Akcent Systemowy (32 kolory):</p>
+                    <p data-lang="en" style="font-size: 14px; margin-bottom: 15px;">System Accent (32 colors):</p>
+                    <div class="color-grid" id="color-grid-container"></div>
                 </div>
 
-                <div class="settings-group">
-                    <h3 data-lang="pl">Struktura Tła (21 Opcji)</h3>
-                    <h3 data-lang="en">Background Structure (21 Options)</h3>
-                    <div class="bg-grid" id="bg-grid-container">
-                        <!-- Generowane w JS (21 Tła) -->
-                    </div>
+                <div>
+                    <p data-lang="pl" style="font-size: 14px; margin-bottom: 15px;">Struktura Tła (21 motywów):</p>
+                    <p data-lang="en" style="font-size: 14px; margin-bottom: 15px;">Background Structure (21 themes):</p>
+                    <div class="bg-grid" id="bg-grid-container"></div>
                 </div>
             </div>
         </div>
@@ -332,7 +421,7 @@
                 <!-- EXO -->
                 <div class="glass-card hover-trigger" style="border-color: var(--accent);">
                     <div class="status-tag tag-active">NOWE | ANDROID</div>
-                    <img src="logoexo.png" alt="EXO" style="width: 80px; height: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-glow));" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
+                    <img src="logoexo.png" alt="EXO" style="width: 80px; height: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-glow)); transition: var(--transition-theme);" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
                     <h3 style="font-size: 28px;">Ibron<span class="gradient-text">EXO.</span></h3>
                     <p data-lang="pl">Hermetyczny kryptosejf offline.</p><p data-lang="en">Hermetic offline crypto-vault.</p>
                     <button class="btn-primary hover-trigger" onclick="switchView('app-exo')"><span data-lang="pl">Czytaj więcej</span><span data-lang="en">Read more</span></button>
@@ -344,11 +433,10 @@
                     <img src="logoclock.png" alt="CHR" style="width: 80px; height: 80px; margin-bottom: 20px; filter: grayscale(1);" onerror="this.src='https://via.placeholder.com/80/000/8A95A5?text=CHR';">
                     <h3 style="font-size: 28px;">IbronCHRONOS</h3>
                     <p data-lang="pl">Silnik zarządzania operacyjnego.</p><p data-lang="en">Operational management engine.</p>
-                    <button class="btn-primary hover-trigger" onclick="switchView('app-chronos')" style="background: rgba(255,255,255,0.1);"><span data-lang="pl">Sprawdź status</span><span data-lang="en">Check status</span></button>
+                    <button class="btn-primary hover-trigger" onclick="switchView('app-chronos')" style="background: var(--border-glass);"><span data-lang="pl">Czytaj więcej</span><span data-lang="en">Read more</span></button>
                 </div>
 
                 <!-- 8 ZABLOKOWANYCH MODUŁÓW -->
-                <!-- Generujemy 8 takich samych bloków by zachować symetrię -->
                 <script>
                     for(let i=0; i<8; i++) {
                         document.write(`
@@ -378,10 +466,10 @@
                 <img src="logoexo.png" alt="EXO" style="width: 100px; height: 100px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: 20px; padding: 15px;" onerror="this.src='https://via.placeholder.com/100/000/00F0FF?text=EXO';">
             </div>
 
-            <!-- LICZNIK BETA -->
+            <!-- LICZNIK BETA Z PRAWDZIWYM CZASEM -->
             <div class="beta-timer-box hover-trigger">
-                <h3 data-lang="pl">>> FAZA ZAMKNIĘTYCH TESTÓW (CLOSED BETA) <<</h3>
-                <h3 data-lang="en">>> CLOSED BETA TESTING PHASE <<</h3>
+                <h3 data-lang="pl" style="color: var(--accent); margin-bottom: 15px; font-size: 14px;">>> FAZA ZAMKNIĘTYCH TESTÓW (CLOSED BETA) <<</h3>
+                <h3 data-lang="en" style="color: var(--accent); margin-bottom: 15px; font-size: 14px;">>> CLOSED BETA TESTING PHASE <<</h3>
                 <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;">
                     Started: May 19, 2026 at 01:18 PM <br> Expected End: June 02, 2026 at 01:18 PM
                 </p>
@@ -402,11 +490,11 @@
             <div class="terminal-box hover-trigger">
                 <h4 data-lang="pl">> OPIS OPERACYJNY IBRON EXO</h4>
                 <h4 data-lang="en">> IBRON EXO OPERATIONAL BRIEF</h4>
-                <p data-lang="pl" style="color: var(--text-muted); font-size: 15px; line-height: 1.8;">
+                <p data-lang="pl" style="color: var(--text-main); font-size: 15px; line-height: 1.8;">
                     <strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf, zaprojektowany do bezkompromisowej ochrony Twoich tekstowych informacji w świecie permanentnej inwigilacji.<br><br>
                     Zbudowany od zera w architekturze <span class="code">offline (Zero-Data)</span>, daje Ci absolutną pewność, że Twoje sekrety nigdy nie opuszczą Twojego urządzenia. Brak zewnętrznych serwerów IbronIndustries, brak aparatu, brak połączenia z chmurą, zero reklam. Zaledwie Ty i Twoje szyfrowane notatki.
                 </p>
-                <p data-lang="en" style="color: var(--text-muted); font-size: 15px; line-height: 1.8;">
+                <p data-lang="en" style="color: var(--text-main); font-size: 15px; line-height: 1.8;">
                     <strong>IbronEXO is not just a notepad.</strong> It is your private, hermetic crypto-vault, designed for uncompromising protection of your text information in a world of permanent surveillance.<br><br>
                     Built from the ground up in an <span class="code">offline (Zero-Data)</span> architecture, it gives you absolute certainty that your secrets will never leave your device. No external IbronIndustries servers, no camera access, no cloud connection, zero ads. Just you and your encrypted notes.
                 </p>
@@ -458,8 +546,8 @@
                 <div class="card-icon" style="font-size: 60px;">⎔</div>
                 <h2 data-lang="pl" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h2>
                 <h2 data-lang="en" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODULE IN CLOSED BETA TESTING</h2>
-                <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany przez IbronIndustries.</p>
-                <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted by IbronIndustries.</p>
+                <p data-lang="pl" style="color: var(--text-main); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany przez IbronIndustries.</p>
+                <p data-lang="en" style="color: var(--text-main); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted by IbronIndustries.</p>
                 <div class="loading-bar"><div class="loading-fill"></div></div>
                 <p style="font-family: var(--font-mono); color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-top: 15px;">> SYSTEM.DEPLOYMENT = PENDING...</p>
             </div>
@@ -478,8 +566,8 @@
                 <div class="card-icon" style="font-size: 60px; color: var(--accent);">⏣</div>
                 <h2 data-lang="pl" style="margin-bottom: 20px; font-weight: 900; letter-spacing: 2px;">PROJEKTY FIZYCZNE</h2>
                 <h2 data-lang="en" style="margin-bottom: 20px; font-weight: 900; letter-spacing: 2px;">PHYSICAL PROJECTS</h2>
-                <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa pod szyldem IbronIndustries. Szczegóły tajne.</p>
-                <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Decentralized software requires independent hardware. We are building physical security tokens under the IbronIndustries brand. Details classified.</p>
+                <p data-lang="pl" style="color: var(--text-main); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa pod szyldem IbronIndustries. Szczegóły tajne.</p>
+                <p data-lang="en" style="color: var(--text-main); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Decentralized software requires independent hardware. We are building physical security tokens under the IbronIndustries brand. Details classified.</p>
                 <div class="loading-bar"><div class="loading-fill" style="animation-duration: 4s;"></div></div>
                 <p style="font-family: var(--font-mono); color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-top: 15px;">> HARDWARE.DESIGN = IN_PROGRESS...</p>
             </div>
@@ -585,7 +673,7 @@
                 splash.style.opacity = '0';
                 setTimeout(() => splash.style.display = 'none', 800); 
             }, 1000); 
-            initUIFramework(); // inicjalizacja kolorów i tła
+            initUIFramework(); 
         });
 
         /* === SYSTEM WIDOKÓW (ZAKŁADKI) === */
@@ -601,7 +689,93 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* === SYSTEM PERSONALIZACJI UI (32 KOLORY, 21 TŁA) === */
+        /* === SYSTEM WOLNOŚCI (POPUP) === */
+        let freedomModalShown = false;
+        function openPersonalize() {
+            switchView('personalize');
+            if(!freedomModalShown) {
+                document.getElementById('freedom-modal').classList.add('active');
+            }
+        }
+        function closeFreedomModal() {
+            document.getElementById('freedom-modal').classList.remove('active');
+            freedomModalShown = true;
+            // Jeśli muzyka nie grała, odpalamy dla domyślnego motywu
+            if(!isMusicPlaying) toggleMusic();
+        }
+
+        /* === AUDIO CROSSFADER (GŁÓWNY SILNIK) === */
+        const tracks = {
+            'cyber': document.getElementById('music-cyber'),
+            'nature': document.getElementById('music-nature'),
+            'space': document.getElementById('music-space'),
+            'stealth': document.getElementById('music-stealth')
+        };
+        let currentAudioTheme = 'cyber';
+        let isMusicPlaying = false;
+        let fadeInterval = null;
+
+        function toggleMusic() {
+            const currentTrack = tracks[currentAudioTheme];
+            const audioIndicator = document.getElementById('audio-dot');
+            if (isMusicPlaying) { 
+                currentTrack.pause(); 
+                audioIndicator.classList.remove('playing'); 
+            } else { 
+                currentTrack.volume = 0.2; 
+                currentTrack.play().catch(e => console.log("Audio zablokowane")); 
+                audioIndicator.classList.add('playing'); 
+            }
+            isMusicPlaying = !isMusicPlaying;
+        }
+
+        function crossfadeAudio(newThemeId) {
+            if(!isMusicPlaying) {
+                currentAudioTheme = newThemeId; // Jeśli wyciszone, po prostu zmień referencję
+                return;
+            }
+            const oldTrack = tracks[currentAudioTheme];
+            const newTrack = tracks[newThemeId];
+            if(oldTrack === newTrack) return;
+
+            if(fadeInterval) clearInterval(fadeInterval);
+            
+            newTrack.volume = 0;
+            newTrack.play().catch(e => {});
+            
+            let step = 0.02;
+            fadeInterval = setInterval(() => {
+                if(oldTrack && oldTrack.volume > step) oldTrack.volume -= step;
+                if(newTrack.volume < 0.2 - step) newTrack.volume += step;
+                else {
+                    if(oldTrack) oldTrack.pause();
+                    newTrack.volume = 0.2;
+                    currentAudioTheme = newThemeId;
+                    clearInterval(fadeInterval);
+                }
+            }, 100);
+        }
+
+        /* === GLOBAL THEMES (MASTER TEMPLATES) === */
+        function applyMasterTheme(themeId, btnElement) {
+            // Zmiana klasyków CSS
+            document.documentElement.setAttribute('data-global-theme', themeId);
+            
+            // Wizualna aktualizacja buttonów
+            document.querySelectorAll('.template-card').forEach(c => c.classList.remove('active'));
+            btnElement.classList.add('active');
+
+            // Podmiana tła (wymusza dedykowane tła)
+            if(themeId === 'cyber') setBg('bg-1', null);
+            if(themeId === 'nature') setBg('bg-nature', null);
+            if(themeId === 'space') setBg('bg-space', null);
+            if(themeId === 'stealth') setBg('bg-0', null); // czyste tło stealth
+
+            // Płynna zmiana muzyki
+            crossfadeAudio(themeId);
+        }
+
+        /* === SYSTEM PERSONALIZACJI UI (32 KOLORY, 21 TŁA OVERRIDES) === */
         const colors = [
             { hex: '#00F0FF', rgb: '0, 240, 255' }, { hex: '#00FF41', rgb: '0, 255, 65' }, { hex: '#FF9900', rgb: '255, 153, 0' }, { hex: '#FF2A2A', rgb: '255, 42, 42' }, 
             { hex: '#B026FF', rgb: '176, 38, 255' }, { hex: '#FFFFFF', rgb: '255, 255, 255' }, { hex: '#FF0055', rgb: '255, 0, 85' }, { hex: '#00FF9D', rgb: '0, 255, 157' },
@@ -615,55 +789,59 @@
 
         const backgrounds = [
             { id: 'bg-0', pl: 'Czyste (Clean)', en: 'Clean Minimal' }, { id: 'bg-1', pl: 'Siatka Szeroka', en: 'Large Grid' }, { id: 'bg-2', pl: 'Siatka Gęsta', en: 'Dense Grid' },
-            { id: 'bg-3', pl: 'Kropki Duże', en: 'Large Dots' }, { id: 'bg-4', pl: 'Kropki Małe', en: 'Small Dots' }, { id: 'bg-5', pl: 'Linie Poziome', en: 'Horizontal Lines' },
+            { id: 'bg-3', pl: 'Rozbłysk Centrum', en: 'Center Flare' }, { id: 'bg-4', pl: 'Drobne Kropki', en: 'Micro Dots' }, { id: 'bg-5', pl: 'Linie Poziome', en: 'Horizontal Lines' },
             { id: 'bg-6', pl: 'Linie Pionowe', en: 'Vertical Lines' }, { id: 'bg-7', pl: 'Skosy Prawe', en: 'Right Diagonals' }, { id: 'bg-8', pl: 'Skosy Lewe', en: 'Left Diagonals' },
-            { id: 'bg-9', pl: 'Krzyżyki (Crosshatch)', en: 'Crosshatch' }, { id: 'bg-10', pl: 'Podwójne Okręgi', en: 'Double Circles' }, { id: 'bg-11', pl: 'Radar', en: 'Radar Pattern' },
+            { id: 'bg-9', pl: 'Krzyżyki', en: 'Crosshatch' }, { id: 'bg-10', pl: 'Podwójne Okręgi', en: 'Double Circles' }, { id: 'bg-11', pl: 'Radar', en: 'Radar Pattern' },
             { id: 'bg-12', pl: 'Matryca', en: 'Matrix Grid' }, { id: 'bg-13', pl: 'Carbon Fiber', en: 'Carbon Fiber' }, { id: 'bg-14', pl: 'Deszcz Danych', en: 'Data Rain' },
-            { id: 'bg-15', pl: 'Rozbłysk', en: 'Central Flare' }, { id: 'bg-16', pl: 'Układ Scalony', en: 'Circuit Board' }, { id: 'bg-17', pl: 'Labirynt', en: 'Labyrinth' },
-            { id: 'bg-18', pl: 'Narożniki', en: 'Corner Glow' }, { id: 'bg-19', pl: 'Fale (Waves)', en: 'Radial Waves' }, { id: 'bg-20', pl: 'Wykres', en: 'Graph Paper' }
+            { id: 'bg-15', pl: 'Wielki Krąg', en: 'Giant Ring' }, { id: 'bg-16', pl: 'Układ Scalony', en: 'Circuit Board' }, { id: 'bg-17', pl: 'Labirynt', en: 'Labyrinth' },
+            { id: 'bg-18', pl: 'Narożniki', en: 'Corner Glow' }, { id: 'bg-19', pl: 'Fale', en: 'Radial Waves' }, { id: 'bg-20', pl: 'Wykres', en: 'Graph Paper' }
         ];
 
         function initUIFramework() {
-            // Render Kolorów
             const colorGrid = document.getElementById('color-grid-container');
             let colorHtml = '';
-            colors.forEach((c, index) => {
-                const activeClass = index === 0 ? 'active' : '';
-                colorHtml += `<button class="color-btn ${activeClass} hover-trigger" style="background: ${c.hex}; color: ${c.hex};" onclick="setAccent('${c.rgb}', '${c.hex}', this)"></button>`;
+            colors.forEach((c) => {
+                colorHtml += `<button class="color-btn hover-trigger" style="background: ${c.hex}; color: ${c.hex};" onclick="setAccentOverride('${c.rgb}', '${c.hex}', this)"></button>`;
             });
             colorGrid.innerHTML = colorHtml;
 
-            // Render Teł
             const bgContainer = document.getElementById('bg-layers-container');
             const bgBtnGrid = document.getElementById('bg-grid-container');
-            let layersHtml = '';
+            
+            // Dodanie ukrytych warstw teł głównych motywów
+            bgContainer.innerHTML = `<div class="bg-layer active" id="bg-1"></div><div class="bg-layer" id="bg-nature"></div><div class="bg-layer" id="bg-space"></div>`;
+            
+            let layersHtml = bgContainer.innerHTML;
             let btnsHtml = '';
             
-            backgrounds.forEach((bg, index) => {
-                const activeClass = index === 1 ? 'active' : ''; // Domyślnie bg-1
-                layersHtml += `<div class="bg-layer ${activeClass}" id="${bg.id}"></div>`;
-                btnsHtml += `<button class="bg-btn ${activeClass} hover-trigger" onclick="setBg('${bg.id}', this)"><span data-lang="pl">${bg.pl}</span><span data-lang="en">${bg.en}</span></button>`;
+            backgrounds.forEach((bg) => {
+                if(bg.id !== 'bg-1') { // bg-1 już dodany
+                    layersHtml += `<div class="bg-layer" id="${bg.id}"></div>`;
+                }
+                btnsHtml += `<button class="bg-btn hover-trigger" onclick="setBg('${bg.id}', this)"><span data-lang="pl">${bg.pl}</span><span data-lang="en">${bg.en}</span></button>`;
             });
             
             bgContainer.innerHTML = layersHtml;
             bgBtnGrid.innerHTML = btnsHtml;
-            
-            // Re-bind hover sounds for new elements
             bindHoverTriggers();
         }
 
-        function setAccent(rgbValue, hexValue, btnElement) {
+        function setAccentOverride(rgbValue, hexValue, btnElement) {
             document.documentElement.style.setProperty('--accent', hexValue);
             document.documentElement.style.setProperty('--accent-rgb', rgbValue);
             document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
+            if(btnElement) btnElement.classList.add('active');
         }
 
         function setBg(bgId, btnElement) {
             document.querySelectorAll('.bg-layer').forEach(layer => layer.classList.remove('active'));
-            document.getElementById(bgId).classList.add('active');
-            document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
-            btnElement.classList.add('active');
+            const target = document.getElementById(bgId);
+            if(target) target.classList.add('active');
+            
+            if(btnElement) {
+                document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
+                btnElement.classList.add('active');
+            }
         }
 
         /* === ODLICZANIE DO ZAKOŃCZENIA TESTÓW BETA (EXO) === */
@@ -701,17 +879,14 @@
 
         function bindHoverTriggers() {
             document.querySelectorAll('.hover-trigger').forEach(el => {
-                // Zapobiegamy dublowaniu event listenerów
                 el.removeEventListener('mouseenter', handleMouseEnter);
                 el.removeEventListener('mouseleave', handleMouseLeave);
-                
                 el.addEventListener('mouseenter', handleMouseEnter);
                 el.addEventListener('mouseleave', handleMouseLeave);
             });
         }
         function handleMouseEnter() { cursor.classList.add('hover'); }
         function handleMouseLeave() { cursor.classList.remove('hover'); }
-        bindHoverTriggers(); // Wywołanie na start
 
         /* === JĘZYK === */
         let currentLang = 'pl';
@@ -723,28 +898,6 @@
                 const base = img.getAttribute('data-base');
                 img.src = currentLang === 'pl' ? base + "pl.png" : base + ".png";
             });
-        }
-
-        /* === AUDIO === */
-        const bgMusic = document.getElementById('bg-music');
-        const audioIndicator = document.getElementById('audio-dot');
-        let isMusicPlaying = false;
-        let userInteracted = false;
-
-        document.body.addEventListener('click', () => {
-            if(!userInteracted && !isMusicPlaying) { toggleMusic(); userInteracted = true; }
-        }, { once: true });
-
-        function toggleMusic() {
-            if (isMusicPlaying) { 
-                bgMusic.pause(); 
-                audioIndicator.classList.remove('playing'); 
-            } else { 
-                bgMusic.volume = 0.2; 
-                bgMusic.play().catch(e => console.log("Audio zablokowane")); 
-                audioIndicator.classList.add('playing'); 
-            }
-            isMusicPlaying = !isMusicPlaying;
         }
 
         /* === LIGHTBOX === */
