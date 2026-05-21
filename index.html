@@ -14,13 +14,11 @@
     <style>
         /* === SYSTEM ZMIENNYCH (DYNAMICZNA PERSONALIZACJA) === */
         :root {
-            /* Kolory bazowe - modyfikowalne przez JS */
             --bg-main: #030508;
             --bg-glass: rgba(10, 15, 25, 0.6);
             --text-main: #FFFFFF;
             --text-muted: #8A95A5;
             
-            /* Domyślny akcent (CYAN) */
             --accent: #00F0FF;
             --accent-rgb: 0, 240, 255;
             --accent-glow: rgba(var(--accent-rgb), 0.4);
@@ -29,7 +27,6 @@
             --border-glass: rgba(255, 255, 255, 0.08);
             --border-hover: rgba(var(--accent-rgb), 0.5);
             
-            /* Typografia */
             --font-head: 'Outfit', sans-serif;
             --font-body: 'Outfit', sans-serif;
             --font-mono: 'Space Mono', monospace;
@@ -39,39 +36,41 @@
         html, body { margin: 0; padding: 0; min-height: 100vh; overflow-x: hidden; }
         * { box-sizing: border-box; cursor: none !important; }
         
-        body { 
-            background-color: var(--bg-main); 
-            color: var(--text-main); 
-            font-family: var(--font-body); 
-            line-height: 1.6; 
-        }
-
+        body { background-color: var(--bg-main); color: var(--text-main); font-family: var(--font-body); line-height: 1.6; }
         h1, h2, h3, h4, .logo-part-1, .logo-part-2 { font-family: var(--font-head); }
-        .gradient-text { 
-            background: linear-gradient(135deg, #FFFFFF 0%, var(--accent) 100%); 
-            -webkit-background-clip: text; 
-            -webkit-text-fill-color: transparent; 
-        }
+        .gradient-text { background: linear-gradient(135deg, #FFFFFF 0%, var(--accent) 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 
-        /* === DYNAMICZNE TŁA (Zmieniane w Panelu) === */
-        .bg-layer {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; transition: opacity 0.5s ease;
-        }
-        /* Grid */
-        #bg-grid { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; opacity: 1; }
-        /* Dots */
-        #bg-dots { background-image: radial-gradient(rgba(255,255,255,0.1) 1px, transparent 1px); background-size: 40px 40px; opacity: 0; }
+        /* === DYNAMICZNE TŁA (21 MOTYWÓW) === */
+        .bg-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; pointer-events: none; transition: opacity 0.5s ease; opacity: 0; }
+        .bg-layer.active { opacity: 1; }
         
-        /* Ambient Glow */
-        .ambient-glow {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none;
-            background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 60%);
-            opacity: 0.5; transition: background 0.5s;
-        }
+        #bg-0 { background: transparent; }
+        #bg-1 { background-image: linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px); background-size: 60px 60px; }
+        #bg-2 { background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px); background-size: 20px 20px; }
+        #bg-3 { background-image: radial-gradient(rgba(255,255,255,0.1) 1.5px, transparent 1.5px); background-size: 40px 40px; }
+        #bg-4 { background-image: radial-gradient(rgba(255,255,255,0.05) 1px, transparent 1px); background-size: 15px 15px; }
+        #bg-5 { background: repeating-linear-gradient(0deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px); }
+        #bg-6 { background: repeating-linear-gradient(90deg, transparent, transparent 10px, rgba(255,255,255,0.02) 10px, rgba(255,255,255,0.02) 20px); }
+        #bg-7 { background: repeating-linear-gradient(45deg, transparent, transparent 15px, rgba(255,255,255,0.02) 15px, rgba(255,255,255,0.02) 30px); }
+        #bg-8 { background: repeating-linear-gradient(-45deg, transparent, transparent 15px, rgba(255,255,255,0.02) 15px, rgba(255,255,255,0.02) 30px); }
+        #bg-9 { background-image: linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.02) 75%, rgba(255,255,255,0.02)), linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.02) 75%, rgba(255,255,255,0.02)); background-size: 40px 40px; background-position: 0 0, 20px 20px; }
+        #bg-10 { background-image: radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 1px, transparent 1px), radial-gradient(circle, rgba(var(--accent-rgb), 0.1) 1px, transparent 1px); background-size: 80px 80px; background-position: 0 0, 40px 40px; }
+        #bg-11 { background: radial-gradient(circle, transparent 20%, rgba(255,255,255,0.02) 20%, rgba(255,255,255,0.02) 80%, transparent 80%, transparent); background-size: 100px 100px; }
+        #bg-12 { background-image: linear-gradient(rgba(0,240,255,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(0,240,255,0.05) 1px, transparent 1px); background-size: 50px 50px; }
+        #bg-13 { background: repeating-linear-gradient(45deg, #030508, #030508 5px, #0a0f18 5px, #0a0f18 10px); }
+        #bg-14 { background: repeating-linear-gradient(135deg, rgba(255,255,255,0.01) 0px, rgba(255,255,255,0.01) 2px, transparent 2px, transparent 10px); }
+        #bg-15 { background-image: radial-gradient(circle at 50% 50%, rgba(var(--accent-rgb), 0.05) 0%, transparent 50%); background-size: 120px 120px; }
+        #bg-16 { background-image: linear-gradient(0deg, transparent 24%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.03) 26%, transparent 27%, transparent 74%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255,255,255,0.03) 25%, rgba(255,255,255,0.03) 26%, transparent 27%, transparent 74%, rgba(255,255,255,0.03) 75%, rgba(255,255,255,0.03) 76%, transparent 77%, transparent); background-size: 50px 50px; }
+        #bg-17 { background: linear-gradient(135deg, rgba(255,255,255,0.02) 25%, transparent 25%) -25px 0, linear-gradient(225deg, rgba(255,255,255,0.02) 25%, transparent 25%) -25px 0, linear-gradient(315deg, rgba(255,255,255,0.02) 25%, transparent 25%), linear-gradient(45deg, rgba(255,255,255,0.02) 25%, transparent 25%); background-size: 50px 50px; }
+        #bg-18 { background: radial-gradient(circle at top left, rgba(var(--accent-rgb), 0.1) 0%, transparent 30%), radial-gradient(circle at bottom right, rgba(var(--accent-rgb), 0.1) 0%, transparent 30%); }
+        #bg-19 { background-image: repeating-radial-gradient(circle, rgba(255,255,255,0.02), rgba(255,255,255,0.02) 10px, transparent 10px, transparent 20px); }
+        #bg-20 { background-image: repeating-linear-gradient(to right, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 100px), repeating-linear-gradient(to bottom, rgba(255,255,255,0.02) 0, rgba(255,255,255,0.02) 1px, transparent 1px, transparent 100px); background-size: 100px 100px; }
+
+        .ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 60%); opacity: 0.5; transition: background 0.5s; }
 
         /* === CUSTOM KURSOR === */
-        #custom-cursor { position: fixed; top: 0; left: 0; width: 24px; height: 24px; border: 1.5px solid var(--accent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999999; transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--accent-glow); }
-        #custom-cursor::after { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; transition: 0.3s; }
+        #custom-cursor { position: fixed; top: 0; left: 0; width: 24px; height: 24px; border: 1.5px solid var(--accent); border-radius: 50%; pointer-events: none; transform: translate(-50%, -50%); z-index: 9999999; transition: width 0.2s, height 0.2s, background 0.2s, border-color 0.2s; display: flex; justify-content: center; align-items: center; box-shadow: 0 0 15px var(--accent-glow); }
+        #custom-cursor::after { content: ''; width: 6px; height: 6px; background: var(--accent); border-radius: 50%; transition: 0.2s; }
         #custom-cursor.hover { width: 50px; height: 50px; background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); backdrop-filter: blur(4px); }
         #custom-cursor.hover::after { width: 0; height: 0; }
 
@@ -81,123 +80,72 @@
 
         /* === SPLASH SCREEN === */
         #splash-screen { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #010203; z-index: 99999; display: flex; justify-content: center; align-items: center; transition: opacity 0.8s ease, visibility 0.8s; }
-        .arc-core { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent); animation: arcPulse 1s ease-in-out infinite alternate; z-index: 5; }
+        .arc-core { width: 20px; height: 20px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 30px var(--accent); animation: arcPulse 1s ease-in-out infinite alternate; }
         @keyframes arcPulse { 0% { transform: scale(0.8); opacity: 0.7; } 100% { transform: scale(1.2); opacity: 1; } }
 
-        /* === NAWIGACJA TOP (GLASSMORPHISM) === */
-        nav { 
-            position: fixed; top: 0; left: 0; width: 100%; height: 80px; 
-            background: var(--bg-glass); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border-bottom: 1px solid var(--border-glass); z-index: 2000; 
-            display: flex; align-items: center; justify-content: space-between; padding: 0 5%; 
-        }
+        /* === NAWIGACJA TOP === */
+        nav { position: fixed; top: 0; left: 0; width: 100%; height: 80px; background: var(--bg-glass); backdrop-filter: blur(25px); border-bottom: 1px solid var(--border-glass); z-index: 2000; display: flex; align-items: center; justify-content: space-between; padding: 0 5%; }
         .logo { display: flex; align-items: center; text-decoration: none; user-select: none; }
         .logo-part-1 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--text-main); }
         .logo-part-2 { font-size: 24px; font-weight: 900; letter-spacing: 2px; color: var(--accent); margin-left: 5px; transition: color 0.4s;}
         
-        .nav-controls { display: flex; align-items: center; gap: 15px; }
-        .nav-btn { 
-            background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); 
-            color: var(--text-main); padding: 10px 20px; border-radius: 30px; 
-            font-size: 12px; font-weight: bold; letter-spacing: 1px; transition: var(--transition); 
-            display: flex; align-items: center; gap: 8px; text-transform: uppercase;
-        }
+        .nav-controls { display: flex; align-items: center; gap: 15px; flex-wrap: wrap;}
+        .nav-btn { background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); color: var(--text-main); padding: 10px 20px; border-radius: 30px; font-size: 11px; font-weight: bold; letter-spacing: 1px; transition: var(--transition); display: flex; align-items: center; gap: 8px; text-transform: uppercase;}
         .nav-btn:hover, .nav-btn.active { border-color: var(--accent); background: rgba(var(--accent-rgb), 0.05); box-shadow: 0 0 20px var(--accent-glow); color: var(--accent);}
-        
         .audio-indicator { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); transition: 0.3s; }
         .audio-indicator.playing { background: var(--accent); box-shadow: 0 0 10px var(--accent); }
 
         /* === SYSTEM WIDOKÓW (PAGES) === */
-        .view-container {
-            padding: 120px 5% 80px;
-            max-width: 1200px;
-            margin: 0 auto;
-            position: relative;
-        }
-        
-        .view { 
-            display: none; 
-            opacity: 0; 
-            transform: translateY(20px); 
-            animation: viewFadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards; 
-        }
+        .view-container { padding: 120px 5% 80px; max-width: 1200px; margin: 0 auto; position: relative; }
+        .view { display: none; opacity: 0; transform: translateY(20px); animation: viewFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
         .view.active { display: block; }
-        
-        @keyframes viewFadeIn { 
-            0% { opacity: 0; transform: translateY(30px) scale(0.98); filter: blur(5px); } 
-            100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } 
-        }
+        @keyframes viewFadeIn { 0% { opacity: 0; transform: translateY(30px) scale(0.98); filter: blur(5px); } 100% { opacity: 1; transform: translateY(0) scale(1); filter: blur(0); } }
 
         /* === WSPÓLNE KOMPONENTY === */
-        .section-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end;}
-        .section-header h1 { font-size: clamp(30px, 5vw, 50px); font-weight: 900; text-transform: uppercase; margin: 0; line-height: 1;}
+        .section-header { margin-bottom: 40px; border-bottom: 1px solid var(--border-glass); padding-bottom: 20px; display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap;}
+        .section-header h1 { font-size: clamp(28px, 5vw, 45px); font-weight: 900; text-transform: uppercase; margin: 0; line-height: 1;}
         .section-badge { font-family: var(--font-mono); color: var(--accent); font-size: 14px; letter-spacing: 2px; }
 
-        .btn-back { 
-            background: transparent; border: 1px solid var(--border-glass); color: var(--text-muted); 
-            font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; 
-            margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; 
-            padding: 10px 20px; border-radius: 30px; transition: var(--transition); 
-        }
+        .btn-back { background: transparent; border: 1px solid var(--border-glass); color: var(--text-muted); font-size: 11px; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; margin-bottom: 30px; display: inline-flex; align-items: center; gap: 10px; padding: 10px 20px; border-radius: 30px; transition: var(--transition); }
         .btn-back:hover { border-color: var(--accent); color: var(--text-main); box-shadow: 0 0 15px var(--accent-glow); }
 
         .grid-container { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        
-        .glass-card { 
-            background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px 30px; 
-            backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px);
-            transition: var(--transition); position: relative; overflow: hidden; transform-style: preserve-3d;
-            display: flex; flex-direction: column;
-        }
+        .glass-card { background: linear-gradient(145deg, rgba(255,255,255,0.03) 0%, rgba(255,255,255,0.01) 100%); border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px 30px; backdrop-filter: blur(10px); transition: var(--transition); position: relative; overflow: hidden; display: flex; flex-direction: column; }
         .glass-card::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at top right, var(--accent-glow), transparent 60%); opacity: 0; transition: var(--transition); pointer-events: none;}
         .glass-card:hover { border-color: var(--border-hover); transform: translateY(-5px); box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
         .glass-card:hover::before { opacity: 0.15; }
         
         .card-icon { font-size: 40px; color: var(--accent); margin-bottom: 20px; display: inline-block; transition: color 0.4s;}
-        .glass-card h3 { font-size: 24px; font-weight: 700; margin-bottom: 15px; color: var(--text-main); }
+        .glass-card h3 { font-size: 22px; font-weight: 700; margin-bottom: 15px; color: var(--text-main); }
         .glass-card p { color: var(--text-muted); font-size: 15px; line-height: 1.7; margin-bottom: 20px; flex-grow: 1;}
 
-        .btn-primary { 
-            display: inline-flex; align-items: center; justify-content: center; gap: 10px; 
-            background: var(--text-main); color: var(--bg-main); font-weight: 800; letter-spacing: 1px; 
-            padding: 15px 30px; border-radius: 30px; text-decoration: none; transition: var(--transition); border: none; font-size: 13px; text-transform: uppercase;
-        }
+        .btn-primary { display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--text-main); color: var(--bg-main); font-weight: 800; letter-spacing: 1px; padding: 12px 25px; border-radius: 30px; text-decoration: none; transition: var(--transition); border: none; font-size: 12px; text-transform: uppercase; width: max-content; }
         .btn-primary:hover { background: var(--accent); box-shadow: 0 0 25px var(--accent-glow); transform: scale(1.02); }
 
-        /* === TAGI STATUSU === */
         .status-tag { position: absolute; top: 20px; right: 20px; padding: 5px 12px; border-radius: 12px; font-family: var(--font-mono); font-size: 10px; font-weight: 700; letter-spacing: 1px; }
         .tag-active { background: rgba(var(--accent-rgb), 0.1); color: var(--accent); border: 1px solid var(--accent); }
         .tag-locked { background: rgba(255, 42, 42, 0.1); color: var(--danger); border: 1px solid var(--danger); }
         .tag-beta { background: rgba(255, 235, 59, 0.1); color: #ffeb3b; border: 1px solid #ffeb3b; }
 
-        /* === STRONA GŁÓWNA (HUB) === */
-        .hub-header { text-align: center; padding: 40px 0 60px; }
-        .hub-header h1 { font-size: clamp(40px, 7vw, 80px); line-height: 1.1; margin-bottom: 20px; }
-        .hub-header p { font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto; }
-        
-        .nav-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; }
-        .nav-card { text-align: center; padding: 40px 20px; align-items: center; justify-content: center; }
-
-        /* === PANEL PERSONALIZACJI (NOWOŚĆ) === */
+        /* === PANEL PERSONALIZACJI (32 KOLORY, 21 TŁA) === */
         .settings-panel { background: rgba(0,0,0,0.4); border: 1px solid var(--border-glass); border-radius: 20px; padding: 40px; }
         .settings-group { margin-bottom: 40px; }
         .settings-group h3 { font-size: 18px; color: var(--text-main); margin-bottom: 15px; text-transform: uppercase; letter-spacing: 2px; display: flex; align-items: center; gap: 10px;}
         .settings-group h3::before { content: ''; display: block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; }
-        .settings-desc { color: var(--text-muted); font-size: 14px; margin-bottom: 25px; line-height: 1.6; }
         
-        .color-picker { display: flex; gap: 15px; flex-wrap: wrap; }
-        .color-btn { width: 50px; height: 50px; border-radius: 50%; border: 2px solid transparent; transition: var(--transition); position: relative; }
-        .color-btn:hover { transform: scale(1.1); }
-        .color-btn.active { border-color: #fff; box-shadow: 0 0 20px currentColor; }
+        .color-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(40px, 1fr)); gap: 15px; }
+        .color-btn { width: 100%; aspect-ratio: 1; border-radius: 50%; border: 2px solid transparent; transition: 0.3s; position: relative; }
+        .color-btn:hover { transform: scale(1.15); z-index: 10;}
+        .color-btn.active { border-color: #fff; box-shadow: 0 0 15px currentColor; transform: scale(1.1); }
         
-        .bg-picker { display: flex; gap: 15px; flex-wrap: wrap; }
-        .bg-btn { padding: 12px 24px; border: 1px solid var(--border-glass); background: transparent; color: var(--text-muted); border-radius: 12px; font-family: var(--font-mono); font-size: 13px; transition: var(--transition); }
+        .bg-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 10px; }
+        .bg-btn { padding: 12px; border: 1px solid var(--border-glass); background: rgba(255,255,255,0.02); color: var(--text-muted); border-radius: 8px; font-family: var(--font-mono); font-size: 11px; transition: var(--transition); text-align: center; }
         .bg-btn.active, .bg-btn:hover { border-color: var(--accent); color: var(--accent); background: rgba(var(--accent-rgb), 0.1); }
 
         /* === DETALE KONTENTU === */
         .terminal-box { background: rgba(0,0,0,0.6); color: #fff; padding: 40px; border-radius: 20px; border: 1px solid var(--border-glass); margin: 40px 0; font-family: var(--font-mono); border-top: 3px solid var(--accent); }
         .terminal-box h4 { color: var(--accent); font-size: 16px; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 20px; }
+        .terminal-box .code { color: #00e676; font-weight: bold; }
         
         .app-metadata { display: flex; flex-wrap: wrap; gap: 15px; margin: 30px 0; padding-bottom: 30px; border-bottom: 1px solid var(--border-glass); }
         .meta-tag { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.03); padding: 8px 16px; border-radius: 12px; font-family: var(--font-mono); font-size: 12px; color: var(--text-muted); border: 1px solid var(--border-glass); }
@@ -209,44 +157,49 @@
         .screen-card img { width: 100%; height: 100%; object-fit: cover; transition: 0.4s; opacity: 0.7; }
         .screen-card:hover img { opacity: 1; transform: scale(1.05); }
 
-        .protocol-rule { margin-bottom: 30px; padding: 25px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--border-glass); }
-        .protocol-rule h4 { color: var(--accent); margin-bottom: 10px; font-size: 18px; }
+        .protocol-rule { margin-bottom: 30px; padding: 30px; background: rgba(255,255,255,0.02); border-radius: 16px; border: 1px solid var(--border-glass); }
+        .protocol-rule h4 { color: var(--accent); margin-bottom: 15px; font-size: 18px; text-transform: uppercase;}
 
         .construction-box { text-align: center; padding: 60px 30px; border: 1px dashed var(--border-glass); background: rgba(0, 0, 0, 0.4); border-radius: 20px; margin-top: 30px; }
+        .loading-bar { width: 100%; max-width: 400px; height: 4px; background: rgba(255,255,255,0.1); margin: 30px auto 10px; border-radius: 2px; overflow: hidden;}
+        .loading-fill { width: 30%; height: 100%; background: var(--accent); animation: scan 2s ease-in-out infinite alternate; box-shadow: 0 0 10px var(--accent); }
+        @keyframes scan { 0% { transform: translateX(-50%); width: 20%; } 100% { transform: translateX(350%); width: 20%; } }
 
-        /* RWD */
+        /* Timer Beta */
+        .beta-timer-box { background: rgba(var(--accent-rgb), 0.05); border: 1px solid var(--accent); padding: 20px; border-radius: 16px; margin: 30px 0; font-family: var(--font-mono); text-align: center;}
+        .beta-timer-box h3 { color: var(--accent); font-size: 14px; margin-bottom: 15px; letter-spacing: 2px; }
+        .timer-display { font-size: clamp(20px, 4vw, 35px); font-weight: 700; color: #fff; text-shadow: 0 0 15px var(--accent-glow); display: flex; justify-content: center; gap: 15px;}
+        .timer-unit { display: flex; flex-direction: column; align-items: center; }
+        .timer-label { font-size: 10px; color: var(--text-muted); margin-top: 5px; letter-spacing: 1px; }
+
         @media (max-width: 768px) {
             #custom-cursor { display: none !important; }
             * { cursor: auto !important; }
             nav { padding: 15px; height: auto; flex-direction: column; gap: 15px; }
             .view-container { padding-top: 140px; }
             .section-header { flex-direction: column; align-items: flex-start; gap: 10px; }
-            .color-picker { justify-content: center; }
-            .hub-header h1 { font-size: 35px; }
         }
     </style>
 </head>
 <body>
 
     <!-- DYNAMICZNE TŁA -->
-    <div class="bg-layer" id="bg-grid"></div>
-    <div class="bg-layer" id="bg-dots"></div>
+    <div id="bg-layers-container">
+        <!-- Generowane przez JS -->
+    </div>
     <div class="ambient-glow"></div>
 
     <div id="custom-cursor"></div>
-
-    <!-- SPLASH SCREEN -->
     <div id="splash-screen"><div class="arc-core"></div></div>
 
-    <!-- NAWIGACJA TOP -->
+    <!-- NAWIGACJA -->
     <nav>
         <a class="logo hover-trigger" onclick="switchView('home')">
             <span class="logo-part-1">IBRON</span><span class="logo-part-2">INDUSTRIES</span>
         </a>
         <div class="nav-controls">
-            <!-- Przycisk do nowej sekcji Personalizacji -->
-            <button class="nav-btn hover-trigger" onclick="switchView('personalize')" title="System Preferences">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <button class="nav-btn hover-trigger" onclick="switchView('personalize')">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
                 <span data-lang="pl">UI System</span><span data-lang="en">UI System</span>
             </button>
             <button class="nav-btn hover-trigger" onclick="toggleMusic()">
@@ -258,7 +211,6 @@
         </div>
     </nav>
 
-    <!-- MUZYKA -->
     <audio id="bg-music" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
 
     <div class="view-container">
@@ -267,118 +219,69 @@
         <!-- WIDOK 1: STRONA GŁÓWNA (DASHBOARD HUB) -->
         <!-- ========================================== -->
         <div id="home" class="view active">
-            <div class="hub-header">
+            <div style="text-align: center; padding: 40px 0 60px;">
                 <div style="display: inline-flex; align-items: center; gap: 10px; background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); padding: 8px 20px; border-radius: 30px; font-family: var(--font-mono); font-size: 12px; color: var(--accent); margin-bottom: 20px;">
                     <div style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; box-shadow: 0 0 10px var(--accent);"></div>
                     ENCRYPTION: AES-256-GCM // SHIELD: ACTIVE
                 </div>
-                <h1 data-lang="pl">Odzyskaj <span class="gradient-text">kontrolę.</span></h1>
-                <h1 data-lang="en">Regain <span class="gradient-text">Control.</span></h1>
-                <p data-lang="pl">Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.</p>
-                <p data-lang="en">Decentralized engineering software. Zero telemetry, absolute privacy.</p>
+                <h1 data-lang="pl" style="font-size: clamp(40px, 7vw, 80px); line-height: 1.1; margin-bottom: 20px;">Odzyskaj <span class="gradient-text">kontrolę.</span></h1>
+                <h1 data-lang="en" style="font-size: clamp(40px, 7vw, 80px); line-height: 1.1; margin-bottom: 20px;">Regain <span class="gradient-text">Control.</span></h1>
+                <p data-lang="pl" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.</p>
+                <p data-lang="en" style="font-size: 18px; color: var(--text-muted); max-width: 600px; margin: 0 auto;">Decentralized engineering software. Zero telemetry, absolute privacy.</p>
             </div>
 
-            <div class="nav-grid">
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('about')">
-                    <div class="card-icon">◈</div>
-                    <h3 data-lang="pl">O NAS</h3><h3 data-lang="en">ABOUT US</h3>
-                    <p data-lang="pl">Nasza filozofia i zasady działania.</p>
-                    <p data-lang="en">Our philosophy and rules of operation.</p>
+            <div class="grid-container" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); text-align: center;">
+                <div class="glass-card hover-trigger" onclick="switchView('about')" style="align-items: center;">
+                    <div class="card-icon">◈</div><h3 data-lang="pl">O NAS</h3><h3 data-lang="en">ABOUT US</h3>
                 </div>
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('apps')">
-                    <div class="card-icon">⎈</div>
-                    <h3 data-lang="pl">APLIKACJE</h3><h3 data-lang="en">SOFTWARE</h3>
-                    <p data-lang="pl">Ekosystem bezpiecznego oprogramowania.</p>
-                    <p data-lang="en">Secure software ecosystem.</p>
+                <div class="glass-card hover-trigger" onclick="switchView('apps-hub')" style="align-items: center;">
+                    <div class="card-icon">⎈</div><h3 data-lang="pl">APLIKACJE</h3><h3 data-lang="en">SOFTWARE</h3>
                 </div>
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('hardware')">
-                    <div class="card-icon">⏣</div>
-                    <h3 data-lang="pl">HARDWARE</h3><h3 data-lang="en">HARDWARE</h3>
-                    <p data-lang="pl">Dywizja fizycznego sprzętu taktycznego.</p>
-                    <p data-lang="en">Physical tactical gear division.</p>
+                <div class="glass-card hover-trigger" onclick="switchView('hardware')" style="align-items: center;">
+                    <div class="card-icon">⏣</div><h3 data-lang="pl">HARDWARE</h3><h3 data-lang="en">HARDWARE</h3>
                 </div>
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('protocols')">
-                    <div class="card-icon">⎚</div>
-                    <h3 data-lang="pl">PROTOKOŁY</h3><h3 data-lang="en">PROTOCOLS</h3>
-                    <p data-lang="pl">Regulaminy, licencje i bezpieczeństwo.</p>
-                    <p data-lang="en">Regulations, licenses, and security.</p>
+                <div class="glass-card hover-trigger" onclick="switchView('protocols')" style="align-items: center;">
+                    <div class="card-icon">⎚</div><h3 data-lang="pl">PROTOKOŁY</h3><h3 data-lang="en">PROTOCOLS</h3>
                 </div>
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('contact')">
-                    <div class="card-icon">✉</div>
-                    <h3 data-lang="pl">KONTAKT</h3><h3 data-lang="en">CONTACT</h3>
-                    <p data-lang="pl">Bezpieczny kanał łączności.</p>
-                    <p data-lang="en">Secure communication channel.</p>
+                <div class="glass-card hover-trigger" onclick="switchView('contact')" style="align-items: center;">
+                    <div class="card-icon">✉</div><h3 data-lang="pl">KONTAKT</h3><h3 data-lang="en">CONTACT</h3>
                 </div>
-                <div class="glass-card nav-card hover-trigger" onclick="switchView('personalize')" style="border-color: var(--accent);">
-                    <div class="status-tag tag-active">NEW FEATURE</div>
-                    <div class="card-icon">⚙</div>
-                    <h3 data-lang="pl">SYSTEM UI</h3><h3 data-lang="en">SYSTEM UI</h3>
-                    <p data-lang="pl">Personalizacja środowiska pracy.</p>
-                    <p data-lang="en">Work environment personalization.</p>
+                <div class="glass-card hover-trigger" onclick="switchView('personalize')" style="align-items: center; border-color: var(--accent);">
+                    <div class="status-tag tag-active">NEW</div>
+                    <div class="card-icon">⚙</div><h3 data-lang="pl">SYSTEM UI</h3><h3 data-lang="en">SYSTEM UI</h3>
                 </div>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- WIDOK 2: PERSONALIZACJA (NOWOŚĆ DLA UŻYTKOWNIKA) -->
+        <!-- WIDOK 2: PERSONALIZACJA (32 KOLORY, 21 TŁA)-->
         <!-- ========================================== -->
         <div id="personalize" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
-                <div>
-                    <h1 class="gradient-text" data-lang="pl">UI Framework</h1>
-                    <h1 class="gradient-text" data-lang="en">UI Framework</h1>
-                </div>
+                <div><h1 class="gradient-text">UI Framework</h1></div>
                 <div class="section-badge">SYS.PREFS_V1</div>
             </div>
 
             <div class="glass-card" style="margin-bottom: 40px;">
-                <p data-lang="pl" style="font-size: 18px;">
-                    <strong>W Ibron Industries kontrola oznacza również władzę nad własnym środowiskiem pracy.</strong><br><br>
-                    Ten panel to demonstracja naszego podejścia do interfejsu (UI) – to użytkownik decyduje, jak wygląda jego narzędzie, a nie sztywne korporacyjne wytyczne. Wybierz schemat kolorów, tło i dostosuj system pod siebie. To, co tu widzisz, to fundament personalizacji, który wdrażamy w naszych zaawansowanych aplikacjach.
-                </p>
-                <p data-lang="en" style="font-size: 18px;">
-                    <strong>At Ibron Industries, control also means authority over your own work environment.</strong><br><br>
-                    This panel demonstrates our approach to UI – the user decides how their tool looks, not rigid corporate guidelines. Choose your color scheme, background, and tailor the system to yourself. What you see here is the foundation of personalization that we implement in our advanced applications.
-                </p>
+                <p data-lang="pl" style="font-size: 16px;"><strong>W Ibron Industries to Ty masz pełną kontrolę nad środowiskiem pracy.</strong><br>Ten panel to nasza wizja wolności – wybierz 1 z 32 barw akcentu oraz 1 z 21 topografii cyfrowego płótna.</p>
+                <p data-lang="en" style="font-size: 16px;"><strong>At Ibron Industries, you have full control over your environment.</strong><br>This panel is our vision of freedom – choose 1 of 32 accent colors and 1 of 21 digital canvas topographies.</p>
             </div>
 
             <div class="settings-panel">
-                <!-- Kolory Akcentu -->
                 <div class="settings-group">
-                    <h3 data-lang="pl">Główny Akcent Systemowy</h3>
-                    <h3 data-lang="en">Primary System Accent</h3>
-                    <div class="settings-desc" data-lang="pl">Zdefiniuj kolorystykę interfejsu. Zmiana zostanie zaaplikowana globalnie.</div>
-                    <div class="settings-desc" data-lang="en">Define the interface color scheme. The change will be applied globally.</div>
-                    
-                    <div class="color-picker">
-                        <button class="color-btn active hover-trigger" style="background: #00F0FF; color: #00F0FF;" onclick="setAccent('0, 240, 255', '#00F0FF', this)"></button>
-                        <button class="color-btn hover-trigger" style="background: #00FF41; color: #00FF41;" onclick="setAccent('0, 255, 65', '#00FF41', this)"></button>
-                        <button class="color-btn hover-trigger" style="background: #FF9900; color: #FF9900;" onclick="setAccent('255, 153, 0', '#FF9900', this)"></button>
-                        <button class="color-btn hover-trigger" style="background: #FF2A2A; color: #FF2A2A;" onclick="setAccent('255, 42, 42', '#FF2A2A', this)"></button>
-                        <button class="color-btn hover-trigger" style="background: #B026FF; color: #B026FF;" onclick="setAccent('176, 38, 255', '#B026FF', this)"></button>
-                        <button class="color-btn hover-trigger" style="background: #FFFFFF; color: #FFFFFF;" onclick="setAccent('255, 255, 255', '#FFFFFF', this)"></button>
+                    <h3 data-lang="pl">Główny Akcent Systemowy (32 Opcje)</h3>
+                    <h3 data-lang="en">Primary System Accent (32 Options)</h3>
+                    <div class="color-grid" id="color-grid-container">
+                        <!-- Generowane w JS (32 kolory) -->
                     </div>
                 </div>
 
-                <!-- Wzór Tła -->
                 <div class="settings-group">
-                    <h3 data-lang="pl">Struktura Tła</h3>
-                    <h3 data-lang="en">Background Structure</h3>
-                    <div class="settings-desc" data-lang="pl">Wybierz topografię cyfrowego płótna.</div>
-                    <div class="settings-desc" data-lang="en">Select the topography of your digital canvas.</div>
-                    
-                    <div class="bg-picker">
-                        <button class="bg-btn active hover-trigger" onclick="setBg('grid', this)" data-lang="pl">Siatka (Grid)</button>
-                        <button class="bg-btn active hover-trigger" onclick="setBg('grid', this)" data-lang="en">Grid Pattern</button>
-                        
-                        <button class="bg-btn hover-trigger" onclick="setBg('dots', this)" data-lang="pl">Punkty (Dots)</button>
-                        <button class="bg-btn hover-trigger" onclick="setBg('dots', this)" data-lang="en">Dot Matrix</button>
-                        
-                        <button class="bg-btn hover-trigger" onclick="setBg('clean', this)" data-lang="pl">Czyste (Minimal)</button>
-                        <button class="bg-btn hover-trigger" onclick="setBg('clean', this)" data-lang="en">Clean Minimal</button>
+                    <h3 data-lang="pl">Struktura Tła (21 Opcji)</h3>
+                    <h3 data-lang="en">Background Structure (21 Options)</h3>
+                    <div class="bg-grid" id="bg-grid-container">
+                        <!-- Generowane w JS (21 Tła) -->
                     </div>
                 </div>
             </div>
@@ -388,46 +291,28 @@
         <!-- WIDOK 3: O NAS -->
         <!-- ========================================== -->
         <div id="about" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
-                <div>
-                    <h1 class="gradient-text" data-lang="pl">O Nas / Nasza Filozofia</h1>
-                    <h1 class="gradient-text" data-lang="en">About Us / Our Philosophy</h1>
-                </div>
-                <div class="section-badge">CORE_VALUES</div>
+                <div><h1 class="gradient-text" data-lang="pl">Nasza Filozofia</h1><h1 class="gradient-text" data-lang="en">Our Philosophy</h1></div>
             </div>
-
             <div class="glass-card" style="margin-bottom: 40px;">
-                <h3 data-lang="pl">Powrót do uczciwych zasad.</h3>
-                <h3 data-lang="en">A return to fair rules.</h3>
-                <p data-lang="pl">Wierzymy, że nowoczesna technologia powinna służyć człowiekowi, a nie na odwrót. Dzisiejszy rynek cyfrowy przyzwyczaił nas do niezdrowego kompromisu: za darmowe programy płacimy swoimi prywatnymi danymi, a codzienne narzędzia są skomplikowane i przeładowane reklamami.</p>
-                <p data-lang="en">We believe modern tech should serve humans, not the other way around. Today's digital market forces an unhealthy compromise: we pay for free software with our private data, and everyday tools are bloated with ads.</p>
-                
-                <p data-lang="pl" style="margin-top: 15px;">IbronIndustries powstało, aby przywrócić normalność. Jesteśmy niezależnym studiem technologicznym. Nie interesuje nas zbieranie Twoich logów, analiza Twoich zachowań czy handel Twoją prywatnością. Chcemy po prostu dostarczać oprogramowanie i rozwiązania, które działają dokładnie tak, jak powinny od samego początku.</p>
-                <p data-lang="en" style="margin-top: 15px;">IbronIndustries was founded to restore normality. As an independent tech studio, we have no interest in collecting logs, analyzing behavior, or trading your privacy. We just want to build software that works exactly as it should right from the start.</p>
+                <h3 data-lang="pl">Powrót do uczciwych zasad.</h3><h3 data-lang="en">A return to fair rules.</h3>
+                <p data-lang="pl">Wierzymy, że nowoczesna technologia powinna służyć człowiekowi, a nie na odwrót. Dzisiejszy rynek cyfrowy przyzwyczaił nas do niezdrowego kompromisu: za darmowe programy płacimy swoimi prywatnymi danymi, a codzienne narzędzia są skomplikowane i przeładowane reklamami.<br><br>IbronIndustries powstało, aby przywrócić normalność. Jesteśmy niezależnym studiem technologicznym. Nie interesuje nas zbieranie Twoich logów, analiza Twoich zachowań czy handel Twoją prywatnością. Chcemy po prostu dostarczać oprogramowanie i rozwiązania, które działają dokładnie tak, jak powinny od samego początku.</p>
+                <p data-lang="en">We believe modern tech should serve humans, not the other way around. Today's digital market forces an unhealthy compromise: we pay for free software with our private data, and everyday tools are bloated with ads.<br><br>IbronIndustries was founded to restore normality. As an independent tech studio, we have no interest in collecting logs, analyzing behavior, or trading your privacy. We just want to build software that works exactly as it should right from the start.</p>
             </div>
-
             <div class="grid-container">
                 <div class="glass-card hover-trigger">
-                    <div class="card-icon">◈</div>
-                    <h3 data-lang="pl">Technologia szanująca granice</h3>
-                    <h3 data-lang="en">Tech respecting boundaries</h3>
+                    <div class="card-icon">◈</div><h3 data-lang="pl">Technologia ułatwiająca życie</h3><h3 data-lang="en">Tech respecting boundaries</h3>
                     <p data-lang="pl">Tworzymy dla każdego, kto szuka solidnych, intuicyjnych narzędzi do codziennej pracy, organizacji czasu czy ochrony kapitału. Prowadzimy zrównoważony biznes – zarabiamy na fizycznym sprzęcie, gadżetach i funkcjach premium. Płacisz raz za konkretny produkt.</p>
                     <p data-lang="en">We build for anyone seeking solid, intuitive tools for daily work or capital protection. We run a sustainable business – we earn on physical hardware and premium features. You pay once for a specific product.</p>
                 </div>
                 <div class="glass-card hover-trigger">
-                    <div class="card-icon">⎈</div>
-                    <h3 data-lang="pl">To, co niezbędne – za darmo</h3>
-                    <h3 data-lang="en">The essentials – for free</h3>
+                    <div class="card-icon">⎈</div><h3 data-lang="pl">To, co niezbędne – za darmo</h3><h3 data-lang="en">The essentials – for free</h3>
                     <p data-lang="pl">Uważamy, że poczucie bezpieczeństwa w cyfrowym świecie to fundament, a nie luksus. Dlatego potężne, lokalne mechanizmy ochronne naszych flagowych aplikacji (takich jak IbronEXO) oddajemy w Twoje ręce całkowicie bezpłatnie, bez ukrytych opłat i bez reklam.</p>
                     <p data-lang="en">What is essential, we give for free. Security is a foundation, not a luxury. That's why the powerful, local mechanisms of apps like IbronEXO are provided entirely free of charge, with no ads or hidden fees.</p>
                 </div>
                 <div class="glass-card hover-trigger">
-                    <div class="card-icon">⏣</div>
-                    <h3 data-lang="pl">Odpowiedzialna Architektura</h3>
-                    <h3 data-lang="en">Responsible Architecture</h3>
+                    <div class="card-icon">⏣</div><h3 data-lang="pl">Odpowiedzialna Architektura</h3><h3 data-lang="en">Responsible Architecture</h3>
                     <p data-lang="pl">Nasze produkty projektujemy tak, aby ułatwiały Ci życie w sposób maksymalnie dyskretny. Tam, gdzie to możliwe, działamy w 100% lokalnie na Twoim urządzeniu. Pomagamy w zadaniach, ale nie wglądamy w ich treść.</p>
                     <p data-lang="en">We design products to make your life easier discreetly. Where possible, we operate 100% locally on your device. We help with your tasks, but we don't look at the content.</p>
                 </div>
@@ -435,46 +320,85 @@
         </div>
 
         <!-- ========================================== -->
-        <!-- WIDOK 4: APLIKACJE (EXO HUB) -->
+        <!-- WIDOK 4: APLIKACJE HUB -->
         <!-- ========================================== -->
-        <div id="apps" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+        <div id="apps-hub" class="view">
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
+            <div class="section-header">
+                <div><h1 class="gradient-text" data-lang="pl">Ekosystem Aplikacji</h1><h1 class="gradient-text" data-lang="en">Application Ecosystem</h1></div>
+            </div>
+
+            <div class="grid-container">
+                <!-- EXO -->
+                <div class="glass-card hover-trigger" style="border-color: var(--accent);">
+                    <div class="status-tag tag-active">NOWE | ANDROID</div>
+                    <img src="logoexo.png" alt="EXO" style="width: 80px; height: 80px; margin-bottom: 20px; filter: drop-shadow(0 0 10px var(--accent-glow));" onerror="this.src='https://via.placeholder.com/80/000/00F0FF?text=EXO';">
+                    <h3 style="font-size: 28px;">Ibron<span class="gradient-text">EXO.</span></h3>
+                    <p data-lang="pl">Hermetyczny kryptosejf offline.</p><p data-lang="en">Hermetic offline crypto-vault.</p>
+                    <button class="btn-primary hover-trigger" onclick="switchView('app-exo')"><span data-lang="pl">Czytaj więcej</span><span data-lang="en">Read more</span></button>
+                </div>
+
+                <!-- CHRONOS -->
+                <div class="glass-card hover-trigger">
+                    <div class="status-tag tag-beta" data-lang="pl">W BUDOWIE</div><div class="status-tag tag-beta" data-lang="en">IN DEV</div>
+                    <img src="logoclock.png" alt="CHR" style="width: 80px; height: 80px; margin-bottom: 20px; filter: grayscale(1);" onerror="this.src='https://via.placeholder.com/80/000/8A95A5?text=CHR';">
+                    <h3 style="font-size: 28px;">IbronCHRONOS</h3>
+                    <p data-lang="pl">Silnik zarządzania operacyjnego.</p><p data-lang="en">Operational management engine.</p>
+                    <button class="btn-primary hover-trigger" onclick="switchView('app-chronos')" style="background: rgba(255,255,255,0.1);"><span data-lang="pl">Sprawdź status</span><span data-lang="en">Check status</span></button>
+                </div>
+
+                <!-- 8 ZABLOKOWANYCH MODUŁÓW -->
+                <!-- Generujemy 8 takich samych bloków by zachować symetrię -->
+                <script>
+                    for(let i=0; i<8; i++) {
+                        document.write(`
+                        <div class="glass-card hover-trigger" style="justify-content: center; align-items: center; text-align: center; opacity: 0.6;">
+                            <div class="status-tag tag-locked">RESTRICTED</div>
+                            <div class="card-icon" style="color: var(--danger); margin-bottom: 10px; font-size: 30px;">✖</div>
+                            <h3 data-lang="pl" style="font-size: 18px;">ZASZYFROWANE [0${i+1}]</h3><h3 data-lang="en" style="font-size: 18px;">ENCRYPTED [0${i+1}]</h3>
+                            <p data-lang="pl" style="color:var(--danger); font-size: 12px; margin:0;">Dostęp zablokowany.</p><p data-lang="en" style="color:var(--danger); font-size: 12px; margin:0;">Access Denied.</p>
+                        </div>
+                        `);
+                    }
+                </script>
+            </div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- WIDOK 4.1: IBRON EXO (DETALE) -->
+        <!-- ========================================== -->
+        <div id="app-exo" class="view">
+            <button class="btn-back hover-trigger" onclick="switchView('apps-hub')">← Powrót do Aplikacji</button>
             <div class="section-header">
                 <div>
-                    <h1 class="gradient-text" data-lang="pl">Ekosystem Aplikacji</h1>
-                    <h1 class="gradient-text" data-lang="en">Application Ecosystem</h1>
+                    <h1 style="font-size: clamp(35px, 5vw, 60px);">Ibron<span class="gradient-text">EXO.</span></h1>
+                    <p data-lang="pl" style="color: var(--text-muted); font-size: 20px; margin-top: 10px;">Twój hermetyczny kryptosejf offline.</p>
+                    <p data-lang="en" style="color: var(--text-muted); font-size: 20px; margin-top: 10px;">Your hermetic offline crypto-vault.</p>
                 </div>
-                <div class="section-badge">SOFTWARE_SYS</div>
+                <img src="logoexo.png" alt="EXO" style="width: 100px; height: 100px; background: rgba(0,0,0,0.5); border: 1px solid var(--border-glass); border-radius: 20px; padding: 15px;" onerror="this.src='https://via.placeholder.com/100/000/00F0FF?text=EXO';">
             </div>
 
-            <!-- EXO Showcase -->
-            <div class="glass-card" style="flex-direction: row; flex-wrap: wrap; gap: 40px; align-items: center; margin-bottom: 40px; border-color: var(--accent);">
-                <div style="flex: 1; min-width: 300px;">
-                    <div class="status-tag tag-active" style="position: relative; display: inline-block; margin-bottom: 20px; top: 0; right: 0;">NOWE! | ANDROID</div>
-                    <h1 style="font-size: clamp(35px, 5vw, 50px); margin-bottom: 10px; font-weight: 900; line-height: 1;">Ibron<span class="gradient-text">EXO.</span></h1>
-                    <p data-lang="pl" style="font-size: 18px; margin-bottom: 10px;">Twój hermetyczny kryptosejf offline.</p>
-                    <p data-lang="en" style="font-size: 18px; margin-bottom: 10px;">Your hermetic offline crypto-vault.</p>
-                    
-                    <div class="app-metadata">
-                        <div class="meta-tag" data-lang="pl">Wersja: <strong>1.0.0</strong></div><div class="meta-tag" data-lang="en">Version: <strong>1.0.0</strong></div>
-                        <div class="meta-tag" data-lang="pl">Wydawca: <strong>IbronIndustries</strong></div><div class="meta-tag" data-lang="en">Publisher: <strong>IbronIndustries</strong></div>
-                        <div class="meta-tag" data-lang="pl">Data: <strong>Wkrótce (Maj 2026)</strong></div><div class="meta-tag" data-lang="en">Date: <strong>Soon (May 2026)</strong></div>
-                        <div class="meta-tag" data-lang="pl">Licencja: <strong>Darmowa (Brak Reklam)</strong></div><div class="meta-tag" data-lang="en">License: <strong>Free (No Ads)</strong></div>
-                    </div>
-
-                    <a href="#" class="btn-primary hover-trigger" onclick="alert('System weryfikacji Google Play w toku.'); return false;">
-                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                        <span data-lang="pl">Pobierz z Google Play</span><span data-lang="en">Download on Google Play</span>
-                    </a>
-                </div>
-                <div style="width: 140px; height: 140px; background: rgba(0,0,0,0.5); border-radius: 24px; border: 1px solid var(--border-glass); padding: 20px; display: flex; justify-content: center; align-items: center;">
-                    <img src="logoexo.png" alt="EXO" style="max-width: 100%; filter: drop-shadow(0 0 15px var(--accent-glow));" onerror="this.src='https://via.placeholder.com/100/000/00F0FF?text=EXO';">
+            <!-- LICZNIK BETA -->
+            <div class="beta-timer-box hover-trigger">
+                <h3 data-lang="pl">>> FAZA ZAMKNIĘTYCH TESTÓW (CLOSED BETA) <<</h3>
+                <h3 data-lang="en">>> CLOSED BETA TESTING PHASE <<</h3>
+                <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;">
+                    Started: May 19, 2026 at 01:18 PM <br> Expected End: June 02, 2026 at 01:18 PM
+                </p>
+                <div class="timer-display">
+                    <div class="timer-unit"><span id="t-days">00</span><span class="timer-label">DAYS</span></div> :
+                    <div class="timer-unit"><span id="t-hours">00</span><span class="timer-label">HRS</span></div> :
+                    <div class="timer-unit"><span id="t-mins">00</span><span class="timer-label">MIN</span></div> :
+                    <div class="timer-unit"><span id="t-secs">00</span><span class="timer-label">SEC</span></div>
                 </div>
             </div>
 
-            <!-- Terminal Opis -->
+            <div class="app-metadata">
+                <div class="meta-tag" data-lang="pl">Wersja: <strong>1.0.0</strong></div><div class="meta-tag" data-lang="en">Version: <strong>1.0.0</strong></div>
+                <div class="meta-tag" data-lang="pl">Wydawca: <strong>IbronIndustries</strong></div><div class="meta-tag" data-lang="en">Publisher: <strong>IbronIndustries</strong></div>
+                <div class="meta-tag" data-lang="pl">Licencja: <strong>Darmowa (Brak Reklam)</strong></div><div class="meta-tag" data-lang="en">License: <strong>Free (No Ads)</strong></div>
+            </div>
+
             <div class="terminal-box hover-trigger">
                 <h4 data-lang="pl">> OPIS OPERACYJNY IBRON EXO</h4>
                 <h4 data-lang="en">> IBRON EXO OPERATIONAL BRIEF</h4>
@@ -490,24 +414,24 @@
 
             <div class="grid-container" style="margin-bottom: 40px;">
                 <div class="glass-card hover-trigger">
-                    <h3 data-lang="pl" style="font-size: 20px;">Protokół "Podwójnego Dna"</h3><h3 data-lang="en" style="font-size: 20px;">Triple PIN System</h3>
-                    <p data-lang="pl">System potrójnego zamka. Główny PIN otwiera prawdziwe dane. W sytuacji zagrożenia użyj <strong>Decoy PIN</strong> – otworzy on całkowicie osobny, fałszywy sejf. Trzeci kod, <strong>Nuke PIN</strong>, to ostateczny przycisk paniki, który natychmiast niszczy wszystkie dane.</p>
-                    <p data-lang="en">A triple-lock system. Main PIN opens real data. In a threat situation, use the <strong>Decoy PIN</strong> for a fake vault. The <strong>Nuke PIN</strong> is the ultimate panic button that instantly destroys all data.</p>
+                    <h3 data-lang="pl" style="font-size: 18px;">Protokół "Podwójnego Dna"</h3><h3 data-lang="en" style="font-size: 18px;">Triple PIN System</h3>
+                    <p data-lang="pl">System potrójnego zamka. Główny PIN otwiera prawdziwe dane. W sytuacji zagrożenia użyj <strong>Decoy PIN</strong> – otworzy on całkowicie osobny, fałszywy sejf wypełniony zwykłymi notatkami. Trzeci kod, <strong>Nuke PIN</strong>, to ostateczny przycisk paniki, który natychmiast i bezpowrotnie niszczy wszystkie dane.</p>
+                    <p data-lang="en">A triple-lock system. The Main PIN opens your real data. In a threat situation, use the <strong>Decoy PIN</strong> – it opens a completely separate, fake vault filled with ordinary notes. The third code, the <strong>Nuke PIN</strong>, is the ultimate panic button that instantly destroys all data.</p>
                 </div>
                 <div class="glass-card hover-trigger">
-                    <h3 data-lang="pl" style="font-size: 20px;">Znikające Notatki (Timery)</h3><h3 data-lang="en" style="font-size: 20px;">Vanishing Notes (Timers)</h3>
+                    <h3 data-lang="pl" style="font-size: 18px;">Znikające Notatki (Timery)</h3><h3 data-lang="en" style="font-size: 18px;">Vanishing Notes (Timers)</h3>
                     <p data-lang="pl">Ty ustalasz zasady. Ustaw licznik czasu dla konkretnej notatki lub dokumentu operacyjnego – gdy czas dobiegnie końca, plik tekstowy wyparuje z pamięci urządzenia, zostawiając po sobie tylko nadpisane zera.</p>
                     <p data-lang="en">You set the rules. Set a countdown timer for a specific text note – when time is up, the file securely and permanently vanishes from the device's memory, leaving behind nothing but overwritten zeros.</p>
                 </div>
                 <div class="glass-card hover-trigger">
-                    <h3 data-lang="pl" style="font-size: 20px;">Dead Man's Switch</h3><h3 data-lang="en" style="font-size: 20px;">Dead Man's Switch</h3>
+                    <h3 data-lang="pl" style="font-size: 18px;">Dead Man's Switch</h3><h3 data-lang="en" style="font-size: 18px;">Dead Man's Switch</h3>
                     <p data-lang="pl">Zabezpieczenie na wypadek przejęcia lub utraty urządzenia. Włącz odliczanie (np. na 7, 30 lub 90 dni) – jeśli przez ten czas nie zalogujesz się prawidłowo do aplikacji, IbronEXO automatycznie zrówna całą bazę z ziemią.</p>
                     <p data-lang="en">Protection against device seizure or loss. Enable a countdown (e.g., for 7, 30, or 90 days) – if you don't log into the app successfully during this time, IbronEXO will automatically wipe the entire database.</p>
                 </div>
                 <div class="glass-card hover-trigger">
-                    <h3 data-lang="pl" style="font-size: 20px;">Absolutna Izolacja (Offline)</h3><h3 data-lang="en" style="font-size: 20px;">Absolute Isolation (Offline)</h3>
-                    <p data-lang="pl">System celowo nie obsługuje zaciągania multimediów ani wysyłania powiadomień przez serwer. Eliminujemy ryzyko wycieku z galerii czy plików PDF. Liczy się tylko zaszyfrowany dziennik wpisywany ręcznie z klawiatury.</p>
-                    <p data-lang="en">The system deliberately avoids multimedia imports or server notifications. This completely eliminates the risk of leaks from your gallery or PDFs. What matters is a secure log typed securely via keyboard.</p>
+                    <h3 data-lang="pl" style="font-size: 18px;">Absolutna Izolacja (Offline)</h3><h3 data-lang="en" style="font-size: 18px;">Absolute Isolation (Offline)</h3>
+                    <p data-lang="pl">System celowo nie obsługuje zaciągania multimediów ani wysyłania powiadomień przez serwer. W ten sposób całkowicie eliminujemy ryzyko wycieku z galerii czy plików PDF. Liczy się tylko zaszyfrowany, chronologiczny dziennik operacyjny wpisywany ręcznie z klawiatury.</p>
+                    <p data-lang="en">The system deliberately avoids multimedia imports or server notifications. This completely eliminates the risk of leaks from your gallery or PDFs. What matters is a secure, chronological operational log typed securely via keyboard.</p>
                 </div>
             </div>
 
@@ -518,29 +442,26 @@
                 <div class="screen-card hover-trigger" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen4" src="screen4pl.png" alt="EXO 4"></div>
                 <div class="screen-card hover-trigger" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen5" src="screen5pl.png" alt="EXO 5"></div>
             </div>
+        </div>
 
-            <!-- CHRONOS & ZABLOKOWANE -->
-            <div class="section-header" style="margin-top: 60px;">
-                <h1 class="gradient-text" data-lang="pl">Kolejne Projekty</h1>
-                <h1 class="gradient-text" data-lang="en">Upcoming Projects</h1>
+        <!-- ========================================== -->
+        <!-- WIDOK 4.2: IBRON CHRONOS (DETALE) -->
+        <!-- ========================================== -->
+        <div id="app-chronos" class="view">
+            <button class="btn-back hover-trigger" onclick="switchView('apps-hub')">← Powrót do Aplikacji</button>
+            <div class="section-header">
+                <div><h1 style="font-size: clamp(35px, 5vw, 60px);">IbronCHRONOS.</h1></div>
+                <div class="section-badge">OP_MODULE</div>
             </div>
-            <div class="grid-container">
-                <div class="glass-card hover-trigger">
-                    <div class="status-tag tag-beta" data-lang="pl">W BUDOWIE</div><div class="status-tag tag-beta" data-lang="en">IN DEV</div>
-                    <h3 style="margin-top: 10px;">IbronCHRONOS</h3>
-                    <p data-lang="pl">Silnik zarządzania operacyjnego.</p><p data-lang="en">Operational management engine.</p>
-                    <div class="construction-box" style="padding: 20px; margin-top: auto;">
-                        <h4 data-lang="pl" style="font-size: 11px;">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h4><h4 data-lang="en" style="font-size: 11px;">MODULE IN CLOSED BETA TESTING</h4>
-                        <p data-lang="pl" style="font-size: 12px; color: var(--text-muted);">Chronos Protocol to zaawansowany silnik do manipulacji czasem. Dostęp zablokowany przez IbronIndustries.</p>
-                        <p data-lang="en" style="font-size: 12px; color: var(--text-muted);">Chronos Protocol is an advanced time engine. Access restricted by IbronIndustries.</p>
-                    </div>
-                </div>
-                <div class="glass-card hover-trigger" style="justify-content: center; align-items: center; text-align: center;">
-                    <div class="status-tag tag-locked">RESTRICTED</div>
-                    <div class="card-icon" style="color: var(--danger); margin-bottom: 10px;">✖</div>
-                    <h3 data-lang="pl">ZASZYFROWANE</h3><h3 data-lang="en">ENCRYPTED</h3>
-                    <p data-lang="pl" style="color:var(--danger);">Dostęp zablokowany.</p><p data-lang="en" style="color:var(--danger);">Access Denied.</p>
-                </div>
+            
+            <div class="construction-box">
+                <div class="card-icon" style="font-size: 60px;">⎔</div>
+                <h2 data-lang="pl" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h2>
+                <h2 data-lang="en" style="margin-bottom: 10px; font-weight: 900; letter-spacing: 2px;">MODULE IN CLOSED BETA TESTING</h2>
+                <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol to zaawansowany silnik do manipulacji czasem operacyjnym. Ze względu na restrykcyjne testy wydajności, dostęp do modułu jest obecnie zablokowany przez IbronIndustries.</p>
+                <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px;">Chronos Protocol is an advanced engine for operational time manipulation. Due to strict performance testing, access to the module is currently restricted by IbronIndustries.</p>
+                <div class="loading-bar"><div class="loading-fill"></div></div>
+                <p style="font-family: var(--font-mono); color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-top: 15px;">> SYSTEM.DEPLOYMENT = PENDING...</p>
             </div>
         </div>
 
@@ -548,43 +469,29 @@
         <!-- WIDOK 5: HARDWARE -->
         <!-- ========================================== -->
         <div id="hardware" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
-                <div>
-                    <h1 class="gradient-text" data-lang="pl">Laboratorium R&D</h1>
-                    <h1 class="gradient-text" data-lang="en">R&D Laboratory</h1>
-                </div>
-                <div class="section-badge">HARDWARE_DIV</div>
+                <div><h1 class="gradient-text" data-lang="pl">Laboratorium R&D</h1><h1 class="gradient-text" data-lang="en">R&D Laboratory</h1></div>
             </div>
 
             <div class="construction-box hover-trigger" style="border-color: var(--accent); padding: 80px 40px;">
-                <div class="card-icon" style="font-size: 60px;">⏣</div>
+                <div class="card-icon" style="font-size: 60px; color: var(--accent);">⏣</div>
                 <h2 data-lang="pl" style="margin-bottom: 20px; font-weight: 900; letter-spacing: 2px;">PROJEKTY FIZYCZNE</h2>
                 <h2 data-lang="en" style="margin-bottom: 20px; font-weight: 900; letter-spacing: 2px;">PHYSICAL PROJECTS</h2>
-                
                 <p data-lang="pl" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa pod szyldem IbronIndustries. Szczegóły tajne.</p>
                 <p data-lang="en" style="color: var(--text-muted); max-width: 600px; margin: 0 auto 30px; font-size: 18px;">Decentralized software requires independent hardware. We are building physical security tokens under the IbronIndustries brand. Details classified.</p>
-                
                 <div class="loading-bar"><div class="loading-fill" style="animation-duration: 4s;"></div></div>
                 <p style="font-family: var(--font-mono); color: var(--accent); font-size: 12px; letter-spacing: 2px; margin-top: 15px;">> HARDWARE.DESIGN = IN_PROGRESS...</p>
             </div>
         </div>
 
         <!-- ========================================== -->
-        <!-- WIDOK 6: PROTOKOŁY -->
+        <!-- WIDOK 6: PROTOKOŁY (ORYGINALNE) -->
         <!-- ========================================== -->
         <div id="protocols" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
-                <div>
-                    <h1 class="gradient-text" data-lang="pl">Dokumentacja Operacyjna</h1>
-                    <h1 class="gradient-text" data-lang="en">Operational Documentation</h1>
-                </div>
-                <div class="section-badge">LEGAL_SEC</div>
+                <div><h1 class="gradient-text" data-lang="pl">Dokumentacja Operacyjna</h1><h1 class="gradient-text" data-lang="en">Operational Documentation</h1></div>
             </div>
 
             <div class="glass-card" style="margin-bottom: 40px;">
@@ -595,22 +502,42 @@
             <div class="protocol-rule hover-trigger">
                 <h4 data-lang="pl">PROTOKÓŁ 1: CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI</h4>
                 <h4 data-lang="en">PROTOCOL 1: FULL DISCLAIMER OF LIABILITY</h4>
-                <p data-lang="pl"><strong>1. As-Is:</strong> Aplikacje dostarczane są „As-Is”, bez gwarancji niezawodności po aktualizacjach systemów. IbronIndustries nie ponosi odpowiedzialności za utratę danych.<br><br><strong>2. Brak tylnej furtki:</strong> Aplikacje nie mają funkcji resetowania hasła e-mailem. Zgubienie PINu to permanentna utrata danych.<br><br><strong>3. Kapitał:</strong> Przechowywanie fraz Seed odbywa się na Twoje ryzyko. Nie odpowiadamy za cyberataki.</p>
-                <p data-lang="en"><strong>1. As-Is:</strong> Apps are delivered 'As-Is'. IbronIndustries is not liable for data loss.<br><br><strong>2. No Backdoors:</strong> No password reset. Losing a PIN means permanent data loss.<br><br><strong>3. Capital:</strong> Storing Seed phrases is at your own risk. We are not responsible for cyberattacks.</p>
+                <p data-lang="pl">
+                    <strong>1. Warunki dostarczenia (As-Is):</strong><br>Aplikacje dostarczane są „As-Is”, bez gwarancji niezawodności po aktualizacjach systemów (Android/iOS). IbronIndustries nie ponosi odpowiedzialności za ewentualną utratę danych, notatek czy uszkodzenie bazy.<br><br>
+                    <strong>2. Brak tylnej furtki (No Backdoor):</strong><br>Aplikacje IbronIndustries nie mają funkcji resetowania hasła e-mailem. Jeśli zapomnisz kodu PIN, dane zostają matematycznie zablokowane na zawsze. Nie mamy technicznej możliwości odzyskania dostępu.<br><br>
+                    <strong>3. Kapitał i Cyberataki:</strong><br>Przechowywanie fraz kryptowalutowych (Seed Phrase) odbywa się na Twoje ryzyko. IbronIndustries nie odpowiada za straty wynikające z awarii, infekcji malware/spyware czy kradzieży fizycznej urządzenia.
+                </p>
+                <p data-lang="en">
+                    <strong>1. As-Is Delivery Terms:</strong><br>Apps are delivered 'As-Is', with no guarantee of uninterrupted operation after OS updates. IbronIndustries is not liable for any data loss, database corruption, or crashes.<br><br>
+                    <strong>2. No Backdoors:</strong><br>IbronIndustries applications have no password reset function. If you forget your PIN, data is permanently mathematically locked. We have no technical ability to recover access.<br><br>
+                    <strong>3. Capital & Cyberattacks:</strong><br>Storing crypto seed phrases is at your own risk. IbronIndustries bears no responsibility for financial losses resulting from device theft, malware/spyware infections, or cyberattacks.
+                </p>
             </div>
 
             <div class="protocol-rule hover-trigger">
                 <h4 data-lang="pl">PROTOKÓŁ 2: ARCHITEKTURA I PRYWATNOŚĆ (RODO)</h4>
                 <h4 data-lang="en">PROTOCOL 2: ARCHITECTURE & PRIVACY (GDPR)</h4>
-                <p data-lang="pl"><strong>1. Administrator Danych:</strong> Wydawcą aplikacji jest osoba fizyczna działająca pod marką IbronIndustries. Kontakt: alex@ibronindustries.pl.<br><br><strong>2. Zero-Data:</strong> IbronEXO nie zbiera, nie przechowuje i nie przesyła żadnych danych na zewnątrz.</p>
-                <p data-lang="en"><strong>1. Data Administrator:</strong> Publisher is an individual under IbronIndustries. Contact: alex@ibronindustries.pl.<br><br><strong>2. Zero-Data:</strong> IbronEXO does not collect, store, or transmit any data externally.</p>
+                <p data-lang="pl">
+                    <strong>1. Administrator Danych:</strong><br>Wydawcą aplikacji jest osoba fizyczna działająca pod marką IbronIndustries. Kontakt: alex@ibronindustries.pl. Projekt jest inicjatywą niekomercyjną.<br><br>
+                    <strong>2. Aplikacje Offline (Zero-Data):</strong><br>Aplikacja IbronEXO działa w modelu Zero-Data. Nie zbiera, nie przechowuje i nie przesyła żadnych Twoich danych na zewnętrzne serwery IbronIndustries. Wszystko zostaje na Twoim urządzeniu.
+                </p>
+                <p data-lang="en">
+                    <strong>1. Data Administrator:</strong><br>The publisher is an individual operating under the IbronIndustries brand. Contact: alex@ibronindustries.pl. This is a non-commercial initiative.<br><br>
+                    <strong>2. Offline Applications (Zero-Data):</strong><br>IbronEXO operates on a Zero-Data model. It does not collect, store, or transmit your data to external IbronIndustries servers. Everything stays on your device.
+                </p>
             </div>
 
             <div class="protocol-rule hover-trigger">
                 <h4 data-lang="pl">PROTOKÓŁ 3: STATUS KOMERCYJNY I ROZWÓJ</h4>
                 <h4 data-lang="en">PROTOCOL 3: COMMERCIAL STATUS & DEVELOPMENT</h4>
-                <p data-lang="pl"><strong>1. Dystrybucja bezpłatna:</strong> Wszystkie obecne aplikacje udostępniane przez IbronIndustries są całkowicie darmowe i pozbawione reklam.<br><br><strong>2. Zapewnienie zgodności:</strong> Z chwilą uruchomienia sprzedaży komercyjnej (hardware/premium), pojawi się pełny Regulamin Sklepu.</p>
-                <p data-lang="en"><strong>1. Free Distribution:</strong> All current apps released by IbronIndustries are completely free and without ads.<br><br><strong>2. Compliance Assurance:</strong> Upon launching commercial sales (hardware/premium), a full Store Regulation will be published.</p>
+                <p data-lang="pl">
+                    <strong>1. Dystrybucja bezpłatna:</strong><br>Wszystkie obecne aplikacje udostępniane przez IbronIndustries w sklepach (Google Play / App Store) są całkowicie darmowe, pozbawione reklam oraz ukrytych mikropłatności.<br><br>
+                    <strong>2. Zapewnienie zgodności:</strong><br>Z chwilą uruchomienia przez IbronIndustries sprzedaży komercyjnej (hardware/premium), na stronie pojawi się pełny Regulamin Sklepu zgodny z prawem polskim.
+                </p>
+                <p data-lang="en">
+                    <strong>1. Free Distribution:</strong><br>All current apps released by IbronIndustries in official stores (Google Play / App Store) are completely free, without ads or hidden microtransactions.<br><br>
+                    <strong>2. Compliance Assurance:</strong><br>Upon launching commercial sales (hardware/premium) by IbronIndustries, a full Store Regulation complying with Polish law will be published on our website.
+                </p>
             </div>
         </div>
 
@@ -618,15 +545,9 @@
         <!-- WIDOK 7: KONTAKT -->
         <!-- ========================================== -->
         <div id="contact" class="view">
-            <button class="btn-back hover-trigger" data-lang="pl" onclick="switchView('home')">← Powrót do Huba</button>
-            <button class="btn-back hover-trigger" data-lang="en" onclick="switchView('home')">← Return to Hub</button>
-            
+            <button class="btn-back hover-trigger" onclick="switchView('home')">← Powrót</button>
             <div class="section-header">
-                <div>
-                    <h1 class="gradient-text" data-lang="pl">Kontakt</h1>
-                    <h1 class="gradient-text" data-lang="en">Contact</h1>
-                </div>
-                <div class="section-badge">COMM_LINK_256</div>
+                <div><h1 class="gradient-text" data-lang="pl">Kontakt</h1><h1 class="gradient-text" data-lang="en">Contact</h1></div>
             </div>
 
             <div class="glass-card hover-trigger" style="text-align: center; padding: 80px 40px; margin: 40px auto; max-width: 800px;">
@@ -664,80 +585,133 @@
                 splash.style.opacity = '0';
                 setTimeout(() => splash.style.display = 'none', 800); 
             }, 1000); 
+            initUIFramework(); // inicjalizacja kolorów i tła
         });
 
-        /* === SYSTEM WIDOKÓW (KLUCZOWA ZMIANA) === */
+        /* === SYSTEM WIDOKÓW (ZAKŁADKI) === */
         function switchView(viewId) {
-            // Najpierw ukrywamy wszystkie
-            const views = document.querySelectorAll('.view');
-            views.forEach(v => {
-                v.style.animation = 'none'; // reset animacji
+            document.querySelectorAll('.view').forEach(v => {
+                v.style.animation = 'none';
                 v.classList.remove('active');
             });
-            
-            // Pokazujemy nowy widok
             const targetView = document.getElementById(viewId);
             targetView.classList.add('active');
-            // Wymuszamy reflow, aby animacja zadziałała od nowa
             void targetView.offsetWidth; 
-            targetView.style.animation = 'viewFadeIn 0.6s cubic-bezier(0.25, 1, 0.5, 1) forwards';
-            
+            targetView.style.animation = 'viewFadeIn 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards';
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        /* === SYSTEM PERSONALIZACJI UI === */
+        /* === SYSTEM PERSONALIZACJI UI (32 KOLORY, 21 TŁA) === */
+        const colors = [
+            { hex: '#00F0FF', rgb: '0, 240, 255' }, { hex: '#00FF41', rgb: '0, 255, 65' }, { hex: '#FF9900', rgb: '255, 153, 0' }, { hex: '#FF2A2A', rgb: '255, 42, 42' }, 
+            { hex: '#B026FF', rgb: '176, 38, 255' }, { hex: '#FFFFFF', rgb: '255, 255, 255' }, { hex: '#FF0055', rgb: '255, 0, 85' }, { hex: '#00FF9D', rgb: '0, 255, 157' },
+            { hex: '#FFFF00', rgb: '255, 255, 0' }, { hex: '#FF00FF', rgb: '255, 0, 255' }, { hex: '#0088FF', rgb: '0, 136, 255' }, { hex: '#FF5500', rgb: '255, 85, 0' },
+            { hex: '#7700FF', rgb: '119, 0, 255' }, { hex: '#00FFCC', rgb: '0, 255, 204' }, { hex: '#FF3399', rgb: '255, 51, 153' }, { hex: '#99FF00', rgb: '153, 255, 0' },
+            { hex: '#FF0000', rgb: '255, 0, 0' }, { hex: '#0000FF', rgb: '0, 0, 255' }, { hex: '#00FFFF', rgb: '0, 255, 255' }, { hex: '#FF6600', rgb: '255, 102, 0' },
+            { hex: '#CC00FF', rgb: '204, 0, 255' }, { hex: '#33FF00', rgb: '51, 255, 0' }, { hex: '#FF00CC', rgb: '255, 0, 204' }, { hex: '#00CCFF', rgb: '0, 204, 255' },
+            { hex: '#FFCC00', rgb: '255, 204, 0' }, { hex: '#6600FF', rgb: '102, 0, 255' }, { hex: '#00FF66', rgb: '0, 255, 102' }, { hex: '#FF0033', rgb: '255, 0, 51' },
+            { hex: '#3300FF', rgb: '51, 0, 255' }, { hex: '#0033FF', rgb: '0, 51, 255' }, { hex: '#FF9933', rgb: '255, 153, 51' }, { hex: '#9933FF', rgb: '153, 51, 255' }
+        ];
+
+        const backgrounds = [
+            { id: 'bg-0', pl: 'Czyste (Clean)', en: 'Clean Minimal' }, { id: 'bg-1', pl: 'Siatka Szeroka', en: 'Large Grid' }, { id: 'bg-2', pl: 'Siatka Gęsta', en: 'Dense Grid' },
+            { id: 'bg-3', pl: 'Kropki Duże', en: 'Large Dots' }, { id: 'bg-4', pl: 'Kropki Małe', en: 'Small Dots' }, { id: 'bg-5', pl: 'Linie Poziome', en: 'Horizontal Lines' },
+            { id: 'bg-6', pl: 'Linie Pionowe', en: 'Vertical Lines' }, { id: 'bg-7', pl: 'Skosy Prawe', en: 'Right Diagonals' }, { id: 'bg-8', pl: 'Skosy Lewe', en: 'Left Diagonals' },
+            { id: 'bg-9', pl: 'Krzyżyki (Crosshatch)', en: 'Crosshatch' }, { id: 'bg-10', pl: 'Podwójne Okręgi', en: 'Double Circles' }, { id: 'bg-11', pl: 'Radar', en: 'Radar Pattern' },
+            { id: 'bg-12', pl: 'Matryca', en: 'Matrix Grid' }, { id: 'bg-13', pl: 'Carbon Fiber', en: 'Carbon Fiber' }, { id: 'bg-14', pl: 'Deszcz Danych', en: 'Data Rain' },
+            { id: 'bg-15', pl: 'Rozbłysk', en: 'Central Flare' }, { id: 'bg-16', pl: 'Układ Scalony', en: 'Circuit Board' }, { id: 'bg-17', pl: 'Labirynt', en: 'Labyrinth' },
+            { id: 'bg-18', pl: 'Narożniki', en: 'Corner Glow' }, { id: 'bg-19', pl: 'Fale (Waves)', en: 'Radial Waves' }, { id: 'bg-20', pl: 'Wykres', en: 'Graph Paper' }
+        ];
+
+        function initUIFramework() {
+            // Render Kolorów
+            const colorGrid = document.getElementById('color-grid-container');
+            let colorHtml = '';
+            colors.forEach((c, index) => {
+                const activeClass = index === 0 ? 'active' : '';
+                colorHtml += `<button class="color-btn ${activeClass} hover-trigger" style="background: ${c.hex}; color: ${c.hex};" onclick="setAccent('${c.rgb}', '${c.hex}', this)"></button>`;
+            });
+            colorGrid.innerHTML = colorHtml;
+
+            // Render Teł
+            const bgContainer = document.getElementById('bg-layers-container');
+            const bgBtnGrid = document.getElementById('bg-grid-container');
+            let layersHtml = '';
+            let btnsHtml = '';
+            
+            backgrounds.forEach((bg, index) => {
+                const activeClass = index === 1 ? 'active' : ''; // Domyślnie bg-1
+                layersHtml += `<div class="bg-layer ${activeClass}" id="${bg.id}"></div>`;
+                btnsHtml += `<button class="bg-btn ${activeClass} hover-trigger" onclick="setBg('${bg.id}', this)"><span data-lang="pl">${bg.pl}</span><span data-lang="en">${bg.en}</span></button>`;
+            });
+            
+            bgContainer.innerHTML = layersHtml;
+            bgBtnGrid.innerHTML = btnsHtml;
+            
+            // Re-bind hover sounds for new elements
+            bindHoverTriggers();
+        }
+
         function setAccent(rgbValue, hexValue, btnElement) {
-            // Ustawiamy zmienne CSS w korzeniu (root)
             document.documentElement.style.setProperty('--accent', hexValue);
             document.documentElement.style.setProperty('--accent-rgb', rgbValue);
-            
-            // Aktualizacja wizualna guzików
             document.querySelectorAll('.color-btn').forEach(b => b.classList.remove('active'));
             btnElement.classList.add('active');
         }
 
-        function setBg(bgType, btnElement) {
-            // Ukrywamy wszystkie tła
-            document.getElementById('bg-grid').style.opacity = '0';
-            document.getElementById('bg-dots').style.opacity = '0';
-            
-            // Pokazujemy wybrane
-            if(bgType === 'grid') document.getElementById('bg-grid').style.opacity = '1';
-            if(bgType === 'dots') document.getElementById('bg-dots').style.opacity = '1';
-            
-            // Aktualizacja wizualna guzików (uwaga: szukamy po atrybucie onclick, żeby zaktualizować polski i angielski guzik na raz)
+        function setBg(bgId, btnElement) {
+            document.querySelectorAll('.bg-layer').forEach(layer => layer.classList.remove('active'));
+            document.getElementById(bgId).classList.add('active');
             document.querySelectorAll('.bg-btn').forEach(b => b.classList.remove('active'));
-            document.querySelectorAll(`.bg-btn[onclick="setBg('${bgType}', this)"]`).forEach(b => b.classList.add('active'));
+            btnElement.classList.add('active');
         }
 
-        /* === CUSTOM KURSOR & TILT === */
+        /* === ODLICZANIE DO ZAKOŃCZENIA TESTÓW BETA (EXO) === */
+        const endDate = new Date('June 02, 2026 13:18:00').getTime();
+        
+        setInterval(() => {
+            const now = new Date().getTime();
+            const distance = endDate - now;
+            
+            if (distance < 0) {
+                document.getElementById('t-days').innerText = "00";
+                document.getElementById('t-hours').innerText = "00";
+                document.getElementById('t-mins').innerText = "00";
+                document.getElementById('t-secs').innerText = "00";
+                return;
+            }
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('t-days').innerText = days < 10 ? "0" + days : days;
+            document.getElementById('t-hours').innerText = hours < 10 ? "0" + hours : hours;
+            document.getElementById('t-mins').innerText = minutes < 10 ? "0" + minutes : minutes;
+            document.getElementById('t-secs').innerText = seconds < 10 ? "0" + seconds : seconds;
+        }, 1000);
+
+        /* === CUSTOM KURSOR & HOVER === */
         const cursor = document.getElementById('custom-cursor');
         document.addEventListener('mousemove', e => {
             cursor.style.left = e.clientX + 'px';
             cursor.style.top = e.clientY + 'px';
         });
 
-        document.querySelectorAll('.hover-trigger').forEach(el => {
-            el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
-            el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
-        });
-
-        /* EFEKT 3D DLA KART */
-        document.querySelectorAll('.glass-card').forEach(card => {
-            card.addEventListener('mousemove', e => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left; 
-                const y = e.clientY - rect.top;  
-                const centerX = rect.width / 2;
-                const centerY = rect.height / 2;
-                const rotateX = ((y - centerY) / centerY) * -5;
-                const rotateY = ((x - centerX) / centerX) * 5;
-                card.style.transform = `perspective(1000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
+        function bindHoverTriggers() {
+            document.querySelectorAll('.hover-trigger').forEach(el => {
+                // Zapobiegamy dublowaniu event listenerów
+                el.removeEventListener('mouseenter', handleMouseEnter);
+                el.removeEventListener('mouseleave', handleMouseLeave);
+                
+                el.addEventListener('mouseenter', handleMouseEnter);
+                el.addEventListener('mouseleave', handleMouseLeave);
             });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-            });
-        });
+        }
+        function handleMouseEnter() { cursor.classList.add('hover'); }
+        function handleMouseLeave() { cursor.classList.remove('hover'); }
+        bindHoverTriggers(); // Wywołanie na start
 
         /* === JĘZYK === */
         let currentLang = 'pl';
