@@ -128,19 +128,34 @@
         
         .ambient-glow { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -2; pointer-events: none; background: radial-gradient(circle at 50% 0%, var(--accent-glow), transparent 60%); opacity: 0.5; transition: background 1.5s ease; }
 
-        /* === CUSTOM KURSOR (POPRAWIONA WIDOCZNOŚĆ) === */
+        /* === CUSTOM KURSOR - NAPRAWIONY === */
         #custom-cursor { 
-            position: fixed; top: 0; left: 0; width: 24px; height: 24px; 
-            border: 2px solid var(--accent); border-radius: 50%; pointer-events: none; 
-            transform: translate(-50%, -50%); z-index: 9999999; 
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 24px;
+            height: 24px; 
+            border: 2px solid var(--accent);
+            border-radius: 50%;
+            pointer-events: none; 
+            transform: translate(-50%, -50%);
+            z-index: 2147483647; /* maksymalny możliwy z-index */
             transition: width 0.2s, height 0.2s, background 0.2s, border-color 0.2s; 
-            display: flex; justify-content: center; align-items: center; 
-            box-shadow: 0 0 15px var(--accent-glow), 0 0 5px rgba(0,0,0,0.5); /* Cień ratujący na białym tłe */
-            filter: drop-shadow(0 0 2px rgba(255,255,255,0.3)); /* Biała poświata ratująca na czarnym */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 0 15px var(--accent-glow), 0 0 5px rgba(0,0,0,0.5);
+            mix-blend-mode: normal;
+            will-change: transform;
         }
         #custom-cursor::after { 
-            content: ''; width: 4px; height: 4px; background: var(--accent); 
-            border-radius: 50%; transition: 0.2s; box-shadow: 0 0 5px rgba(0,0,0,0.8);
+            content: '';
+            width: 4px;
+            height: 4px;
+            background: var(--accent); 
+            border-radius: 50%;
+            transition: 0.2s;
+            box-shadow: 0 0 5px var(--accent);
         }
         #custom-cursor.hover { width: 45px; height: 45px; background: rgba(var(--accent-rgb), 0.15); border-color: var(--accent); backdrop-filter: blur(2px); }
         #custom-cursor.hover::after { width: 8px; height: 8px; box-shadow: 0 0 10px var(--accent); }
@@ -285,6 +300,7 @@
     <div id="bg-layers-container"></div>
     <div class="ambient-glow"></div>
 
+    <!-- KURSOR - musi być pierwszy element przed wszystkim innym -->
     <div id="custom-cursor"></div>
     <div id="splash-screen"><div class="arc-core"></div></div>
 
@@ -607,12 +623,14 @@
                 </div>
             </div>
 
-            <!-- LICZNIK BETA Z PRAWDZIWYM CZASEM -->
+            <!-- ============================================================ -->
+            <!-- ZMIANA 1: Data przedłużona o tydzień: June 02 → June 09 2026 -->
+            <!-- ============================================================ -->
             <div class="beta-timer-box hover-trigger">
-                <h3 data-lang="pl">>> FAZA ZAMKNIĘTYCH TESTÓW (CLOSED BETA) <<</h3>
-                <h3 data-lang="en">>> CLOSED BETA TESTING PHASE <<</h3>
+                <h3 data-lang="pl">>> FAZA ZAMKNIĘTYCH TESTÓW (CLOSED BETA) — PRZEDŁUŻONA <<</h3>
+                <h3 data-lang="en">>> CLOSED BETA TESTING PHASE — EXTENDED <<</h3>
                 <p style="color: var(--text-muted); font-size: 12px; margin-bottom: 20px;">
-                    Started: May 19, 2026 at 01:18 PM <br> Expected End: June 02, 2026 at 01:18 PM
+                    Started: May 19, 2026 at 01:18 PM <br> Expected End: June 09, 2026 at 01:18 PM
                 </p>
                 <div class="timer-display">
                     <div class="timer-unit"><span id="t-days">00</span><span class="timer-label">DAYS</span></div> :
@@ -625,17 +643,20 @@
             <div class="app-metadata">
                 <div class="meta-tag" data-lang="pl">Wersja: <strong>1.0.0</strong></div><div class="meta-tag" data-lang="en">Version: <strong>1.0.0</strong></div>
                 <div class="meta-tag" data-lang="pl">Wydawca: <strong>IbronIndustries</strong></div><div class="meta-tag" data-lang="en">Publisher: <strong>IbronIndustries</strong></div>
-                <div class="meta-tag" data-lang="pl">Data wydania: <strong>Wkrótce (Maj 2026)</strong></div><div class="meta-tag" data-lang="en">Release date: <strong>Soon (May 2026)</strong></div>
+                <div class="meta-tag" data-lang="pl">Data wydania: <strong>Wkrótce (Czerwiec 2026)</strong></div><div class="meta-tag" data-lang="en">Release date: <strong>Soon (June 2026)</strong></div>
                 <div class="meta-tag" data-lang="pl">Licencja: <strong>Darmowa (Brak Reklam)</strong></div><div class="meta-tag" data-lang="en">License: <strong>Free (No Ads)</strong></div>
             </div>
 
+            <!-- ============================================================ -->
+            <!-- ZMIANA 2: Nowy tekst o akceptacji Google Play (oba języki)   -->
+            <!-- ============================================================ -->
             <div style="margin-bottom: 50px; text-align: center;">
                 <a href="#" class="btn-primary hover-trigger" onclick="alert('System weryfikacji Google Play w toku. Oprogramowanie będzie dostępne wkrótce.'); return false;">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 5px;"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
                     <span data-lang="pl">POBIERZ Z GOOGLE PLAY</span><span data-lang="en">DOWNLOAD ON GOOGLE PLAY</span>
                 </a>
-                <p data-lang="pl" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: var(--font-mono); letter-spacing: 1px;">> STATUS: OCZEKUJE NA CERTYFIKACJĘ SKLEPU</p>
-                <p data-lang="en" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: var(--font-mono); letter-spacing: 1px;">> STATUS: PENDING STORE CERTIFICATION</p>
+                <p data-lang="pl" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: var(--font-mono); letter-spacing: 1px;">> STATUS: OCZEKUJE NA AKCEPTACJĘ APLIKACJI W GOOGLE PLAY</p>
+                <p data-lang="en" style="margin-top: 15px; font-size: 11px; color: var(--danger); font-family: var(--font-mono); letter-spacing: 1px;">> STATUS: PENDING APP APPROVAL ON GOOGLE PLAY</p>
             </div>
 
             <div class="terminal-box hover-trigger">
@@ -749,7 +770,7 @@
                 <h4 data-lang="pl">PROTOKÓŁ 1: CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI</h4>
                 <h4 data-lang="en">PROTOCOL 1: FULL DISCLAIMER OF LIABILITY</h4>
                 <p data-lang="pl">
-                    <strong>1. Warunki dostarczenia (As-Is):</strong><br>Aplikacje dostarczane są „As-Is”, bez gwarancji niezawodności po aktualizacjach systemów (Android/iOS). IbronIndustries nie ponosi odpowiedzialności za ewentualną utratę danych, notatek czy uszkodzenie bazy.<br><br>
+                    <strong>1. Warunki dostarczenia (As-Is):</strong><br>Aplikacje dostarczane są „As-Is", bez gwarancji niezawodności po aktualizacjach systemów (Android/iOS). IbronIndustries nie ponosi odpowiedzialności za ewentualną utratę danych, notatek czy uszkodzenie bazy.<br><br>
                     <strong>2. Brak tylnej furtki (No Backdoor):</strong><br>Aplikacje IbronIndustries nie mają funkcji resetowania hasła e-mailem. Jeśli zapomnisz kodu PIN, dane zostają matematycznie zablokowane na zawsze. Nie mamy technicznej możliwości odzyskania dostępu.<br><br>
                     <strong>3. Kapitał i Cyberataki:</strong><br>Przechowywanie fraz kryptowalutowych (Seed Phrase) odbywa się na Twoje ryzyko. IbronIndustries nie odpowiada za straty wynikające z awarii, infekcji malware/spyware czy kradzieży fizycznej urządzenia.
                 </p>
@@ -825,6 +846,20 @@
     </div>
 
     <script>
+        /* ============================================================ */
+        /* ZMIANA 3: NAPRAWA KURSORA                                    */
+        /* Problem 1: zmienna 'cursor' nie była zdefiniowana globalnie  */
+        /* Problem 2: z-index za niski (był 9999999, teraz 2147483647)  */
+        /* Problem 3: mousemove listener dodany zbyt późno              */
+        /* ============================================================ */
+        const cursor = document.getElementById('custom-cursor');
+
+        // Listener dodany natychmiast po deklaracji zmiennej
+        document.addEventListener('mousemove', (e) => {
+            cursor.style.left = e.clientX + 'px';
+            cursor.style.top = e.clientY + 'px';
+        });
+
         /* === SPLASH SCREEN === */
         window.addEventListener('load', () => {
             setTimeout(() => {
@@ -1083,8 +1118,10 @@
             if(btn) btn.classList.add('active');
         }
 
-        /* === ODLICZANIE DO ZAKOŃCZENIA TESTÓW BETA (EXO) === */
-        const endDate = new Date('June 02, 2026 13:18:00').getTime();
+        /* ============================================================ */
+        /* ZMIANA 1: Data przedłużona o tydzień: June 02 → June 09 2026 */
+        /* ============================================================ */
+        const endDate = new Date('June 09, 2026 13:18:00').getTime();
         
         setInterval(() => {
             const now = new Date().getTime();
