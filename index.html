@@ -93,8 +93,8 @@ h1,h2,h3,h4,.logo-part-1,.logo-part-2{font-family:var(--font-head)}
 #custom-cursor.c-square.hov{width:calc(var(--cursor-size)*1.8);height:calc(var(--cursor-size)*1.8);background:rgba(var(--accent-rgb),.1)}
 #custom-cursor.c-diamond{width:var(--cursor-size);height:var(--cursor-size);border:2px solid var(--accent);border-radius:3px;transform:translate(-50%,-50%) rotate(45deg);box-shadow:0 0 15px var(--accent-glow)}
 #custom-cursor.c-diamond.hov{width:calc(var(--cursor-size)*1.8);height:calc(var(--cursor-size)*1.8);background:rgba(var(--accent-rgb),.1)}
-#custom-cursor.c-cross{width:var(--cursor-size);height:var(--cursor-size);position:relative}
-#custom-cursor.c-cross::before,#custom-cursor.c-cross::after{content:'';position:absolute;background:var(--accent);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px var(--accent)}
+#custom-cursor.c-cross{width:var(--cursor-size);height:var(--cursor-size);position:relative;background:transparent}
+#custom-cursor.c-cross::before,#custom-cursor.c-cross::after{content:'';position:absolute;background:var(--accent);top:50%;left:50%;transform:translate(-50%,-50%);box-shadow:0 0 8px var(--accent);border-radius:1px}
 #custom-cursor.c-cross::before{width:100%;height:2px}
 #custom-cursor.c-cross::after{width:2px;height:100%}
 #custom-cursor.c-cross.hov::before{width:calc(var(--cursor-size)*1.6)}
@@ -332,6 +332,87 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
 /* misc */
 @keyframes pulseStatus{0%,100%{box-shadow:0 0 5px #00e676}50%{box-shadow:0 0 15px #00e676}}
 @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+
+/* ===== CUSTOM MODE BOOT SEQUENCE OVERLAY ===== */
+#boot-overlay{
+  position:fixed;top:0;left:0;width:100%;height:100%;
+  background:#000;z-index:9999;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  opacity:0;visibility:hidden;transition:opacity .3s;
+  font-family:var(--font-mono);
+  overflow:hidden;
+}
+#boot-overlay.active{opacity:1;visibility:visible}
+#boot-overlay.fade-out{opacity:0;transition:opacity .6s ease}
+.boot-scanline{
+  position:absolute;top:0;left:0;width:100%;height:4px;
+  background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.8),transparent);
+  animation:bootScan 1.2s linear infinite;
+  pointer-events:none;
+}
+@keyframes bootScan{from{top:-4px}to{top:100%}}
+.boot-grid-bg{
+  position:absolute;inset:0;
+  background-image:linear-gradient(rgba(var(--accent-rgb),.04) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(var(--accent-rgb),.04) 1px,transparent 1px);
+  background-size:40px 40px;
+  animation:bootGridFade 3s ease forwards;
+}
+@keyframes bootGridFade{0%{opacity:0}30%{opacity:1}100%{opacity:.3}}
+.boot-center{position:relative;z-index:2;text-align:center;max-width:700px;padding:0 20px}
+.boot-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 30px}
+.boot-ring{
+  position:absolute;inset:0;border-radius:50%;
+  border:2px solid transparent;
+}
+.boot-ring-1{border-color:var(--accent);animation:bootRing1 2s linear infinite;box-shadow:0 0 20px var(--accent-glow),inset 0 0 20px rgba(var(--accent-rgb),.1)}
+.boot-ring-2{inset:12px;border-color:rgba(var(--accent-rgb),.5);animation:bootRing1 1.5s linear infinite reverse}
+.boot-ring-3{inset:24px;border-color:rgba(var(--accent-rgb),.3);animation:bootRing1 1s linear infinite}
+@keyframes bootRing1{to{transform:rotate(360deg)}}
+.boot-core{
+  position:absolute;inset:36px;border-radius:50%;
+  background:radial-gradient(circle,var(--accent) 0%,rgba(var(--accent-rgb),.3) 50%,transparent 70%);
+  animation:bootCore 2s ease-in-out infinite;
+}
+@keyframes bootCore{0%,100%{transform:scale(.8);opacity:.8}50%{transform:scale(1.1);opacity:1}}
+.boot-title{
+  font-family:var(--font-head);font-size:clamp(22px,4vw,38px);
+  font-weight:900;letter-spacing:8px;text-transform:uppercase;
+  color:var(--accent);text-shadow:0 0 30px var(--accent-glow);
+  margin-bottom:8px;
+  animation:bootTitleIn .6s ease .2s both;
+}
+@keyframes bootTitleIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.boot-sub{
+  font-size:11px;letter-spacing:3px;color:rgba(var(--accent-rgb),.6);
+  margin-bottom:32px;
+  animation:bootTitleIn .6s ease .4s both;
+}
+.boot-lines{
+  text-align:left;display:inline-block;min-width:320px;
+  animation:bootTitleIn .5s ease .6s both;
+}
+.boot-line{
+  font-size:11px;color:rgba(var(--accent-rgb),.7);letter-spacing:1px;
+  padding:3px 0;display:flex;align-items:center;gap:10px;
+  opacity:0;
+}
+.boot-line.show{animation:bootLineIn .3s ease forwards}
+@keyframes bootLineIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
+.boot-line-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0}
+.boot-line-ok{color:#00e676;font-weight:bold}
+.boot-progress-wrap{
+  margin-top:28px;width:100%;max-width:400px;
+  animation:bootTitleIn .5s ease .8s both;
+}
+.boot-progress-bar{height:3px;background:rgba(var(--accent-rgb),.15);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.boot-progress-fill{height:100%;background:var(--accent);box-shadow:0 0 10px var(--accent);width:0%;transition:width .1s linear}
+.boot-progress-label{font-size:10px;color:rgba(var(--accent-rgb),.5);letter-spacing:2px;text-align:right}
+.boot-corner{position:absolute;width:20px;height:20px;opacity:.4}
+.boot-corner.tl{top:20px;left:20px;border-top:2px solid var(--accent);border-left:2px solid var(--accent)}
+.boot-corner.tr{top:20px;right:20px;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
+.boot-corner.bl{bottom:20px;left:20px;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent)}
+.boot-corner.br{bottom:20px;right:20px;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
 </style>
 </head>
 <body>
@@ -499,6 +580,37 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
   </div>
 </div>
 
+<!-- CUSTOM MODE BOOT OVERLAY -->
+<div id="boot-overlay">
+  <div class="boot-grid-bg"></div>
+  <div class="boot-scanline"></div>
+  <div class="boot-corner tl"></div>
+  <div class="boot-corner tr"></div>
+  <div class="boot-corner bl"></div>
+  <div class="boot-corner br"></div>
+  <div class="boot-center">
+    <div class="boot-ring-wrap">
+      <div class="boot-ring boot-ring-1"></div>
+      <div class="boot-ring boot-ring-2"></div>
+      <div class="boot-ring boot-ring-3"></div>
+      <div class="boot-core"></div>
+    </div>
+    <div class="boot-title" id="boot-title">TRYB WŁASNY</div>
+    <div class="boot-sub">IBRON INDUSTRIES // UI ENGINE v4.0</div>
+    <div class="boot-lines" id="boot-lines">
+      <div class="boot-line" id="bl-1"><div class="boot-line-dot"></div><span>[ SYS.AUTH ] Weryfikacja dostępu...</span></div>
+      <div class="boot-line" id="bl-2"><div class="boot-line-dot"></div><span>[ UI.ENGINE ] Ładowanie modułów...</span></div>
+      <div class="boot-line" id="bl-3"><div class="boot-line-dot"></div><span>[ CONTROLS ] Odblokowanie parametrów...</span></div>
+      <div class="boot-line" id="bl-4"><div class="boot-line-dot"></div><span>[ PALETTE ] Inicjalizacja kolorów...</span></div>
+      <div class="boot-line" id="bl-5"><div class="boot-line-dot"></div><span class="boot-line-ok">[ STATUS ] GOTOWY — Pełna kontrola przyznana ✓</span></div>
+    </div>
+    <div class="boot-progress-wrap">
+      <div class="boot-progress-bar"><div class="boot-progress-fill" id="boot-progress"></div></div>
+      <div class="boot-progress-label" id="boot-pct">0%</div>
+    </div>
+  </div>
+</div>
+
 <!-- CURSOR -->
 <div id="custom-cursor" class="c-ring"></div>
 
@@ -555,7 +667,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div class="lang-wrap">
       <button class="lang-btn hv" onclick="toggleLangDropdown()">
         <div class="lang-flag-wave" id="nav-flag">
-          <svg viewBox="0 0 22 15"><rect width="22" height="5" fill="#DC143C"/><rect y="5" width="22" height="5" fill="#fff"/><rect y="10" width="22" height="5" fill="#DC143C"/></svg>
+          <svg viewBox="0 0 22 15"><rect width="22" height="7.5" fill="#FFFFFF"/><rect y="7.5" width="22" height="7.5" fill="#DC143C"/></svg>
         </div>
         <span id="nav-lang-code">PL</span>
         <svg width="10" height="6" viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
@@ -848,6 +960,30 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div class="glass-card card-center" style="opacity:.45"><div class="status-tag-wrap"><span class="status-tag tag-locked">CLASSIFIED</span></div><div class="card-icon" style="color:var(--danger);font-size:28px">✖</div><h3 style="font-size:16px" data-lang-key="locked"></h3></div>
     <div class="glass-card card-center" style="opacity:.45"><div class="status-tag-wrap"><span class="status-tag tag-locked">RESTRICTED</span></div><div class="card-icon" style="color:var(--danger);font-size:28px">✖</div><h3 style="font-size:16px" data-lang-key="locked"></h3></div>
     <div class="glass-card card-center" style="opacity:.45"><div class="status-tag-wrap"><span class="status-tag tag-locked">CLASSIFIED</span></div><div class="card-icon" style="color:var(--danger);font-size:28px">✖</div><h3 style="font-size:16px" data-lang-key="locked"></h3></div>
+    <div class="glass-card card-center" style="opacity:.35;border-color:var(--danger)">
+      <div class="status-tag-wrap"><span class="status-tag tag-locked">TOP SECRET</span></div>
+      <div style="font-size:28px;margin-bottom:10px;color:var(--danger)">⊗</div>
+      <h3 style="font-size:14px;letter-spacing:3px;color:var(--danger)">IBRON//SHADOW</h3>
+      <p style="font-size:10px;font-family:var(--font-mono);color:var(--danger);margin:0;opacity:.7">LEVEL 5 CLEARANCE<br>REQUIRED</p>
+    </div>
+    <div class="glass-card card-center" style="opacity:.35;border-color:var(--danger)">
+      <div class="status-tag-wrap"><span class="status-tag tag-locked">TOP SECRET</span></div>
+      <div style="font-size:28px;margin-bottom:10px;color:var(--danger)">⊗</div>
+      <h3 style="font-size:14px;letter-spacing:3px;color:var(--danger)">IBRON//NEXUS</h3>
+      <p style="font-size:10px;font-family:var(--font-mono);color:var(--danger);margin:0;opacity:.7">LEVEL 5 CLEARANCE<br>REQUIRED</p>
+    </div>
+    <div class="glass-card card-center" style="opacity:.25;border-style:dashed">
+      <div class="status-tag-wrap"><span class="status-tag" style="color:#555;border-color:#333">UNKNOWN</span></div>
+      <div style="font-size:28px;margin-bottom:10px;color:#333">?</div>
+      <h3 style="font-size:14px;letter-spacing:3px;color:#444">███████</h3>
+      <p style="font-size:10px;font-family:var(--font-mono);color:#333;margin:0">REDACTED</p>
+    </div>
+    <div class="glass-card card-center" style="opacity:.25;border-style:dashed">
+      <div class="status-tag-wrap"><span class="status-tag" style="color:#555;border-color:#333">UNKNOWN</span></div>
+      <div style="font-size:28px;margin-bottom:10px;color:#333">?</div>
+      <h3 style="font-size:14px;letter-spacing:3px;color:#444">███████</h3>
+      <p style="font-size:10px;font-family:var(--font-mono);color:#333;margin:0">REDACTED</p>
+    </div>
   </div>
 </div>
 
@@ -1039,7 +1175,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
    TRANSLATIONS — 22 languages
 ============================================================ */
 const LANGS = {
-  pl:{code:'pl',name:'Polski',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="7.5" fill="#fff"/><rect y="7.5" width="22" height="7.5" fill="#DC143C"/></svg>'},
+  pl:{code:'pl',name:'Polski',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="7.5" fill="#FFFFFF"/><rect y="7.5" width="22" height="7.5" fill="#DC143C"/></svg>'},
   en:{code:'en',name:'English',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="15" fill="#012169"/><path d="M0 0l22 15M22 0L0 15" stroke="#fff" stroke-width="3"/><path d="M0 0l22 15M22 0L0 15" stroke="#C8102E" stroke-width="1.5"/><path d="M11 0v15M0 7.5h22" stroke="#fff" stroke-width="5"/><path d="M11 0v15M0 7.5h22" stroke="#C8102E" stroke-width="3"/></svg>'},
   de:{code:'de',name:'Deutsch',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="5" fill="#000"/><rect y="5" width="22" height="5" fill="#DD0000"/><rect y="10" width="22" height="5" fill="#FFCE00"/></svg>'},
   fr:{code:'fr',name:'Français',flag:'<svg viewBox="0 0 22 15"><rect width="7.33" height="15" fill="#002395"/><rect x="7.33" width="7.34" height="15" fill="#fff"/><rect x="14.67" width="7.33" height="15" fill="#ED2939"/></svg>'},
@@ -1170,12 +1306,59 @@ function requestCustomUnlock(btnEl){
 let pendingUnlockBtn = null;
 function confirmUnlock(){
   document.getElementById('unlock-modal').classList.remove('active');
-  customUnlocked = true;
-  applyMaster('custom', pendingUnlockBtn||document.getElementById('tpl-custom'));
-  // Reveal advanced panel, hide unlock prompt
-  document.getElementById('unlock-prompt').style.display='none';
-  document.getElementById('advanced-panel').classList.add('revealed');
-  rebuildUI();
+  // Trigger spectacular boot sequence
+  runBootSequence(()=>{
+    customUnlocked = true;
+    applyMaster('custom', pendingUnlockBtn||document.getElementById('tpl-custom'));
+    document.getElementById('unlock-prompt').style.display='none';
+    document.getElementById('advanced-panel').classList.add('revealed');
+    rebuildUI();
+  });
+}
+
+function runBootSequence(onComplete){
+  const overlay = document.getElementById('boot-overlay');
+  const progress = document.getElementById('boot-progress');
+  const pct = document.getElementById('boot-pct');
+  const lines = [1,2,3,4,5];
+
+  overlay.classList.add('active');
+  overlay.classList.remove('fade-out');
+
+  // Reset
+  lines.forEach(i=>{const el=document.getElementById('bl-'+i);if(el){el.classList.remove('show');}});
+  progress.style.width='0%';pct.textContent='0%';
+
+  const steps = [
+    {delay:400, line:1, pv:18},
+    {delay:900, line:2, pv:38},
+    {delay:1400, line:3, pv:60},
+    {delay:1900, line:4, pv:80},
+    {delay:2500, line:5, pv:100},
+  ];
+
+  // Animate progress bar smoothly
+  let currentPct = 0;
+  const progInterval = setInterval(()=>{
+    if(currentPct < 100){currentPct=Math.min(100,currentPct+0.8);progress.style.width=currentPct+'%';pct.textContent=Math.floor(currentPct)+'%';}
+    else clearInterval(progInterval);
+  },25);
+
+  steps.forEach(({delay,line,pv})=>{
+    setTimeout(()=>{
+      const el=document.getElementById('bl-'+line);
+      if(el)el.classList.add('show');
+    },delay);
+  });
+
+  setTimeout(()=>{
+    clearInterval(progInterval);
+    progress.style.width='100%';pct.textContent='100%';
+    setTimeout(()=>{
+      overlay.classList.add('fade-out');
+      setTimeout(()=>{overlay.classList.remove('active','fade-out');if(onComplete)onComplete();},650);
+    },600);
+  },3200);
 }
 
 /* ============================================================
@@ -1462,6 +1645,15 @@ function closeLightbox(e){const lb=document.getElementById('image-lightbox');if(
    INIT
 ============================================================ */
 window.addEventListener('load',()=>{
+  // Auto-detect browser language
+  const saved = (() => { try { const d=localStorage.getItem('ibron_prefs'); return d ? JSON.parse(d).lang : null; } catch(e){ return null; } })();
+  if(!saved) {
+    const browserLang = (navigator.language || navigator.userLanguage || 'pl').toLowerCase().slice(0,2);
+    const supported = Object.keys(LANGS);
+    if(supported.includes(browserLang) && browserLang !== 'pl') {
+      setLang(browserLang);
+    }
+  }
   buildLangDropdown();
   applyTranslations();
   loadPersonalization();
@@ -1472,3 +1664,4 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
+      
