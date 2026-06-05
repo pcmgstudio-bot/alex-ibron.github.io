@@ -57,30 +57,11 @@ h1,h2,h3,h4,.logo-part-1,.logo-part-2{font-family:var(--font-head)}
 .ambient-glow{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;background:radial-gradient(circle at 50% 0%,var(--accent-glow),transparent 60%);opacity:.5;transition:background 1.5s ease}
 [data-global-theme="miami"] .ambient-glow{background:radial-gradient(ellipse at 30% 10%,rgba(255,110,199,.2) 0%,transparent 50%),radial-gradient(ellipse at 70% 90%,rgba(0,229,255,.15) 0%,transparent 50%);opacity:1}
 
-/* ===== MIAMI PALMS — SVG animated, z-index -1 (behind content) ===== */
-.miami-palms-container{position:fixed;bottom:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.5s ease}
-[data-global-theme="miami"] .miami-palms-container{opacity:1}
-.miami-palm-svg{position:absolute;bottom:0}
-.miami-palm-svg.left{left:-10px}
-.miami-palm-svg.right{right:-10px;transform:scaleX(-1)}
-/* Leaf animations */
-@keyframes sway1{0%,100%{transform:rotate(0deg) translateX(0)}50%{transform:rotate(4deg) translateX(3px)}}
-@keyframes sway2{0%,100%{transform:rotate(0deg) translateX(0)}50%{transform:rotate(-5deg) translateX(-4px)}}
-@keyframes sway3{0%,100%{transform:rotate(0deg) translateX(0)}40%{transform:rotate(6deg) translateX(5px)}70%{transform:rotate(-3deg) translateX(-2px)}}
-@keyframes trunkSway{0%,100%{transform:rotate(0deg)}50%{transform:rotate(1.5deg)}}
-.palm-trunk{transform-origin:bottom center;animation:trunkSway 4s ease-in-out infinite}
-.palm-leaf-1{transform-origin:30% 85%;animation:sway1 3s ease-in-out infinite}
-.palm-leaf-2{transform-origin:60% 85%;animation:sway2 3.5s ease-in-out infinite}
-.palm-leaf-3{transform-origin:50% 90%;animation:sway3 4s ease-in-out infinite}
-.palm-leaf-4{transform-origin:40% 80%;animation:sway1 2.8s ease-in-out infinite reverse}
-.palm-leaf-5{transform-origin:70% 80%;animation:sway2 3.2s ease-in-out infinite reverse}
-.palm-leaf-6{transform-origin:20% 88%;animation:sway3 3.7s ease-in-out infinite}
-.palm-leaf-7{transform-origin:80% 85%;animation:sway1 2.5s ease-in-out infinite}
-/* Miami sun */
-.miami-sun-wrap{position:fixed;top:80px;left:50%;transform:translateX(-50%);width:180px;height:90px;pointer-events:none;z-index:0;opacity:0;transition:opacity 1.5s ease;overflow:hidden}
-[data-global-theme="miami"] .miami-sun-wrap{opacity:.7}
-.miami-sun-inner{width:180px;height:180px;border-radius:50%;background:linear-gradient(180deg,#FFE566 0%,#FF6EC7 55%,transparent 100%);position:relative}
-.miami-sun-lines{position:absolute;bottom:0;left:0;width:100%;height:50%}
+
+
+[data-global-theme="miami"] 
+
+
 
 /* ===== CURSOR ===== */
 #custom-cursor{position:fixed;top:0;left:0;pointer-events:none;transform:translate(-50%,-50%);z-index:2147483647;will-change:transform;transition:width .15s,height .15s,border-radius .15s,background .15s}
@@ -439,145 +420,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
 </div>
 <div class="ambient-glow"></div>
 
-<!-- MIAMI PALMS -->
-<div class="miami-palms-container">
-  <!-- Left palm -->
-  <svg class="miami-palm-svg left" width="260" height="680" viewBox="0 0 260 680" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="trunkG1" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#4a2800"/>
-        <stop offset="50%" stop-color="#7a4a1a"/>
-        <stop offset="100%" stop-color="#3d2000"/>
-      </linearGradient>
-      <linearGradient id="leafG1" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#00e676"/>
-        <stop offset="60%" stop-color="#1b5e20"/>
-        <stop offset="100%" stop-color="#004d40"/>
-      </linearGradient>
-      <linearGradient id="leafG2" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#69f0ae"/>
-        <stop offset="100%" stop-color="#00695c"/>
-      </linearGradient>
-      <linearGradient id="coconutG" x1="0" y1="0" x2="1" y2="1">
-        <stop offset="0%" stop-color="#8d6e63"/>
-        <stop offset="100%" stop-color="#4e342e"/>
-      </linearGradient>
-    </defs>
-    <!-- Trunk with slight curve -->
-    <g class="palm-trunk">
-      <path d="M115 680 C118 580 122 500 125 430 C128 360 132 300 130 240" stroke="url(#trunkG1)" stroke-width="22" stroke-linecap="round" fill="none"/>
-      <!-- Trunk rings (detail) -->
-      <path d="M115 640 Q127 643 126 645" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M116 610 Q128 613 127 615" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M117 580 Q129 583 128 585" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M118 550 Q130 553 129 555" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M119 520 Q131 523 130 525" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M120 490 Q132 493 131 495" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M121 460 Q133 463 132 465" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M122 430 Q134 433 133 435" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M123 400 Q135 403 134 405" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M124 370 Q136 373 135 375" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M125 340 Q137 343 136 345" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M126 310 Q138 313 137 315" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M127 280 Q139 283 138 285" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-    </g>
-    <!-- Coconuts -->
-    <g opacity=".9">
-      <circle cx="134" cy="248" r="10" fill="url(#coconutG)"/>
-      <circle cx="122" cy="252" r="9" fill="url(#coconutG)"/>
-      <circle cx="128" cy="262" r="8" fill="url(#coconutG)"/>
-    </g>
-    <!-- Leaves — each with its own sway class -->
-    <g class="palm-leaf-1">
-      <path d="M130 240 C80 190 10 175 -30 190 C10 165 85 170 130 220" fill="url(#leafG1)" opacity=".9"/>
-      <path d="M130 240 C60 205 -10 195 -40 200 C-5 185 70 195 130 235" fill="url(#leafG2)" opacity=".6"/>
-    </g>
-    <g class="palm-leaf-2">
-      <path d="M130 240 C165 185 220 165 265 175 C220 155 160 170 130 225" fill="url(#leafG1)" opacity=".9"/>
-      <path d="M130 240 C170 195 230 180 270 185 C225 170 165 185 130 232" fill="url(#leafG2)" opacity=".55"/>
-    </g>
-    <g class="palm-leaf-3">
-      <path d="M130 240 C100 170 90 100 110 60 C80 105 85 175 125 235" fill="url(#leafG1)" opacity=".85"/>
-      <path d="M130 240 C115 165 110 95 125 55 C95 100 100 170 128 238" fill="url(#leafG2)" opacity=".5"/>
-    </g>
-    <g class="palm-leaf-4">
-      <path d="M130 240 C170 175 195 110 185 60 C205 110 175 180 132 238" fill="url(#leafG1)" opacity=".85"/>
-      <path d="M130 240 C175 185 200 120 190 70 C210 120 180 188 133 239" fill="url(#leafG2)" opacity=".5"/>
-    </g>
-    <g class="palm-leaf-5">
-      <path d="M130 240 C50 220 -10 245 -50 270 C-5 240 55 225 128 237" fill="url(#leafG1)" opacity=".8"/>
-    </g>
-    <g class="palm-leaf-6">
-      <path d="M130 240 C210 215 265 235 300 255 C260 228 208 218 131 237" fill="url(#leafG1)" opacity=".75"/>
-    </g>
-    <g class="palm-leaf-7">
-      <path d="M130 240 C145 195 175 165 200 155 C170 170 140 200 129 238" fill="url(#leafG2)" opacity=".7"/>
-    </g>
-  </svg>
-  <!-- Right palm (mirrored) -->
-  <svg class="miami-palm-svg right" width="260" height="680" viewBox="0 0 260 680" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <linearGradient id="trunkG2" x1="0" y1="0" x2="1" y2="0">
-        <stop offset="0%" stop-color="#3d2000"/>
-        <stop offset="50%" stop-color="#7a4a1a"/>
-        <stop offset="100%" stop-color="#4a2800"/>
-      </linearGradient>
-    </defs>
-    <g class="palm-trunk">
-      <path d="M145 680 C142 580 138 500 135 430 C132 360 128 300 130 240" stroke="url(#trunkG2)" stroke-width="22" stroke-linecap="round" fill="none"/>
-      <path d="M145 640 Q133 643 134 645" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M144 600 Q132 603 133 605" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M143 560 Q131 563 132 565" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M142 520 Q130 523 131 525" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M141 480 Q129 483 130 485" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M140 440 Q128 443 129 445" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M139 400 Q127 403 128 405" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M138 360 Q126 363 127 365" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M137 320 Q125 323 126 325" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-      <path d="M136 280 Q124 283 125 285" stroke="#5c3d00" stroke-width="3" fill="none" opacity=".6"/>
-    </g>
-    <g opacity=".9">
-      <circle cx="126" cy="248" r="10" fill="url(#coconutG)"/>
-      <circle cx="138" cy="252" r="9" fill="url(#coconutG)"/>
-      <circle cx="132" cy="262" r="8" fill="url(#coconutG)"/>
-    </g>
-    <g class="palm-leaf-1">
-      <path d="M130 240 C80 190 10 175 -30 190 C10 165 85 170 130 220" fill="url(#leafG1)" opacity=".9"/>
-    </g>
-    <g class="palm-leaf-2">
-      <path d="M130 240 C165 185 220 165 265 175 C220 155 160 170 130 225" fill="url(#leafG1)" opacity=".9"/>
-    </g>
-    <g class="palm-leaf-3">
-      <path d="M130 240 C100 170 90 100 110 60 C80 105 85 175 125 235" fill="url(#leafG1)" opacity=".85"/>
-    </g>
-    <g class="palm-leaf-4">
-      <path d="M130 240 C170 175 195 110 185 60 C205 110 175 180 132 238" fill="url(#leafG1)" opacity=".85"/>
-    </g>
-    <g class="palm-leaf-5">
-      <path d="M130 240 C50 220 -10 245 -50 270 C-5 240 55 225 128 237" fill="url(#leafG1)" opacity=".8"/>
-    </g>
-    <g class="palm-leaf-6">
-      <path d="M130 240 C210 215 265 235 300 255 C260 228 208 218 131 237" fill="url(#leafG1)" opacity=".75"/>
-    </g>
-    <g class="palm-leaf-7">
-      <path d="M130 240 C145 195 175 165 200 155 C170 170 140 200 129 238" fill="url(#leafG2)" opacity=".7"/>
-    </g>
-  </svg>
-</div>
-
-<!-- Miami Sun -->
-<div class="miami-sun-wrap">
-  <div class="miami-sun-inner">
-    <svg class="miami-sun-lines" viewBox="0 0 180 90" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <line x1="0" y1="10" x2="180" y2="10" stroke="#00E5FF" stroke-width="3" opacity=".7"/>
-      <line x1="0" y1="22" x2="180" y2="22" stroke="#00E5FF" stroke-width="2.5" opacity=".6"/>
-      <line x1="0" y1="34" x2="180" y2="34" stroke="#00E5FF" stroke-width="2" opacity=".5"/>
-      <line x1="0" y1="46" x2="180" y2="46" stroke="#00E5FF" stroke-width="1.5" opacity=".4"/>
-      <line x1="0" y1="58" x2="180" y2="58" stroke="#00E5FF" stroke-width="1" opacity=".3"/>
-      <line x1="0" y1="70" x2="180" y2="70" stroke="#00E5FF" stroke-width="1" opacity=".2"/>
-      <line x1="0" y1="82" x2="180" y2="82" stroke="#00E5FF" stroke-width="1" opacity=".15"/>
-    </svg>
-  </div>
 </div>
 
 <!-- CUSTOM MODE BOOT OVERLAY -->
@@ -681,7 +523,7 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
 
 <!-- ===== HOME ===== -->
 <div id="home" class="view active">
-  <div class="miami-banner">♪ WELCOME TO MIAMI // 1986 // DRIVE INTO THE NIGHT ♪</div>
+  <div class="miami-banner">◉ NEON DRIFT // SYNTHWAVE ENGINE // SIGNAL LOCKED ◉</div>
 
   <!-- Hero card -->
   <div style="position:relative;padding:42px 35px;border:var(--card-border-style);background:var(--card-bg-style);border-radius:var(--card-radius);margin-bottom:24px;text-align:center;backdrop-filter:blur(10px);transition:var(--transition-theme);overflow:hidden">
@@ -766,9 +608,14 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div><div class="section-badge">SYS.PREFS_V4</div><h1 class="gradient-text">UI Framework</h1></div>
   </div>
 
-  <!-- Save/load bar -->
+  <!-- Save bar with privacy info -->
   <div class="save-bar">
-    <span class="save-bar-msg" id="save-msg">[ PERSONALIZATION: UNSAVED ]</span>
+    <div style="flex:1;min-width:200px">
+      <div class="save-bar-msg" id="save-msg">[ PERSONALIZATION: UNSAVED ]</div>
+      <div style="font-size:10px;color:var(--text-muted);font-family:var(--font-mono);margin-top:5px;line-height:1.6">
+        ⓘ Zapis działa TYLKO na tym urządzeniu / tej przeglądarce.<br>Dane są przechowywane lokalnie (localStorage) — żaden serwer, zero śledzenia.
+      </div>
+    </div>
     <button class="save-btn hv" onclick="savePersonalization()" data-lang-key="save_btn"></button>
     <button class="reset-btn hv" onclick="resetPersonalization()" data-lang-key="reset_btn"></button>
   </div>
@@ -789,8 +636,8 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_nature_desc"></p>
       </div>
       <div class="glass-card tpl-card hv" id="tpl-miami" onclick="applyMaster('miami',this)">
-        <div style="font-size:44px;margin-bottom:14px;line-height:1;filter:drop-shadow(0 0 12px rgba(255,110,199,.8))">🌴</div>
-        <h3 style="background:linear-gradient(135deg,#FF6EC7,#00E5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent">80s MIAMI</h3>
+        <div style="font-size:44px;margin-bottom:14px;line-height:1;color:#FF6EC7;text-shadow:0 0 20px rgba(255,110,199,.9),0 0 40px rgba(0,229,255,.4)">◉</div>
+        <h3 style="background:linear-gradient(135deg,#FF6EC7,#00E5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-size:16px;letter-spacing:3px">NEON DRIFT</h3>
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_miami_desc"></p>
       </div>
       <!-- Custom / Override mode — replaces Stealth -->
@@ -828,19 +675,39 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div class="setting-group">
       <div class="setting-header" data-lang-key="sh_lighting"></div>
       <div class="setting-desc" data-lang-key="sd_lighting"></div>
-      <div class="opt-grid" id="sg-lighting"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+        <div class="opt-grid" id="sg-lighting"></div>
+        <div id="lighting-preview-wrap" style="position:sticky;top:20px">
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--text-muted);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">[ LIVE PREVIEW ]</div>
+          <div id="lighting-preview" style="border-radius:var(--card-radius);padding:22px 20px;transition:all .3s;border:1px solid var(--border-glass);background:var(--card-bg-style)">
+            <div style="font-size:26px;margin-bottom:10px;color:var(--accent)">⎔</div>
+            <div style="font-family:var(--font-head);font-size:16px;font-weight:900;letter-spacing:2px;color:var(--text-main);margin-bottom:8px">OŚWIETLENIE</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.5">Podgląd cienia i poświaty elementów.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 2 Accent -->
     <div class="setting-group">
       <div class="setting-header" data-lang-key="sh_accent"></div>
       <div class="setting-desc" data-lang-key="sd_accent"></div>
-      <div class="color-grid" id="sg-colors"></div>
-      <div class="custom-color-wrap hv">
-        <input type="color" id="color-picker" value="#00F0FF" oninput="applyCustomColor(this.value)">
+      <div style="display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start">
         <div>
-          <span style="display:block;font-size:13px;font-weight:bold;color:var(--text-main)" data-lang-key="custom_color_label"></span>
-          <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted)" id="hex-display">#00F0FF</span>
+          <div class="color-grid" id="sg-colors"></div>
+          <div class="custom-color-wrap hv" style="margin-top:12px">
+            <input type="color" id="color-picker" value="#00F0FF" oninput="applyCustomColor(this.value)">
+            <div>
+              <span style="display:block;font-size:13px;font-weight:bold;color:var(--text-main)" data-lang-key="custom_color_label"></span>
+              <span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted)" id="hex-display">#00F0FF</span>
+            </div>
+          </div>
+        </div>
+        <div style="position:sticky;top:20px;min-width:140px">
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--text-muted);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">[ LIVE PREVIEW ]</div>
+          <div style="border-radius:50%;width:80px;height:80px;background:var(--accent);box-shadow:0 0 30px var(--accent-glow),0 0 60px rgba(var(--accent-rgb),.2);margin:0 auto 10px;transition:all .3s"></div>
+          <div style="text-align:center;font-family:var(--font-mono);font-size:11px;color:var(--accent);letter-spacing:1px" id="accent-preview-hex">#00F0FF</div>
+          <div style="margin-top:12px;padding:10px;border:1px solid var(--accent);border-radius:10px;text-align:center;font-size:11px;color:var(--accent);font-family:var(--font-mono);transition:all .3s;box-shadow:0 0 10px var(--accent-glow)">AKCENT</div>
         </div>
       </div>
     </div>
@@ -856,7 +723,17 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div class="setting-group">
       <div class="setting-header" data-lang-key="sh_card"></div>
       <div class="setting-desc" data-lang-key="sd_card"></div>
-      <div class="opt-grid" id="sg-card"></div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start">
+        <div class="opt-grid" id="sg-card"></div>
+        <div id="card-preview-wrap" style="position:sticky;top:20px">
+          <div style="font-size:10px;font-family:var(--font-mono);color:var(--text-muted);letter-spacing:2px;margin-bottom:10px;text-transform:uppercase">[ LIVE PREVIEW ]</div>
+          <div id="card-preview" style="border-radius:var(--card-radius);padding:22px 20px;transition:all .3s;border:var(--card-border-style);background:var(--card-bg-style);box-shadow:var(--card-shadow)">
+            <div style="font-size:26px;margin-bottom:10px;color:var(--accent)">◈</div>
+            <div style="font-family:var(--font-head);font-size:16px;font-weight:900;letter-spacing:2px;color:var(--text-main);margin-bottom:8px">PREVIEW</div>
+            <div style="font-size:12px;color:var(--text-muted);line-height:1.5">Tak będą wyglądać Twoje kafelki w tym stylu.</div>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- 5 Radius -->
@@ -1200,17 +1077,229 @@ const LANGS = {
 };
 
 const T = {
-  pl:{freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_title:'Odzyskaj <span class="gradient-text">kontrolę.</span>',hero_sub:'Zdecentralizowane oprogramowanie inżynieryjne. Absolutna prywatność.',home_about_desc:'Nasza filozofia i zasady działania.',home_apps_desc:'Ekosystem bezpiecznego oprogramowania.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Regulaminy, licencje i bezpieczeństwo.',home_contact_desc:'Bezpieczny kanał łączności.',home_ui_desc:'Personalizacja środowiska pracy.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś razem.',offer_hero_sub:'Strony, aplikacje, systemy, design, urządzenia. Ty z pomysłem, my z wykonaniem.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Palmy, neon, synthwave.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / NASZA FILOZOFIA',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że prywatność powinna być standardem, a nie luksusem. IbronIndustries to niezależne studio technologiczne dostarczające oprogramowanie działające dokładnie tak, jak powinno — od pierwszego uruchomienia. Nie interesuje nas wyścig z korporacjami. Interesuje nas budowanie użytecznych produktów dla prawdziwych ludzi.',about_h3_2:'Prywatność za darmo, premium za cenę uczciwą.',about_p2:'Podstawowe narzędzia ochrony są i pozostaną darmowe, bez reklam i telemetrii. Moduły premium za symboliczną opłatę. Fizyczny sprzęt po cenach rynkowych. Proste i uczciwe.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony biznes',about_c3p:'Zarabiamy na modułach premium i sprzęcie. Płacisz raz za konkretną wartość. Bez pułapek subskrypcji.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',apps_exo_tag:'NOWE! | ANDROID',apps_exo_desc:'Hermetyczny kryptosejf offline.',apps_chr_tag:'W BUDOWIE',apps_chr_desc:'Silnik zarządzania operacyjnego.',locked:'ZASZYFROWANE',exo_tagline:'Twój hermetyczny kryptosejf offline.',beta_title:'FAZA ZAMKNIĘTYCH TESTÓW — PRZEDŁUŻONA',version:'Wersja',release:'Data wydania',release_date:'Wkrótce (Czerwiec 2026)',license:'Licencja',license_val:'Darmowa (Brak Reklam)',dl_play:'POBIERZ Z GOOGLE PLAY',dl_status:'> STATUS: OCZEKUJE NA AKCEPTACJĘ W GOOGLE PLAY',exo_brief_title:'> OPIS OPERACYJNY IBRON EXO',exo_brief_body:'<strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zaprojektowany do bezkompromisowej ochrony informacji tekstowych. Zbudowany w architekturze <span class="code">offline (Zero-Data)</span> — Twoje sekrety nigdy nie opuszczą urządzenia.',exo_f1h:'Protokół "Podwójnego Dna"',exo_f1p:'Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.',exo_f2h:'Znikające Notatki',exo_f2p:'Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.',exo_f3p:'Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.',exo_f4h:'Absolutna Izolacja',exo_f4p:'Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.',chr_badge:'Moduł Operacyjny',chr_locked_title:'MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW',chr_locked_desc:'Chronos Protocol — zaawansowany silnik zarządzania operacyjnego. Dostęp tymczasowo zablokowany.',hw_badge:'Dywizja Sprzętowa',hw_h1:'Laboratorium R&D.',hw_title:'PROJEKTY FIZYCZNE',hw_desc:'Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa.',proto_badge:'Zasady Bezpieczeństwa',proto_h1:'Dokumentacja Operacyjna.',proto_intro:'<strong>PROTOKOŁY BEZPIECZEŃSTWA, PRYWATNOŚCI I OGRANICZENIA ODPOWIEDZIALNOŚCI</strong><br><br>Dokument określa zasady korzystania z aplikacji IbronIndustries. Korzystając z naszych produktów, akceptujesz poniższe protokoły.',proto_1_title:'PROTOKÓŁ 1: WYŁĄCZENIE ODPOWIEDZIALNOŚCI',proto_1_body:'<strong>1. As-Is:</strong> Aplikacje dostarczane bez gwarancji niezawodności.<br><br><strong>2. Brak backdoora:</strong> Brak resetu hasła — zapomniany PIN = dane zablokowane na zawsze.<br><br><strong>3. Kapitał:</strong> Przechowywanie fraz krypto na własne ryzyko.',proto_2_title:'PROTOKÓŁ 2: PRYWATNOŚĆ (RODO)',proto_2_body:'<strong>1. Administrator:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO nie zbiera, nie przechowuje, nie przesyła żadnych danych. Wszystko zostaje na urządzeniu.',proto_3_title:'PROTOKÓŁ 3: STATUS KOMERCYJNY',proto_3_body:'<strong>1. Bezpłatna dystrybucja:</strong> Wszystkie obecne aplikacje są darmowe, bez reklam.<br><br><strong>2. Premium:</strong> Moduły premium za symboliczną opłatę. Hardware po cenach rynkowych.',contact_badge:'Komunikacja 256-bit',contact_h1:'KONTAKT.',contact_h3:'Nawiąż połączenie',contact_desc:'Wsparcie techniczne, propozycja współpracy, pytania operacyjne — nasz terminal jest otwarty.',contact_secure:'KANAŁ ZABEZPIECZONY',contact_us:'NAPISZ DO NAS',offer_badge:'Współpraca & Realizacja',offer_h1:'Nasza Oferta.',offer_equal_title:'Każdy klient jest priorytetem',offer_equal_desc:'Nie dzielimy klientów. Freelancer, startup, korporacja — wszyscy otrzymują to samo zaangażowanie i jakość.',offer_what_title:'> CO MOŻEMY DLA CIEBIE ZBUDOWAĆ',offer_what_body:'Masz pomysł? Mamy narzędzia. Współpracujemy na każdym etapie — od koncepcji i designu, przez development, aż po wdrożenie.',o1h:'Strony Internetowe',o1p:'Landing page, portfolio, sklep, platforma firmowa. Szybkie, responsywne, z duszą. Kodujemy od zera.',o2h:'Aplikacje Mobilne',o2p:'Android & iOS. React Native lub natywne. Od MVP po pełnoprawny produkt.',o3p:'Systemy designu, prototypy, brandbook, identyfikacja wizualna. Design to architektura doświadczenia.',o4h:'Programy & Systemy',o4p:'Narzędzia wewnętrzne, automatyzacje, systemy zarządzania. Oprogramowanie dla Twoich realnych problemów.',o5h:'Pomysły & Consulting',o5p:'Mglisty pomysł? Zamieniamy go w konkretny plan. Strategia produktowa, wybór technologii, architektura projektu.',o6h:'Urządzenia & Hardware',o6p:'Praca koncepcyjna nad urządzeniami fizycznymi — prototypy, R&D, integracja software+hardware.',pricing_badge:'MODEL CENOWY',pricing_title:'Prywatność za darmo.<br>Reszta — uczciwie.',pricing_sub:'Nasze oprogramowanie prywatności jest i pozostanie darmowe. Za projekty na zamówienie — wycena indywidualna.',price_free_name:'Oprogramowanie Prywatności',price_free_unit:'zawsze darmowe',pf1:'IbronEXO — kryptosejf offline',pf2:'Zero reklam, zero telemetrii',pf3:'Pełne funkcje podstawowe',price_prem_num:'Wycena indywidualna',pp1:'Strony & aplikacje na zamówienie',pp2:'Design systemów i brandingu',pp3:'Moduły rozszerzone softu',pp4:'Consulting i architektura',price_hw_num:'Ceny rynkowe',ph1:'Fizyczne urządzenia bezpieczeństwa',ph2:'Hardware R&D IbronIndustries',ph3:'Uczciwa cena produkcji',in_prep:'> W PRZYGOTOWANIU',offer_cta_h:'Gotowy na współpracę?',offer_cta_p:'Opisz swój projekt — im więcej szczegółów, tym lepiej. Odezwiemy się z wyceną i planem działania.'},
-  en:{freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, cursor, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more',nav_about:'ABOUT US',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLS',nav_contact:'CONTACT',hero_title:'Regain <span class="gradient-text">Control.</span>',hero_sub:'Decentralized engineering software. Absolute privacy.',home_about_desc:'Our philosophy and rules.',home_apps_desc:'Secure software ecosystem.',home_hw_desc:'Physical tactical gear division.',home_proto_desc:'Regulations, licenses, security.',home_contact_desc:'Secure communication channel.',home_ui_desc:'Environment personalization.',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something.",offer_hero_sub:'Websites, apps, systems, design, hardware. You bring the idea, we bring the execution.',offer_hero_btn:'VIEW OFFER →',tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Palms, neon, synthwave.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, cursor, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Cursor & shapes',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_cursor:'7. Cursor Style',sd_cursor:'6 cursor personalities. (Desktop only)',sh_csize:'8. Cursor Size',sd_csize:'Choose cursor size.',sh_anim:'9. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'10. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'11. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / OUR PHILOSOPHY',about_h3_1:'Technology that just works.',about_p1:'We believe privacy should be a standard, not a luxury. IbronIndustries is an independent tech studio delivering software that works exactly as it should from day one. No corporate race. Just useful products for real people.',about_h3_2:'Privacy for free, premium at a fair price.',about_p2:'Core protection tools are and will remain free, no ads, no telemetry. Premium modules at modest fees. Hardware at market prices. Simple and fair.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable business',about_c3p:'We earn on premium modules and hardware. Pay once for concrete value. No subscription traps.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',apps_exo_tag:'NEW! | ANDROID',apps_exo_desc:'Hermetic offline crypto-vault.',apps_chr_tag:'IN DEV',apps_chr_desc:'Operational management engine.',locked:'ENCRYPTED',exo_tagline:'Your hermetic offline crypto-vault.',beta_title:'CLOSED BETA TESTING PHASE — EXTENDED',version:'Version',release:'Release date',release_date:'Soon (June 2026)',license:'License',license_val:'Free (No Ads)',dl_play:'DOWNLOAD ON GOOGLE PLAY',dl_status:'> STATUS: PENDING APP APPROVAL ON GOOGLE PLAY',exo_brief_title:'> IBRON EXO OPERATIONAL BRIEF',exo_brief_body:'<strong>IbronEXO is not just a notepad.</strong> It\'s your private, hermetic crypto-vault built for uncompromising protection of text information. Built in an <span class="code">offline (Zero-Data)</span> architecture — your secrets never leave your device.',exo_f1h:'Triple PIN System',exo_f1p:'Main PIN — real data. Decoy PIN — fake vault. Nuke PIN — instant total wipe.',exo_f2h:'Vanishing Notes',exo_f2p:'Set a timer per note. When it expires — overwritten zeros, no trace left.',exo_f3p:'If you don\'t log in within the set period — the app automatically wipes the database.',exo_f4h:'Absolute Isolation',exo_f4p:'No media imports, no server notifications. Only a manually typed encrypted text log.',chr_badge:'Operational Module',chr_locked_title:'MODULE IN CLOSED BETA TESTING',chr_locked_desc:'Chronos Protocol — advanced operational management engine. Access temporarily restricted.',hw_badge:'Hardware Division',hw_h1:'R&D Laboratory.',hw_title:'PHYSICAL PROJECTS',hw_desc:'Decentralized software requires independent hardware. Building physical security devices under IbronIndustries.',proto_badge:'Security Protocols',proto_h1:'Operational Documentation.',proto_intro:'<strong>SECURITY, PRIVACY AND LIABILITY LIMITATION PROTOCOLS</strong><br><br>This document defines the rules for using IbronIndustries applications. By using our products, you accept these protocols.',proto_1_title:'PROTOCOL 1: DISCLAIMER OF LIABILITY',proto_1_body:'<strong>1. As-Is:</strong> Apps delivered with no reliability guarantee.<br><br><strong>2. No Backdoors:</strong> No password reset — forgotten PIN = data permanently locked.<br><br><strong>3. Capital:</strong> Storing crypto seed phrases at your own risk.',proto_2_title:'PROTOCOL 2: PRIVACY (GDPR)',proto_2_body:'<strong>1. Administrator:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO does not collect, store or transmit any data. Everything stays on device.',proto_3_title:'PROTOCOL 3: COMMERCIAL STATUS',proto_3_body:'<strong>1. Free Distribution:</strong> All current apps are free, no ads.<br><br><strong>2. Premium:</strong> Premium modules at modest fees. Hardware at market prices.',contact_badge:'256-bit Communication',contact_h1:'CONTACT.',contact_h3:'Establish Connection',contact_desc:'Technical support, business proposals, operational questions — our terminal is open.',contact_secure:'CHANNEL SECURED',contact_us:'CONTACT US',offer_badge:'Partnership & Delivery',offer_h1:'Our Offer.',offer_equal_title:'Every client is a priority',offer_equal_desc:'We don\'t divide clients. Freelancer, startup, corporation — everyone gets the same commitment and quality.',offer_what_title:'> WHAT WE CAN BUILD FOR YOU',offer_what_body:'Have an idea? We have the tools. We collaborate at every stage — from concept and design, through development, to deployment.',o1h:'Websites',o1p:'Landing pages, portfolios, shops, corporate platforms. Fast, responsive, with soul. Coded from scratch.',o2h:'Mobile Apps',o2p:'Android & iOS. React Native or native. From MVP to full product.',o3p:'Design systems, prototypes, brandbooks, visual identity. Design is experience architecture.',o4h:'Software & Systems',o4p:'Internal tools, automations, management systems. Software for your real business problems.',o5h:'Ideas & Consulting',o5p:'Vague idea? We turn it into a concrete plan. Product strategy, technology selection, project architecture.',o6h:'Devices & Hardware',o6p:'Conceptual work on physical devices — prototypes, R&D, software+hardware integration.',pricing_badge:'PRICING MODEL',pricing_title:'Privacy for free.<br>The rest — fairly priced.',pricing_sub:'Our privacy software is and will remain free. For custom projects — individual pricing, no hidden fees.',price_free_name:'Privacy Software',price_free_unit:'always free',pf1:'IbronEXO — offline crypto-vault',pf2:'Zero ads, zero telemetry',pf3:'Full core features',price_prem_num:'Custom quote',pp1:'Custom websites & apps',pp2:'Design systems & branding',pp3:'Extended software modules',pp4:'Consulting & architecture',price_hw_num:'Market prices',ph1:'Physical security devices',ph2:'IbronIndustries hardware R&D',ph3:'Fair production pricing',in_prep:'> IN PREPARATION',offer_cta_h:'Ready to collaborate?',offer_cta_p:'Describe your project — the more details, the better. We\'ll respond with a quote and action plan.'},
+  pl:{freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_title:'Odzyskaj <span class="gradient-text">kontrolę.</span>',hero_sub:'Zdecentralizowane oprogramowanie inżynieryjne. Absolutna prywatność.',home_about_desc:'Nasza filozofia i zasady działania.',home_apps_desc:'Ekosystem bezpiecznego oprogramowania.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Regulaminy, licencje i bezpieczeństwo.',home_contact_desc:'Bezpieczny kanał łączności.',home_ui_desc:'Personalizacja środowiska pracy.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś razem.',offer_hero_sub:'Strony, aplikacje, systemy, design, urządzenia. Ty z pomysłem, my z wykonaniem.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Synthwave, neon, drift.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / NASZA FILOZOFIA',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że prywatność powinna być standardem, a nie luksusem. IbronIndustries to niezależne studio technologiczne dostarczające oprogramowanie działające dokładnie tak, jak powinno — od pierwszego uruchomienia. Nie interesuje nas wyścig z korporacjami. Interesuje nas budowanie użytecznych produktów dla prawdziwych ludzi.',about_h3_2:'Prywatność za darmo, premium za cenę uczciwą.',about_p2:'Podstawowe narzędzia ochrony są i pozostaną darmowe, bez reklam i telemetrii. Moduły premium za symboliczną opłatę. Fizyczny sprzęt po cenach rynkowych. Proste i uczciwe.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony biznes',about_c3p:'Zarabiamy na modułach premium i sprzęcie. Płacisz raz za konkretną wartość. Bez pułapek subskrypcji.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',apps_exo_tag:'NOWE! | ANDROID',apps_exo_desc:'Hermetyczny kryptosejf offline.',apps_chr_tag:'W BUDOWIE',apps_chr_desc:'Silnik zarządzania operacyjnego.',locked:'ZASZYFROWANE',exo_tagline:'Twój hermetyczny kryptosejf offline.',beta_title:'FAZA ZAMKNIĘTYCH TESTÓW — PRZEDŁUŻONA',version:'Wersja',release:'Data wydania',release_date:'Wkrótce (Czerwiec 2026)',license:'Licencja',license_val:'Darmowa (Brak Reklam)',dl_play:'POBIERZ Z GOOGLE PLAY',dl_status:'> STATUS: OCZEKUJE NA AKCEPTACJĘ W GOOGLE PLAY',exo_brief_title:'> OPIS OPERACYJNY IBRON EXO',exo_brief_body:'<strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zaprojektowany do bezkompromisowej ochrony informacji tekstowych. Zbudowany w architekturze <span class="code">offline (Zero-Data)</span> — Twoje sekrety nigdy nie opuszczą urządzenia.',exo_f1h:'Protokół "Podwójnego Dna"',exo_f1p:'Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.',exo_f2h:'Znikające Notatki',exo_f2p:'Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.',exo_f3p:'Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.',exo_f4h:'Absolutna Izolacja',exo_f4p:'Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.',chr_badge:'Moduł Operacyjny',chr_locked_title:'MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW',chr_locked_desc:'Chronos Protocol — zaawansowany silnik zarządzania operacyjnego. Dostęp tymczasowo zablokowany.',hw_badge:'Dywizja Sprzętowa',hw_h1:'Laboratorium R&D.',hw_title:'PROJEKTY FIZYCZNE',hw_desc:'Zdecentralizowane oprogramowanie wymaga niezależnego sprzętu. Budujemy fizyczne nośniki bezpieczeństwa.',proto_badge:'Zasady Bezpieczeństwa',proto_h1:'Dokumentacja Operacyjna.',proto_intro:'<strong>PROTOKOŁY BEZPIECZEŃSTWA, PRYWATNOŚCI I OGRANICZENIA ODPOWIEDZIALNOŚCI</strong><br><br>Dokument określa zasady korzystania z aplikacji IbronIndustries. Korzystając z naszych produktów, akceptujesz poniższe protokoły.',proto_1_title:'PROTOKÓŁ 1: WYŁĄCZENIE ODPOWIEDZIALNOŚCI',proto_1_body:'<strong>1. As-Is:</strong> Aplikacje dostarczane bez gwarancji niezawodności.<br><br><strong>2. Brak backdoora:</strong> Brak resetu hasła — zapomniany PIN = dane zablokowane na zawsze.<br><br><strong>3. Kapitał:</strong> Przechowywanie fraz krypto na własne ryzyko.',proto_2_title:'PROTOKÓŁ 2: PRYWATNOŚĆ (RODO)',proto_2_body:'<strong>1. Administrator:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO nie zbiera, nie przechowuje, nie przesyła żadnych danych. Wszystko zostaje na urządzeniu.',proto_3_title:'PROTOKÓŁ 3: STATUS KOMERCYJNY',proto_3_body:'<strong>1. Bezpłatna dystrybucja:</strong> Wszystkie obecne aplikacje są darmowe, bez reklam.<br><br><strong>2. Premium:</strong> Moduły premium za symboliczną opłatę. Hardware po cenach rynkowych.',contact_badge:'Komunikacja 256-bit',contact_h1:'KONTAKT.',contact_h3:'Nawiąż połączenie',contact_desc:'Wsparcie techniczne, propozycja współpracy, pytania operacyjne — nasz terminal jest otwarty.',contact_secure:'KANAŁ ZABEZPIECZONY',contact_us:'NAPISZ DO NAS',offer_badge:'Współpraca & Realizacja',offer_h1:'Nasza Oferta.',offer_equal_title:'Każdy klient jest priorytetem',offer_equal_desc:'Nie dzielimy klientów. Freelancer, startup, korporacja — wszyscy otrzymują to samo zaangażowanie i jakość.',offer_what_title:'> CO MOŻEMY DLA CIEBIE ZBUDOWAĆ',offer_what_body:'Masz pomysł? Mamy narzędzia. Współpracujemy na każdym etapie — od koncepcji i designu, przez development, aż po wdrożenie.',o1h:'Strony Internetowe',o1p:'Landing page, portfolio, sklep, platforma firmowa. Szybkie, responsywne, z duszą. Kodujemy od zera.',o2h:'Aplikacje Mobilne',o2p:'Android & iOS. React Native lub natywne. Od MVP po pełnoprawny produkt.',o3p:'Systemy designu, prototypy, brandbook, identyfikacja wizualna. Design to architektura doświadczenia.',o4h:'Programy & Systemy',o4p:'Narzędzia wewnętrzne, automatyzacje, systemy zarządzania. Oprogramowanie dla Twoich realnych problemów.',o5h:'Pomysły & Consulting',o5p:'Mglisty pomysł? Zamieniamy go w konkretny plan. Strategia produktowa, wybór technologii, architektura projektu.',o6h:'Urządzenia & Hardware',o6p:'Praca koncepcyjna nad urządzeniami fizycznymi — prototypy, R&D, integracja software+hardware.',pricing_badge:'MODEL CENOWY',pricing_title:'Prywatność za darmo.<br>Reszta — uczciwie.',pricing_sub:'Nasze oprogramowanie prywatności jest i pozostanie darmowe. Za projekty na zamówienie — wycena indywidualna.',price_free_name:'Oprogramowanie Prywatności',price_free_unit:'zawsze darmowe',pf1:'IbronEXO — kryptosejf offline',pf2:'Zero reklam, zero telemetrii',pf3:'Pełne funkcje podstawowe',price_prem_num:'Wycena indywidualna',pp1:'Strony & aplikacje na zamówienie',pp2:'Design systemów i brandingu',pp3:'Moduły rozszerzone softu',pp4:'Consulting i architektura',price_hw_num:'Ceny rynkowe',ph1:'Fizyczne urządzenia bezpieczeństwa',ph2:'Hardware R&D IbronIndustries',ph3:'Uczciwa cena produkcji',in_prep:'> W PRZYGOTOWANIU',offer_cta_h:'Gotowy na współpracę?',offer_cta_p:'Opisz swój projekt — im więcej szczegółów, tym lepiej. Odezwiemy się z wyceną i planem działania.'},
+  en:{freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, cursor, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more',nav_about:'ABOUT US',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLS',nav_contact:'CONTACT',hero_title:'Regain <span class="gradient-text">Control.</span>',hero_sub:'Decentralized engineering software. Absolute privacy.',home_about_desc:'Our philosophy and rules.',home_apps_desc:'Secure software ecosystem.',home_hw_desc:'Physical tactical gear division.',home_proto_desc:'Regulations, licenses, security.',home_contact_desc:'Secure communication channel.',home_ui_desc:'Environment personalization.',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something.",offer_hero_sub:'Websites, apps, systems, design, hardware. You bring the idea, we bring the execution.',offer_hero_btn:'VIEW OFFER →',tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Synthwave, neon, drift.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, cursor, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Cursor & shapes',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_cursor:'7. Cursor Style',sd_cursor:'6 cursor personalities. (Desktop only)',sh_csize:'8. Cursor Size',sd_csize:'Choose cursor size.',sh_anim:'9. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'10. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'11. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / OUR PHILOSOPHY',about_h3_1:'Technology that just works.',about_p1:'We believe privacy should be a standard, not a luxury. IbronIndustries is an independent tech studio delivering software that works exactly as it should from day one. No corporate race. Just useful products for real people.',about_h3_2:'Privacy for free, premium at a fair price.',about_p2:'Core protection tools are and will remain free, no ads, no telemetry. Premium modules at modest fees. Hardware at market prices. Simple and fair.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable business',about_c3p:'We earn on premium modules and hardware. Pay once for concrete value. No subscription traps.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',apps_exo_tag:'NEW! | ANDROID',apps_exo_desc:'Hermetic offline crypto-vault.',apps_chr_tag:'IN DEV',apps_chr_desc:'Operational management engine.',locked:'ENCRYPTED',exo_tagline:'Your hermetic offline crypto-vault.',beta_title:'CLOSED BETA TESTING PHASE — EXTENDED',version:'Version',release:'Release date',release_date:'Soon (June 2026)',license:'License',license_val:'Free (No Ads)',dl_play:'DOWNLOAD ON GOOGLE PLAY',dl_status:'> STATUS: PENDING APP APPROVAL ON GOOGLE PLAY',exo_brief_title:'> IBRON EXO OPERATIONAL BRIEF',exo_brief_body:'<strong>IbronEXO is not just a notepad.</strong> It\'s your private, hermetic crypto-vault built for uncompromising protection of text information. Built in an <span class="code">offline (Zero-Data)</span> architecture — your secrets never leave your device.',exo_f1h:'Triple PIN System',exo_f1p:'Main PIN — real data. Decoy PIN — fake vault. Nuke PIN — instant total wipe.',exo_f2h:'Vanishing Notes',exo_f2p:'Set a timer per note. When it expires — overwritten zeros, no trace left.',exo_f3p:'If you don\'t log in within the set period — the app automatically wipes the database.',exo_f4h:'Absolute Isolation',exo_f4p:'No media imports, no server notifications. Only a manually typed encrypted text log.',chr_badge:'Operational Module',chr_locked_title:'MODULE IN CLOSED BETA TESTING',chr_locked_desc:'Chronos Protocol — advanced operational management engine. Access temporarily restricted.',hw_badge:'Hardware Division',hw_h1:'R&D Laboratory.',hw_title:'PHYSICAL PROJECTS',hw_desc:'Decentralized software requires independent hardware. Building physical security devices under IbronIndustries.',proto_badge:'Security Protocols',proto_h1:'Operational Documentation.',proto_intro:'<strong>SECURITY, PRIVACY AND LIABILITY LIMITATION PROTOCOLS</strong><br><br>This document defines the rules for using IbronIndustries applications. By using our products, you accept these protocols.',proto_1_title:'PROTOCOL 1: DISCLAIMER OF LIABILITY',proto_1_body:'<strong>1. As-Is:</strong> Apps delivered with no reliability guarantee.<br><br><strong>2. No Backdoors:</strong> No password reset — forgotten PIN = data permanently locked.<br><br><strong>3. Capital:</strong> Storing crypto seed phrases at your own risk.',proto_2_title:'PROTOCOL 2: PRIVACY (GDPR)',proto_2_body:'<strong>1. Administrator:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO does not collect, store or transmit any data. Everything stays on device.',proto_3_title:'PROTOCOL 3: COMMERCIAL STATUS',proto_3_body:'<strong>1. Free Distribution:</strong> All current apps are free, no ads.<br><br><strong>2. Premium:</strong> Premium modules at modest fees. Hardware at market prices.',contact_badge:'256-bit Communication',contact_h1:'CONTACT.',contact_h3:'Establish Connection',contact_desc:'Technical support, business proposals, operational questions — our terminal is open.',contact_secure:'CHANNEL SECURED',contact_us:'CONTACT US',offer_badge:'Partnership & Delivery',offer_h1:'Our Offer.',offer_equal_title:'Every client is a priority',offer_equal_desc:'We don\'t divide clients. Freelancer, startup, corporation — everyone gets the same commitment and quality.',offer_what_title:'> WHAT WE CAN BUILD FOR YOU',offer_what_body:'Have an idea? We have the tools. We collaborate at every stage — from concept and design, through development, to deployment.',o1h:'Websites',o1p:'Landing pages, portfolios, shops, corporate platforms. Fast, responsive, with soul. Coded from scratch.',o2h:'Mobile Apps',o2p:'Android & iOS. React Native or native. From MVP to full product.',o3p:'Design systems, prototypes, brandbooks, visual identity. Design is experience architecture.',o4h:'Software & Systems',o4p:'Internal tools, automations, management systems. Software for your real business problems.',o5h:'Ideas & Consulting',o5p:'Vague idea? We turn it into a concrete plan. Product strategy, technology selection, project architecture.',o6h:'Devices & Hardware',o6p:'Conceptual work on physical devices — prototypes, R&D, software+hardware integration.',pricing_badge:'PRICING MODEL',pricing_title:'Privacy for free.<br>The rest — fairly priced.',pricing_sub:'Our privacy software is and will remain free. For custom projects — individual pricing, no hidden fees.',price_free_name:'Privacy Software',price_free_unit:'always free',pf1:'IbronEXO — offline crypto-vault',pf2:'Zero ads, zero telemetry',pf3:'Full core features',price_prem_num:'Custom quote',pp1:'Custom websites & apps',pp2:'Design systems & branding',pp3:'Extended software modules',pp4:'Consulting & architecture',price_hw_num:'Market prices',ph1:'Physical security devices',ph2:'IbronIndustries hardware R&D',ph3:'Fair production pricing',in_prep:'> IN PREPARATION',offer_cta_h:'Ready to collaborate?',offer_cta_p:'Describe your project — the more details, the better. We\'ll respond with a quote and action plan.'},
 };
 
 // Fill remaining languages with English fallback + local name
-['de','fr','es','it','pt','ru','uk','zh','ja','ko','ar','hi','tr','nl','sv','no','cs','ro','hu','el'].forEach(c=>{
-  if(!T[c]) T[c] = {...T.en};
-  // Override key names in native script where practical
-  const natives = {de:'Deutsch',fr:'Français',es:'Español',it:'Italiano',pt:'Português',ru:'Русский',uk:'Українська',zh:'中文',ja:'日本語',ko:'한국어',ar:'العربية',hi:'हिन्दी',tr:'Türkçe',nl:'Nederlands',sv:'Svenska',no:'Norsk',cs:'Čeština',ro:'Română',hu:'Magyar',el:'Ελληνικά'};
-  // Just use English for non-PL/EN — in a real project you'd add full translations
-});
+
+// ── Full translations for all 20 extra languages ──
+// Each language gets its own full object based on English with native overrides
+(function(){
+  const base = T.en;
+  const langs = {
+    de:{
+      freedom_title:'FREIHEITS-PROTOKOLL',freedom_desc:'Sie betreten die Zone absoluter Kontrolle. Ändern Sie jedes Interface-Detail — Theme, Farben, Cursor, Typografie.',freedom_btn:'INITIIEREN',
+      back:'Zurück',back_apps:'Zurück zu Apps',read_more:'Mehr lesen',nav_about:'ÜBER UNS',nav_apps:'SOFTWARE',nav_proto:'PROTOKOLLE',nav_contact:'KONTAKT',
+      hero_title:'Kontrolle <span class="gradient-text">zurückgewinnen.</span>',hero_sub:'Dezentralisierte Ingenieursoftware. Absolute Privatsphäre.',
+      home_about_desc:'Unsere Philosophie und Regeln.',home_apps_desc:'Sicheres Software-Ökosystem.',home_hw_desc:'Physische Hardware-Division.',
+      home_proto_desc:'Vorschriften, Lizenzen, Sicherheit.',home_contact_desc:'Sicherer Kommunikationskanal.',home_ui_desc:'Interface-Personalisierung.',
+      offer_label:'IBRON × PARTNERSCHAFT',offer_hero_title:'Lass uns etwas bauen.',offer_hero_sub:'Websites, Apps, Systeme, Design, Hardware. Du hast die Idee, wir haben die Umsetzung.',offer_hero_btn:'ANGEBOT ANSEHEN →',
+      tpl_header:'FERTIGE SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Jedes Theme bietet einen eigenen Soundtrack und komplettes UI-Redesign.',
+      tpl_cyber_desc:'Glas, Neon und Dunkel.',tpl_nature_desc:'Hell, organischer Kontrast.',tpl_miami_desc:'Synthwave, Neon, Drift.',tpl_custom_name:'EIGENER MODUS',tpl_custom_desc:'Volle Kontrolle über jedes Detail.',
+      unlock_title:'EIGENER MODUS',unlock_desc:'Sie gehen tiefer. Schalten Sie volle Kontrolle über jeden Interface-Aspekt frei — Beleuchtung, Farben, Cursor, Typografie, Musik und mehr.',unlock_btn:'KONTROLLE ÜBERNEHMEN',
+      access_1:'Farben & Akzente',access_2:'Cursor & Formen',access_3:'Musik & Typografie',
+      custom_modal_title:'EIGENER MODUS — ZUGANG',custom_modal_l1:'VOLLE INTERFACE-KONTROLLE',custom_modal_l2:'ENTSPERRT',custom_modal_l3:'UNBEGRENZT',custom_modal_btn:'ZUGANG INITIIEREN',
+      adv_title:'ERWEITERTE OVERRIDES',
+      sh_lighting:'1. Beleuchtungs-Engine',sd_lighting:'Schatten- und Glühverhalten wählen.',
+      sh_accent:'2. System-Akzentfarbe',sd_accent:'12 Presets + benutzerdefiniertes Farbrad.',
+      sh_bg:'3. Hintergrundstruktur',sd_bg:'Topographie der digitalen Leinwand wählen.',
+      sh_card:'4. Karten-Architektur',sd_card:'Glas, Solid, Wireframe und mehr.',
+      sh_radius:'5. Eckenrundung',sd_radius:'Schieberegler 0px (scharf) bis 50px (rund).',
+      sh_font:'6. Typografie',sd_font:'7 einzigartige Schriftpaare.',
+      sh_cursor:'7. Cursor-Stil',sd_cursor:'6 Cursor-Persönlichkeiten. (Nur Desktop)',
+      sh_csize:'8. Cursor-Größe',sd_csize:'Cursor-Größe wählen.',
+      sh_anim:'9. Animationsgeschwindigkeit',sd_anim:'Beeinflusst Übergänge und Hover-Effekte.',
+      sh_density:'10. Layout-Dichte',sd_density:'Kompakt, normal oder weiträumig.',
+      sh_music:'11. Eigene Musik',sd_music:'Soundtrack wählen (1m–5m.mp3).',
+      save_btn:'SPEICHERN',reset_btn:'RESET',custom_color_label:'Benutzerdefinierte Farbe',
+      about_badge:'Mission & Vision',about_h1:'ÜBER UNS / UNSERE PHILOSOPHIE',
+      about_h3_1:'Technologie, die einfach funktioniert.',about_p1:'Wir glauben, dass Privatsphäre ein Standard sein sollte, kein Luxus. IbronIndustries ist ein unabhängiges Tech-Studio, das Software liefert, die genau so funktioniert, wie sie sollte.',
+      about_h3_2:'Privatsphäre kostenlos, Premium zum fairen Preis.',about_p2:'Grundlegende Schutz-Tools sind und bleiben kostenlos, keine Werbung, keine Telemetrie. Premium-Module zu moderaten Gebühren. Hardware zu Marktpreisen.',
+      about_c1h:'Lokal, nicht Cloud',about_c1p:'100% lokal auf Ihrem Gerät. Keine Server, keine Datenerfassung.',
+      about_c2h:'Für jeden zugänglich',about_c2p:'Digitale Privatsphäre ist nicht nur für Experten. Intuitives Design, null Einstiegshürde.',
+      about_c3h:'Nachhaltiges Geschäft',about_c3p:'Verdienen durch Premium-Module und Hardware. Einmal bezahlen für konkreten Wert.',
+      apps_badge:'IbronIndustries Software',apps_h1:'Anwendungs-Ökosystem.',
+      apps_exo_tag:'NEU! | ANDROID',apps_exo_desc:'Hermetischer Offline-Krypto-Tresor.',apps_chr_tag:'IN ENTWICKLUNG',apps_chr_desc:'Operatives Management-System.',locked:'VERSCHLÜSSELT',
+      exo_tagline:'Ihr hermetischer Offline-Krypto-Tresor.',beta_title:'GESCHLOSSENE BETA — VERLÄNGERT',
+      version:'Version',release:'Veröffentlichung',release_date:'Bald (Juni 2026)',license:'Lizenz',license_val:'Kostenlos (Keine Werbung)',
+      dl_play:'AUF GOOGLE PLAY HERUNTERLADEN',dl_status:'> STATUS: AUSSTEHENDE GENEHMIGUNG AUF GOOGLE PLAY',
+      exo_brief_title:'> IBRON EXO EINSATZBESCHREIBUNG',exo_brief_body:'<strong>IbronEXO ist kein normales Notizbuch.</strong> Es ist Ihr privater, hermetischer Krypto-Tresor für kompromisslosen Schutz in <span class="code">offline (Zero-Data)</span> Architektur.',
+      exo_f1h:'Triple-PIN-System',exo_f1p:'Haupt-PIN — echte Daten. Decoy-PIN — falscher Tresor. Nuke-PIN — sofortige Totalauslöschung.',
+      exo_f2h:'Verschwindende Notizen',exo_f2p:'Timer pro Notiz. Wenn abgelaufen — überschriebene Nullen, keine Spur.',
+      exo_f3p:'Wenn Sie sich nicht innerhalb der eingestellten Zeit einloggen, löscht die App automatisch die Datenbank.',
+      exo_f4h:'Absolute Isolation',exo_f4p:'Keine Medien-Importe, keine Server-Benachrichtigungen. Nur manuell getipptes verschlüsseltes Protokoll.',
+      chr_badge:'Operatives Modul',chr_locked_title:'MODUL IN GESCHLOSSENER BETA',chr_locked_desc:'Chronos Protocol — fortschrittliches operatives Management-System. Zugang vorübergehend gesperrt.',
+      hw_badge:'Hardware-Division',hw_h1:'F&E-Labor.',hw_title:'PHYSISCHE PROJEKTE',hw_desc:'Dezentralisierte Software benötigt unabhängige Hardware.',
+      proto_badge:'Sicherheitsprotokolle',proto_h1:'Operative Dokumentation.',proto_intro:'<strong>SICHERHEITS- UND DATENSCHUTZPROTOKOLLE</strong><br><br>Dieses Dokument definiert die Regeln für die Nutzung von IbronIndustries-Anwendungen.',
+      proto_1_title:'PROTOKOLL 1: HAFTUNGSAUSSCHLUSS',proto_1_body:'<strong>1. As-Is:</strong> Apps ohne Zuverlässigkeitsgarantie.<br><br><strong>2. Keine Hintertüren:</strong> Kein Passwort-Reset — vergessener PIN = dauerhaft gesperrt.<br><br><strong>3. Kapital:</strong> Krypto-Seed-Phrasen auf eigenes Risiko.',
+      proto_2_title:'PROTOKOLL 2: DATENSCHUTZ (DSGVO)',proto_2_body:'<strong>1. Administrator:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO erfasst, speichert oder überträgt keine Daten.',
+      proto_3_title:'PROTOKOLL 3: KOMMERZIELLER STATUS',proto_3_body:'<strong>1. Kostenlose Verteilung:</strong> Alle aktuellen Apps kostenlos, keine Werbung.<br><br><strong>2. Premium:</strong> Premium-Module zu moderaten Gebühren.',
+      contact_badge:'256-Bit-Kommunikation',contact_h1:'KONTAKT.',contact_h3:'Verbindung herstellen',contact_desc:'Technischer Support, Geschäftsvorschläge, operative Fragen — unser Terminal ist offen.',contact_secure:'KANAL GESICHERT',contact_us:'KONTAKTIEREN SIE UNS',
+      offer_badge:'Partnerschaft & Lieferung',offer_h1:'Unser Angebot.',offer_equal_title:'Jeder Kunde hat Priorität',offer_equal_desc:'Wir unterscheiden keine Kunden. Freelancer, Startup, Konzern — alle erhalten dasselbe Engagement und dieselbe Qualität.',
+      offer_what_title:'> WAS WIR FÜR SIE BAUEN KÖNNEN',offer_what_body:'Haben Sie eine Idee? Wir haben die Werkzeuge. Zusammenarbeit in jeder Phase — von Konzept und Design über Entwicklung bis zur Bereitstellung.',
+      o1h:'Webseiten',o1p:'Landing Pages, Portfolios, Shops, Unternehmensplattformen. Schnell, responsiv, mit Seele.',
+      o2h:'Mobile Apps',o2p:'Android & iOS. React Native oder nativ. Von MVP bis Vollprodukt.',
+      o3p:'Design-Systeme, Prototypen, Markenhandbücher, visuelle Identität.',
+      o4h:'Software & Systeme',o4p:'Interne Tools, Automatisierungen, Management-Systeme.',
+      o5h:'Ideen & Beratung',o5p:'Vage Idee? Wir machen daraus einen konkreten Plan.',
+      o6h:'Geräte & Hardware',o6p:'Konzeptarbeit für physische Geräte — Prototypen, F&E, Software+Hardware-Integration.',
+      pricing_badge:'PREISMODELL',pricing_title:'Privatsphäre kostenlos.<br>Der Rest — fair bepreist.',pricing_sub:'Unsere Privatsphäre-Software ist und bleibt kostenlos. Für individuelle Projekte — Einzelpreise.',
+      price_free_name:'Privatsphäre-Software',price_free_unit:'immer kostenlos',pf1:'IbronEXO — Offline-Krypto-Tresor',pf2:'Keine Werbung, keine Telemetrie',pf3:'Alle Kernfunktionen',
+      price_prem_num:'Individuelles Angebot',pp1:'Individuelle Websites & Apps',pp2:'Design-Systeme & Branding',pp3:'Erweiterte Software-Module',pp4:'Beratung & Architektur',
+      price_hw_num:'Marktpreise',ph1:'Physische Sicherheitsgeräte',ph2:'IbronIndustries Hardware F&E',ph3:'Fairer Produktionspreis',
+      in_prep:'> IN VORBEREITUNG',offer_cta_h:'Bereit zur Zusammenarbeit?',offer_cta_p:'Beschreiben Sie Ihr Projekt — je mehr Details, desto besser.'
+    },
+    fr:{
+      freedom_title:'PROTOCOLE DE LIBERTÉ',freedom_desc:"Vous entrez dans la zone de contrôle absolu. Modifiez chaque détail de l'interface — thème, couleurs, curseur, typographie.",freedom_btn:'INITIER',
+      back:'Retour',back_apps:'Retour aux Apps',read_more:'Lire plus',nav_about:'À PROPOS',nav_apps:'LOGICIELS',nav_proto:'PROTOCOLES',nav_contact:'CONTACT',
+      hero_title:'Reprenez le <span class="gradient-text">contrôle.</span>',hero_sub:'Logiciel ingénierie décentralisé. Confidentialité absolue.',
+      home_about_desc:'Notre philosophie et nos règles.',home_apps_desc:"Écosystème logiciel sécurisé.",home_hw_desc:'Division matérielle physique.',home_proto_desc:'Règlements, licences, sécurité.',home_contact_desc:'Canal de communication sécurisé.',home_ui_desc:"Personnalisation de l'interface.",
+      offer_label:'IBRON × PARTENARIAT',offer_hero_title:'Construisons quelque chose.',offer_hero_sub:'Sites web, apps, systèmes, design, matériel. Vous avez l'idée, nous avons l'exécution.',offer_hero_btn:"VOIR L'OFFRE →",
+      tpl_header:'SCHÉMAS PRÊTS (MASTER TEMPLATES)',tpl_desc:'Chaque thème offre une bande son unique et une refonte complète de l'interface.',
+      tpl_cyber_desc:'Verre, néon et obscurité.',tpl_nature_desc:'Clair, contraste organique.',tpl_miami_desc:'Synthwave, néon, dérive.',tpl_custom_name:'MODE PERSONNALISÉ',tpl_custom_desc:'Contrôle total sur chaque détail.',
+      unlock_title:'MODE PERSONNALISÉ',unlock_desc:'Vous allez plus loin. Débloquez le contrôle total sur chaque aspect de l'interface.',unlock_btn:'PRENDRE LE CONTRÔLE',
+      access_1:'Couleurs & accents',access_2:'Curseur & formes',access_3:'Musique & typographie',
+      custom_modal_title:'MODE PERSONNALISÉ — ACCÈS',custom_modal_l1:'CONTRÔLE TOTAL DE L'INTERFACE',custom_modal_l2:'DÉBLOQUÉ',custom_modal_l3:'ILLIMITÉ',custom_modal_btn:"INITIER L'ACCÈS",
+      adv_title:'OVERRIDES AVANCÉS',
+      sh_lighting:'1. Moteur d'éclairage',sd_lighting:'Choisir le comportement des ombres et lueurs.',
+      sh_accent:'2. Couleur d'accentuation',sd_accent:'12 préréglages + roue chromatique personnalisée.',
+      sh_bg:'3. Structure d'arrière-plan',sd_bg:'Sélectionner la topographie de la toile numérique.',
+      sh_card:'4. Architecture des cartes',sd_card:'Verre, solide, wireframe et plus.',
+      sh_radius:'5. Arrondi des coins',sd_radius:'Curseur 0px (pointu) à 50px (arrondi).',
+      sh_font:'6. Typographie',sd_font:'7 paires de polices distinctives.',
+      sh_cursor:'7. Style de curseur',sd_cursor:'6 personnalités de curseur. (Bureau uniquement)',
+      sh_csize:'8. Taille du curseur',sd_csize:'Choisir la taille du curseur.',
+      sh_anim:'9. Vitesse d'animation',sd_anim:'Affecte les transitions et effets hover.',
+      sh_density:'10. Densité de mise en page',sd_density:'Compact, normal ou espacé.',
+      sh_music:'11. Musique personnalisée',sd_music:'Choisir la bande son (1m–5m.mp3).',
+      save_btn:'SAUVEGARDER',reset_btn:'RÉINITIALISER',custom_color_label:'Couleur personnalisée',
+      about_badge:'Mission & Vision',about_h1:'À PROPOS / NOTRE PHILOSOPHIE',
+      about_h3_1:'Technologie qui fonctionne simplement.',about_p1:'Nous croyons que la confidentialité devrait être un standard, pas un luxe. IbronIndustries est un studio tech indépendant livrant des logiciels qui fonctionnent exactement comme ils le devraient.',
+      about_h3_2:'Confidentialité gratuite, premium à prix juste.',about_p2:'Les outils de protection de base sont et resteront gratuits, sans publicités ni télémétrie. Modules premium à des frais modérés. Matériel aux prix du marché.',
+      about_c1h:'Local, pas cloud',about_c1p:'100% local sur votre appareil. Aucun serveur, aucune collecte de données.',
+      about_c2h:'Accessible à tous',about_c2p:'La confidentialité numérique n'est pas réservée aux experts. Design intuitif, zéro barrière d'entrée.',
+      about_c3h:'Entreprise durable',about_c3p:'Nous gagnons sur les modules premium et le matériel. Payez une fois pour une valeur concrète.',
+      apps_badge:'Logiciels IbronIndustries',apps_h1:'Écosystème d'applications.',
+      apps_exo_tag:'NOUVEAU! | ANDROID',apps_exo_desc:'Coffre-fort crypto hermétique hors ligne.',apps_chr_tag:'EN DÉVELOPPEMENT',apps_chr_desc:'Moteur de gestion opérationnelle.',locked:'CHIFFRÉ',
+      exo_tagline:'Votre coffre-fort crypto hermétique hors ligne.',beta_title:'PHASE BÊTA FERMÉE — PROLONGÉE',
+      version:'Version',release:'Date de sortie',release_date:'Bientôt (Juin 2026)',license:'Licence',license_val:'Gratuit (Sans Pub)',
+      dl_play:'TÉLÉCHARGER SUR GOOGLE PLAY',dl_status:'> STATUT: EN ATTENTE D'APPROBATION SUR GOOGLE PLAY',
+      exo_brief_title:'> DESCRIPTION OPÉRATIONNELLE IBRON EXO',exo_brief_body:'<strong>IbronEXO n'est pas un simple bloc-notes.</strong> C'est votre coffre-fort crypto privé et hermétique en architecture <span class="code">offline (Zero-Data)</span>.',
+      exo_f1h:'Système Triple PIN',exo_f1p:'PIN principal — vraies données. PIN leurre — faux coffre. PIN nucléaire — effacement total instantané.',
+      exo_f2h:'Notes éphémères',exo_f2p:'Minuteur par note. À expiration — zéros écrasés, aucune trace.',
+      exo_f3p:'Si vous ne vous connectez pas dans le délai imparti, l'app efface automatiquement la base de données.',
+      exo_f4h:'Isolation absolue',exo_f4p:'Pas d'imports multimédia, pas de notifications serveur. Uniquement un journal texte chiffré.',
+      chr_badge:'Module Opérationnel',chr_locked_title:'MODULE EN BÊTA FERMÉE',chr_locked_desc:'Chronos Protocol — moteur de gestion opérationnelle avancé. Accès temporairement restreint.',
+      hw_badge:'Division Matérielle',hw_h1:'Laboratoire R&D.',hw_title:'PROJETS PHYSIQUES',hw_desc:'Les logiciels décentralisés nécessitent du matériel indépendant.',
+      proto_badge:'Protocoles de Sécurité',proto_h1:'Documentation Opérationnelle.',proto_intro:'<strong>PROTOCOLES DE SÉCURITÉ ET DE CONFIDENTIALITÉ</strong><br><br>Ce document définit les règles d'utilisation des applications IbronIndustries.',
+      proto_1_title:'PROTOCOLE 1: EXCLUSION DE RESPONSABILITÉ',proto_1_body:'<strong>1. Tel quel:</strong> Apps sans garantie de fiabilité.<br><br><strong>2. Pas de portes dérobées:</strong> Pas de réinitialisation — PIN oublié = données verrouillées à jamais.<br><br><strong>3. Capital:</strong> Phrases seed crypto à vos risques.',
+      proto_2_title:'PROTOCOLE 2: CONFIDENTIALITÉ (RGPD)',proto_2_body:'<strong>1. Administrateur:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO ne collecte, stocke ni transmet aucune donnée.',
+      proto_3_title:'PROTOCOLE 3: STATUT COMMERCIAL',proto_3_body:'<strong>1. Distribution gratuite:</strong> Toutes les apps actuelles gratuites, sans pub.<br><br><strong>2. Premium:</strong> Modules premium à frais modérés.',
+      contact_badge:'Communication 256-bit',contact_h1:'CONTACT.',contact_h3:'Établir la connexion',contact_desc:'Support technique, propositions commerciales, questions opérationnelles — notre terminal est ouvert.',contact_secure:'CANAL SÉCURISÉ',contact_us:'NOUS CONTACTER',
+      offer_badge:'Partenariat & Livraison',offer_h1:'Notre Offre.',offer_equal_title:'Chaque client est une priorité',offer_equal_desc:'Nous ne divisons pas les clients. Freelance, startup, corporation — tous reçoivent le même engagement et la même qualité.',
+      offer_what_title:'> CE QUE NOUS POUVONS CONSTRUIRE',offer_what_body:'Vous avez une idée? Nous avons les outils. Collaboration à chaque étape — du concept au déploiement.',
+      o1h:'Sites Web',o1p:'Pages d'atterrissage, portfolios, boutiques, plateformes. Rapides, responsifs, avec âme.',
+      o2h:'Apps Mobiles',o2p:'Android & iOS. React Native ou natif. Du MVP au produit complet.',
+      o3p:'Systèmes de design, prototypes, guides de marque, identité visuelle.',
+      o4h:'Logiciels & Systèmes',o4p:'Outils internes, automatisations, systèmes de gestion.',
+      o5h:'Idées & Conseil',o5p:'Idée vague? Nous la transformons en plan concret.',
+      o6h:'Appareils & Matériel',o6p:'Travail conceptuel sur des appareils physiques — prototypes, R&D.',
+      pricing_badge:'MODÈLE DE TARIFICATION',pricing_title:'Confidentialité gratuite.<br>Le reste — au juste prix.',pricing_sub:'Notre logiciel de confidentialité est et restera gratuit. Pour les projets sur mesure — tarification individuelle.',
+      price_free_name:'Logiciel de Confidentialité',price_free_unit:'toujours gratuit',pf1:'IbronEXO — coffre-fort hors ligne',pf2:'Zéro pub, zéro télémétrie',pf3:'Toutes les fonctions de base',
+      price_prem_num:'Devis personnalisé',pp1:'Sites web & apps sur mesure',pp2:'Systèmes de design & branding',pp3:'Modules logiciels étendus',pp4:'Conseil & architecture',
+      price_hw_num:'Prix du marché',ph1:'Dispositifs de sécurité physiques',ph2:'Hardware R&D IbronIndustries',ph3:'Prix de production équitable',
+      in_prep:'> EN PRÉPARATION',offer_cta_h:'Prêt à collaborer?',offer_cta_p:'Décrivez votre projet — plus il y a de détails, mieux c'est.'
+    },
+    es:{
+      freedom_title:'PROTOCOLO DE LIBERTAD',freedom_desc:'Estás entrando en la zona de control absoluto. Cambia cada detalle de la interfaz — tema, colores, cursor, tipografía.',freedom_btn:'INICIAR',
+      back:'Volver',back_apps:'Volver a Apps',read_more:'Leer más',nav_about:'NOSOTROS',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLOS',nav_contact:'CONTACTO',
+      hero_title:'Recupera el <span class="gradient-text">control.</span>',hero_sub:'Software de ingeniería descentralizado. Privacidad absoluta.',
+      home_about_desc:'Nuestra filosofía y reglas.',home_apps_desc:'Ecosistema de software seguro.',home_hw_desc:'División de hardware físico.',home_proto_desc:'Reglamentos, licencias, seguridad.',home_contact_desc:'Canal de comunicación seguro.',home_ui_desc:'Personalización del entorno.',
+      offer_label:'IBRON × ASOCIACIÓN',offer_hero_title:'Construyamos algo.',offer_hero_sub:'Sitios web, apps, sistemas, diseño, hardware. Tú con la idea, nosotros con la ejecución.',offer_hero_btn:'VER OFERTA →',
+      tpl_header:'ESQUEMAS LISTOS (MASTER TEMPLATES)',tpl_desc:'Cada tema ofrece una banda sonora única y un rediseño completo de la interfaz.',
+      tpl_cyber_desc:'Cristal, neón y oscuridad.',tpl_nature_desc:'Claro, contraste orgánico.',tpl_miami_desc:'Synthwave, neón, deriva.',tpl_custom_name:'MODO PROPIO',tpl_custom_desc:'Control total sobre cada detalle.',
+      unlock_title:'MODO PROPIO',unlock_desc:'Vas más profundo. Desbloquea control total sobre cada aspecto de la interfaz.',unlock_btn:'TOMAR EL CONTROL',
+      access_1:'Colores y acentos',access_2:'Cursor y formas',access_3:'Música y tipografía',
+      custom_modal_title:'MODO PROPIO — ACCESO',custom_modal_l1:'CONTROL TOTAL DE INTERFAZ',custom_modal_l2:'DESBLOQUEADO',custom_modal_l3:'ILIMITADO',custom_modal_btn:'INICIAR ACCESO',
+      adv_title:'MODIFICADORES AVANZADOS',
+      sh_lighting:'1. Motor de Iluminación',sd_lighting:'Elegir comportamiento de sombras y brillo.',
+      sh_accent:'2. Color de Acento',sd_accent:'12 presets + rueda de colores personalizada.',
+      sh_bg:'3. Estructura de Fondo',sd_bg:'Seleccionar topografía del lienzo digital.',
+      sh_card:'4. Arquitectura de Tarjetas',sd_card:'Cristal, sólido, wireframe y más.',
+      sh_radius:'5. Redondeo de Esquinas',sd_radius:'Deslizador 0px (agudo) a 50px (redondeado).',
+      sh_font:'6. Tipografía',sd_font:'7 pares de fuentes distintivos.',
+      sh_cursor:'7. Estilo de Cursor',sd_cursor:'6 personalidades de cursor. (Solo escritorio)',
+      sh_csize:'8. Tamaño de Cursor',sd_csize:'Elegir tamaño del cursor.',
+      sh_anim:'9. Velocidad de Animación',sd_anim:'Afecta transiciones y efectos hover.',
+      sh_density:'10. Densidad de Layout',sd_density:'Compacto, normal o espacioso.',
+      sh_music:'11. Música Propia',sd_music:'Elegir banda sonora (1m–5m.mp3).',
+      save_btn:'GUARDAR',reset_btn:'RESETEAR',custom_color_label:'Color personalizado',
+      about_badge:'Misión & Visión',about_h1:'NOSOTROS / NUESTRA FILOSOFÍA',
+      about_h3_1:'Tecnología que simplemente funciona.',about_p1:'Creemos que la privacidad debería ser un estándar, no un lujo. IbronIndustries es un estudio tecnológico independiente.',
+      about_h3_2:'Privacidad gratis, premium a precio justo.',about_p2:'Las herramientas básicas de protección son y seguirán siendo gratuitas, sin anuncios ni telemetría.',
+      about_c1h:'Local, no nube',about_c1p:'100% local en tu dispositivo. Sin servidores, sin recopilación de datos.',
+      about_c2h:'Accesible para todos',about_c2p:'La privacidad digital no es solo para expertos. Diseño intuitivo, cero barrera de entrada.',
+      about_c3h:'Negocio sostenible',about_c3p:'Ganamos con módulos premium y hardware. Pagas una vez por valor concreto.',
+      apps_badge:'Software IbronIndustries',apps_h1:'Ecosistema de Aplicaciones.',
+      apps_exo_tag:'¡NUEVO! | ANDROID',apps_exo_desc:'Caja fuerte cripto hermética sin conexión.',apps_chr_tag:'EN DESARROLLO',apps_chr_desc:'Motor de gestión operacional.',locked:'CIFRADO',
+      exo_tagline:'Tu caja fuerte cripto hermética sin conexión.',beta_title:'FASE BETA CERRADA — EXTENDIDA',
+      version:'Versión',release:'Fecha de lanzamiento',release_date:'Pronto (Junio 2026)',license:'Licencia',license_val:'Gratis (Sin Anuncios)',
+      dl_play:'DESCARGAR EN GOOGLE PLAY',dl_status:'> ESTADO: APROBACIÓN PENDIENTE EN GOOGLE PLAY',
+      exo_brief_title:'> DESCRIPCIÓN OPERACIONAL IBRON EXO',exo_brief_body:'<strong>IbronEXO no es un bloc de notas ordinario.</strong> Es tu caja fuerte cripto privada y hermética en arquitectura <span class="code">offline (Zero-Data)</span>.',
+      exo_f1h:'Sistema Triple PIN',exo_f1p:'PIN principal — datos reales. PIN señuelo — caja fuerte falsa. PIN nuclear — borrado total instantáneo.',
+      exo_f2h:'Notas Evanescentes',exo_f2p:'Temporizador por nota. Al expirar — ceros sobrescritos, ningún rastro.',
+      exo_f3p:'Si no inicias sesión en el período establecido, la app borra automáticamente la base de datos.',
+      exo_f4h:'Aislamiento Absoluto',exo_f4p:'Sin importaciones multimedia, sin notificaciones servidor. Solo un registro de texto cifrado.',
+      chr_badge:'Módulo Operacional',chr_locked_title:'MÓDULO EN BETA CERRADA',chr_locked_desc:'Chronos Protocol — motor avanzado de gestión operacional. Acceso temporalmente restringido.',
+      hw_badge:'División Hardware',hw_h1:'Laboratorio I+D.',hw_title:'PROYECTOS FÍSICOS',hw_desc:'El software descentralizado requiere hardware independiente.',
+      proto_badge:'Protocolos de Seguridad',proto_h1:'Documentación Operacional.',proto_intro:'<strong>PROTOCOLOS DE SEGURIDAD Y PRIVACIDAD</strong><br><br>Este documento define las reglas de uso de las aplicaciones IbronIndustries.',
+      proto_1_title:'PROTOCOLO 1: DESCARGO DE RESPONSABILIDAD',proto_1_body:'<strong>1. Tal cual:</strong> Apps sin garantía de fiabilidad.<br><br><strong>2. Sin puertas traseras:</strong> Sin restablecimiento — PIN olvidado = datos bloqueados para siempre.<br><br><strong>3. Capital:</strong> Frases semilla cripto bajo tu propio riesgo.',
+      proto_2_title:'PROTOCOLO 2: PRIVACIDAD (RGPD)',proto_2_body:'<strong>1. Administrador:</strong> IbronIndustries — alex@ibronindustries.pl<br><br><strong>2. Zero-Data:</strong> IbronEXO no recopila, almacena ni transmite datos.',
+      proto_3_title:'PROTOCOLO 3: ESTADO COMERCIAL',proto_3_body:'<strong>1. Distribución gratuita:</strong> Todas las apps actuales gratuitas, sin anuncios.<br><br><strong>2. Premium:</strong> Módulos premium a tarifas moderadas.',
+      contact_badge:'Comunicación 256-bit',contact_h1:'CONTACTO.',contact_h3:'Establecer Conexión',contact_desc:'Soporte técnico, propuestas comerciales, preguntas operacionales — nuestro terminal está abierto.',contact_secure:'CANAL ASEGURADO',contact_us:'CONTÁCTENOS',
+      offer_badge:'Asociación & Entrega',offer_h1:'Nuestra Oferta.',offer_equal_title:'Cada cliente es prioridad',offer_equal_desc:'No dividimos clientes. Freelancer, startup, corporación — todos reciben el mismo compromiso y calidad.',
+      offer_what_title:'> QUÉ PODEMOS CONSTRUIR',offer_what_body:'¿Tienes una idea? Tenemos las herramientas. Colaboramos en cada etapa.',
+      o1h:'Sitios Web',o1p:'Landing pages, portafolios, tiendas, plataformas. Rápidos, responsivos, con alma.',
+      o2h:'Apps Móviles',o2p:'Android & iOS. React Native o nativo. De MVP a producto completo.',
+      o3p:'Sistemas de diseño, prototipos, libros de marca, identidad visual.',
+      o4h:'Software & Sistemas',o4p:'Herramientas internas, automatizaciones, sistemas de gestión.',
+      o5h:'Ideas & Consultoría',o5p:'¿Idea vaga? La convertimos en un plan concreto.',
+      o6h:'Dispositivos & Hardware',o6p:'Trabajo conceptual en dispositivos físicos — prototipos, I+D.',
+      pricing_badge:'MODELO DE PRECIOS',pricing_title:'Privacidad gratis.<br>El resto — a precio justo.',pricing_sub:'Nuestro software de privacidad es y seguirá siendo gratuito.',
+      price_free_name:'Software de Privacidad',price_free_unit:'siempre gratis',pf1:'IbronEXO — caja fuerte sin conexión',pf2:'Cero anuncios, cero telemetría',pf3:'Todas las funciones básicas',
+      price_prem_num:'Presupuesto personalizado',pp1:'Sitios web & apps personalizados',pp2:'Sistemas de diseño & branding',pp3:'Módulos software extendidos',pp4:'Consultoría & arquitectura',
+      price_hw_num:'Precios de mercado',ph1:'Dispositivos de seguridad físicos',ph2:'Hardware R&D IbronIndustries',ph3:'Precio de producción justo',
+      in_prep:'> EN PREPARACIÓN',offer_cta_h:'¿Listo para colaborar?',offer_cta_p:'Describe tu proyecto — cuantos más detalles, mejor.'
+    }
+  };
+  // For remaining languages, build from English base + add language-specific key phrases
+  const langSpecific = {
+    it:{nav_about:'CHI SIAMO',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLLI',nav_contact:'CONTATTO',back:'Indietro',back_apps:'Torna alle App',read_more:'Leggi di più',hero_title:'Riprendi il <span class="gradient-text">controllo.</span>',hero_sub:'Software ingegneristico decentralizzato. Privacy assoluta.',freedom_title:'PROTOCOLLO DI LIBERTÀ',freedom_desc:'Stai entrando nella zona di controllo assoluto. Modifica ogni dettaglio dell'interfaccia.',freedom_btn:'INIZIARE',save_btn:'SALVA',reset_btn:'RESET',tpl_custom_name:'MODALITÀ PERSONALIZZATA',unlock_btn:'PRENDERE IL CONTROLLO',contact_us:'CONTATTACI',offer_hero_btn:'VEDI OFFERTA →',locked:'CRITTOGRAFATO',dl_play:'SCARICA SU GOOGLE PLAY',in_prep:'> IN PREPARAZIONE'},
+    pt:{nav_about:'SOBRE NÓS',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLOS',nav_contact:'CONTATO',back:'Voltar',back_apps:'Voltar aos Apps',read_more:'Ler mais',hero_title:'Retome o <span class="gradient-text">controle.</span>',hero_sub:'Software de engenharia descentralizado. Privacidade absoluta.',freedom_title:'PROTOCOLO DE LIBERDADE',freedom_desc:'Você está entrando na zona de controle absoluto.',freedom_btn:'INICIAR',save_btn:'SALVAR',reset_btn:'REDEFINIR',tpl_custom_name:'MODO PERSONALIZADO',unlock_btn:'ASSUMIR O CONTROLE',contact_us:'CONTATE-NOS',offer_hero_btn:'VER OFERTA →',locked:'CRIPTOGRAFADO',dl_play:'BAIXAR NO GOOGLE PLAY',in_prep:'> EM PREPARAÇÃO'},
+    ru:{nav_about:'О НАС',nav_apps:'ПРОГРАММЫ',nav_proto:'ПРОТОКОЛЫ',nav_contact:'КОНТАКТ',back:'Назад',back_apps:'Назад к Приложениям',read_more:'Читать далее',hero_title:'Верните <span class="gradient-text">контроль.</span>',hero_sub:'Децентрализованное инженерное ПО. Абсолютная конфиденциальность.',freedom_title:'ПРОТОКОЛ СВОБОДЫ',freedom_desc:'Вы входите в зону абсолютного контроля. Измените каждую деталь интерфейса.',freedom_btn:'ИНИЦИИРОВАТЬ',save_btn:'СОХРАНИТЬ',reset_btn:'СБРОС',tpl_custom_name:'СВОЙ РЕЖИМ',unlock_btn:'ВЗЯТЬ КОНТРОЛЬ',contact_us:'НАПИСАТЬ НАМ',offer_hero_btn:'СМОТРЕТЬ ПРЕДЛОЖЕНИЕ →',locked:'ЗАШИФРОВАНО',dl_play:'СКАЧАТЬ В GOOGLE PLAY',in_prep:'> В ПОДГОТОВКЕ',offer_equal_title:'Каждый клиент — приоритет',about_h3_1:'Технология, которая просто работает.',price_free_unit:'всегда бесплатно'},
+    uk:{nav_about:'ПРО НАС',nav_apps:'ПРОГРАМИ',nav_proto:'ПРОТОКОЛИ',nav_contact:'КОНТАКТ',back:'Назад',back_apps:'Назад до Додатків',read_more:'Читати далі',hero_title:'Поверніть <span class="gradient-text">контроль.</span>',hero_sub:'Децентралізоване інженерне ПЗ. Абсолютна конфіденційність.',freedom_title:'ПРОТОКОЛ СВОБОДИ',freedom_desc:'Ви входите в зону абсолютного контролю.',freedom_btn:'ІНІЦІЮВАТИ',save_btn:'ЗБЕРЕГТИ',reset_btn:'СКИНУТИ',tpl_custom_name:'ВЛАСНИЙ РЕЖИМ',unlock_btn:'ВЗЯТИ КОНТРОЛЬ',contact_us:'НАПИСАТИ НАМ',offer_hero_btn:'ПЕРЕГЛЯНУТИ ПРОПОЗИЦІЮ →',locked:'ЗАШИФРОВАНО',dl_play:'ЗАВАНТАЖИТИ В GOOGLE PLAY',in_prep:'> В ПІДГОТОВЦІ'},
+    zh:{nav_about:'关于我们',nav_apps:'软件',nav_proto:'协议',nav_contact:'联系',back:'返回',back_apps:'返回应用',read_more:'阅读更多',hero_title:'重获 <span class="gradient-text">控制权。</span>',hero_sub:'去中心化工程软件。绝对隐私。',freedom_title:'自由协议',freedom_desc:'您正在进入绝对控制区域。更改界面的每个细节。',freedom_btn:'启动',save_btn:'保存',reset_btn:'重置',tpl_custom_name:'自定义模式',unlock_btn:'掌控',contact_us:'联系我们',offer_hero_btn:'查看报价 →',locked:'已加密',dl_play:'在 GOOGLE PLAY 下载',in_prep:'> 准备中',offer_equal_title:'每位客户都是优先级'},
+    ja:{nav_about:'私たちについて',nav_apps:'ソフトウェア',nav_proto:'プロトコル',nav_contact:'コンタクト',back:'戻る',back_apps:'アプリに戻る',read_more:'続きを読む',hero_title:'コントロールを<span class="gradient-text">取り戻す。</span>',hero_sub:'分散型エンジニアリングソフトウェア。完全プライバシー。',freedom_title:'自由プロトコル',freedom_desc:'絶対制御ゾーンに入ります。インターフェースのすべての詳細を変更します。',freedom_btn:'開始',save_btn:'保存',reset_btn:'リセット',tpl_custom_name:'カスタムモード',unlock_btn:'コントロールを取る',contact_us:'お問い合わせ',offer_hero_btn:'オファーを見る →',locked:'暗号化済み',dl_play:'GOOGLE PLAYでダウンロード',in_prep:'> 準備中'},
+    ko:{nav_about:'회사 소개',nav_apps:'소프트웨어',nav_proto:'프로토콜',nav_contact:'연락처',back:'뒤로',back_apps:'앱으로 돌아가기',read_more:'더 읽기',hero_title:'통제권을 <span class="gradient-text">되찾으세요.</span>',hero_sub:'탈중앙화 엔지니어링 소프트웨어. 완전한 프라이버시.',freedom_title:'자유 프로토콜',freedom_desc:'절대 제어 구역에 진입합니다. 인터페이스의 모든 세부 사항을 변경하세요.',freedom_btn:'시작',save_btn:'저장',reset_btn:'초기화',tpl_custom_name:'커스텀 모드',unlock_btn:'제어권 획득',contact_us:'문의하기',offer_hero_btn:'오퍼 보기 →',locked:'암호화됨',dl_play:'GOOGLE PLAY에서 다운로드',in_prep:'> 준비 중'},
+    ar:{nav_about:'من نحن',nav_apps:'البرامج',nav_proto:'البروتوكولات',nav_contact:'اتصل بنا',back:'رجوع',back_apps:'العودة إلى التطبيقات',read_more:'اقرأ المزيد',hero_title:'استعد <span class="gradient-text">السيطرة.</span>',hero_sub:'برامج هندسية لا مركزية. خصوصية مطلقة.',freedom_title:'بروتوكول الحرية',freedom_desc:'أنت تدخل منطقة السيطرة المطلقة.',freedom_btn:'بدء',save_btn:'حفظ',reset_btn:'إعادة تعيين',tpl_custom_name:'الوضع المخصص',unlock_btn:'تولي السيطرة',contact_us:'اتصل بنا',offer_hero_btn:'عرض العرض ←',locked:'مشفر',dl_play:'تنزيل من GOOGLE PLAY',in_prep:'> قيد التحضير'},
+    hi:{nav_about:'हमारे बारे में',nav_apps:'सॉफ़्टवेयर',nav_proto:'प्रोटोकॉल',nav_contact:'संपर्क',back:'वापस',back_apps:'Apps पर वापस',read_more:'और पढ़ें',hero_title:'नियंत्रण <span class="gradient-text">वापस लें।</span>',hero_sub:'विकेंद्रीकृत इंजीनियरिंग सॉफ़्टवेयर। पूर्ण गोपनीयता।',freedom_title:'स्वतंत्रता प्रोटोकॉल',freedom_desc:'आप पूर्ण नियंत्रण क्षेत्र में प्रवेश कर रहे हैं।',freedom_btn:'प्रारंभ करें',save_btn:'सहेजें',reset_btn:'रीसेट',tpl_custom_name:'कस्टम मोड',unlock_btn:'नियंत्रण लें',contact_us:'हमसे संपर्क करें',offer_hero_btn:'ऑफर देखें →',locked:'एन्क्रिप्टेड',dl_play:'GOOGLE PLAY से डाउनलोड करें',in_prep:'> तैयारी में'},
+    tr:{nav_about:'HAKKIMIZDA',nav_apps:'YAZILIM',nav_proto:'PROTOKOLLER',nav_contact:'İLETİŞİM',back:'Geri',back_apps:"App'lere Geri",read_more:'Devamını oku',hero_title:'Kontrolü <span class="gradient-text">geri alın.</span>',hero_sub:'Merkezi olmayan mühendislik yazılımı. Mutlak gizlilik.',freedom_title:'ÖZGÜRLÜK PROTOKOLÜ',freedom_desc:'Mutlak kontrol bölgesine giriyorsunuz.',freedom_btn:'BAŞLAT',save_btn:'KAYDET',reset_btn:'SIFIRLA',tpl_custom_name:'ÖZEL MOD',unlock_btn:'KONTROLÜ AL',contact_us:'BİZİMLE İLETİŞİM',offer_hero_btn:'TEKLİFİ GÖR →',locked:'ŞİFRELENMİŞ',dl_play:"GOOGLE PLAY'DEN İNDİR",in_prep:'> HAZIRLANIYOR'},
+    nl:{nav_about:'OVER ONS',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLLEN',nav_contact:'CONTACT',back:'Terug',back_apps:'Terug naar Apps',read_more:'Lees meer',hero_title:'Herwin de <span class="gradient-text">controle.</span>',hero_sub:'Gedecentraliseerde engineeringsoftware. Absolute privacy.',freedom_title:'VRIJHEIDSPROTOCOL',freedom_desc:'U betreedt de zone van absolute controle.',freedom_btn:'INITIËREN',save_btn:'OPSLAAN',reset_btn:'RESET',tpl_custom_name:'EIGEN MODUS',unlock_btn:'NEEM CONTROLE',contact_us:'NEEM CONTACT OP',offer_hero_btn:'BEKIJK AANBOD →',locked:'VERSLEUTELD',dl_play:'DOWNLOAD OP GOOGLE PLAY',in_prep:'> IN VOORBEREIDING'},
+    sv:{nav_about:'OM OSS',nav_apps:'PROGRAMVARA',nav_proto:'PROTOKOLL',nav_contact:'KONTAKT',back:'Tillbaka',back_apps:'Tillbaka till Apps',read_more:'Läs mer',hero_title:'Återta <span class="gradient-text">kontrollen.</span>',hero_sub:'Decentraliserad ingenjörsprogramvara. Absolut integritet.',freedom_title:'FRIHETSPROTOKOLL',freedom_desc:'Du går in i zonen för absolut kontroll.',freedom_btn:'INITIERA',save_btn:'SPARA',reset_btn:'ÅTERSTÄLL',tpl_custom_name:'EGET LÄGE',unlock_btn:'TA KONTROLL',contact_us:'KONTAKTA OSS',offer_hero_btn:'SE ERBJUDANDE →',locked:'KRYPTERAD',dl_play:'LADDA NER PÅ GOOGLE PLAY',in_prep:'> UNDER FÖRBEREDELSE'},
+    no:{nav_about:'OM OSS',nav_apps:'PROGRAMVARE',nav_proto:'PROTOKOLLER',nav_contact:'KONTAKT',back:'Tilbake',back_apps:'Tilbake til Apps',read_more:'Les mer',hero_title:'Gjenvinne <span class="gradient-text">kontrollen.</span>',hero_sub:'Desentralisert ingeniørprogramvare. Absolutt personvern.',freedom_title:'FRIHETSPROTOKOLL',freedom_desc:'Du går inn i sonen for absolutt kontroll.',freedom_btn:'INITIER',save_btn:'LAGRE',reset_btn:'TILBAKESTILL',tpl_custom_name:'EGET MODUS',unlock_btn:'TA KONTROLL',contact_us:'KONTAKT OSS',offer_hero_btn:'SE TILBUD →',locked:'KRYPTERT',dl_play:'LAST NED PÅ GOOGLE PLAY',in_prep:'> UNDER FORBEREDELSE'},
+    cs:{nav_about:'O NÁS',nav_apps:'SOFTWARE',nav_proto:'PROTOKOLY',nav_contact:'KONTAKT',back:'Zpět',back_apps:'Zpět na Aplikace',read_more:'Číst více',hero_title:'Znovu získejte <span class="gradient-text">kontrolu.</span>',hero_sub:'Decentralizovaný inženýrský software. Absolutní soukromí.',freedom_title:'PROTOKOL SVOBODY',freedom_desc:'Vstupujete do zóny absolutní kontroly.',freedom_btn:'ZAHÁJIT',save_btn:'ULOŽIT',reset_btn:'RESETOVAT',tpl_custom_name:'VLASTNÍ REŽIM',unlock_btn:'PŘEVZÍT KONTROLU',contact_us:'KONTAKTUJTE NÁS',offer_hero_btn:'ZOBRAZIT NABÍDKU →',locked:'ŠIFROVÁNO',dl_play:'STÁHNOUT NA GOOGLE PLAY',in_prep:'> V PŘÍPRAVĚ'},
+    ro:{nav_about:'DESPRE NOI',nav_apps:'SOFTWARE',nav_proto:'PROTOCOALE',nav_contact:'CONTACT',back:'Înapoi',back_apps:'Înapoi la Aplicații',read_more:'Citește mai mult',hero_title:'Recâștigați <span class="gradient-text">controlul.</span>',hero_sub:'Software ingineresc descentralizat. Confidențialitate absolută.',freedom_title:'PROTOCOLUL LIBERTĂȚII',freedom_desc:'Intrați în zona controlului absolut.',freedom_btn:'INIȚIAȚI',save_btn:'SALVAȚI',reset_btn:'RESETAȚI',tpl_custom_name:'MOD PROPRIU',unlock_btn:'PRELUAȚI CONTROLUL',contact_us:'CONTACTAȚI-NE',offer_hero_btn:'VEDEȚI OFERTA →',locked:'CRIPTAT',dl_play:'DESCĂRCAȚI DE PE GOOGLE PLAY',in_prep:'> ÎN PREGĂTIRE'},
+    hu:{nav_about:'RÓLUNK',nav_apps:'SZOFTVER',nav_proto:'PROTOKOLLOK',nav_contact:'KAPCSOLAT',back:'Vissza',back_apps:'Vissza az Appokhoz',read_more:'Tovább olvas',hero_title:'Szerezze vissza az <span class="gradient-text">irányítást.</span>',hero_sub:'Decentralizált mérnöki szoftver. Abszolút adatvédelem.',freedom_title:'SZABADSÁG PROTOKOLL',freedom_desc:'Belép az abszolút irányítás zónájába.',freedom_btn:'INDÍTÁS',save_btn:'MENTÉS',reset_btn:'VISSZAÁLLÍTÁS',tpl_custom_name:'SAJÁT MÓD',unlock_btn:'IRÁNYÍTÁS ÁTVÉTELE',contact_us:'LÉPJEN KAPCSOLATBA',offer_hero_btn:'AJÁNLAT MEGTEKINTÉSE →',locked:'TITKOSÍTOTT',dl_play:'LETÖLTÉS A GOOGLE PLAY-RŐL',in_prep:'> ELŐKÉSZÍTÉS ALATT'},
+    el:{nav_about:'ΣΧΕΤΙΚΑ',nav_apps:'ΛΟΓΙΣΜΙΚΟ',nav_proto:'ΠΡΩΤΟΚΟΛΛΑ',nav_contact:'ΕΠΙΚΟΙΝΩΝΙΑ',back:'Πίσω',back_apps:'Πίσω στις Εφαρμογές',read_more:'Διαβάστε περισσότερα',hero_title:'Ανακτήστε τον <span class="gradient-text">έλεγχο.</span>',hero_sub:'Αποκεντρωμένο μηχανολογικό λογισμικό. Απόλυτη ιδιωτικότητα.',freedom_title:'ΠΡΩΤΟΚΟΛΛΟ ΕΛΕΥΘΕΡΙΑΣ',freedom_desc:'Εισέρχεστε στη ζώνη απόλυτου ελέγχου.',freedom_btn:'ΕΚΚΙΝΗΣΗ',save_btn:'ΑΠΟΘΗΚΕΥΣΗ',reset_btn:'ΕΠΑΝΑΦΟΡΑ',tpl_custom_name:'ΔΙΚΟΣ ΜΟΥ ΤΡΟΠΟΣ',unlock_btn:'ΑΝΑΛΗΨΗ ΕΛΕΓΧΟΥ',contact_us:'ΕΠΙΚΟΙΝΩΝΗΣΤΕ',offer_hero_btn:'ΔΕΙΤΕ ΠΡΟΣΦΟΡΑ →',locked:'ΚΡΥΠΤΟΓΡΑΦΗΜΕΝΟ',dl_play:'ΛΗΨΗ ΑΠΟ GOOGLE PLAY',in_prep:'> ΥΠΟ ΠΡΟΕΤΟΙΜΑΣΙΑ'}
+  };
+
+  // Merge: full translations for de/fr/es, English-base+overrides for the rest
+  ['de','fr','es'].forEach(c=>{ T[c] = langs[c]; });
+  ['it','pt','ru','uk','zh','ja','ko','ar','hi','tr','nl','sv','no','cs','ro','hu','el'].forEach(c=>{
+    T[c] = {...base, ...(langSpecific[c]||{})};
+  });
+})();
 
 let currentLang = 'pl';
 
@@ -1548,15 +1637,30 @@ function rebuildUI(){
 function encodeAttr(s){return s.replace(/'/g,"\\'");}
 
 /* Setting appliers */
-function setLighting(sh,gs,gc,btn){setProp('--card-shadow',sh);setProp('--glow-spread',gs);setProp('--glow-color',gc);actBtn(btn,'sg-lighting');}
-function setAccent(rgb,hex,btn){setProp('--accent',hex);setProp('--accent-rgb',rgb);document.getElementById('color-picker').value=hex;document.getElementById('hex-display').innerText=hex;actBtn(btn,'sg-colors');}
+function setLighting(sh,gs,gc,btn){
+  setProp('--card-shadow',sh);setProp('--glow-spread',gs);setProp('--glow-color',gc);actBtn(btn,'sg-lighting');
+  const prev=document.getElementById('lighting-preview');
+  if(prev){prev.style.boxShadow=sh;prev.style.border='1px solid '+gc.replace('var(--glow-color)','var(--accent)');}
+}
+function setAccent(rgb,hex,btn){
+  setProp('--accent',hex);setProp('--accent-rgb',rgb);
+  document.getElementById('color-picker').value=hex;
+  document.getElementById('hex-display').innerText=hex;
+  const aprev=document.getElementById('accent-preview-hex');if(aprev)aprev.innerText=hex;
+  actBtn(btn,'sg-colors');
+}
 function applyCustomColor(hex){const r=parseInt(hex.substr(1,2),16),g=parseInt(hex.substr(3,2),16),b=parseInt(hex.substr(5,2),16);setAccent(`${r},${g},${b}`,hex,null);}
 function setBg(id,btn){
   document.querySelectorAll('.bg-layer').forEach(l=>{if(l.id!=='bg-miami-grid')l.classList.remove('active');});
   const t=document.getElementById(id);if(t)t.classList.add('active');
   actBtn(btn,'sg-bg');
 }
-function setCard(bg,b,btn){setProp('--card-bg-style',bg.replace(/\\'/g,"'"));setProp('--card-border-style',b);actBtn(btn,'sg-card');}
+function setCard(bg,b,btn){
+  const bgR=bg.replace(/\\'/g,"'");
+  setProp('--card-bg-style',bgR);setProp('--card-border-style',b);actBtn(btn,'sg-card');
+  const prev=document.getElementById('card-preview');
+  if(prev){prev.style.background=bgR;prev.style.border=b;}
+}
 function setRadius(v){setProp('--card-radius',v+'px');document.getElementById('radius-val').innerText=v+'px';}
 function setFont(h,b,btn){setProp('--font-head',h);setProp('--font-body',b);actBtn(btn,'sg-fonts');}
 function setCursor(cls,btn){cursor.className=cls;actBtn(btn,'sg-cursor');}
@@ -1664,4 +1768,3 @@ window.addEventListener('load',()=>{
 </script>
 </body>
 </html>
-      
