@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" data-global-theme="cyber">
+<html lang="pl" data-global-theme="aurora">
 <head>
   <script type="application/ld+json">
     {
@@ -2037,6 +2037,184 @@ window.addEventListener('load',()=>{
   
   showAdSlide(0);
 });
+</script>
+<!-- ═══════════════════════════════════════════════════════════════
+     AURORA PATCH — wklej to PRZED </body> w swojej stronie
+     Dodaje: motyw Aurora (domyślny), intro z cząsteczek, złote tło,
+     licznik prywatności, muzykę bg-default.mp3, kafelek wyboru.
+     NIE psuje żadnej istniejącej funkcji.
+     ═══════════════════════════════════════════════════════════════ -->
+
+<!-- Muzyka Aurora -->
+<audio id="mus-aurora" loop><source src="bg-default.mp3" type="audio/mpeg"></audio>
+
+<!-- Intro cząsteczkowe -->
+<div id="aurora-intro"><canvas id="aurora-intro-canvas"></canvas></div>
+
+<!-- Canvas cząsteczek tła -->
+<canvas id="aurora-particles"></canvas>
+
+<style>
+[data-global-theme="aurora"]{--bg-main:#0A0E1A;--bg-glass:rgba(10,14,26,.72);--text-main:#F5F3EE;--text-muted:#9BA3B4;--accent:#E8B84B;--accent-rgb:232,184,75;--accent-glow:rgba(232,184,75,.35);--danger:#E0526A;--border-glass:rgba(232,184,75,.14);--border-hover:rgba(232,184,75,.55);--card-bg-style:linear-gradient(145deg,rgba(232,184,75,.04) 0%,rgba(255,255,255,.01) 100%);--card-shadow:0 18px 40px rgba(0,0,0,.35);--terminal-bg:rgba(10,14,26,.85);--terminal-text:#E8B84B;}
+[data-global-theme="aurora"] .gradient-text{background:linear-gradient(135deg,#F5F3EE 0%,#E8B84B 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+#bg-aurora{background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,184,75,.07) 0%, transparent 55%),radial-gradient(ellipse 90% 60% at 50% 110%, rgba(40,60,110,.18) 0%, transparent 70%),linear-gradient(rgba(232,184,75,.022) 1px, transparent 1px),linear-gradient(90deg, rgba(232,184,75,.022) 1px, transparent 1px);background-size:100% 100%,100% 100%,70px 70px,70px 70px}
+#aurora-particles{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:0;transition:opacity 1.5s ease}
+[data-global-theme="aurora"] #aurora-particles{opacity:1}
+#aurora-intro{position:fixed;inset:0;background:#0A0E1A;z-index:99999;display:flex;align-items:center;justify-content:center;transition:opacity .9s ease}
+#aurora-intro.gone{opacity:0;pointer-events:none}
+.priv-bar-aurora{display:flex;justify-content:center;flex-wrap:wrap;gap:14px;margin:0 0 28px}
+.priv-chip-a{background:rgba(var(--accent-rgb),.05);border:1px solid var(--border-glass);border-radius:12px;padding:16px 24px;text-align:center;min-width:140px;transition:.4s}
+.priv-chip-a:hover{border-color:var(--accent);box-shadow:0 0 20px var(--accent-glow);transform:translateY(-3px)}
+.priv-num-a{font-family:var(--font-head);font-size:30px;font-weight:900;color:var(--accent);line-height:1;text-shadow:0 0 20px var(--accent-glow)}
+.priv-lbl-a{font-family:var(--font-mono);font-size:10px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-top:6px}
+/* kafelek Aurora w kreatorze */
+#tpl-aurora .card-icon{color:#E8B84B}
+#tpl-aurora h3{background:linear-gradient(135deg,#F5F3EE,#E8B84B);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+</style>
+
+<script>
+(function(){
+/* ===== 1. DODAJ TŁO AURORA do BG layers ===== */
+const bgLayers=document.getElementById('bg-layers');
+if(bgLayers && !document.getElementById('bg-aurora')){
+  const a=document.createElement('div');a.className='bg-layer';a.id='bg-aurora';bgLayers.appendChild(a);
+}
+
+/* ===== 2. MUZYKA AURORA — zarządzana lokalnie w patchu ===== */
+const auroraAudio=document.getElementById('mus-aurora');
+function stopAllMusicExceptAurora(){
+  document.querySelectorAll('audio').forEach(a=>{if(a.id!=='mus-aurora'){a.pause();}});
+}
+
+/* ===== 3. DODAJ AURORĘ do mapy teł w applyMaster (przez nadpisanie bgMap) ===== */
+/* Robione miękko: gdy ktoś wybierze aurora, ustawiamy tło ręcznie */
+const _origApplyMaster = window.applyMaster;
+if(typeof _origApplyMaster==='function'){
+  window.applyMaster=function(themeId,btnEl){
+    if(themeId==='aurora'){
+      document.documentElement.setAttribute('data-global-theme','aurora');
+      document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('active'));
+      if(btnEl)btnEl.classList.add('active');
+      document.querySelectorAll('.bg-layer').forEach(l=>l.classList.remove('active'));
+      const bg=document.getElementById('bg-aurora');if(bg)bg.classList.add('active');
+      stopAllMusicExceptAurora();
+      if(auroraAudio && document.getElementById('audio-dot') && document.getElementById('audio-dot').classList.contains('on')){
+        auroraAudio.volume=0.2;auroraAudio.currentTime=0;auroraAudio.play().catch(()=>{});
+      }
+      if(window.resetOverrides)window.resetOverrides();
+      return;
+    }
+    return _origApplyMaster(themeId,btnEl);
+  };
+}
+
+/* ===== 4. ROZSZERZ playThemeMusic o aurora ===== */
+const _origPlay = window.playThemeMusic;
+if(typeof _origPlay==='function'){
+  window.playThemeMusic=function(themeId){
+    const theme = themeId || document.documentElement.getAttribute('data-global-theme');
+    if(theme==='aurora'){
+      stopAllMusicExceptAurora();
+      if(auroraAudio){auroraAudio.volume=0.2;auroraAudio.currentTime=0;auroraAudio.play().catch(()=>{});}
+      return;
+    }
+    if(auroraAudio)auroraAudio.pause();
+    return _origPlay(themeId);
+  };
+}
+
+/* ===== 4b. PRZECHWYĆ toggleMusic dla aurora ===== */
+const _origToggle = window.toggleMusic;
+window.toggleMusic=function(){
+  const theme=document.documentElement.getAttribute('data-global-theme');
+  const dot=document.getElementById('audio-dot');
+  if(theme==='aurora'){
+    if(auroraAudio && !auroraAudio.paused){
+      auroraAudio.pause();if(dot)dot.classList.remove('on');
+    } else {
+      stopAllMusicExceptAurora();
+      if(auroraAudio){auroraAudio.volume=0.2;auroraAudio.play().catch(()=>{});}
+      if(dot)dot.classList.add('on');
+    }
+    return;
+  }
+  // inny motyw — upewnij się że aurora cicho, wywołaj oryginał
+  if(auroraAudio)auroraAudio.pause();
+  if(typeof _origToggle==='function')return _origToggle();
+};
+
+/* ===== 5. DODAJ KAFELEK WYBORU AURORA w kreatorze ===== */
+function addAuroraTile(){
+  const cyber=document.getElementById('tpl-cyber');
+  if(cyber && !document.getElementById('tpl-aurora')){
+    const tile=document.createElement('div');
+    tile.className='glass-card tpl-card active hv';
+    tile.id='tpl-aurora';
+    tile.setAttribute('onclick',"applyMaster('aurora',this)");
+    tile.innerHTML='<div class="card-icon">◇</div><h3>AURORA</h3><p style="margin:0;font-size:12px;text-align:center">Granat i złoto. Elegancja.</p>';
+    cyber.parentNode.insertBefore(tile,cyber);
+    cyber.classList.remove('active');
+  }
+}
+addAuroraTile();
+
+/* ===== 6. AKTYWUJ TŁO AURORA na starcie ===== */
+if(document.documentElement.getAttribute('data-global-theme')==='aurora'){
+  document.querySelectorAll('.bg-layer').forEach(l=>l.classList.remove('active'));
+  const bg=document.getElementById('bg-aurora');if(bg)bg.classList.add('active');
+}
+
+/* ===== 7. INTRO: cząsteczki formują IBRON INDUSTRIES ===== */
+const cv=document.getElementById('aurora-intro-canvas'),ic=cv.getContext('2d');
+let IW=cv.width=innerWidth,IH=cv.height=innerHeight;
+const tmp=document.createElement('canvas'),tc=tmp.getContext('2d');
+tmp.width=IW;tmp.height=IH;
+const fs=Math.min(IW/9,90);
+tc.fillStyle='#fff';tc.textAlign='center';tc.textBaseline='middle';
+tc.font='900 '+fs+'px Rajdhani, sans-serif';
+tc.fillText('IBRON',IW/2,IH/2-fs*0.5);
+tc.font='700 '+(fs*0.40)+'px Rajdhani, sans-serif';
+tc.fillText('INDUSTRIES',IW/2,IH/2+fs*0.42);
+const data=tc.getImageData(0,0,IW,IH).data;
+const targets=[];
+const gap=Math.max(3,Math.floor(fs/30));
+for(let y=0;y<IH;y+=gap){for(let xx=0;xx<IW;xx+=gap){if(data[(y*IW+xx)*4+3]>128)targets.push({x:xx,y:y});}}
+const dots=targets.map(t=>({x:Math.random()*IW,y:Math.random()*IH,tx:t.x,ty:t.y,vx:0,vy:0,r:Math.random()*1.3+.7}));
+let frame=0,done=false;
+function iloop(){
+  frame++;ic.clearRect(0,0,IW,IH);
+  dots.forEach(d=>{
+    const dx=d.tx-d.x,dy=d.ty-d.y;
+    d.vx=(d.vx+dx*0.02)*0.82;d.vy=(d.vy+dy*0.02)*0.82;
+    d.x+=d.vx;d.y+=d.vy;
+    ic.beginPath();ic.arc(d.x,d.y,d.r,0,7);
+    ic.fillStyle='rgba(232,184,75,.95)';ic.shadowColor='rgba(232,184,75,.9)';ic.shadowBlur=8;ic.fill();
+  });
+  if(frame<200&&!done)requestAnimationFrame(iloop);
+  else if(!done){done=true;setTimeout(()=>document.getElementById('aurora-intro').classList.add('gone'),700);}
+}
+/* intro tylko gdy aurora jest aktywna */
+if(document.documentElement.getAttribute('data-global-theme')==='aurora'){iloop();}
+else{document.getElementById('aurora-intro').classList.add('gone');}
+
+/* ===== 8. CZĄSTECZKI TŁA ===== */
+const pc=document.getElementById('aurora-particles'),px=pc.getContext('2d');
+let PW,PH,parts=[];
+function psize(){PW=pc.width=innerWidth;PH=pc.height=innerHeight;}
+psize();addEventListener('resize',psize);
+for(let i=0;i<42;i++)parts.push({x:Math.random()*PW,y:Math.random()*PH,r:Math.random()*1.6+.4,vx:(Math.random()-.5)*.22,vy:(Math.random()-.5)*.22,a:Math.random()*.45+.2});
+function pdraw(){
+  px.clearRect(0,0,PW,PH);
+  parts.forEach(p=>{
+    p.x+=p.vx;p.y+=p.vy;
+    if(p.x<0)p.x=PW;if(p.x>PW)p.x=0;if(p.y<0)p.y=PH;if(p.y>PH)p.y=0;
+    px.beginPath();px.arc(p.x,p.y,p.r,0,7);
+    px.fillStyle='rgba(232,184,75,'+p.a+')';px.shadowColor='rgba(232,184,75,.8)';px.shadowBlur=6;px.fill();
+  });
+  requestAnimationFrame(pdraw);
+}
+pdraw();
+})();
 </script>
 </body>
 </html>
