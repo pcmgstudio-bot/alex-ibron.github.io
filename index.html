@@ -7,7 +7,6 @@
   <meta name="description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
   <link rel="canonical" href="https://ibronindustries.pl/">
   
-  <!-- Semantic JSON-LD (WebSite, Organization, SoftwareApplication) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -267,7 +266,6 @@
   .tpl-card{text-align:center;padding:26px 16px;border-width:2px;cursor:pointer;}
   .tpl-card.active{border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow);transform:scale(1.02)}
   .tpl-card h3{margin-top:10px;margin-bottom:4px;font-size:17px;text-transform:uppercase;letter-spacing:2px}
-  #tpl-aurora .card-icon{color:#E8B84B}
   .advanced-panel{background:rgba(128,128,128,.06);border:1px solid var(--border-glass);border-radius:var(--card-radius);padding:32px;transition:var(--transition-theme);display:none}
   .advanced-panel.revealed{display:block;animation:viewIn .5s ease}
   .setting-group{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border-glass)}
@@ -449,7 +447,6 @@
 </head>
 <body>
 
-<!-- SKRYPT INICJUJĄCY TRYB SPA: Ukrywa sekcje i uruchamia aplikację -->
 <script>document.body.classList.add('js-enabled');</script>
 
 <noscript>
@@ -459,7 +456,7 @@
 </noscript>
 
 <div id="bg-layers">
-  <div class="bg-layer active" id="bg-1"></div>
+  <div class="bg-layer" id="bg-1"></div>
   <div class="bg-layer" id="bg-0"></div>
   <div class="bg-layer" id="bg-2"></div>
   <div class="bg-layer" id="bg-3"></div>
@@ -474,7 +471,7 @@
   <div class="bg-layer" id="bg-hexagons"></div>
   <div class="bg-layer" id="bg-circuit"></div>
   <div class="bg-layer" id="bg-rings"></div>
-  <div class="bg-layer" id="bg-aurora"></div>
+  <div class="bg-layer active" id="bg-aurora"></div>
 </div>
 
 <div id="aurora-sky">
@@ -628,7 +625,6 @@
       </div>
   </a>
 
-  <!-- STRONA GŁÓWNA - AKTUALNOŚCI POD REKLAMĄ -->
   <div class="glass-card hv" style="margin-bottom:var(--grid-gap); padding:16px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-left: 3px solid var(--accent);" onclick="switchView('app-exo', event)">
       <div>
           <div style="font-family:var(--font-mono); font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:4px;" data-lang-key="news_main_title_sub">SYS.LOG // AKTUALIZACJA IBRONEXO</div>
@@ -891,7 +887,6 @@
       > SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...
     </div>
 
-    <!-- IbronEXO (Tylko to ma tag 'android' i 'avail') -->
     <div class="glass-card card-center hv app-card" data-category="avail android" style="border-color:var(--accent)" onclick="switchView('app-exo', event)">
       <div class="status-tag-wrap"><span class="status-tag tag-active" data-lang-key="apps_exo_tag">DOSTĘPNE</span></div>
       <img src="logoexo.png" alt="EXO" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow));transition:var(--transition-theme)" onerror="this.src='https://via.placeholder.com/76/000/00F0FF?text=EXO'">
@@ -900,21 +895,18 @@
       <a href="#app-exo" class="btn-primary hv" onclick="switchView('app-exo', event)" data-lang-key="read_more">Czytaj więcej</a>
     </div>
     
-    <!-- IbronGYM (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-locked" data-lang-key="apps_gym_tag">W BUDOWIE</span></div>
       <img src="logogym.png" alt="GYM" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/FF3B30?text=GYM'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">GYM</span></h3>
     </div>
 
-    <!-- IbronINTERFACE (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_inter_tag">W BUDOWIE</span></div>
       <img src="logointer.png" alt="INTER" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/B026FF?text=INT'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">INTERFACE</span></h3>
     </div>
 
-    <!-- IbronCHRONOS (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_chr_tag">W BUDOWIE</span></div>
       <img src="logoclock.png" alt="CHR" style="width:76px;height:76px;margin-bottom:16px;filter:grayscale(1)" onerror="this.src='https://via.placeholder.com/76/000/8A95A5?text=CHR'">
@@ -972,13 +964,11 @@
     <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f4h">Absolutna Izolacja</h3><p data-lang-key="exo_f4p">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</p></div>
   </div>
 
-  <!-- CHANGELOG SECTION -->
   <div class="section-header" style="margin-top: 50px; margin-bottom: 30px; border-top: 1px solid var(--border-glass); padding-top: 30px; border-bottom: none;">
     <div><div class="section-badge" data-lang-key="changelog_badge">Dziennik Zmian</div><h2 style="font-size:clamp(20px,4vw,28px)" data-lang-key="changelog_title">HISTORIA AKTUALIZACJI</h2></div>
   </div>
 
   <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px;">
-    <!-- Accordion Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; flex-wrap: wrap; gap: 10px; cursor: pointer;" onclick="const content = this.nextElementSibling; const icon = this.querySelector('.toggle-icon'); if(content.style.display==='none'){content.style.display='block'; icon.innerHTML='▼';}else{content.style.display='none'; icon.innerHTML='▶';}">
       <div style="display: flex; gap: 10px; align-items: center;">
         <span class="toggle-icon" style="color:var(--accent); font-size:12px; font-family:var(--font-mono); width:15px;">▼</span>
@@ -989,7 +979,6 @@
         <span data-lang-key="cl_date">Data</span>: 15.06.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Całkowita waga aplikacji</span>: 13.1 MB
       </div>
     </div>
-    <!-- Accordion Content -->
     <div class="changelog-details" style="display:block;">
         <p style="font-size: 14px; margin-bottom: 14px; color: var(--text-main);" data-lang-key="cl_104_desc">Oficjalna aktualizacja produkcyjna na platformie Google Play.</p>
         <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
@@ -1377,6 +1366,7 @@ function switchView(id, event){
     history.pushState(null, null, '#' + id);
   }
 
+  // Ensure JS is active for SPA mode
   if(!document.body.classList.contains('js-enabled')) {
      document.body.classList.add('js-enabled');
   }
