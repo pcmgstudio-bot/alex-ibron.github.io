@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl" data-global-theme="aurora">
 <head>
-  <script type="application/ld+json">
+<script type="application/ld+json">
     {
   "@context": "https://schema.org",
   "@type": "Person",
@@ -688,6 +688,11 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
 .boot-corner.tr{top:20px;right:20px;border-top:2px solid var(--accent);border-right:2px solid var(--accent)}
 .boot-corner.bl{bottom:20px;left:20px;border-bottom:2px solid var(--accent);border-left:2px solid var(--accent)}
 .boot-corner.br{bottom:20px;right:20px;border-bottom:2px solid var(--accent);border-right:2px solid var(--accent)}
+
+/* ===== NEWS BANNER ===== */
+.news-banner{border-left:4px solid var(--accent); background:rgba(232,184,75,0.05); padding:20px; display:flex; align-items:center; gap:20px; margin-bottom:30px;}
+.news-date{font-family:var(--font-mono); font-size:12px; color:var(--accent); display:block; margin-bottom:5px;}
+.news-title{font-family:var(--font-head); font-size:18px; font-weight:700; text-transform:uppercase;}
 </style>
 </head>
 <body>
@@ -829,6 +834,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <span style="background:rgba(128,128,128,.1);padding:7px 14px;border-radius:8px;border:1px solid var(--border-glass)">[ OFFLINE MODE: <strong style="color:var(--text-main)">FORCED</strong> ]</span>
   </div>
 
+  <div class="news-banner glass-card" style="cursor: pointer;" onclick="switchView('app-exo', event)">
+      <div style="font-size:30px">✦</div>
+      <div>
+          <span class="news-date">15.06.2026</span>
+          <div class="news-title" data-lang-key="news_main_title">Oficjalna premiera IbronEXO v1.0.4 w Google Play</div>
+          <p style="font-size:13px; color:var(--text-muted); margin: 0;" data-lang-key="news_main_desc">Wprowadziliśmy kluczowe poprawki stabilności systemu PIN i zoptymalizowaliśmy interfejs dla najwyższego komfortu pracy.</p>
+      </div>
+  </div>
+
   <a href="#app-exo" class="exo-ad-slider hv" onclick="switchView('app-exo', event)">
       <div class="exo-ad-left">
           <h2 class="glitch-anim" id="exo-ad-title">IBRON EXO</h2>
@@ -850,19 +864,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
           </div>
       </div>
   </a>
-
-  <!-- NEWS BANNER -->
-  <div class="glass-card hv" style="margin-bottom:var(--grid-gap); padding:18px 25px; display:flex; align-items:center; justify-content:space-between; gap:20px; flex-wrap:wrap; border-left:3px solid var(--accent);">
-      <div style="display:flex; align-items:center; gap:16px;">
-          <div style="font-size:22px; color:var(--accent); animation:blink 2s infinite;">⎚</div>
-          <div>
-              <div style="font-family:var(--font-mono); font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:4px;" data-lang-key="news_badge">SYS.LOG // OSTATNIE ZMIANY</div>
-              <div style="font-size:13px; color:var(--text-main);" data-lang-key="news_text"><strong>[ IbronEXO v1.0.4 ]</strong> - Zwiększona stabilność, nowa optymalizacja zapytań kryptograficznych.</div>
-          </div>
-      </div>
-      <a href="#app-exo" class="btn-back hv" style="margin:0; padding:8px 18px; font-size:10px;" onclick="switchView('app-exo', event)" data-lang-key="news_btn">SZCZEGÓŁY →</a>
-  </div>
-  <!-- /NEWS BANNER -->
 
   <div class="home-grid" style="margin-bottom:var(--grid-gap)">
     <a href="#about" class="glass-card card-center hv" onclick="switchView('about', event)">
@@ -1107,12 +1108,10 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
 
   <div class="grid-container" id="app-grid-container">
     
-    <!-- Komunikat o braku wyników (domyślnie ukryty) -->
     <div id="empty-apps-msg" style="display:none; grid-column: 1 / -1; text-align:center; padding: 60px 20px; font-family:var(--font-mono); color:var(--text-muted); border: 1px dashed var(--border-glass); border-radius: var(--card-radius); background: rgba(128,128,128,0.04);" data-lang-key="empty_apps_msg">
       > SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...
     </div>
 
-    <!-- IbronEXO (Tylko to ma tag 'android' i 'avail') -->
     <div class="glass-card card-center hv app-card" data-category="avail android" style="border-color:var(--accent)" onclick="switchView('app-exo', event)">
       <div class="status-tag-wrap"><span class="status-tag tag-active" data-lang-key="apps_exo_tag">DOSTĘPNE</span></div>
       <img src="logoexo.png" alt="EXO" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow));transition:var(--transition-theme)" onerror="this.src='https://via.placeholder.com/76/000/00F0FF?text=EXO'">
@@ -1121,21 +1120,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
       <a href="#app-exo" class="btn-primary hv" onclick="switchView('app-exo', event)" data-lang-key="read_more">Czytaj więcej</a>
     </div>
     
-    <!-- IbronGYM (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-locked" data-lang-key="apps_gym_tag">W BUDOWIE</span></div>
       <img src="logogym.png" alt="GYM" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/FF3B30?text=GYM'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">GYM</span></h3>
     </div>
 
-    <!-- IbronINTERFACE (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_inter_tag">W BUDOWIE</span></div>
       <img src="logointer.png" alt="INTER" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/B026FF?text=INT'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">INTERFACE</span></h3>
     </div>
 
-    <!-- IbronCHRONOS (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_chr_tag">W BUDOWIE</span></div>
       <img src="logoclock.png" alt="CHR" style="width:76px;height:76px;margin-bottom:16px;filter:grayscale(1)" onerror="this.src='https://via.placeholder.com/76/000/8A95A5?text=CHR'">
@@ -1193,7 +1189,6 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
     <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f4h">Absolutna Izolacja</h3><p data-lang-key="exo_f4p">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</p></div>
   </div>
 
-  <!-- CHANGELOG SECTION -->
   <div class="section-header" style="margin-top: 50px; margin-bottom: 30px; border-top: 1px solid var(--border-glass); padding-top: 30px; border-bottom: none;">
     <div><div class="section-badge" data-lang-key="changelog_badge">Dziennik Zmian</div><h2 style="font-size:clamp(20px,4vw,28px)" data-lang-key="changelog_title">HISTORIA AKTUALIZACJI</h2></div>
   </div>
@@ -1201,16 +1196,18 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
   <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; flex-wrap: wrap; gap: 10px;">
       <div style="display: flex; gap: 10px; align-items: center;">
-        <span style="font-family: var(--font-head); color: var(--text-main); font-weight: 900; font-size: 22px; letter-spacing: 1px;">v1.0.4</span>
+        <span style="font-family: var(--font-head); color: var(--text-main); font-weight: 900; font-size: 22px; letter-spacing: 1px;" data-lang-key="cl_104_title">Wersja 1.0.4 (Produkcyjna)</span>
         <span class="status-tag tag-active">LATEST</span>
       </div>
       <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 1px;">
-        <span data-lang-key="cl_date">Data</span>: 15.06.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Rozmiar</span>: ~4.2 MB
+        <span data-lang-key="cl_date">Data</span>: 15.06.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Rozmiar</span>: 13.1 MB
       </div>
     </div>
+    <p style="font-size: 14px; margin-bottom: 14px; color: var(--text-main);" data-lang-key="cl_104_desc">Krytyczne poprawki stabilności systemu PIN, eliminacja błędów interfejsu oraz pełna optymalizacja renderowania ekranów dla płynniejszego działania.</p>
     <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
       <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">+</span> <span data-lang-key="cl_104_1">[CORE] Przebudowa mechanizmu hashowania PIN-u na nowy standard bezpieczeństwa.</span></li>
       <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">+</span> <span data-lang-key="cl_104_2">[UI] Optymalizacja renderowania cieni w interfejsie na starszych urządzeniach.</span></li>
+      <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">+</span> <span data-lang-key="cl_104_4">[BUILD] Optymalizacja wagi pakietu dystrybucyjnego (App Bundle zredukowane do 13.1 MB na urządzeniach referencyjnych).</span></li>
       <li style="display: flex; gap: 10px;"><span style="color: var(--danger);">-</span> <span data-lang-key="cl_104_3">[BUGFIX] Usunięto błąd powodujący zamykanie klawiatury przy błędnym wpisaniu PIN-u Decoy.</span></li>
     </ul>
   </div>
@@ -1218,20 +1215,15 @@ input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;heigh
   <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px; opacity: 0.85;">
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; flex-wrap: wrap; gap: 10px;">
       <div style="display: flex; gap: 10px; align-items: center;">
-        <span style="font-family: var(--font-head); color: var(--text-main); font-weight: 900; font-size: 20px; letter-spacing: 1px;">v1.0.3</span>
+        <span style="font-family: var(--font-head); color: var(--text-main); font-weight: 900; font-size: 20px; letter-spacing: 1px;" data-lang-key="cl_start_title">Premiera aplikacji</span>
       </div>
       <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 1px;">
-        <span data-lang-key="cl_date">Data</span>: 02.05.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Rozmiar</span>: ~4.1 MB
+        <span data-lang-key="cl_date">Data</span>: 15.06.2026
       </div>
     </div>
-    <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
-      <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">+</span> <span data-lang-key="cl_103_1">[FEATURE] Dodano mechanizm "Dead Man Switch" do automatycznego usuwania danych.</span></li>
-      <li style="display: flex; gap: 10px;"><span style="color: var(--accent);">+</span> <span data-lang-key="cl_103_2">[SECURITY] Blokada wykonywania zrzutów ekranu i nagrywania (FLAG_SECURE).</span></li>
-    </ul>
+    <p style="font-size: 14px; margin: 0; color: var(--text-muted);" data-lang-key="cl_start_desc">Oficjalny debiut hermetycznego środowiska IbronEXO. Start dystrybucji na platformie Google Play.</p>
   </div>
-  <!-- /CHANGELOG SECTION -->
-
-</div>
+  </div>
 
 <div id="app-chronos" class="view">
   <a href="#apps-hub" class="btn-back hv" onclick="switchView('apps-hub', event)">← <span data-lang-key="back_apps">Powrót do Aplikacji</span></a>
@@ -1381,11 +1373,12 @@ const LANGS = {
 
 const T = {
   pl:{
-    news_badge:'SYS.LOG // OSTATNIE ZMIANY',news_text:'<strong>[ IbronEXO v1.0.4 ]</strong> - Zwiększona stabilność, nowa optymalizacja zapytań kryptograficznych.',news_btn:'SZCZEGÓŁY →',
-    changelog_badge:'Dziennik Zmian',changelog_title:'HISTORIA AKTUALIZACJI',cl_size:'Rozmiar',cl_date:'Data',
-    cl_104_1:'[CORE] Przebudowa mechanizmu hashowania PIN-u na nowy standard bezpieczeństwa.',cl_104_2:'[UI] Optymalizacja renderowania cieni w interfejsie na starszych urządzeniach.',cl_104_3:'[BUGFIX] Usunięto błąd powodujący zamykanie klawiatury przy błędnym wpisaniu PIN-u Decoy.',
-    cl_103_1:'[FEATURE] Dodano mechanizm "Dead Man Switch" do automatycznego usuwania danych.',cl_103_2:'[SECURITY] Blokada wykonywania zrzutów ekranu i nagrywania (FLAG_SECURE).',
-    empty_apps_msg:'> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...',freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_title:'Odzyskaj <span class="gradient-text">kontrolę.</span>',hero_sub:'Zdecentralizowane oprogramowanie inżynieryjne. Absolutna prywatność.',home_about_desc:'Nasza philosophy i zasady działania.',home_apps_desc:'Ekosystem bezpiecznego oprogramowania.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Regulaminy, licencje i bezpieczeństwo.',home_contact_desc:'Bezpieczny kanał łączności.',home_ui_desc:'Personalizacja środowiska pracy.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś razem.',offer_hero_sub:'Strony, aplikacje, systemy, design. Ty z pomysłem, my z wykonaniem.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Granat, neon i synthwave.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / WIZJA I PRZYSZŁOŚĆ',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.',about_h3_2:'Prywatność jako standard.',about_p2:'Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony rozwój',about_c3p:'Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',
+    news_main_title:'Oficjalna premiera IbronEXO v1.0.4 w Google Play',news_main_desc:'Wprowadziliśmy kluczowe poprawki stabilności systemu PIN i zoptymalizowaliśmy interfejs dla najwyższego komfortu pracy.',
+    changelog_badge:'Dziennik Aktualizacji',changelog_title:'HISTORIA AKTUALIZACJI',cl_size:'Rozmiar',cl_date:'Data',
+    cl_104_title:'Wersja 1.0.4 (Produkcyjna)',cl_104_desc:'Krytyczne poprawki stabilności systemu PIN, eliminacja błędów interfejsu oraz optymalizacja ekranów dla płynniejszego działania.',
+    cl_104_1:'[CORE] Przebudowa mechanizmu hashowania PIN-u na nowy standard bezpieczeństwa.',cl_104_2:'[UI] Optymalizacja renderowania cieni w interfejsie na starszych urządzeniach.',cl_104_3:'[BUGFIX] Usunięto błąd powodujący zamykanie klawiatury przy błędnym wpisaniu PIN-u Decoy.',cl_104_4:'[BUILD] Optymalizacja wagi pakietu dystrybucyjnego (rozmiar pobierania na urządzeniach referencyjnych zredukowany do 13.1 MB).',
+    cl_start_title:'Premiera aplikacji',cl_start_desc:'Oficjalny debiut hermetycznego środowiska IbronEXO. Start dystrybucji na platformie Google Play.',
+    empty_apps_msg:'> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...',freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_title:'Odzyskaj <span class="gradient-text">kontrolę.</span>',hero_sub:'Zdecentralizowane oprogramowanie inżynieryjne. Absolutna prywatność.',home_about_desc:'Nasza filozofia i zasady działania.',home_apps_desc:'Ekosystem bezpiecznego oprogramowania.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Regulaminy, licencje i bezpieczeństwo.',home_contact_desc:'Bezpieczny kanał łączności.',home_ui_desc:'Personalizacja środowiska pracy.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś razem.',offer_hero_sub:'Strony, aplikacje, systemy, design. Ty z pomysłem, my z wykonaniem.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Granat, neon i synthwave.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / WIZJA I PRZYSZŁOŚĆ',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.',about_h3_2:'Prywatność jako standard.',about_p2:'Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony rozwój',about_c3p:'Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',
     filter_all: 'Wszystkie', filter_avail: 'Dostępne', filter_indev: 'W Budowie', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
     apps_gym_tag: 'W BUDOWIE',
     apps_exo_tag:'DOSTĘPNE',apps_exo_desc:'Hermetyczny kryptosejf offline.',
@@ -1424,10 +1417,11 @@ const T = {
     badge_v: 'WERSJA 1.0.4', badge_enc: 'AES-256-GCM', badge_off: 'TRYB OFFLINE', offer_btn_contract: '[ INICJUJ KONTRAKT PROJEKTOWY ]'
   },
   en:{
-    news_badge:'SYS.LOG // LATEST UPDATES',news_text:'<strong>[ IbronEXO v1.0.4 ]</strong> - Improved stability, new cryptographic query optimization.',news_btn:'DETAILS →',
+    news_main_title:'Official launch of IbronEXO v1.0.4 on Google Play',news_main_desc:'We have introduced critical PIN system stability improvements and optimized the UI for the best experience.',
     changelog_badge:'Changelog',changelog_title:'UPDATE HISTORY',cl_size:'Size',cl_date:'Date',
-    cl_104_1:'[CORE] Rebuilt the PIN hashing mechanism to a new security standard.',cl_104_2:'[UI] Optimized shadow rendering in the interface for older devices.',cl_104_3:'[BUGFIX] Fixed an issue causing the keyboard to dismiss on incorrect Decoy PIN entry.',
-    cl_103_1:'[FEATURE] Added "Dead Man Switch" mechanism for automatic data wiping.',cl_103_2:'[SECURITY] Blocked screenshots and screen recording (FLAG_SECURE).',
+    cl_104_title:'Version 1.0.4 (Production)',cl_104_desc:'Critical PIN stability fixes, UI bug removals, and full screen rendering optimizations for smoother operation.',
+    cl_104_1:'[CORE] Rebuilt the PIN hashing mechanism to a new security standard.',cl_104_2:'[UI] Optimized shadow rendering in the interface for older devices.',cl_104_3:'[BUGFIX] Fixed an issue causing the keyboard to dismiss on incorrect Decoy PIN entry.',cl_104_4:'[BUILD] Optimized distribution package weight (App Bundle reduced to 13.1 MB on reference devices).',
+    cl_start_title:'App Launch',cl_start_desc:'Official debut of the IbronEXO hermetic environment. Distribution launched on Google Play.',
     empty_apps_msg:'> SYS.LOG: NO MODULES IN THIS CATEGORY...',freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, cursor, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more',nav_about:'ABOUT US',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLS',nav_contact:'CONTACT',hero_title:'Regain <span class="gradient-text">Control.</span>',hero_sub:'Decentralized engineering software. Absolute privacy.',home_about_desc:'Our philosophy and rules.',home_apps_desc:'Secure software ecosystem.',home_proto_desc:'Regulations, licenses, security.',home_contact_desc:'Secure communication channel.',home_ui_desc:'Environment personalization.',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something.",offer_hero_sub:'Websites, apps, systems, design. You bring the idea, we bring the execution.',offer_hero_btn:'VIEW OFFER →',tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Navy, neon, synthwave.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, cursor, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Cursor & shapes',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_cursor:'7. Cursor Style',sd_cursor:'6 cursor personalities. (Desktop only)',sh_csize:'8. Cursor Size',sd_csize:'Choose cursor size.',sh_anim:'9. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'10. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'11. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / VISION & FUTURE',about_h3_1:'Technology that just works.',about_p1:'We believe technology should serve the user. IbronIndustries focuses on delivering software that runs smoothly, respects privacy, and accomplishes tasks without bloatware. We build for conscious users.',about_h3_2:'Privacy as a standard.',about_p2:'The core and local versions of our protection tools (like IbronEXO) are and will remain free. We plan to build our future growth on a fair model – providing highly specialized premium modules and physical hardware for transparent fees.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable growth',about_c3p:'Our projects are funded on transparent rules. Free, open features for everyone, and paid advanced modules and hardware for demanding users.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',
     filter_all: 'All', filter_avail: 'Available', filter_indev: 'In Dev', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
     apps_gym_tag: 'IN DEV',
