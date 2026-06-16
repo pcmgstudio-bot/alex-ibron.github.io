@@ -7,6 +7,24 @@
   <meta name="description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
   <link rel="canonical" href="https://ibronindustries.pl/">
   
+  <!-- Open Graph / Wyszukiwarki / Media Społecznościowe -->
+  <meta property="og:title" content="IBRON INDUSTRIES | Absolute Privacy">
+  <meta property="og:description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
+  <meta property="og:image" content="The unbidden (3).png">
+  <meta property="og:image:alt" content="IBRON INDUSTRIES Logo">
+  <meta property="og:url" content="https://ibronindustries.pl/">
+  <meta property="og:type" content="website">
+  
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="IBRON INDUSTRIES | Absolute Privacy">
+  <meta name="twitter:description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
+  <meta name="twitter:image" content="The unbidden (3).png">
+
+  <!-- Ikony strony -->
+  <link rel="icon" href="The unbidden (3).png">
+  <link rel="apple-touch-icon" href="The unbidden (3).png">
+
+  <!-- Semantic JSON-LD (WebSite, Organization, SoftwareApplication) -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
@@ -16,13 +34,15 @@
         "@id": "https://ibronindustries.pl/#website",
         "url": "https://ibronindustries.pl/",
         "name": "IBRON INDUSTRIES",
-        "description": "Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność."
+        "description": "Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.",
+        "image": "https://ibronindustries.pl/The unbidden (3).png"
       },
       {
         "@type": "Organization",
         "@id": "https://ibronindustries.pl/#organization",
         "name": "Ibron Industries",
         "url": "https://ibronindustries.pl/",
+        "logo": "https://ibronindustries.pl/The unbidden (3).png",
         "founder": {
           "@type": "Person",
           "name": "Aleksander Ibron",
@@ -233,6 +253,19 @@
   .exo-slides-container img.active { opacity: 1; }
   .exo-badges { display: flex; gap: 10px; flex-wrap: wrap; }
   .exo-badge { background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 8px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; }
+
+  /* ===== PREMIUM NEWS BANNER ===== */
+  .news-banner-premium { position: relative; overflow: hidden; background: rgba(10,14,26, 0.4); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: var(--card-radius); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; cursor: pointer; transition: var(--transition-theme), var(--transition-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: var(--grid-gap); text-decoration: none; }
+  .news-banner-premium:hover { border-color: var(--accent); box-shadow: 0 10px 40px rgba(var(--accent-rgb), 0.2); transform: translateY(-3px); }
+  .news-banner-premium::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, transparent 60%); pointer-events: none; }
+  .nb-content { display: flex; align-items: center; gap: 20px; position: relative; z-index: 2; }
+  .nb-icon { font-size: 32px; color: var(--accent); animation: pulse 2s infinite; text-shadow: 0 0 15px var(--accent-glow); }
+  .nb-text { display: flex; flex-direction: column; }
+  .nb-meta { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-bottom: 6px; font-weight: bold; }
+  .nb-title { font-family: var(--font-head); font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--text-main); line-height: 1.2; margin-bottom: 4px; }
+  .nb-desc { font-size: 13px; color: var(--text-muted); margin: 0; }
+  .nb-arrow { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; white-space: nowrap; position: relative; z-index: 2; border: 1px solid rgba(var(--accent-rgb), 0.3); padding: 8px 16px; border-radius: 20px; transition: 0.3s; background: rgba(var(--accent-rgb), 0.05); }
+  .news-banner-premium:hover .nb-arrow { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
 
   /* ===== OFFER ===== */
   .offer-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(var(--accent-rgb),.1) 0%,rgba(var(--accent-rgb),.03) 60%,rgba(128,128,128,.04) 100%);border:1px solid var(--accent);border-radius:var(--card-radius);padding:55px 45px;margin-top:4px;text-align:center;box-shadow:0 0 40px rgba(var(--accent-rgb),.12),inset 0 0 80px rgba(var(--accent-rgb),.03);transition:var(--transition-theme),var(--transition-hover); text-decoration:none; display:block;}
@@ -447,6 +480,7 @@
 </head>
 <body>
 
+<!-- SKRYPT INICJUJĄCY TRYB SPA: Ukrywa sekcje i uruchamia aplikację -->
 <script>document.body.classList.add('js-enabled');</script>
 
 <noscript>
@@ -610,7 +644,7 @@
           <p id="exo-ad-desc">Hermetyczny sejf offline zbudowany bez kompromisów. Żadnej chmury, żadnej telemetrii. Twój klucz to jedyna droga do danych.</p>
           <div class="exo-badges" style="margin-top: 30px;">
               <span class="exo-badge" data-lang-key="badge_v">WERSJA 1.0.4</span>
-              <span class="exo-badge" data-lang-key="badge_enc">AES-256-GCM</span>
+              <span class="exo-badge" style="border-color:#00e676; color:#00e676; box-shadow:0 0 10px rgba(0,230,118,0.3);" data-lang-key="badge_update">NOWA AKTUALIZACJA</span>
               <span class="exo-badge" data-lang-key="badge_off">TRYB OFFLINE</span>
           </div>
       </div>
@@ -625,14 +659,18 @@
       </div>
   </a>
 
-  <div class="glass-card hv" style="margin-bottom:var(--grid-gap); padding:16px 24px; cursor: pointer; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; border-left: 3px solid var(--accent);" onclick="switchView('app-exo', event)">
-      <div>
-          <div style="font-family:var(--font-mono); font-size:10px; color:var(--accent); letter-spacing:2px; margin-bottom:4px;" data-lang-key="news_main_title_sub">SYS.LOG // AKTUALIZACJA IBRONEXO</div>
-          <div style="font-family:var(--font-head); font-size:16px; font-weight:700; text-transform:uppercase; color:var(--text-main);" data-lang-key="news_main_title">IbronEXO v1.0.4 w Google Play</div>
-          <p style="font-size:12px; color:var(--text-muted); margin: 0;" data-lang-key="news_main_desc">Krytyczne poprawki stabilności i optymalizacja interfejsu.</p>
+  <!-- PREMIUM NEWS BANNER -->
+  <a href="#app-exo" class="news-banner-premium hv" onclick="switchView('app-exo', event)">
+      <div class="nb-content">
+          <div class="nb-icon">✦</div>
+          <div class="nb-text">
+              <div class="nb-meta" data-lang-key="news_main_title_sub">SYS.LOG // AKTUALIZACJA IBRONEXO</div>
+              <div class="nb-title" data-lang-key="news_main_title">IbronEXO v1.0.4 w Google Play</div>
+              <p class="nb-desc" data-lang-key="news_main_desc">Krytyczne poprawki stabilności i optymalizacja interfejsu.</p>
+          </div>
       </div>
-      <span style="font-family:var(--font-mono); font-size:11px; color:var(--accent); font-weight:bold; white-space:nowrap;">[ ZOBACZ ZMIANY → ]</span>
-  </div>
+      <div class="nb-arrow" data-lang-key="news_main_btn">[ ZOBACZ ZMIANY → ]</div>
+  </a>
 
   <div class="home-grid" style="margin-bottom:var(--grid-gap)">
     <a href="#about" class="glass-card card-center hv" onclick="switchView('about', event)">
@@ -700,12 +738,12 @@
     <div class="setting-header" data-lang-key="tpl_header">GOTOWE SCHEMATY (MASTER TEMPLATES)</div>
     <div class="setting-desc" data-lang-key="tpl_desc">Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.</div>
     <div class="template-grid">
-      <div class="glass-card tpl-card active hv" id="tpl-cyber" onclick="applyMaster('cyber',this)">
+      <div class="glass-card tpl-card hv" id="tpl-cyber" onclick="applyMaster('cyber',this)">
         <div class="card-icon" style="color:#00F0FF">⎔</div>
         <h3>CYBER CORE</h3>
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_cyber_desc">Szkło, neon i mrok.</p>
       </div>
-      <div class="glass-card tpl-card hv" id="tpl-aurora" onclick="applyMaster('aurora',this)">
+      <div class="glass-card tpl-card active hv" id="tpl-aurora" onclick="applyMaster('aurora',this)">
         <div class="card-icon" style="color:#E8B84B">◇</div>
         <h3>AURORA</h3>
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_aurora_desc">Granat i złoto. Elegancja.</p>
@@ -887,6 +925,7 @@
       > SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...
     </div>
 
+    <!-- IbronEXO (Tylko to ma tag 'android' i 'avail') -->
     <div class="glass-card card-center hv app-card" data-category="avail android" style="border-color:var(--accent)" onclick="switchView('app-exo', event)">
       <div class="status-tag-wrap"><span class="status-tag tag-active" data-lang-key="apps_exo_tag">DOSTĘPNE</span></div>
       <img src="logoexo.png" alt="EXO" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow));transition:var(--transition-theme)" onerror="this.src='https://via.placeholder.com/76/000/00F0FF?text=EXO'">
@@ -895,18 +934,21 @@
       <a href="#app-exo" class="btn-primary hv" onclick="switchView('app-exo', event)" data-lang-key="read_more">Czytaj więcej</a>
     </div>
     
+    <!-- IbronGYM (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-locked" data-lang-key="apps_gym_tag">W BUDOWIE</span></div>
       <img src="logogym.png" alt="GYM" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/FF3B30?text=GYM'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">GYM</span></h3>
     </div>
 
+    <!-- IbronINTERFACE (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_inter_tag">W BUDOWIE</span></div>
       <img src="logointer.png" alt="INTER" style="width:76px;height:76px;margin-bottom:16px;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/76/000/B026FF?text=INT'">
       <h3 style="font-size:24px">Ibron<span class="gradient-text">INTERFACE</span></h3>
     </div>
 
+    <!-- IbronCHRONOS (Tylko 'indev') -->
     <div class="glass-card card-center hv app-card" data-category="indev">
       <div class="status-tag-wrap"><span class="status-tag tag-beta" data-lang-key="apps_chr_tag">W BUDOWIE</span></div>
       <img src="logoclock.png" alt="CHR" style="width:76px;height:76px;margin-bottom:16px;filter:grayscale(1)" onerror="this.src='https://via.placeholder.com/76/000/8A95A5?text=CHR'">
@@ -964,11 +1006,13 @@
     <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f4h">Absolutna Izolacja</h3><p data-lang-key="exo_f4p">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</p></div>
   </div>
 
+  <!-- CHANGELOG SECTION -->
   <div class="section-header" style="margin-top: 50px; margin-bottom: 30px; border-top: 1px solid var(--border-glass); padding-top: 30px; border-bottom: none;">
     <div><div class="section-badge" data-lang-key="changelog_badge">Dziennik Zmian</div><h2 style="font-size:clamp(20px,4vw,28px)" data-lang-key="changelog_title">HISTORIA AKTUALIZACJI</h2></div>
   </div>
 
   <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px;">
+    <!-- Accordion Header -->
     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; flex-wrap: wrap; gap: 10px; cursor: pointer;" onclick="const content = this.nextElementSibling; const icon = this.querySelector('.toggle-icon'); if(content.style.display==='none'){content.style.display='block'; icon.innerHTML='▼';}else{content.style.display='none'; icon.innerHTML='▶';}">
       <div style="display: flex; gap: 10px; align-items: center;">
         <span class="toggle-icon" style="color:var(--accent); font-size:12px; font-family:var(--font-mono); width:15px;">▼</span>
@@ -979,6 +1023,7 @@
         <span data-lang-key="cl_date">Data</span>: 15.06.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Całkowita waga aplikacji</span>: 13.1 MB
       </div>
     </div>
+    <!-- Accordion Content -->
     <div class="changelog-details" style="display:block;">
         <p style="font-size: 14px; margin-bottom: 14px; color: var(--text-main);" data-lang-key="cl_104_desc">Oficjalna aktualizacja produkcyjna na platformie Google Play.</p>
         <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
@@ -1159,7 +1204,8 @@ const LANGS = {
 
 const T = {
   pl:{
-    news_main_title_sub:'SYS.LOG // AKTUALIZACJA IBRONEXO',news_main_title:'IbronEXO v1.0.4 w Google Play',news_main_desc:'Krytyczne poprawki stabilności i optymalizacja interfejsu.',
+    badge_update: 'NOWA AKTUALIZACJA',
+    news_main_title_sub:'SYS.LOG // AKTUALIZACJA IBRONEXO',news_main_title:'IbronEXO v1.0.4 w Google Play',news_main_desc:'Krytyczne poprawki stabilności i optymalizacja interfejsu.',news_main_btn:'[ ZOBACZ ZMIANY → ]',
     changelog_badge:'Dziennik Aktualizacji',changelog_title:'HISTORIA AKTUALIZACJI',cl_size:'Całkowita waga aplikacji',cl_date:'Data',
     cl_104_title:'Wersja 1.0.4',cl_104_desc:'Oficjalna aktualizacja produkcyjna na platformie Google Play.',
     cl_104_1:'Krytyczne poprawki stabilności systemu PIN.',cl_104_2:'Eliminacja błędów interfejsu (UI).',cl_104_3:'Pełna optymalizacja renderowania ekranów dla płynniejszego działania.',cl_104_4:'Zredukowany rozmiar pobierania dzięki optymalizacji paczek dystrybucyjnych.',
@@ -1200,10 +1246,11 @@ const T = {
     about_founder_p1: 'Nazywam się Aleksander. Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.',
     about_founder_p2: 'Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.',
     about_founder_p3: 'Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. Płacisz za konkretną wartość lub funkcjonalność, a nie swoimi prywatnymi danymi.',
-    badge_v: 'WERSJA 1.0.4', badge_enc: 'AES-256-GCM', badge_off: 'TRYB OFFLINE', offer_btn_contract: '[ INICJUJ KONTRAKT PROJEKTOWY ]'
+    badge_v: 'WERSJA 1.0.4', badge_off: 'TRYB OFFLINE', offer_btn_contract: '[ INICJUJ KONTRAKT PROJEKTOWY ]'
   },
   en:{
-    news_main_title_sub:'SYS.LOG // IBRONEXO UPDATE',news_main_title:'IbronEXO v1.0.4 on Google Play',news_main_desc:'Critical stability fixes and UI optimization.',
+    badge_update: 'NEW UPDATE',
+    news_main_title_sub:'SYS.LOG // IBRONEXO UPDATE',news_main_title:'IbronEXO v1.0.4 on Google Play',news_main_desc:'Critical stability fixes and UI optimization.',news_main_btn:'[ VIEW CHANGES → ]',
     changelog_badge:'Changelog',changelog_title:'UPDATE HISTORY',cl_size:'Total app weight',cl_date:'Date',
     cl_104_title:'Version 1.0.4',cl_104_desc:'Official production update on Google Play platform.',
     cl_104_1:'Critical stability improvements for the PIN system.',cl_104_2:'UI bug fixes.',cl_104_3:'Full screen rendering optimization for smoother experience.',cl_104_4:'Optimized distribution package weight (App Bundle reduced to 13.1 MB on reference devices).',
@@ -1239,7 +1286,7 @@ const T = {
     proto_5_title:'[ PROTOCOL 5 ] DISTRIBUTION & COMMERCIAL STATUS',
     proto_5_body:'All current digital applications (including IbronEXO) are provided completely free of charge – with no hidden ads, no microtransactions, and no data trading. The project is an independent technological initiative. A full e-commerce regulation will be published when Ibron Industries launches the sale of physical hardware or premium services.',
     contact_badge:'256-bit Communication',contact_h1:'CONTACT.',contact_h3:'Establish Connection',contact_desc:'Technical support, business proposals, operational questions — our terminal is open.',contact_secure:'CHANNEL SECURED',contact_us:'CONTACT US',offer_badge:'Partnership & Delivery',offer_h1:'Design & Deployment.',offer_equal_title:'Uncompromising Engineering Quality',offer_equal_desc:'Every project is treated as a critical system. We deliver total source code clarity and high-end visual aesthetics.',offer_what_title:'> AVAILABLE PROJECT SPECIFICATIONS',offer_what_body:'Deployment of custom solutions for commercial (B2B) and personal (B2C) infrastructure. Coded completely from scratch.',o1h:'Web Apps & Systems',o1p:'Highly optimized SPA platforms and modern digital portfolios. Speed and clean code.',o2h:'Mobile Ecosystems',o2p:'Native Android architecture and hybrid deployments. Focused on clean memory usage.',o3h:'Interfaces (UI/UX)',o3p:'High-end UI/UX design systems, modern dashboards, and full structural identity.',o4h:'Automations & Scripts',o4p:'Deployment of business automation layers, secure database integration, and micro-tools.',
-    badge_v: 'VERSION 1.0.4', badge_enc: 'AES-256-GCM', badge_off: 'OFFLINE MODE', offer_btn_contract: '[ INITIATE PROJECT CONTRACT ]',
+    badge_v: 'VERSION 1.0.4', badge_off: 'OFFLINE MODE', offer_btn_contract: '[ INITIATE PROJECT CONTRACT ]',
     about_founder_h: 'SYSTEM ARCHITECT // FOUNDER',
     about_founder_p1: 'My name is Aleksander. I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.',
     about_founder_p2: 'I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices.',
