@@ -661,7 +661,7 @@
           <div class="nb-text">
               <div class="nb-meta" data-lang-key="news_main_title_sub">SYS.LOG // AKTUALIZACJA IBRONEXO</div>
               <div class="nb-title" data-lang-key="news_main_title">IbronEXO v1.0.5 w Google Play</div>
-              <p class="nb-desc" data-lang-key="news_main_desc">Nowy system blokady PIN, zaawansowana personalizacja i krytyczne poprawki.</p>
+              <p class="nb-desc" data-lang-key="news_main_desc">Nowy system blokady po błędnych próbach PIN, zaawansowana personalizacja i poprawki.</p>
           </div>
       </div>
       <div class="nb-arrow" data-lang-key="news_main_btn">[ ZOBACZ ZMIANY → ]</div>
@@ -1080,7 +1080,7 @@
             <h4 style="font-family: var(--font-mono); font-size: 13px; color: #00e676;">[ PHASE 03 // GLOBAL DEPLOYMENT ]</h4>
             <p style="font-size: 13px; color: var(--text-main); font-weight: bold;" data-lang-key="inter_t3">Oficjalne wdrożenie i globalne wydanie produkcyjne w drugiej połowie roku 2026.</p>
         </div>
-        </div>
+    </div>
   </div>
 
   <div class="grid-container">
@@ -1179,7 +1179,6 @@
   <span class="lb-close hv">&times;</span>
   <img id="lb-img" src="" alt="Zoom">
 </div>
-
 <script>
 /* ============================================================
    TRANSLATIONS — PL and EN only
@@ -1192,7 +1191,7 @@ const LANGS = {
 const T = {
   pl:{
     badge_update: 'NOWA AKTUALIZACJA',
-    news_main_title_sub:'SYS.LOG // AKTUALIZACJA IBRONEXO',news_main_title:'IbronEXO v1.0.5 w Google Play',news_main_desc:'Nowy system blokady PIN, zaawansowana personalizacja i krytyczne poprawki.',news_main_btn:'[ ZOBACZ ZMIANY → ]',
+    news_main_title_sub:'SYS.LOG // AKTUALIZACJA IBRONEXO',news_main_title:'IbronEXO v1.0.5 w Google Play',news_main_desc:'Nowy system blokady po błędnych próbach PIN, zaawansowana personalizacja i poprawki.',news_main_btn:'[ ZOBACZ ZMIANY → ]',
     changelog_badge:'Dziennik Aktualizacji',changelog_title:'HISTORIA AKTUALIZACJI',cl_size:'Całkowita waga aplikacji',cl_date:'Data',
     cl_105_title:'Wersja 1.0.5',cl_105_desc:'Najnowsza aktualizacja wprowadzająca nowe zabezpieczenia, personalizację i poprawki.',
     cl_105_1:'Bezpieczeństwo: Nowy system blokady po błędnych próbach PIN z eskalacją czasową oraz silniejsze szyfrowanie klucza dostępu (natywne PBKDF2).',cl_105_2:'Personalizacja interfejsu: 15 nowych wzorów tła, 28 kolorów akcentu i 8 gotowych presetów motywów.',cl_105_3:'Poprawki: Naprawiono zasłanianie przycisków przez pasek systemowy Android oraz język notatek w sejfie Decoy.',
@@ -1948,3 +1947,14 @@ window.addEventListener('load',()=>{
           const p=parts[i];
           p.x+=p.vx;p.y+=p.vy;
           if(p.x<-10)p.x=PW;if(p.x>PW+10)p.x=0;if(p.y<-10)p.y=PH;if(p.y>PH+10)p.y=0;
+          px.drawImage(GLOW,p.x-p.s/2,p.y-p.s/2,p.s,p.s);
+        }
+        requestAnimationFrame(pdraw);
+      }
+      pdraw();
+  }
+});
+</script>
+
+</body>
+</html>
