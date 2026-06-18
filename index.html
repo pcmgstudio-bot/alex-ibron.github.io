@@ -1885,10 +1885,12 @@ function closeLightbox(e){const lb=document.getElementById('image-lightbox');if(
 window.addEventListener('load',()=>{
   const saved = (() => { try { const d=localStorage.getItem('ibron_prefs'); return d ? JSON.parse(d).lang : null; } catch(e){ return null; } })();
   if(!saved) {
-    const browserLang = (navigator.language || navigator.userLanguage || 'pl').toLowerCase().slice(0,2);
+    const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
     const supported = Object.keys(LANGS);
-    if(supported.includes(browserLang) && browserLang !== 'pl') {
-      setLang(browserLang);
+    if(supported.includes(browserLang)) {
+      if(browserLang !== 'pl') setLang(browserLang);
+    } else {
+      setLang('en');
     }
   }
   buildLangDropdown();
