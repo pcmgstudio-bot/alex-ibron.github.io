@@ -3,6 +3,20 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+  <script>
+(function(){
+  try{
+    var saved = JSON.parse(localStorage.getItem('ibron_prefs')||'null');
+    var lang = saved && saved.lang;
+    if(!lang){
+      var bl = (navigator.language||navigator.userLanguage||'en').toLowerCase().slice(0,2);
+      lang = (bl === 'pl' || bl === 'en') ? bl : 'en';
+    }
+    window.__ibronLang = lang;
+    document.documentElement.lang = lang;
+  }catch(e){ window.__ibronLang='pl'; }
+})();
+</script>
   <title>IBRON INDUSTRIES | Absolute Privacy</title>
   <meta name="description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
   <link rel="canonical" href="https://ibronindustries.pl/">
@@ -1280,7 +1294,7 @@ const T = {
   },
 };
 
-let currentLang = 'pl';
+let currentLang = window.__ibronLang || 'pl';
 
 function t(key){ return (T[currentLang]||T.pl)[key] || (T.pl[key]) || key; }
 
@@ -1883,16 +1897,9 @@ function closeLightbox(e){const lb=document.getElementById('image-lightbox');if(
    INIT & AURORA ENGINE
 ============================================================ */
 window.addEventListener('load',()=>{
-  const saved = (() => { try { const d=localStorage.getItem('ibron_prefs'); return d ? JSON.parse(d).lang : null; } catch(e){ return null; } })();
-  if(!saved) {
-    const browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
-    const supported = Object.keys(LANGS);
-    if(supported.includes(browserLang)) {
-      if(browserLang !== 'pl') setLang(browserLang);
-    } else {
-      setLang('en');
-    }
-  }
+// Język już ustawiony wcześnie w <head> — tylko synchronizujemy UI (flagę, dropdown) bez przebudowy treści
+  document.getElementById('nav-flag').innerHTML = LANGS[currentLang].flag;
+  document.getElementById('nav-lang-code').textContent = currentLang.toUpperCase();
   buildLangDropdown();
   applyTranslations();
   loadPersonalization();
