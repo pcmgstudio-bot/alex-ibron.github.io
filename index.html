@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" data-global-theme="aurora">
+<html lang="pl" data-global-theme="nebula">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
@@ -99,6 +99,22 @@
   [data-global-theme="miami"] {--bg-main:#060913;--bg-glass:rgba(6,9,19,0.85);--text-main:#FFFFFF;--text-muted:#8E9EBE;--accent:#FF6EC7;--accent-rgb:255,110,199;--accent-glow:rgba(255,110,199,0.5);--danger:#FF3B76;--border-glass:rgba(0,229,255,0.2);--border-hover:rgba(0,229,255,0.8);--card-bg-style:linear-gradient(145deg,rgba(255,110,199,0.05) 0%,rgba(0,229,255,0.03) 100%);--card-shadow:0 15px 40px rgba(0,0,0,0.4);--terminal-bg:rgba(6,9,19,0.9);--terminal-text:#00E5FF;}
   [data-global-theme="custom"]{--bg-main:#05070A;--bg-glass:rgba(5,7,10,.7);--text-main:#FFF;--text-muted:#A1A1AA;--accent:#FF6600;--accent-rgb:255,102,0;--accent-glow:rgba(255,102,0,.4);--danger:#FF3B30;--border-glass:rgba(255,255,255,.08);--border-hover:rgba(255,102,0,.5);--terminal-bg:rgba(0,0,0,.5);--terminal-text:#FFF;}
   [data-global-theme="aurora"]{--bg-main:#0A0E1A;--bg-glass:rgba(10,14,26,.72);--text-main:#F5F3EE;--text-muted:#9BA3B4;--accent:#E8B84B;--accent-rgb:232,184,75;--accent-glow:rgba(232,184,75,.35);--danger:#E0526A;--border-glass:rgba(232,184,75,.14);--border-hover:rgba(232,184,75,.55);--card-bg-style:linear-gradient(145deg,rgba(232,184,75,.04) 0%,rgba(255,255,255,.01) 100%);--card-shadow:0 18px 40px rgba(0,0,0,.35);--terminal-bg:rgba(10,14,26,.85);--terminal-text:#E8B84B;}
+  [data-global-theme="nebula"]{
+    --bg-main: #04030C;
+    --bg-glass: rgba(4,3,12,0.75);
+    --text-main: #F0EEFF;
+    --text-muted: #8B85A8;
+    --accent: #A855F7;
+    --accent-rgb: 168,85,247;
+    --accent-glow: rgba(168,85,247,0.35);
+    --danger: #F43F5E;
+    --border-glass: rgba(168,85,247,0.12);
+    --border-hover: rgba(168,85,247,0.5);
+    --card-bg-style: linear-gradient(145deg,rgba(168,85,247,0.05) 0%,rgba(59,130,246,0.03) 100%);
+    --card-shadow: 0 18px 40px rgba(0,0,0,0.5);
+    --terminal-bg: rgba(4,3,12,0.9);
+    --terminal-text: #A855F7;
+  }
 
   *,*::before,*::after{box-sizing:border-box;cursor:none!important;margin:0;padding:0}
   html{scroll-behavior:smooth}
@@ -145,6 +161,13 @@
   #bg-circuit{background-image:linear-gradient(rgba(var(--accent-rgb),.07) 2px,transparent 2px),linear-gradient(90deg,rgba(var(--accent-rgb),.07) 2px,transparent 2px),linear-gradient(rgba(var(--accent-rgb),.03) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--accent-rgb),.03) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px}
   #bg-rings{background:radial-gradient(circle,transparent 30%,rgba(var(--accent-rgb),.04) 31%,transparent 32%),radial-gradient(circle,transparent 50%,rgba(var(--accent-rgb),.03) 51%,transparent 52%),radial-gradient(circle,transparent 70%,rgba(var(--accent-rgb),.02) 71%,transparent 72%);background-size:300px 300px;background-position:center}
   
+  #bg-nebula {
+    background: 
+      radial-gradient(ellipse 120% 80% at 20% 70%, rgba(88,28,135,0.45), transparent 55%),
+      radial-gradient(ellipse 80% 60% at 80% 20%, rgba(30,58,138,0.35), transparent 55%),
+      radial-gradient(ellipse 60% 50% at 50% 50%, rgba(157,23,77,0.15), transparent 60%);
+  }
+
   /* AURORA BG AND PARTICLES */
   #bg-aurora{background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,184,75,.07) 0%, transparent 55%),radial-gradient(ellipse 90% 60% at 50% 110%, rgba(40,60,110,.18) 0%, transparent 70%),linear-gradient(rgba(232,184,75,.022) 1px, transparent 1px),linear-gradient(90deg, rgba(232,184,75,.022) 1px, transparent 1px);background-size:100% 100%,100% 100%,70px 70px,70px 70px}
   [data-global-theme="aurora"] #aurora-sky{opacity:1}
@@ -159,6 +182,17 @@
   @keyframes aurWave3{0%,100%{transform:translate(-2%,1%) scaleY(.9) skewX(-3deg);opacity:.6}50%{transform:translate(4%,-3%) scaleY(1.2) skewX(5deg);opacity:.95}}
   [data-global-theme="aurora"] #aurora-particles{opacity:1}
   #aurora-particles{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.5s ease}
+
+  /* NEBULA BG AND PARTICLES */
+  [data-global-theme="nebula"] #nebula-sky { opacity: 1; }
+  #nebula-sky { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.5s ease; }
+  .neb-band { position: absolute; width: 140%; height: 55%; left: -20%; border-radius: 50%; filter: blur(60px); will-change: transform, opacity; mix-blend-mode: screen; }
+  .neb-band.b1 { top: -12%; background: radial-gradient(ellipse 50% 100% at 50% 50%, rgba(88,28,135,0.25), transparent 70%); animation: aurWave1 16s ease-in-out infinite; }
+  .neb-band.b2 { top: -4%; background: radial-gradient(ellipse 55% 100% at 40% 50%, rgba(30,58,138,0.2), transparent 70%); animation: aurWave2 22s ease-in-out infinite; }
+  .neb-band.b3 { top: 2%; background: radial-gradient(ellipse 45% 100% at 60% 50%, rgba(157,23,77,0.18), transparent 70%); animation: aurWave3 19s ease-in-out infinite; }
+  .neb-band.b4 { top: -8%; background: radial-gradient(ellipse 60% 100% at 50% 50%, rgba(109,40,217,0.15), transparent 72%); animation: aurWave1 26s ease-in-out infinite reverse; }
+  [data-global-theme="nebula"] #nebula-particles { opacity: 1; }
+  #nebula-particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.5s ease; }
 
   .ambient-glow{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;background:radial-gradient(circle at 50% 0%,var(--accent-glow),transparent 60%);opacity:.5;transition:background 1.5s ease}
 
@@ -224,7 +258,7 @@
   .btn-back{background:transparent;border:1px solid var(--border-glass);color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:36px;display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:30px;transition:var(--transition-theme),var(--transition-hover);text-decoration:none;cursor:pointer;}
   .btn-back:hover{border-color:var(--accent);color:var(--text-main);background:rgba(128,128,128,.1);box-shadow:0 0 15px var(--accent-glow)}
 
-  .home-grid-clean { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-bottom: 60px; }
+  .home-grid-v2 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 60px; }
 
   /* ===== CARDS ===== */
   .glass-card{background:var(--card-bg-style);border:var(--card-border-style);border-radius:var(--card-radius);padding:var(--card-pad);backdrop-filter:blur(10px);transition:var(--transition-theme),var(--transition-hover);position:relative;overflow:hidden;display:flex;flex-direction:column;box-shadow:var(--card-shadow);contain:layout style; text-decoration:none;}
@@ -265,19 +299,6 @@
   .exo-slides-container img.active { opacity: 1; }
   .exo-badges { display: flex; gap: 10px; flex-wrap: wrap; }
   .exo-badge { background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 8px 14px; font-family: var(--font-mono); font-size: 11px; font-weight: bold; letter-spacing: 1.5px; text-transform: uppercase; border-radius: 4px; }
-
-  /* ===== PREMIUM NEWS BANNER ===== */
-  .news-banner-premium { position: relative; overflow: hidden; background: rgba(10,14,26, 0.4); border: 1px solid rgba(var(--accent-rgb), 0.3); border-radius: var(--card-radius); padding: 20px 30px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; cursor: pointer; transition: var(--transition-theme), var(--transition-hover); box-shadow: 0 10px 30px rgba(0,0,0,0.5); margin-bottom: var(--grid-gap); text-decoration: none; }
-  .news-banner-premium:hover { border-color: var(--accent); box-shadow: 0 10px 40px rgba(var(--accent-rgb), 0.2); transform: translateY(-3px); }
-  .news-banner-premium::before { content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.15) 0%, transparent 60%); pointer-events: none; }
-  .nb-content { display: flex; align-items: center; gap: 20px; position: relative; z-index: 2; }
-  .nb-icon { font-size: 32px; color: var(--accent); animation: pulse 2s infinite; text-shadow: 0 0 15px var(--accent-glow); }
-  .nb-text { display: flex; flex-direction: column; }
-  .nb-meta { font-family: var(--font-mono); font-size: 10px; color: var(--accent); letter-spacing: 2px; margin-bottom: 6px; font-weight: bold; }
-  .nb-title { font-family: var(--font-head); font-size: 20px; font-weight: 900; text-transform: uppercase; color: var(--text-main); line-height: 1.2; margin-bottom: 4px; }
-  .nb-desc { font-size: 13px; color: var(--text-muted); margin: 0; }
-  .nb-arrow { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: 700; white-space: nowrap; position: relative; z-index: 2; border: 1px solid rgba(var(--accent-rgb), 0.3); padding: 8px 16px; border-radius: 20px; transition: 0.3s; background: rgba(var(--accent-rgb), 0.05); }
-  .news-banner-premium:hover .nb-arrow { background: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
 
   /* ===== OFFER ===== */
   .offer-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(var(--accent-rgb),.1) 0%,rgba(var(--accent-rgb),.03) 60%,rgba(128,128,128,.04) 100%);border:1px solid var(--accent);border-radius:var(--card-radius);padding:55px 45px;margin-top:4px;text-align:center;box-shadow:0 0 40px rgba(var(--accent-rgb),.12),inset 0 0 80px rgba(var(--accent-rgb),.03);transition:var(--transition-theme),var(--transition-hover); text-decoration:none; display:block;}
@@ -340,7 +361,7 @@
   .cp-dot{background:currentColor;border-radius:50%;width:40%;height:40%;margin:auto;position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
   .cp-square{border:2px solid currentColor;border-radius:3px;width:100%;height:100%}
   .cp-diamond{border:2px solid currentColor;width:100%;height:100%;transform:rotate(45deg);border-radius:2px}
-  .cp-cross::before,.cp-cross::after{content:'';position:absolute;background:currentColor;top:50%;left:50%;transform:translate(-50%,-50%)}
+  .cp-cross::before,.cp-cross::after{content:'absolute';background:currentColor;top:50%;left:50%;transform:translate(-50%,-50%)}
   .cp-cross::before{width:100%;height:2px}
   .cp-cross::after{width:2px;height:100%}
   .cp-neon{border:2px solid currentColor;border-radius:50%;width:100%;height:100%;box-shadow:0 0 8px currentColor,inset 0 0 6px rgba(0,0,0,.3)}
@@ -426,7 +447,7 @@
 
   /* ===== RESPONSIVE ===== */
   @media(max-width:1024px){
-    .home-grid-clean{grid-template-columns:1fr; gap: 30px;}
+    .home-grid-v2{grid-template-columns:1fr; gap: 30px;}
     .blueprint-grid{grid-template-columns:1fr;}
   }
   @media(max-width:768px){
@@ -435,7 +456,7 @@
     .nav-controls{gap:5px}
     .nav-btn,.lang-btn{padding:5px 9px;font-size:9px}
     .view-container{padding:130px 4% 80px}
-    .home-grid-clean{grid-template-columns:1fr;}
+    .home-grid-v2{grid-template-columns:1fr;}
     .grid-container{grid-template-columns:1fr}
     .offer-hero{padding:35px 20px}
     .template-grid{grid-template-columns:repeat(2,1fr)}
@@ -515,7 +536,8 @@
   <div class="bg-layer" id="bg-hexagons"></div>
   <div class="bg-layer" id="bg-circuit"></div>
   <div class="bg-layer" id="bg-rings"></div>
-  <div class="bg-layer active" id="bg-aurora"></div>
+  <div class="bg-layer" id="bg-aurora"></div>
+  <div class="bg-layer active" id="bg-nebula"></div>
 </div>
 
 <div id="aurora-sky">
@@ -525,6 +547,14 @@
   <div class="aur-band b4"></div>
 </div>
 <canvas id="aurora-particles"></canvas>
+
+<div id="nebula-sky">
+  <div class="neb-band b1"></div>
+  <div class="neb-band b2"></div>
+  <div class="neb-band b3"></div>
+  <div class="neb-band b4"></div>
+</div>
+<canvas id="nebula-particles"></canvas>
 
 <div class="ambient-glow"></div>
 
@@ -634,11 +664,11 @@
 
   <div style="min-height: 50vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; margin-bottom: 60px; padding: 20px;">
     <div style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 2px; color: var(--accent); margin-bottom: 20px; text-transform: uppercase;" data-lang-key="hero_label">Niezależne studio oprogramowania prywatności</div>
-    <h1 style="font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:-2px;margin-bottom:20px;line-height:1.1;text-transform:uppercase" data-lang-key="hero_title">Odzyskaj <span class="gradient-text">kontrolę.</span></h1>
-    <p style="font-size:clamp(16px,2.5vw,20px);color:var(--text-muted);letter-spacing:1px;max-width: 600px;margin-bottom: 40px;" data-lang-key="hero_sub">Tworzymy aplikacje offline, które trzymają dane na Twoim urządzeniu. Zero chmury, zero telemetrii. Zawsze.</p>
+    <h1 style="font-size:clamp(40px,7vw,80px);font-weight:900;letter-spacing:-2px;margin-bottom:20px;line-height:1.1;text-transform:uppercase" data-lang-key="hero_title">Oprogramowanie, które oddaje kontrolę Tobie.</h1>
+    <p style="font-size:clamp(16px,2.5vw,20px);color:var(--text-muted);letter-spacing:1px;max-width: 600px;margin-bottom: 40px;" data-lang-key="hero_sub">Tworzymy narzędzia skupione na prywatności — aplikacje i systemy gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</p>
     <div style="display:flex; gap: 15px; flex-wrap: wrap; justify-content: center;">
-      <a href="#apps-hub" class="btn-primary hv" onclick="switchView('apps-hub', event)" style="padding: 18px 40px; font-size: 15px;" data-lang-key="hero_cta_primary">Zobacz nasze aplikacje →</a>
-      <a href="#about" class="btn-secondary hv" onclick="switchView('about', event)" style="padding: 18px 40px; font-size: 15px;" data-lang-key="hero_cta_secondary">Dowiedz się więcej</a>
+      <a href="#apps-hub" class="btn-primary hv" onclick="switchView('apps-hub', event)" style="padding: 18px 40px; font-size: 15px;" data-lang-key="hero_btn_primary">Zobacz nasze aplikacje →</a>
+      <a href="#about" class="btn-secondary hv" onclick="switchView('about', event)" style="padding: 18px 40px; font-size: 15px;" data-lang-key="hero_btn_secondary">Dowiedz się więcej</a>
     </div>
   </div>
 
@@ -664,28 +694,28 @@
       </div>
   </a>
 
-  <div class="home-grid-clean">
+  <div class="home-grid-v2">
     <a href="#about" class="glass-card card-center hv" onclick="switchView('about', event)">
       <div class="card-icon">◈</div>
       <h3 data-lang-key="nav_about">O NAS</h3>
-      <p data-lang-key="home_about_desc">Nasza filozofia i zasady działania.</p>
+      <p data-lang-key="home_about_desc">Kim jesteśmy i dlaczego budujemy w ten sposób.</p>
     </a>
     <a href="#apps-hub" class="glass-card card-center hv" onclick="switchView('apps-hub', event)">
       <div class="card-icon">⎈</div>
       <h3 data-lang-key="nav_apps">APLIKACJE</h3>
-      <p data-lang-key="home_apps_desc">Poznaj nasz ekosystem aplikacji offline.</p>
+      <p data-lang-key="home_apps_desc">Wszystkie nasze narzędzia — co jest dostępne i co nadchodzi.</p>
     </a>
     <a href="#protocols" class="glass-card card-center hv" onclick="switchView('protocols', event)">
       <div class="card-icon">⎚</div>
       <h3 data-lang-key="nav_proto">PROTOKOŁY</h3>
-      <p data-lang-key="home_proto_desc">Zasady prywatności i licencje.</p>
+      <p data-lang-key="home_proto_desc">Jak traktujemy Twoje dane. Spoiler: nie traktujemy.</p>
     </a>
     <a href="#contact" class="glass-card card-center hv" onclick="switchView('contact', event)">
       <div class="card-icon">✉</div>
       <h3 data-lang-key="nav_contact">KONTAKT</h3>
-      <p data-lang-key="home_contact_desc">Skontaktuj się z nami bezpośrednio.</p>
+      <p data-lang-key="home_contact_desc">Napisz do nas w sprawie wsparcia lub współpracy.</p>
     </a>
-    <a href="#personalize" class="glass-card card-center hv" onclick="openPersonalize(event)" style="grid-column: 1 / -1; border-color:var(--accent)">
+    <a href="#personalize" class="glass-card card-center hv" onclick="openPersonalize(event)" style="border-color:var(--accent)">
       <div class="status-tag-wrap"><span class="status-tag tag-active">NEW FEATURE</span></div>
       <div class="card-icon">⚙</div>
       <h3>UI SYSTEM</h3>
@@ -698,14 +728,15 @@
       <div class="offer-dot"></div>
       <span data-lang-key="offer_label">IBRON × WSPÓŁPRACA</span>
     </div>
-    <h2 class="gradient-text" style="font-size:clamp(26px,4vw,50px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;line-height:1.1" data-lang-key="offer_hero_title">Zbudujmy coś razem.</h2>
-    <p style="color:var(--text-muted);font-size:clamp(13px,2vw,16px);max-width:680px;margin:0 auto 28px" data-lang-key="offer_hero_sub">Strony, aplikacje, systemy, design. Ty z pomysłem, my z wykonaniem.</p>
+    <h2 class="gradient-text" style="font-size:clamp(26px,4vw,50px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;line-height:1.1" data-lang-key="offer_hero_title">Zbudujmy coś, co ma znaczenie.</h2>
+    <p style="color:var(--text-muted);font-size:clamp(13px,2vw,16px);max-width:680px;margin:0 auto 28px" data-lang-key="offer_hero_sub">Aplikacje webowe, narzędzia mobilne, systemy UI. Jeśli masz pomysł który zasługuje na istnienie — pomożemy Ci go zbudować porządnie.</p>
     <div class="offer-tags">
       <span class="offer-tag">Web Design</span>
       <span class="offer-tag">Mobile Apps</span>
       <span class="offer-tag">UI/UX</span>
       <span class="offer-tag">Skrypty & Narzędzia</span>
       <span class="offer-tag">Consulting</span>
+      <span class="offer-tag">Privacy Consulting</span>
     </div>
     <span class="btn-primary" style="margin:0 auto" data-lang-key="offer_hero_btn">SPRAWDŹ OFERTĘ →</span>
   </a>
@@ -727,12 +758,17 @@
     <div class="setting-header" data-lang-key="tpl_header">GOTOWE SCHEMATY (MASTER TEMPLATES)</div>
     <div class="setting-desc" data-lang-key="tpl_desc">Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.</div>
     <div class="template-grid">
+      <div class="glass-card tpl-card active hv" id="tpl-nebula" onclick="applyMaster('nebula',this)">
+        <div style="font-size:44px;margin-bottom:14px;line-height:1;color:#A855F7">✦</div>
+        <h3>NEBULA</h3>
+        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_nebula_desc">Głęboki kosmos. Fiolet, róż, błękit.</p>
+      </div>
       <div class="glass-card tpl-card hv" id="tpl-cyber" onclick="applyMaster('cyber',this)">
         <div class="card-icon" style="color:#00F0FF">⎔</div>
         <h3>CYBER CORE</h3>
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_cyber_desc">Szkło, neon i mrok.</p>
       </div>
-      <div class="glass-card tpl-card active hv" id="tpl-aurora" onclick="applyMaster('aurora',this)">
+      <div class="glass-card tpl-card hv" id="tpl-aurora" onclick="applyMaster('aurora',this)">
         <div class="card-icon" style="color:#E8B84B">◇</div>
         <h3>AURORA</h3>
         <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_aurora_desc">Granat i złoto. Elegancja.</p>
@@ -1190,7 +1226,7 @@ const T = {
     cl_105_title:'Wersja 1.0.5',cl_105_desc:'Najnowsza aktualizacja wprowadzająca nowe zabezpieczenia, personalizację i poprawki.',
     cl_105_1:'Bezpieczeństwo: Nowy system blokady po błędnych próbach PIN z eskalacją czasową oraz silniejsze szyfrowanie klucza dostępu (natywne PBKDF2).',cl_105_2:'Personalizacja interfejsu: 15 nowych wzorów tła, 28 kolorów akcentu i 8 gotowych presetów motywów.',cl_105_3:'Poprawki: Naprawiono zasłanianie przycisków przez pasek systemowy Android oraz język notatek w sejfie Decoy.',
     cl_start_title:'Oficjalny Start Projektu',cl_start_desc_1:'Pierwsza w historii aplikacja wydana przez Ibron Industries.',cl_start_desc_2:'Oficjalny debiut hermetycznego środowiska IbronEXO w sklepie Google Play. Prawdziwy początek naszej drogi do absolutnej prywatności.',
-    empty_apps_msg:'> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...',freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_label:'Niezależne studio oprogramowania prywatności',hero_title:'Odzyskaj <span class="gradient-text">kontrolę.</span>',hero_sub:'Tworzymy aplikacje offline, które trzymają dane na Twoim urządzeniu. Zero chmury, zero telemetrii. Zawsze.',hero_cta_primary:'Zobacz nasze aplikacje →',hero_cta_secondary:'Dowiedz się więcej',home_about_desc:'Nasza filozofia i zasady działania.',home_apps_desc:'Poznaj nasz ekosystem aplikacji offline.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Zasady prywatności i licencje.',home_contact_desc:'Skontaktuj się z nami bezpośrednio.',home_ui_desc:'Spersonalizuj wygląd tej strony.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś razem.',offer_hero_sub:'Strony, aplikacje, systemy, design. Ty z pomysłem, my z wykonaniem.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_aurora_desc:'Granat i złoto. Elegancja.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Granat, neon i synthwave.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / WIZJA I PRZYSZŁOŚĆ',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.',about_h3_2:'Prywatność jako standard.',about_p2:'Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony rozwój',about_c3p:'Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',
+    empty_apps_msg:'> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...',freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, kursor, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej',nav_about:'O NAS',nav_apps:'APLIKACJE',nav_proto:'PROTOKOŁY',nav_contact:'KONTAKT',hero_label:'NIEZALEŻNE STUDIO OPROGRAMOWANIA PRYWATNOŚCI',hero_title:'Oprogramowanie, które oddaje kontrolę Tobie.',hero_sub:'Tworzymy narzędzia skupione na prywatności — aplikacje i systemy gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.',hero_cta_primary:'Zobacz nasze aplikacje →',hero_cta_secondary:'Dowiedz się więcej',home_about_desc:'Kim jesteśmy i dlaczego budujemy w ten sposób.',home_apps_desc:'Wszystkie nasze narzędzia — co jest dostępne i co nadchodzi.',home_hw_desc:'Dywizja fizycznego sprzętu.',home_proto_desc:'Jak traktujemy Twoje dane. Spoiler: nie traktujemy.',home_contact_desc:'Napisz do nas w sprawie wsparcia lub współpracy.',home_ui_desc:'Spersonalizuj wygląd tej strony.',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś, co ma znaczenie.',offer_hero_sub:'Aplikacje webowe, narzędzia mobilne, systemy UI. Jeśli masz pomysł który zasługuje na istnienie — pomożemy Ci go zbudować porządnie.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_aurora_desc:'Granat i złoto. Elegancja.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Granat, neon i synthwave.',tpl_nebula_desc:'Głęboki kosmos. Fiolet, róż, błękit.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, kursor, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Kursor i kształty',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_cursor:'7. Styl Kursora',sd_cursor:'6 osobowości kursora. (Tylko desktop)',sh_csize:'8. Rozmiar Kursora',sd_csize:'Wybierz rozmiar kursora.',sh_anim:'9. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'10. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'11. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / WIZJA I PRZYSZŁOŚĆ',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.',about_h3_2:'Prywatność jako standard.',about_p2:'Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony rozwój',about_c3p:'Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',
     filter_all: 'Wszystkie', filter_avail: 'Dostępne', filter_indev: 'W Budowie', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
     apps_gym_tag: 'W BUDOWIE',
     apps_exo_tag:'DOSTĘPNE',apps_exo_desc:'Hermetyczny kryptosejf offline.',
@@ -1235,7 +1271,7 @@ const T = {
     cl_105_title:'Version 1.0.5',cl_105_desc:'Major update introducing new security standards and advanced environment personalization.',
     cl_105_1:'Security: New PIN lockout system with time-based escalation and stronger key derivation (native PBKDF2).',cl_105_2:'Interface personalization: 15 new background patterns, 28 accent colors, and 8 ready-made theme presets.',cl_105_3:'Fixes: Fixed buttons hidden behind the Android system navigation bar and the Decoy vault note language.',
     cl_start_title:'Official Project Launch',cl_start_desc_1:'The first application in history released by Ibron Industries.',cl_start_desc_2:'Official debut of the IbronEXO hermetic environment in Google Play store. The true beginning of our path to absolute privacy.',
-    empty_apps_msg:'> SYS.LOG: NO MODULES IN THIS CATEGORY...',freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, cursor, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more',nav_about:'ABOUT US',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLS',nav_contact:'CONTACT',hero_label:'Independent privacy software studio',hero_title:'Regain <span class="gradient-text">Control.</span>',hero_sub:'We build offline-first apps that keep your data on your device. No cloud, no telemetry, ever.',hero_cta_primary:'See our apps →',hero_cta_secondary:'Learn more',home_about_desc:'Our philosophy and rules.',home_apps_desc:'Explore our offline software ecosystem.',home_proto_desc:'Regulations, licenses, security.',home_contact_desc:'Contact us directly.',home_ui_desc:'Personalize the look of this site.',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something.",offer_hero_sub:'Websites, apps, systems, design. You bring the idea, we bring the execution.',offer_hero_btn:'VIEW OFFER →',tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_aurora_desc:'Navy and gold. Elegance.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Navy, neon, synthwave.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, cursor, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Cursor & shapes',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_cursor:'7. Cursor Style',sd_cursor:'6 cursor personalities. (Desktop only)',sh_csize:'8. Cursor Size',sd_csize:'Choose cursor size.',sh_anim:'9. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'10. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'11. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / VISION & FUTURE',about_h3_1:'Technology that just works.',about_p1:'We believe technology should serve the user. IbronIndustries focuses on delivering software that runs smoothly, respects privacy, and accomplishes tasks without bloatware. We build for conscious users.',about_h3_2:'Privacy as a standard.',about_p2:'The core and local versions of our protection tools (like IbronEXO) are and will remain free. We plan to build our future growth on a fair model – providing highly specialized premium modules and physical hardware for transparent fees.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable growth',about_c3p:'Our projects are funded on transparent rules. Free, open features for everyone, and paid advanced modules and hardware for demanding users.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',
+    empty_apps_msg:'> SYS.LOG: NO MODULES IN THIS CATEGORY...',freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, cursor, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more',nav_about:'ABOUT US',nav_apps:'SOFTWARE',nav_proto:'PROTOCOLS',nav_contact:'CONTACT',hero_label:'INDEPENDENT PRIVACY SOFTWARE STUDIO',hero_title:'Software that puts you in control.',hero_sub:'We build privacy-focused tools — apps and systems where your data stays with you. No cloud, no telemetry, no exceptions.',hero_cta_primary:'See our apps →',hero_cta_secondary:'Learn more',home_about_desc:'Who we are and why we build this way.',home_apps_desc:"All our tools — what's live and what's coming.",home_proto_desc:"How we handle your data. Spoiler: we don't.",home_contact_desc:'Get in touch for support or collaboration.',home_ui_desc:'Personalize the look of this site.',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something that matters.",offer_hero_sub:"Web apps, mobile tools, UI systems. If you have an idea that deserves to exist — we'll help you build it right.",tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_aurora_desc:'Navy and gold. Elegance.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Navy, neon, synthwave.',tpl_nebula_desc:'Deep space. Purple, pink, blue.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, cursor, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Cursor & shapes',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_cursor:'7. Cursor Style',sd_cursor:'6 cursor personalities. (Desktop only)',sh_csize:'8. Cursor Size',sd_csize:'Choose cursor size.',sh_anim:'9. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'10. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'11. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / VISION & FUTURE',about_h3_1:'Technology that just works.',about_p1:'We believe technology should serve the user. IbronIndustries focuses on delivering software that runs smoothly, respects privacy, and accomplishes tasks without bloatware. We build for conscious users.',about_h3_2:'Privacy as a standard.',about_p2:'The core and local versions of our protection tools (like IbronEXO) are and will remain free. We plan to build our future growth on a fair model – providing highly specialized premium modules and physical hardware for transparent fees.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable growth',about_c3p:'Our projects are funded on transparent rules. Free, open features for everyone, and paid advanced modules and hardware for demanding users.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',
     filter_all: 'All', filter_avail: 'Available', filter_indev: 'In Dev', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
     apps_gym_tag: 'IN DEV',
     apps_exo_tag:'AVAILABLE',apps_exo_desc:'Hermetic offline crypto-vault.',
@@ -1681,7 +1717,7 @@ function applyMaster(themeId, btnEl){
   document.documentElement.setAttribute('data-global-theme',themeId);
   document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('active'));
   if(btnEl)btnEl.classList.add('active');
-  const bgMap={cyber:'bg-1',nature:'bg-nature',miami:'bg-0',custom:'bg-1',aurora:'bg-aurora'}; 
+  const bgMap={cyber:'bg-1',nature:'bg-nature',miami:'bg-0',custom:'bg-1',aurora:'bg-aurora',nebula:'bg-nebula'}; 
   setActiveBg(bgMap[themeId]||'bg-1');
   crossfade(themeId);
   if(themeId!=='custom')resetOverrides();
@@ -1940,6 +1976,61 @@ window.addEventListener('load',()=>{
         requestAnimationFrame(pdraw);
       }
       pdraw();
+  }
+
+  // --- NEBULA PARTICLES RENDER ENGINE ---
+  const np = document.getElementById('nebula-particles');
+  let isScrollingNebula = false;
+  if(np) {
+      const nx = np.getContext('2d');
+      let NW, NH, stars = [];
+      function nsize() { NW = np.width = innerWidth; NH = np.height = innerHeight; }
+      nsize();
+      window.addEventListener('resize', nsize);
+
+      for(let i = 0; i < 200; i++) {
+          let colorRoll = Math.random();
+          let color = '#F0EEFF';
+          if(colorRoll > 0.85) color = '#93C5FD';
+          else if(colorRoll > 0.60) color = '#C084FC';
+
+          stars.push({
+              x: Math.random() * NW,
+              y: Math.random() * NH,
+              r: Math.random() * 1.3 + 0.2,
+              color: color,
+              speed: Math.random() * 0.02 + 0.005,
+              phase: Math.random() * Math.PI * 2
+          });
+      }
+
+      function ndraw() {
+          if(!isScrollingNebula && document.documentElement.getAttribute('data-global-theme') === 'nebula') {
+              nx.clearRect(0, 0, NW, NH);
+              let time = Date.now() * 0.05;
+              for(let i = 0; i < stars.length; i++) {
+                  let s = stars[i];
+                  let opacity = 0.1 + (Math.sin(time * s.speed + s.phase) + 1) / 2 * 0.8;
+                  nx.globalAlpha = opacity;
+                  nx.fillStyle = s.color;
+                  nx.beginPath();
+                  nx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
+                  nx.fill();
+              }
+              nx.globalAlpha = 1;
+          }
+          requestAnimationFrame(ndraw);
+      }
+      ndraw();
+
+      let nebScrollTimeout;
+      window.addEventListener('scroll', () => {
+          isScrollingNebula = true;
+          window.clearTimeout(nebScrollTimeout);
+          nebScrollTimeout = setTimeout(() => {
+              isScrollingNebula = false;
+          }, 300);
+      }, { passive: true });
   }
 });
 
