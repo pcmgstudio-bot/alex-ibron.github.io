@@ -20,44 +20,53 @@
     })();
   </script>
   
-  <title>IBRON INDUSTRIES | Absolute Privacy</title>
+  <title>IBRON INDUSTRIES | Privacy Software</title>
   <meta name="description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
   <link rel="canonical" href="https://ibronindustries.pl/">
   
-  <meta property="og:title" content="IBRON INDUSTRIES | Absolute Privacy">
+  <meta property="og:title" content="IBRON INDUSTRIES | Privacy Software">
   <meta property="og:description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
   <meta property="og:type" content="website">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== VARIABLES & DESIGN SYSTEM ===== */
+    /* ===== LIGHT THEME DESIGN SYSTEM ===== */
     :root {
-      --bg-base: #090C15;
-      --bg-surface: #101522;
-      --bg-surface-hover: #151A29;
+      /* Backgrounds */
+      --bg-base: #FFFFFF;
+      --bg-alt: #FAFAFB;
+      --bg-surface: #FFFFFF;
       
-      --text-primary: #F3F4F6;
-      --text-secondary: #9CA3AF;
-      --text-muted: #6B7280;
+      /* Typography Colors */
+      --text-primary: #0B1220;    /* Dark Navy/Almost Black */
+      --text-secondary: #4B5563;  /* Gray 600 */
+      --text-muted: #9CA3AF;      /* Gray 400 */
       
-      --accent: #E8B84B;
-      --accent-hover: #F2C966;
-      --accent-bg: rgba(232, 184, 75, 0.08);
+      /* Accents */
+      --accent: #1B2A4A;          /* Deep Navy Accent */
+      --accent-hover: #294072;
+      --accent-bg: rgba(27, 42, 74, 0.04);
       
-      --border: rgba(255, 255, 255, 0.08);
-      --border-hover: rgba(255, 255, 255, 0.15);
+      /* Borders & Shadows */
+      --border: rgba(11, 18, 32, 0.08);
+      --border-hover: rgba(11, 18, 32, 0.15);
       
+      --shadow-sm: 0 4px 20px rgba(11, 18, 32, 0.03);
+      --shadow-md: 0 8px 30px rgba(11, 18, 32, 0.06);
+      --shadow-hover: 0 16px 40px rgba(11, 18, 32, 0.08);
+      
+      /* Fonts */
       --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       
+      /* Radii & Transitions */
       --radius-sm: 6px;
-      --radius-md: 12px;
-      
-      --trans-fast: 0.15s ease;
-      --trans-base: 0.3s ease;
+      --radius-md: 16px;
+      --trans-fast: 0.2s ease;
+      --trans-base: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       
       --header-height: 80px;
     }
@@ -71,14 +80,14 @@
     
     html { 
       scroll-behavior: smooth; 
-      scroll-padding-top: 100px; /* Offset for sticky header */
+      scroll-padding-top: 100px;
     }
     
     body {
       background-color: var(--bg-base);
       color: var(--text-primary);
       font-family: var(--font-sans);
-      line-height: 1.6;
+      line-height: 1.7;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
     }
@@ -88,29 +97,35 @@
     ul { list-style: none; }
 
     /* ===== TYPOGRAPHY ===== */
-    h1, h2, h3, h4, h5 { font-weight: 700; line-height: 1.2; color: var(--text-primary); margin-bottom: 0.5em; letter-spacing: -0.02em; }
-    p { color: var(--text-secondary); margin-bottom: 1em; }
+    h1, h2, h3, h4, h5 { 
+      font-weight: 700; 
+      line-height: 1.2; 
+      color: var(--text-primary); 
+      margin-bottom: 0.5em; 
+      letter-spacing: -0.02em; 
+    }
+    p { color: var(--text-secondary); margin-bottom: 1.25em; }
     strong { color: var(--text-primary); font-weight: 600; }
     
     .text-mono { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: -0.01em; }
-    .text-accent { color: var(--accent); }
+    .text-accent { color: var(--accent); font-weight: 600; }
 
     /* ===== COMPONENTS ===== */
     .badge {
       display: inline-flex;
       align-items: center;
       gap: 6px;
-      padding: 4px 10px;
+      padding: 6px 12px;
       border-radius: var(--radius-sm);
       background: var(--accent-bg);
-      border: 1px solid rgba(232, 184, 75, 0.2);
+      border: 1px solid rgba(27, 42, 74, 0.1);
       color: var(--accent);
       font-family: var(--font-mono);
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.05em;
-      margin-bottom: 1rem;
+      margin-bottom: 1.5rem;
     }
     .badge-outline { background: transparent; border-color: var(--border); color: var(--text-secondary); }
 
@@ -120,24 +135,53 @@
       justify-content: center;
       gap: 8px;
       background: var(--accent);
-      color: #000;
-      font-weight: 600;
-      font-size: 0.875rem;
+      color: #FFFFFF;
+      font-weight: 500;
+      font-size: 0.95rem;
       padding: 14px 28px;
       border-radius: var(--radius-sm);
-      transition: background var(--trans-fast), transform var(--trans-fast);
+      transition: background var(--trans-fast), transform var(--trans-base), box-shadow var(--trans-base);
       white-space: nowrap;
+      box-shadow: 0 4px 12px rgba(27, 42, 74, 0.15);
     }
-    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); }
+    .btn-primary:hover { 
+      background: var(--accent-hover); 
+      transform: translateY(-2px); 
+      box-shadow: 0 6px 16px rgba(27, 42, 74, 0.25);
+    }
+
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      font-weight: 500;
+      font-size: 0.95rem;
+      padding: 14px 28px;
+      border-radius: var(--radius-sm);
+      transition: border-color var(--trans-fast), background var(--trans-fast);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-alt);
+    }
 
     .card {
       background: var(--bg-surface);
       border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      padding: 32px;
-      transition: border-color var(--trans-base);
+      padding: 40px;
+      box-shadow: var(--shadow-sm);
+      transition: transform var(--trans-base), box-shadow var(--trans-base), border-color var(--trans-base);
     }
-    
+    a.card:hover {
+      transform: translateY(-4px);
+      box-shadow: var(--shadow-hover);
+      border-color: var(--border-hover);
+    }
+
     /* ===== TOP NAVIGATION (STICKY HEADER) ===== */
     .top-nav {
       position: fixed;
@@ -153,21 +197,21 @@
       transition: height var(--trans-base), background var(--trans-base), border-color var(--trans-base);
     }
     .top-nav.scrolled {
-      height: 60px;
-      background: rgba(9, 12, 21, 0.85);
+      height: 64px;
+      background: rgba(255, 255, 255, 0.95);
       backdrop-filter: blur(12px);
       -webkit-backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border);
     }
 
     .logo { display: flex; flex-direction: column; }
-    .logo-main { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.03em; color: var(--text-primary); line-height: 1; }
-    .logo-sub { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; color: var(--text-muted); margin-top: 4px; }
+    .logo-main { font-size: 1.125rem; font-weight: 800; letter-spacing: -0.02em; color: var(--text-primary); line-height: 1; }
+    .logo-sub { font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em; color: var(--text-muted); margin-top: 4px; }
 
     .nav-links { display: flex; gap: 32px; align-items: center; }
     .nav-item {
       color: var(--text-secondary);
-      font-size: 0.875rem;
+      font-size: 0.9rem;
       font-weight: 500;
       position: relative;
       padding: 4px 0;
@@ -192,47 +236,71 @@
     .lang-btn {
       color: var(--text-secondary);
       font-family: var(--font-mono);
-      font-size: 0.75rem;
-      padding: 4px 8px;
+      font-size: 0.8rem;
+      font-weight: 500;
+      padding: 6px 10px;
       border-radius: 4px;
       transition: var(--trans-fast);
     }
-    .lang-btn:hover { color: var(--text-primary); background: var(--bg-surface); }
+    .lang-btn:hover { color: var(--text-primary); background: var(--bg-alt); }
     .lang-btn.active { color: var(--accent); background: var(--accent-bg); }
 
     /* ===== MAIN CONTAINER & SECTIONS ===== */
     main { padding-top: var(--header-height); }
     
     section {
-      padding: 100px 5%;
-      max-width: 1200px;
+      padding: 120px 5%;
+    }
+    .section-inner {
+      max-width: 1100px;
       margin: 0 auto;
     }
 
-    .section-header { margin-bottom: 60px; }
-    .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); margin: 0; }
+    /* Alternating Backgrounds */
+    section:nth-of-type(even) { background-color: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
+
+    .section-header { margin-bottom: 60px; display: flex; align-items: flex-start; gap: 16px; }
+    .section-header-icon { color: var(--accent); opacity: 0.8; margin-top: 4px; }
+    .section-header h2 { font-size: clamp(2rem, 4vw, 2.75rem); margin: 0; letter-spacing: -0.03em; }
 
     /* RHYTHM 1: HERO (Airy, Left-aligned, Massive Typography) */
     #hero {
-      min-height: 80vh;
+      min-height: 85vh;
       display: flex;
       flex-direction: column;
       justify-content: center;
       padding-top: 40px;
+      background: var(--bg-base);
     }
     #hero h1 {
-      font-size: clamp(3rem, 6vw, 5rem);
+      font-size: clamp(3rem, 6vw, 4.5rem);
       font-weight: 800;
       letter-spacing: -0.04em;
       max-width: 900px;
       line-height: 1.05;
       margin-bottom: 24px;
+      color: var(--text-primary);
     }
     #hero p.lead {
-      font-size: clamp(1.125rem, 2vw, 1.35rem);
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
       max-width: 650px;
-      margin-bottom: 40px;
+      margin-bottom: 48px;
+      color: var(--text-secondary);
     }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 32px;
+      margin-top: 60px;
+      max-width: 800px;
+    }
+    .stat-card {
+      border-left: 2px solid var(--border);
+      padding-left: 20px;
+    }
+    .stat-val { font-size: 2rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
+    .stat-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
 
     /* RHYTHM 2: APPS (Featured Block + List) */
     .featured-app {
@@ -241,47 +309,60 @@
       gap: 60px;
       align-items: center;
       margin-bottom: 40px;
+      padding: 60px;
     }
-    .featured-app .card { padding: 48px; border-color: rgba(232, 184, 75, 0.3); }
-    .featured-img { width: 100%; max-width: 320px; border-radius: 20px; border: 1px solid var(--border); margin: 0 auto; display: block; }
-    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin: 32px 0; border-top: 1px solid var(--border); padding-top: 24px; }
-    .meta-item label { display: block; font-family: var(--font-mono); font-size: 0.7rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
-    .meta-item span { font-size: 0.875rem; font-weight: 500; color: var(--text-primary); }
+    .featured-img { width: 100%; max-width: 320px; border-radius: 12px; border: 1px solid var(--border); margin: 0 auto; display: block; box-shadow: var(--shadow-md); }
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; border-top: 1px solid var(--border); padding-top: 32px; }
+    .meta-item label { display: block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
+    .meta-item span { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
 
     .app-row {
       display: flex;
       align-items: center;
       gap: 24px;
-      padding: 24px;
-      border: 1px dashed var(--border);
+      padding: 32px;
+      border: 1px solid var(--border);
       border-radius: var(--radius-md);
-      background: transparent;
+      background: var(--bg-surface);
+      box-shadow: var(--shadow-sm);
     }
-    .app-row .app-icon { width: 48px; height: 48px; background: var(--bg-surface); border: 1px solid var(--border); border-radius: 8px; display: flex; align-items: center; justify-content: center; }
+    .app-row .app-icon { width: 56px; height: 56px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
 
     /* RHYTHM 3: PROTOCOLS (Document style, centered, narrow) */
-    #protocols { background: var(--bg-surface); max-width: 100%; }
     .doc-container { max-width: 800px; margin: 0 auto; }
     .protocol-box {
       margin-bottom: 48px;
-      padding-left: 32px;
-      border-left: 1px solid var(--border);
-      transition: border-color var(--trans-base);
+      padding: 32px;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      box-shadow: var(--shadow-sm);
+      transition: box-shadow var(--trans-base), border-color var(--trans-base);
     }
-    .protocol-box:hover { border-left-color: var(--accent); }
-    .protocol-box h4 { font-family: var(--font-mono); font-size: 0.875rem; color: var(--accent); text-transform: uppercase; margin-bottom: 16px; letter-spacing: 0.05em; }
+    .protocol-box:hover {
+      border-color: var(--border-hover);
+      box-shadow: var(--shadow-md);
+    }
+    .protocol-box h4 { 
+      font-family: var(--font-mono); 
+      font-size: 0.9rem; 
+      color: var(--accent); 
+      text-transform: uppercase; 
+      margin-bottom: 16px; 
+      letter-spacing: 0.05em; 
+    }
 
     /* RHYTHM 4: ABOUT (Asymmetric Split) */
-    .about-grid { display: grid; grid-template-columns: 2fr 3fr; gap: 60px; }
-    .about-sidebar h3 { font-size: 1.5rem; margin-bottom: 16px; }
-    .about-content p { font-size: 1.125rem; margin-bottom: 24px; }
+    .about-grid { display: grid; grid-template-columns: 1fr 2fr; gap: 80px; }
+    .about-sidebar h3 { font-size: 1.25rem; margin-bottom: 8px; color: var(--text-primary); }
+    .about-content p { font-size: 1.125rem; margin-bottom: 24px; color: var(--text-secondary); }
 
     /* RHYTHM 5: OFFER (Strict 2x2 Grid) */
-    .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+    .offer-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; }
 
     /* RHYTHM 6: CONTACT (Minimal Centered Block) */
     #contact { text-align: center; padding-top: 150px; padding-bottom: 150px; }
-    #contact h2 { font-size: 3rem; margin-bottom: 24px; }
+    #contact h2 { font-size: clamp(2.5rem, 5vw, 3.5rem); margin-bottom: 24px; }
 
     footer {
       border-top: 1px solid var(--border);
@@ -290,20 +371,22 @@
       color: var(--text-muted);
       font-size: 0.875rem;
       font-family: var(--font-mono);
+      background: var(--bg-base);
     }
 
     /* ===== RESPONSIVE ===== */
     .mobile-menu-btn { display: none; color: var(--text-primary); font-size: 1.5rem; }
     
     @media (max-width: 900px) {
-      .nav-links { display: none; /* In a real app, you'd add a mobile menu toggle here. Keeping it simple as requested. */ }
+      .nav-links { display: none; }
       .mobile-menu-btn { display: block; }
       .lang-toggle { margin-left: 0; border-left: none; padding-left: 0; }
       
       .about-grid, .featured-app, .offer-grid { grid-template-columns: 1fr; gap: 40px; }
-      .featured-app { display: flex; flex-direction: column-reverse; }
+      .featured-app { display: flex; flex-direction: column-reverse; padding: 32px; }
       .meta-grid { grid-template-columns: 1fr; }
       #hero { min-height: 60vh; }
+      section { padding: 80px 5%; }
     }
   </style>
 </head>
@@ -334,89 +417,116 @@
   <main>
 
     <section id="hero">
-      <span class="badge text-mono">
-        <span class="lang-pl">Studio Oprogramowania Prywatności</span>
-        <span class="lang-en">Privacy Software Studio</span>
-      </span>
-      <h1>
-        <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
-        <span class="lang-en">Software that puts you in control.</span>
-      </h1>
-      <p class="lead">
-        <span class="lang-pl">Tworzymy narzędzia skupione na prywatności — aplikacje i systemy, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</span>
-        <span class="lang-en">We build privacy-focused tools — apps and systems where your data stays with you. No cloud, no telemetry, no exceptions.</span>
-      </p>
-      <div style="display: flex; gap: 16px; margin-top: 24px;">
-        <a href="#apps" class="btn-primary">
-          <span class="lang-pl">Poznaj produkty</span><span class="lang-en">Explore products</span>
-        </a>
-        <a href="#protocols" class="btn-secondary" style="border-color: var(--border); color: var(--text-primary);">
-          <span class="lang-pl">Zasady działania</span><span class="lang-en">How it works</span>
-        </a>
+      <div class="section-inner">
+        <span class="badge text-mono">
+          <span class="lang-pl">Studio Oprogramowania Prywatności</span>
+          <span class="lang-en">Privacy Software Studio</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
+          <span class="lang-en">Software that puts you in control.</span>
+        </h1>
+        <p class="lead">
+          <span class="lang-pl">Tworzymy narzędzia skupione na prywatności — aplikacje i systemy, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</span>
+          <span class="lang-en">We build privacy-focused tools — apps and systems where your data stays with you. No cloud, no telemetry, no exceptions.</span>
+        </p>
+        <div style="display: flex; gap: 16px; margin-top: 32px;">
+          <a href="#apps" class="btn-primary">
+            <span class="lang-pl">Poznaj produkty</span><span class="lang-en">Explore products</span>
+          </a>
+          <a href="#protocols" class="btn-secondary">
+            <span class="lang-pl">Zasady działania</span><span class="lang-en">How it works</span>
+          </a>
+        </div>
+
+        <div class="stats-grid">
+          <div class="stat-card">
+            <div class="stat-val">1</div>
+            <div class="stat-label"><span class="lang-pl">aplikacja live</span><span class="lang-en">app live</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">0</div>
+            <div class="stat-label"><span class="lang-pl">telemetrii</span><span class="lang-en">telemetry</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val">100%</div>
+            <div class="stat-label"><span class="lang-pl">offline</span><span class="lang-en">offline</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-val"><span class="lang-pl">Silne</span><span class="lang-en">Strong</span></div>
+            <div class="stat-label"><span class="lang-pl">szyfrowanie</span><span class="lang-en">encryption</span></div>
+          </div>
+        </div>
       </div>
     </section>
 
     <section id="apps">
-      <div class="section-header">
-        <span class="badge badge-outline"><span class="lang-pl">Ekosystem</span><span class="lang-en">Ecosystem</span></span>
-        <h2><span class="lang-pl">Oprogramowanie.</span><span class="lang-en">Software.</span></h2>
-      </div>
-
-      <div class="featured-app card">
-        <div>
-          <span class="badge">
-            <span class="lang-pl">Produkt Flagowy</span><span class="lang-en">Flagship Product</span>
-          </span>
-          <h3 style="font-size: 2.5rem; margin-bottom: 8px;">IbronEXO</h3>
-          <p class="text-mono text-accent" style="margin-bottom: 24px;">
-            <span class="lang-pl">DOSTĘPNE W GOOGLE PLAY</span>
-            <span class="lang-en">AVAILABLE ON GOOGLE PLAY</span>
-          </p>
-          <p>
-            <span class="lang-pl"><strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zbudowany w architekturze Zero-Data. Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany AES-256 dziennik tekstowy. Zgubisz klucz — tracisz dane na zawsze.</span>
-            <span class="lang-en"><strong>IbronEXO is not just a notepad.</strong> It's your private, hermetic crypto-vault built on Zero-Data architecture. No media, no server pings. Just an AES-256 encrypted text log. Lose the key — lose the data forever.</span>
-          </p>
-          
-          <div class="meta-grid">
-            <div class="meta-item">
-              <label><span class="lang-pl">Ochrona</span><span class="lang-en">Protection</span></label>
-              <span><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN Decoy System</span></span>
-            </div>
-            <div class="meta-item">
-              <label><span class="lang-pl">Środowisko</span><span class="lang-en">Environment</span></label>
-              <span><span class="lang-pl">100% Offline (Zero Telemetrii)</span><span class="lang-en">100% Offline (Zero Telemetry)</span></span>
-            </div>
-            <div class="meta-item">
-              <label><span class="lang-pl">Wersja / Licencja</span><span class="lang-en">Version / License</span></label>
-              <span>v1.0.5 / <span class="lang-pl">Darmowa</span><span class="lang-en">Free</span></span>
-            </div>
+      <div class="section-inner">
+        <div class="section-header">
+          <svg class="section-header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+          <div>
+            <span class="badge badge-outline"><span class="lang-pl">Ekosystem</span><span class="lang-en">Ecosystem</span></span>
+            <h2><span class="lang-pl">Oprogramowanie.</span><span class="lang-en">Software.</span></h2>
           </div>
+        </div>
 
-          <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-primary">
-            <span class="lang-pl">Pobierz z Google Play</span><span class="lang-en">Download on Google Play</span> &rarr;
-          </a>
-        </div>
-        <div>
-          <img src="screen1pl.png" alt="IbronEXO" class="featured-img" id="dyn-app-img" onerror="this.style.display='none'">
-        </div>
-      </div>
+        <div class="featured-app card">
+          <div>
+            <span class="badge">
+              <span class="lang-pl">Produkt Flagowy</span><span class="lang-en">Flagship Product</span>
+            </span>
+            <h3 style="font-size: 2.25rem; margin-bottom: 8px;">IbronEXO</h3>
+            <p class="text-mono text-accent" style="margin-bottom: 24px;">
+              <span class="lang-pl">DOSTĘPNE W GOOGLE PLAY</span>
+              <span class="lang-en">AVAILABLE ON GOOGLE PLAY</span>
+            </p>
+            <p>
+              <span class="lang-pl"><strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zbudowany w architekturze Zero-Data. Brak multimediów, brak powiadomień serwera. Tylko silnie zaszyfrowany dziennik tekstowy. Zgubisz klucz — tracisz dane na zawsze.</span>
+              <span class="lang-en"><strong>IbronEXO is not just a notepad.</strong> It's your private, hermetic crypto-vault built on Zero-Data architecture. No media, no server pings. Just a strongly encrypted text log. Lose the key — lose the data forever.</span>
+            </p>
+            
+            <div class="meta-grid">
+              <div class="meta-item">
+                <label><span class="lang-pl">Ochrona</span><span class="lang-en">Protection</span></label>
+                <span><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN Decoy System</span></span>
+              </div>
+              <div class="meta-item">
+                <label><span class="lang-pl">Środowisko</span><span class="lang-en">Environment</span></label>
+                <span><span class="lang-pl">100% Offline (Zero Telemetrii)</span><span class="lang-en">100% Offline (Zero Telemetry)</span></span>
+              </div>
+              <div class="meta-item">
+                <label><span class="lang-pl">Wersja / Licencja</span><span class="lang-en">Version / License</span></label>
+                <span>v1.0.5 / <span class="lang-pl">Darmowa</span><span class="lang-en">Free</span></span>
+              </div>
+            </div>
 
-      <div class="app-row">
-        <div class="app-icon"><span style="color:var(--text-muted); font-weight: bold;">CHR</span></div>
-        <div style="flex: 1;">
-          <h4 style="margin-bottom: 4px;">IbronCHRONOS</h4>
-          <p style="margin: 0; font-size: 0.875rem;"><span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span><span class="lang-en">Advanced operational management engine.</span></p>
+            <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <span class="lang-pl">Pobierz z Google Play</span><span class="lang-en">Download on Google Play</span> &rarr;
+            </a>
+          </div>
+          <div>
+            <img src="screen1pl.png" alt="IbronEXO" class="featured-img" id="dyn-app-img" onerror="this.style.display='none'">
+          </div>
         </div>
-        <span class="badge badge-outline" style="margin:0;"><span class="lang-pl">Moduł Zablokowany (In Dev)</span><span class="lang-en">Locked Module (In Dev)</span></span>
+
+        <div class="app-row">
+          <div class="app-icon"><span style="color:var(--text-muted); font-weight: 600;">CHR</span></div>
+          <div style="flex: 1;">
+            <h4 style="margin-bottom: 4px; font-size: 1.125rem;">IbronCHRONOS</h4>
+            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span><span class="lang-en">Advanced operational management engine.</span></p>
+          </div>
+          <span class="badge badge-outline" style="margin:0;"><span class="lang-pl">Moduł Zablokowany (In Dev)</span><span class="lang-en">Locked Module (In Dev)</span></span>
+        </div>
       </div>
     </section>
 
     <section id="protocols">
       <div class="doc-container">
-        <div class="section-header">
+        <div class="section-header" style="justify-content: center; text-align: center; flex-direction: column; align-items: center; margin-bottom: 80px;">
+          <svg class="section-header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="margin-bottom: 16px;"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
           <span class="badge badge-outline"><span class="lang-pl">Regulacje</span><span class="lang-en">Regulations</span></span>
           <h2><span class="lang-pl">Dokumentacja Operacyjna.</span><span class="lang-en">Operational Documentation.</span></h2>
-          <p style="margin-top: 16px; font-size: 1.125rem;">
+          <p style="margin-top: 16px; font-size: 1.125rem; max-width: 600px;">
             <span class="lang-pl">Poniższe protokoły stanowią wiążącą umowę (EULA) między użytkownikiem a Ibron Industries. Pobierając i korzystając z naszych narzędzi, w pełni akceptujesz te zasady.</span>
             <span class="lang-en">The following protocols constitute a binding agreement (EULA) between the user and Ibron Industries. By downloading and using our tools, you fully accept these rules.</span>
           </p>
@@ -473,7 +583,7 @@
         <div class="protocol-box">
           <h4><span class="lang-pl">[ Protokół 7 ] Aktualizacje i Trwałość Danych</span><span class="lang-en">[ Protocol 7 ] Updates & Data Continuity</span></h4>
           <p>
-            <span class="lang-pl">Aktualizacje aplikacji mogą wprowadzać zmiany w wewnętrznej strukturze szyfrowania lub formacie bazy danych. Dokładamy starań, aby każda aktualizacja zachowywała kompatybilność z istniejącym sejfem użytkownika, jednak <strong>nie garantujemy zachowania danych w przypadku poważnych zmian architektury</strong>. Przed każdą aktualizacją zalecamy wykonanie lokalnego eksportu/backupu, jeśli funkcja ta jest dostępna w danej wersji aplikacji.</span>
+            <span class="lang-pl">Aktualizacje aplikacji mogą wprowadzać zmiany w wewnętrznej strukturze szyfrowania lub formacie bazy danych. Dokładamy starań, aby każda aktualizacja zachowywała kompatybilność z istniejącym sejfem użytkownika, jednak <strong>nie gwarantujemy zachowania danych w przypadku poważnych zmian architektury</strong>. Przed każdą aktualizacją zalecamy wykonanie lokalnego eksportu/backupu, jeśli funkcja ta jest dostępna w danej wersji aplikacji.</span>
             <span class="lang-en">Application updates may introduce changes to the internal encryption structure or database format. We make every effort to ensure each update remains compatible with the user's existing vault, however <strong>we do not guarantee data preservation in the event of major architectural changes</strong>. We recommend performing a local export/backup before any update, if this feature is available in the given app version.</span>
           </p>
         </div>
@@ -481,8 +591,8 @@
         <div class="protocol-box">
           <h4><span class="lang-pl">[ Protokół 8 ] Status Audytu</span><span class="lang-en">[ Protocol 8 ] Audit Status</span></h4>
           <p>
-            <span class="lang-pl">Architektura Zero-Data oraz mechanizmy szyfrowania AES-256-GCM opisane na tej stronie odzwierciedlają intencjonalny projekt aplikacji. <strong>Kod aplikacji nie został (jeszcze) poddany niezależnemu audytowi bezpieczeństwa przez stronę trzecią.</strong> Jeśli korzystasz z aplikacji do przechowywania danych o wysokiej wartości (finansowych, korporacyjnych), uwzględnij ten fakt w swojej ocenie ryzyka. Plany dotyczące przyszłych audytów będą komunikowane w tej sekcji.</span>
-            <span class="lang-en">The Zero-Data architecture and AES-256-GCM encryption mechanisms described on this page reflect the application's intentional design. <strong>The application's code has not (yet) undergone an independent third-party security audit.</strong> If you use the application to store high-value data (financial, corporate), factor this into your risk assessment. Plans for future audits will be communicated in this section.</span>
+            <span class="lang-pl">Architektura Zero-Data oraz mechanizmy silnego szyfrowania opisane na tej stronie odzwierciedlają intencjonalny projekt aplikacji. <strong>Kod aplikacji nie został (jeszcze) poddany niezależnemu audytowi bezpieczeństwa przez stronę trzecią.</strong> Jeśli korzystasz z aplikacji do przechowywania danych o wysokiej wartości (finansowych, korporacyjnych), uwzględnij ten fakt w swojej ocenie ryzyka. Plany dotyczące przyszłych audytów będą komunikowane w tej sekcji.</span>
+            <span class="lang-en">The Zero-Data architecture and strong encryption mechanisms described on this page reflect the application's intentional design. <strong>The application's code has not (yet) undergone an independent third-party security audit.</strong> If you use the application to store high-value data (financial, corporate), factor this into your risk assessment. Plans for future audits will be communicated in this section.</span>
           </p>
         </div>
 
@@ -497,83 +607,95 @@
     </section>
 
     <section id="about">
-      <div class="section-header">
-        <span class="badge badge-outline"><span class="lang-pl">Misja i Wizja</span><span class="lang-en">Mission & Vision</span></span>
-        <h2><span class="lang-pl">O Nas / Przyszłość.</span><span class="lang-en">About Us / Future.</span></h2>
-      </div>
-
-      <div class="about-grid">
-        <div class="about-sidebar">
-          <h3 class="text-accent text-mono" style="font-size: 0.875rem; text-transform: uppercase;">
-            <span class="lang-pl">Aleksander // Projektant Systemów, Founder</span>
-            <span class="lang-en">Aleksander // System Architect, Founder</span>
-          </h3>
-          <p style="font-size: 0.875rem; color: var(--text-muted);">
-            <span class="lang-pl">Polska, Niezależne Studio</span>
-            <span class="lang-en">Poland, Independent Studio</span>
-          </p>
+      <div class="section-inner">
+        <div class="section-header">
+          <svg class="section-header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+          <div>
+            <span class="badge badge-outline"><span class="lang-pl">Misja i Wizja</span><span class="lang-en">Mission & Vision</span></span>
+            <h2><span class="lang-pl">O Nas / Przyszłość.</span><span class="lang-en">About Us / Future.</span></h2>
+          </div>
         </div>
-        <div class="about-content">
-          <p>
-            <span class="lang-pl">Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.</span>
-            <span class="lang-en">I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.</span>
-          </p>
-          <p>
-            <span class="lang-pl">Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.</span>
-            <span class="lang-en">I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices.</span>
-          </p>
-          <p>
-            <span class="lang-pl">Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. <strong>Płacisz za konkretną wartość, a nie swoimi danymi.</strong></span>
-            <span class="lang-en">Regardless of the business model, transparency always remains the priority. <strong>You pay for concrete value, not with your data.</strong></span>
-          </p>
+
+        <div class="about-grid">
+          <div class="about-sidebar">
+            <h3 class="text-accent text-mono" style="font-size: 0.875rem; text-transform: uppercase;">
+              <span class="lang-pl">Aleksander // Projektant Systemów, Founder</span>
+              <span class="lang-en">Aleksander // System Architect, Founder</span>
+            </h3>
+            <p style="font-size: 0.875rem; color: var(--text-muted);">
+              <span class="lang-pl">Polska, Niezależne Studio</span>
+              <span class="lang-en">Poland, Independent Studio</span>
+            </p>
+          </div>
+          <div class="about-content">
+            <p>
+              <span class="lang-pl">Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.</span>
+              <span class="lang-en">I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.</span>
+            </p>
+            <p>
+              <span class="lang-pl">Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.</span>
+              <span class="lang-en">I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices.</span>
+            </p>
+            <p>
+              <span class="lang-pl">Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. <strong>Płacisz za konkretną wartość, a nie swoimi danymi.</strong></span>
+              <span class="lang-en">Regardless of the business model, transparency always remains the priority. <strong>You pay for concrete value, not with your data.</strong></span>
+            </p>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="offer">
-      <div class="section-header">
-        <span class="badge badge-outline"><span class="lang-pl">Współpraca B2B</span><span class="lang-en">B2B Partnership</span></span>
-        <h2><span class="lang-pl">Budujemy systemy.</span><span class="lang-en">We build systems.</span></h2>
-        <p style="font-size: 1.125rem; max-width: 600px; margin-top: 16px;">
-          <span class="lang-pl">Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem. Od pierwszej linii kodu po wdrożenie.</span>
-          <span class="lang-en">We build engineering-grade software where privacy and performance are foundational. From the first line of code to deployment.</span>
-        </p>
-      </div>
+      <div class="section-inner">
+        <div class="section-header">
+          <svg class="section-header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+          <div>
+            <span class="badge badge-outline"><span class="lang-pl">Współpraca B2B</span><span class="lang-en">B2B Partnership</span></span>
+            <h2><span class="lang-pl">Budujemy systemy.</span><span class="lang-en">We build systems.</span></h2>
+            <p style="font-size: 1.125rem; max-width: 650px; margin-top: 16px;">
+              <span class="lang-pl">Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem. Od pierwszej linii kodu po wdrożenie.</span>
+              <span class="lang-en">We build engineering-grade software where privacy and performance are foundational. From the first line of code to deployment.</span>
+            </p>
+          </div>
+        </div>
 
-      <div class="offer-grid">
-        <div class="card">
-          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Aplikacje Webowe</span><span class="lang-en">Web Apps</span></h3>
-          <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Zoptymalizowane pod kątem wydajności platformy SPA. Szybkość i czysty kod z zachowaniem najwyższych standardów bezpieczeństwa.</span><span class="lang-en">Highly optimized SPA platforms. Speed and clean code adhering to the highest security standards.</span></p>
-        </div>
-        <div class="card">
-          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Środowiska Mobilne</span><span class="lang-en">Mobile Ecosystems</span></h3>
-          <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Natywne aplikacje z pełnym naciskiem na optymalne zużycie pamięci, lekkie biblioteki i płynność działania offline.</span><span class="lang-en">Native applications with a focus on optimal memory usage, lightweight libraries, and seamless offline capability.</span></p>
-        </div>
-        <div class="card">
-          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Interfejsy UI/UX</span><span class="lang-en">UI/UX Interfaces</span></h3>
-          <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Projektowanie spójnych środowisk wizualnych i surowych systemów designu, zoptymalizowanych pod kątem natychmiastowej responsywności.</span><span class="lang-en">Designing cohesive visual environments and strict design systems, optimized for instant responsiveness.</span></p>
-        </div>
-        <div class="card">
-          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Skrypty & Automatyzacja</span><span class="lang-en">Scripts & Automation</span></h3>
-          <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Bezpieczne mikronarzędzia i integracje z bazami danych działające w hermetycznych środowiskach klienta.</span><span class="lang-en">Secure micro-tools and database integrations operating strictly within the client's hermetic environments.</span></p>
+        <div class="offer-grid">
+          <div class="card">
+            <h3 style="font-size: 1.25rem;"><span class="lang-pl">Aplikacje Webowe</span><span class="lang-en">Web Apps</span></h3>
+            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Zoptymalizowane pod kątem wydajności platformy SPA. Szybkość i czysty kod z zachowaniem najwyższych standardów bezpieczeństwa.</span><span class="lang-en">Highly optimized SPA platforms. Speed and clean code adhering to the highest security standards.</span></p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 1.25rem;"><span class="lang-pl">Środowiska Mobilne</span><span class="lang-en">Mobile Ecosystems</span></h3>
+            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Natywne aplikacje z pełnym naciskiem na optymalne zużycie pamięci, lekkie biblioteki i płynność działania offline.</span><span class="lang-en">Native applications with a focus on optimal memory usage, lightweight libraries, and seamless offline capability.</span></p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 1.25rem;"><span class="lang-pl">Interfejsy UI/UX</span><span class="lang-en">UI/UX Interfaces</span></h3>
+            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Projektowanie spójnych środowisk wizualnych i surowych systemów designu, zoptymalizowanych pod kątem natychmiastowej responsywności.</span><span class="lang-en">Designing cohesive visual environments and strict design systems, optimized for instant responsiveness.</span></p>
+          </div>
+          <div class="card">
+            <h3 style="font-size: 1.25rem;"><span class="lang-pl">Skrypty & Automatyzacja</span><span class="lang-en">Scripts & Automation</span></h3>
+            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Bezpieczne mikronarzędzia i integracje z bazami danych działające w hermetycznych środowiskach klienta.</span><span class="lang-en">Secure micro-tools and database integrations operating strictly within the client's hermetic environments.</span></p>
+          </div>
         </div>
       </div>
     </section>
 
     <section id="contact">
-      <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.04em;">
-        <span class="lang-pl">Nawiąż połączenie.</span><span class="lang-en">Establish connection.</span>
-      </h2>
-      <p style="font-size: 1.25rem; max-width: 500px; margin: 0 auto 40px;">
-        <span class="lang-pl">Wsparcie techniczne, propozycje współpracy B2B lub audyty bezpieczeństwa — nasz terminal jest otwarty.</span>
-        <span class="lang-en">Technical support, B2B cooperation proposals, or security audits — our terminal is open.</span>
-      </p>
-      <a href="mailto:alex@ibronindustries.pl" class="btn-primary" style="font-size: 1.125rem; padding: 16px 32px;">
-        alex@ibronindustries.pl
-      </a>
-      <div style="margin-top: 40px;" class="text-mono">
-        <span style="display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 8px;"></span>
-        <span class="lang-pl">KANAŁ ZABEZPIECZONY [AES-256]</span><span class="lang-en">CHANNEL SECURED [AES-256]</span>
+      <div class="section-inner" style="text-align: center;">
+        <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.04em;">
+          <span class="lang-pl">Nawiąż połączenie.</span><span class="lang-en">Establish connection.</span>
+        </h2>
+        <p style="font-size: 1.15rem; max-width: 500px; margin: 0 auto 40px;">
+          <span class="lang-pl">Wsparcie techniczne, propozycje współpracy B2B lub audyty bezpieczeństwa — nasz terminal jest otwarty.</span>
+          <span class="lang-en">Technical support, B2B cooperation proposals, or security audits — our terminal is open.</span>
+        </p>
+        <a href="mailto:alex@ibronindustries.pl" class="btn-primary" style="font-size: 1.125rem; padding: 18px 36px;">
+          alex@ibronindustries.pl
+        </a>
+        <div style="margin-top: 40px;" class="text-mono">
+          <span style="display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 8px;"></span>
+          <span class="lang-pl">KANAŁ ZABEZPIECZONY [OFFLINE-FIRST]</span><span class="lang-en">CHANNEL SECURED [OFFLINE-FIRST]</span>
+        </div>
       </div>
     </section>
 
