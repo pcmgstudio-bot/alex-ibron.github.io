@@ -20,8 +20,8 @@
     })();
   </script>
   
-  <title>IBRON INDUSTRIES | Absolute Privacy</title>
-  <meta name="description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
+  <title>IBRON INDUSTRIES | Aplikacje</title>
+  <meta name="description" content="Ekosystem oprogramowania Ibron Industries. Architektura Zero-Data, offline-first.">
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,7 +35,10 @@
       --c-text-main: #FFF8F0;
       --c-text-muted: rgba(255, 248, 240, 0.75);
       
-      --c-accent: #E8B84B; /* Złoty akcent do hoverów/badge'y */
+      --c-accent: #E8B84B; 
+      
+      /* Kolor poświaty dla telefonu - dopasowany do videoch.mp4 (niebieskie obwody) */
+      --c-rim-light: rgba(41, 121, 255, 0.35); 
       
       --header-height: 90px;
     }
@@ -57,7 +60,7 @@
       line-height: 1.6;
       -webkit-font-smoothing: antialiased;
       -moz-osx-font-smoothing: grayscale;
-      background-color: #050505; /* Fallback, jeśli wideo ładuje się wolno */
+      background-color: #050505; 
       overflow-x: hidden;
     }
 
@@ -83,7 +86,8 @@
       left: 0;
       width: 100vw;
       height: 100vh;
-      background: rgba(0, 0, 0, 0.45); /* Ciemny overlay dla perfekcyjnego kontrastu z Poppins */
+      /* Ciemniejszy overlay (0.6), bo videoch.mp4 z obwodami może mieć bardzo jasne strefy */
+      background: rgba(0, 0, 0, 0.6); 
       z-index: -1;
       pointer-events: none;
     }
@@ -127,16 +131,8 @@
       text-transform: uppercase;
     }
 
-    .nav-container {
-      display: flex;
-      align-items: center;
-      gap: 40px;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 32px;
-    }
+    .nav-container { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 32px; }
 
     .nav-link {
       font-size: 0.95rem;
@@ -145,24 +141,28 @@
       position: relative;
     }
 
-    .nav-link:hover {
+    .nav-link:hover { color: #FFF; }
+    
+    /* Aktywny link (Apps) */
+    .nav-link.active {
       color: #FFF;
+      font-weight: 600;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 100%; height: 2px;
+      background: var(--c-accent);
+      border-radius: 2px;
     }
 
     .lang-switcher { 
-      display: flex; 
-      gap: 12px; 
+      display: flex; gap: 12px; 
       border-left: 1px solid rgba(255, 255, 255, 0.2); 
       padding-left: 32px;
     }
-    
-    .lang-btn { 
-      color: var(--c-text-muted); 
-      font-weight: 600; 
-      font-size: 0.9rem;
-      transition: color 0.2s ease; 
-    }
-    
+    .lang-btn { color: var(--c-text-muted); font-weight: 600; font-size: 0.9rem; transition: color 0.2s ease; }
     .lang-btn:hover { color: #FFF; }
     .lang-btn.active { color: var(--c-accent); }
 
@@ -172,10 +172,10 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
-      padding: 18px 40px;
+      padding: 16px 36px;
       font-size: 1.05rem;
       font-weight: 700;
-      border-radius: 50px; /* Zaokrąglone przyciski pasujące do fontu Poppins */
+      border-radius: 50px; 
       cursor: pointer;
       transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
       text-transform: uppercase;
@@ -195,147 +195,251 @@
       color: #000;
     }
 
-    /* ===== LAYOUT & CONTAINERS ===== */
-    main {
-      position: relative;
-      z-index: 10;
-    }
-
-    .container {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 5%;
-      width: 100%;
-    }
-
-    /* ===== HERO SECTION ===== */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      padding-top: var(--header-height);
-    }
-
-    .hero-content {
-      max-width: 900px;
-    }
-
-    .hero h1 {
-      font-size: clamp(3rem, 7vw, 5.5rem);
-      margin-bottom: 24px;
-      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    }
-
-    .hero p.lead {
-      font-size: clamp(1.125rem, 2.5vw, 1.35rem);
-      color: var(--c-text-muted);
-      max-width: 700px;
-      margin-bottom: 48px;
-      font-weight: 400;
-    }
-
-    /* ===== HUB / CARDS SECTION ===== */
-    .hub-section {
-      padding: 80px 0 120px;
-    }
-
-    .cards-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 30px;
-    }
-
-    /* Mega piękne, szklane karty */
-    .glass-card {
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      background: rgba(255, 255, 255, 0.04);
-      backdrop-filter: blur(16px);
-      -webkit-backdrop-filter: blur(16px);
-      border: 1px solid rgba(255, 255, 255, 0.1);
-      border-radius: 24px;
-      padding: 40px;
-      text-decoration: none;
-      color: var(--c-text-main);
-      overflow: hidden;
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-
-    /* Subtelny gradientowy blask wewnątrz karty na hover */
-    .glass-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; width: 100%; height: 100%;
-      background: radial-gradient(circle at 50% 0%, rgba(255,255,255,0.1) 0%, transparent 70%);
-      opacity: 0;
-      transition: opacity 0.4s ease;
-      pointer-events: none;
-    }
-
-    .glass-card:not(.disabled):hover {
-      transform: translateY(-8px);
-      background: rgba(255, 255, 255, 0.08);
-      border-color: rgba(255, 255, 255, 0.25);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(255,255,255,0.1) inset;
-    }
-
-    .glass-card:not(.disabled):hover::before {
-      opacity: 1;
-    }
-
-    .card-icon {
-      width: 64px;
-      height: 64px;
-      border-radius: 16px;
-      background: rgba(255, 255, 255, 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 24px;
-      color: #FFF;
-      transition: transform 0.4s ease;
-    }
-
-    .glass-card:not(.disabled):hover .card-icon {
-      transform: scale(1.1);
-      background: #FFF;
-      color: #000;
-    }
-
-    .glass-card h3 {
-      font-size: 1.5rem;
-      margin-bottom: 12px;
-      font-weight: 700;
-    }
-
-    .glass-card p {
-      font-size: 1rem;
-      color: var(--c-text-muted);
-      margin: 0;
-      line-height: 1.6;
-    }
-
-    /* Karta "Wkrótce" */
-    .glass-card.disabled {
-      opacity: 0.4;
-      cursor: default;
-      filter: grayscale(100%);
-    }
-
-    .badge-soon {
-      position: absolute;
-      top: 30px;
-      right: 30px;
-      background: rgba(255, 255, 255, 0.15);
-      color: #FFF;
+    /* ===== BADGE ===== */
+    .badge-accent {
+      display: inline-block;
       font-size: 0.75rem;
       font-weight: 700;
-      padding: 6px 12px;
-      border-radius: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-accent);
+      background: rgba(232, 184, 75, 0.1);
+      border: 1px solid rgba(232, 184, 75, 0.25);
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    /* ===== LAYOUT & CONTAINERS ===== */
+    main { position: relative; z-index: 10; padding-top: calc(var(--header-height) + 60px); padding-bottom: 120px; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 5%; width: 100%; }
+
+    /* ===== SECTION 1: INTRO ===== */
+    .section-intro {
+      text-align: center;
+      margin-bottom: 100px;
+    }
+    
+    .section-intro h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 16px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.6);
+    }
+    
+    .section-intro p {
+      font-size: 1.15rem;
+      color: var(--c-text-muted);
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    /* ===== SECTION 2: IBRON EXO (PRODUCT SHOT) ===== */
+    .app-showcase {
+      display: grid;
+      grid-template-columns: 1fr 1.1fr;
+      gap: 60px;
+      align-items: center;
+      margin-bottom: 120px;
+    }
+
+    /* Left: Text */
+    .app-info { max-width: 540px; }
+    
+    .app-info h2 {
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      line-height: 1;
+      margin-bottom: 12px;
+    }
+
+    .status-line {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #00E676; 
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 24px;
       text-transform: uppercase;
       letter-spacing: 0.05em;
+    }
+    
+    .status-line::before {
+      content: ''; display: block; width: 6px; height: 6px;
+      background: #00E676; border-radius: 50%; box-shadow: 0 0 10px #00E676;
+    }
+
+    .app-desc {
+      font-size: 1.1rem;
+      color: var(--c-text-muted);
+      margin-bottom: 40px;
+    }
+
+    /* Features List */
+    .feature-list {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      margin-bottom: 48px;
+    }
+    
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    
+    .feature-icon {
+      color: var(--c-accent);
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .feature-text h4 {
+      font-size: 1.05rem;
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #FFF;
+    }
+    
+    .feature-text p {
+      font-size: 0.9rem;
+      color: var(--c-text-muted);
+      margin: 0;
+      line-height: 1.5;
+    }
+
+    /* Right: Cinematic Phone Mockup */
+    .phone-wrapper {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px;
+      position: relative;
+    }
+
+    /* Cień lewitacji pod telefonem */
+    .levitation-shadow {
+      position: absolute;
+      bottom: -30px;
+      left: 50%;
+      transform: translateX(-50%) rotateX(75deg);
+      width: 220px;
+      height: 80px;
+      background: rgba(0, 0, 0, 0.9);
+      filter: blur(25px);
+      z-index: 1;
+    }
+
+    /* Ramka telefonu */
+    .device-chassis {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 280px; 
+      max-height: 68vh; /* Generous margin from top/bottom */
+      aspect-ratio: 9 / 19.5;
+      border-radius: 36px;
+      padding: 6px;
+      
+      transform: rotateY(-6deg) rotateX(4deg);
+      transform-style: preserve-3d;
+      
+      background: linear-gradient(160deg, rgba(255,255,255,0.15) 0%, rgba(0,0,0,0.4) 40%, rgba(0,0,0,0.8) 100%);
+      
+      box-shadow: 
+        -20px 30px 50px rgba(0, 0, 0, 0.7),                 /* Base 3D drop shadow */
+        3px -2px 20px var(--c-rim-light),                   /* Blue rim light matching video background */
+        -2px 4px 10px rgba(255, 255, 255, 0.05);            /* Subtle cold reflection */
+    }
+
+    /* Notch */
+    .device-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 90px;
+      height: 24px;
+      background: #000;
+      border-radius: 12px;
+      z-index: 30;
+    }
+
+    /* Ekran kontener */
+    .device-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #000;
+      border-radius: 30px; /* chassis(36) - padding(6) = 30 */
+      overflow: hidden;
+      transform: translateZ(0); /* Safari overflow rounding fix */
+    }
+
+    /* Refleks szkła na ekranie */
+    .device-screen::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -50%;
+      width: 200%; height: 100%;
+      background: linear-gradient(to bottom right, rgba(255, 255, 255, 0.06) 0%, rgba(255, 255, 255, 0.01) 40%, transparent 50%);
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Zrzuty ekranu - crossfade */
+    .screen-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 10;
+    }
+    
+    .screen-img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* ===== SECTION 3: IBRON CHRONOS ===== */
+    .app-chronos {
+      background: rgba(255, 255, 255, 0.03);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 24px;
+      padding: 40px;
+      display: flex;
+      align-items: center;
+      gap: 32px;
+      opacity: 0.6;
+      transition: opacity 0.3s ease;
+    }
+    
+    .app-chronos:hover { opacity: 0.8; }
+
+    .chronos-icon {
+      width: 64px; height: 64px;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 16px;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--c-text-muted);
+      flex-shrink: 0;
+    }
+
+    .chronos-info { flex: 1; }
+    
+    .chronos-info h3 { font-size: 1.75rem; margin-bottom: 4px; color: #FFF; }
+    .chronos-info p { margin: 0; color: var(--c-text-muted); font-size: 1.05rem; }
+
+    .badge-dev {
+      font-family: var(--font-mono); font-size: 0.75rem; font-weight: 600;
+      color: var(--c-text-muted); border: 1px dashed rgba(255, 255, 255, 0.2);
+      padding: 6px 12px; border-radius: 50px; text-transform: uppercase;
     }
 
     /* ===== FOOTER ===== */
@@ -350,20 +454,26 @@
     }
 
     /* ===== RESPONSIVE ===== */
-    .mobile-menu-btn { display: none; color: #FFF; font-size: 1.5rem; }
-    
     @media (max-width: 992px) {
       .nav-links { display: none; }
-      .mobile-menu-btn { display: block; }
       .lang-switcher { border-left: none; padding-left: 0; }
-      .cards-grid { grid-template-columns: 1fr; }
+      
+      .app-showcase {
+        grid-template-columns: 1fr;
+        gap: 60px;
+      }
+      .phone-wrapper { order: -1; }
+      .app-info { max-width: 100%; }
+      
+      .app-chronos { flex-direction: column; text-align: center; gap: 20px; }
+      .badge-dev { margin-top: 16px; display: inline-block; }
     }
   </style>
 </head>
 <body>
 
   <video class="video-bg" autoplay muted loop playsinline>
-    <source src="videobg.mp4" type="video/mp4">
+    <source src="videoch.mp4" type="video/mp4">
   </video>
   <div class="video-overlay"></div>
 
@@ -376,7 +486,7 @@
       <nav class="nav-links">
         <a href="about.html" class="nav-link"><span class="lang-pl">O nas</span><span class="lang-en">About</span></a>
         <a href="protocols.html" class="nav-link"><span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span></a>
-        <a href="apps.html" class="nav-link"><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></a>
+        <a href="apps.html" class="nav-link active"><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></a>
         <a href="design.html" class="nav-link"><span class="lang-pl">Design</span><span class="lang-en">Design</span></a>
         <a href="offer.html" class="nav-link"><span class="lang-pl">Współpraca</span><span class="lang-en">Partnership</span></a>
       </nav>
@@ -389,80 +499,115 @@
   </header>
 
   <main>
-    <section class="hero">
-      <div class="container hero-content">
+    <div class="container">
+      
+      <section class="section-intro">
+        <span class="badge-accent">
+          <span class="lang-pl">Ekosystem</span>
+          <span class="lang-en">Ecosystem</span>
+        </span>
         <h1>
-          <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
-          <span class="lang-en">Software that puts you in control.</span>
+          <span class="lang-pl">Oprogramowanie IbronIndustries.</span>
+          <span class="lang-en">IbronIndustries Software.</span>
         </h1>
-        <p class="lead">
-          <span class="lang-pl">Tworzymy bezkompromisowe narzędzia prywatności. Zero chmury, zero telemetrii, 100% offline.</span>
-          <span class="lang-en">We build uncompromising privacy tools. Zero cloud, zero telemetry, 100% offline.</span>
+        <p>
+          <span class="lang-pl">Tworzymy hermetyczne rozwiązania oparte na architekturze Zero-Data.</span>
+          <span class="lang-en">We build hermetic solutions based on Zero-Data architecture.</span>
         </p>
-        <a href="apps.html" class="btn btn-primary">
-          <span class="lang-pl">Poznaj IbronEXO</span>
-          <span class="lang-en">Explore IbronEXO</span>
-        </a>
-      </div>
-    </section>
+      </section>
 
-    <section class="hub-section">
-      <div class="container cards-grid">
+      <section class="app-showcase">
         
-        <a href="about.html" class="glass-card">
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="16" x2="12" y2="12"></line><line x1="12" y1="8" x2="12.01" y2="8"></line></svg>
+        <div class="app-info">
+          <span class="badge-accent">
+            <span class="lang-pl">Produkt Flagowy</span>
+            <span class="lang-en">Flagship Product</span>
+          </span>
+          
+          <h2>IbronEXO</h2>
+          
+          <div class="status-line">
+            <span class="lang-pl">Dostępne w Google Play</span>
+            <span class="lang-en">Available on Google Play</span>
           </div>
-          <h3><span class="lang-pl">O nas</span><span class="lang-en">About Us</span></h3>
-          <p><span class="lang-pl">Misja, wizja, kim jesteśmy i nasza architektura Zero-Data.</span><span class="lang-en">Mission, vision, who we are and our Zero-Data architecture.</span></p>
-        </a>
+          
+          <p class="app-desc">
+            <span class="lang-pl">Hermetyczny kryptosejf offline. Architektura Zero-Data, brak chmury, brak telemetrii. Twój klucz to jedyna droga do danych.</span>
+            <span class="lang-en">Hermetic offline crypto-vault. Zero-Data architecture, no cloud, no telemetry. Your key is the only path to data.</span>
+          </p>
 
-        <a href="protocols.html" class="glass-card">
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+          <div class="feature-list">
+            <div class="feature-item">
+              <svg class="feature-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+              <div class="feature-text">
+                <h4><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN System</span></h4>
+                <p><span class="lang-pl">Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.</span><span class="lang-en">Main PIN — real data. Decoy PIN — fake vault. Nuke PIN — instant total wipe of all data.</span></p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+              <div class="feature-text">
+                <h4><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h4>
+                <p><span class="lang-pl">Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.</span><span class="lang-en">Set a timer for any note. When it expires, content is overwritten with zeros, leaving no trace.</span></p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path><line x1="12" y1="9" x2="12" y2="13"></line><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+              <div class="feature-text">
+                <h4>Dead Man's Switch</h4>
+                <p><span class="lang-pl">Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.</span><span class="lang-en">If you fail to log in within a defined period, the app automatically wipes the database.</span></p>
+              </div>
+            </div>
+            <div class="feature-item">
+              <svg class="feature-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12h4l3-9 5 18 3-9h5"></path></svg>
+              <div class="feature-text">
+                <h4><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h4>
+                <p><span class="lang-pl">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</span><span class="lang-en">No media, no server pings. Just a strongly encrypted text log entered manually.</span></p>
+              </div>
+            </div>
           </div>
-          <h3><span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span></h3>
-          <p><span class="lang-pl">Zasady bezpieczeństwa, gwarancje i pełna dokumentacja EULA.</span><span class="lang-en">Security rules, guarantees, and complete EULA documentation.</span></p>
-        </a>
 
-        <a href="apps.html" class="glass-card">
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
-          </div>
-          <h3><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></h3>
-          <p><span class="lang-pl">Nasz ekosystem oprogramowania. IbronEXO i moduły operacyjne.</span><span class="lang-en">Our software ecosystem. IbronEXO and operational modules.</span></p>
-        </a>
+          <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+            <span class="lang-pl">Pobierz z Google Play</span>
+            <span class="lang-en">Download on Google Play</span>
+          </a>
+        </div>
 
-        <a href="design.html" class="glass-card">
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><polygon points="10 2 12 6 14 2"></polygon></svg>
+        <div class="phone-wrapper">
+          <div class="levitation-shadow"></div>
+          
+          <div class="device-chassis">
+            <div class="device-screen">
+              <div class="device-notch"></div>
+              
+              <img src="screen1pl.png" class="screen-img active" data-base="screen1" onerror="this.src='https://via.placeholder.com/320x650/050505/E8B84B?text=Screen+1'" alt="IbronEXO Screenshot 1">
+              <img src="screen2pl.png" class="screen-img" data-base="screen2" onerror="this.src='https://via.placeholder.com/320x650/111111/E8B84B?text=Screen+2'" alt="IbronEXO Screenshot 2">
+              <img src="screen3pl.png" class="screen-img" data-base="screen3" onerror="this.src='https://via.placeholder.com/320x650/1A1A1A/E8B84B?text=Screen+3'" alt="IbronEXO Screenshot 3">
+            </div>
           </div>
-          <h3><span class="lang-pl">Design</span><span class="lang-en">Design</span></h3>
-          <p><span class="lang-pl">System personalizacji UI. Zmieniaj wygląd, motywy i struktury.</span><span class="lang-en">UI personalization system. Change looks, themes, and structures.</span></p>
-        </a>
-
-        <a href="offer.html" class="glass-card">
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
-          </div>
-          <h3><span class="lang-pl">Współpraca</span><span class="lang-en">For Business</span></h3>
-          <p><span class="lang-pl">Oferta B2B. Budujemy dedykowane systemy i środowiska izolowane.</span><span class="lang-en">B2B Offer. We build dedicated systems and isolated environments.</span></p>
-        </a>
-
-        <a href="#" class="glass-card disabled" onclick="event.preventDefault();">
-          <div class="badge-soon">
-            <span class="lang-pl">Dostępne wkrótce</span><span class="lang-en">Available soon</span>
-          </div>
-          <div class="card-icon">
-            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-          </div>
-          <h3><span class="lang-pl">Moduł Z</span><span class="lang-en">Module Z</span></h3>
-          <p><span class="lang-pl">System hardware w przygotowaniu.</span><span class="lang-en">Hardware system in development.</span></p>
-        </a>
-
+        </div>
       </div>
+
+      <div class="app-chronos">
+        <div class="chronos-icon">
+          <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        </div>
+        <div class="chronos-info">
+          <h3>IbronCHRONOS</h3>
+          <p>
+            <span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span>
+            <span class="lang-en">Advanced operational management engine.</span>
+          </p>
+        </div>
+        <div class="badge-dev">
+          <span class="lang-pl">W budowie</span>
+          <span class="lang-en">In Development</span>
+        </div>
+      </div>
+
     </div>
-  </section>
+  </main>
 
   <footer>
     <div class="container">
@@ -471,7 +616,7 @@
   </footer>
 
   <script>
-    /* 1. SCROLL HEADER LOGIC */
+    /* HEADER BLUR ON SCROLL */
     const header = document.getElementById('main-header');
     window.addEventListener('scroll', () => {
       if(window.scrollY > 50) {
@@ -481,7 +626,7 @@
       }
     });
 
-    /* 2. LANGUAGE SWITCHER LOGIC */
+    /* LANGUAGE SWITCHER LOGIC */
     function setLang(langCode) {
       document.documentElement.setAttribute('data-lang', langCode);
       document.documentElement.lang = langCode;
@@ -490,11 +635,34 @@
       document.getElementById('lang-pl-btn').classList.remove('active');
       document.getElementById('lang-en-btn').classList.remove('active');
       document.getElementById('lang-' + langCode + '-btn').classList.add('active');
+
+      // Podmiana screenów telefonu w locie (crossfade handle)
+      document.querySelectorAll('.screen-img').forEach(img => {
+        const base = img.getAttribute('data-base');
+        if(base) {
+          img.src = langCode === 'pl' ? `${base}pl.png` : `${base}.png`;
+        }
+      });
     }
 
+    /* PHONE SCREEN SLIDESHOW LOGIC */
+    let currentScreenIndex = 0;
+    function cycleScreenshots() {
+      const screens = document.querySelectorAll('.screen-img');
+      if (screens.length <= 1) return;
+      
+      screens[currentScreenIndex].classList.remove('active');
+      currentScreenIndex = (currentScreenIndex + 1) % screens.length;
+      screens[currentScreenIndex].classList.add('active');
+    }
+
+    /* INIT */
     window.addEventListener('DOMContentLoaded', () => {
       const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
       setLang(initialLang);
+      
+      // Rotacja screenów co 3.5s
+      setInterval(cycleScreenshots, 3500);
     });
   </script>
 </body>
