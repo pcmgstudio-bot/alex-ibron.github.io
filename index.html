@@ -2,11 +2,8 @@
 <html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>IbronEXO - Cinematic Product Shot</title>
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <script>
-    /* ANTI-FOUC LANGUAGE SYSTEM */
     (function(){
       try {
         var lang = localStorage.getItem('ibron_lang');
@@ -22,96 +19,240 @@
       }
     })();
   </script>
-
+  
+  <title>IBRON INDUSTRIES | Privacy Software</title>
+  <meta name="description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
+  
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== ZMIENNE WIZUALNE ===== */
+    /* ===== DESIGN SYSTEM & VARIABLES ===== */
     :root {
-      --font-sans: 'Inter', sans-serif;
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       --font-mono: 'JetBrains Mono', monospace;
       
-      /* Kolory tekstu */
-      --c-app-text: #FFFFFF;
-      --c-app-muted: rgba(255, 255, 255, 0.7);
-      --c-accent: #E8B84B;
-      --c-accent-hover: #F2C966;
-
-      /* Kolory nieba (z sekcji Hero) */
-      --sky-1: #08061C; /* Ciemna noc */
-      --sky-2: #0E0B2E; /* Głęboki granat */
-      --sky-3: #2A2356; /* Fiolet przejściowy */
-      --sky-4: #4A3B6B; /* Wrzosowy fiolet */
+      --c-text-main: #FFF8F0;
+      --c-text-muted: rgba(255, 248, 240, 0.75);
+      
+      --header-height: 80px;
     }
 
-    /* ===== RESET & LANG TOGGLE ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    body { font-family: var(--font-sans); line-height: 1.6; background: #000; color: #fff; overflow-x: hidden; }
+    /* ===== CSS LANGUAGE TOGGLE ===== */
     [data-lang="en"] .lang-pl { display: none !important; }
     [data-lang="pl"] .lang-en { display: none !important; }
-    a { text-decoration: none; }
 
-    /* ==============================================================
-       CINEMATIC APPS SECTION
-       ============================================================== */
-    #apps-cinematic {
-      position: relative;
+    /* ===== RESET & GLOBAL ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { 
+      scroll-behavior: smooth; 
+      min-height: 100%;
+    }
+    
+    /* JEDNO CIĄGŁE NIEBO:
+      Gradient przypisany do body, rozciągający się na całą wysokość dokumentu.
+      Brak fixed attachment oznacza, że scrollując, odkrywamy nowe warstwy atmosfery.
+    */
+    body {
+      color: var(--c-text-main);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      overflow-x: hidden;
       min-height: 100vh;
-      display: flex;
-      align-items: center;
-      /* Generous padding, sekcja oddycha */
-      padding: 120px 5%;
-      overflow: hidden;
+      margin: 0;
       
-      /* TŁO: Górna partia nieba z Hero (Granat przechodzący w fiolet) */
-      background: linear-gradient(180deg, var(--sky-1) 0%, var(--sky-2) 40%, var(--sky-3) 100%);
+      background: linear-gradient(
+        to bottom,
+        #08061C 0%,      /* Start (Hero): Głęboka ciemna noc */
+        #0E0B2E 12%,     /* Apps: Nocny granat */
+        #2A2356 30%,     /* Protocols: Przejście w fiolet */
+        #4A3B6B 50%,     /* About: Jasny, wrzosowy fiolet */
+        #C9596B 70%,     /* Offer: Magentyczny róż zachodu */
+        #FF6B35 85%,     /* Contact: Ciepły pomarańcz */
+        #FF8C5A 92%,     
+        #FFB347 97%,     
+        #E8B84B 100%     /* Horyzont: Złoto */
+      );
     }
 
-    /* TŁO: Subtelne gwiazdy budujące klimat nieba */
-    .apps-stars {
+    a { text-decoration: none; color: inherit; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    ul { list-style: none; }
+
+    /* ===== GWIAZDY (Na samej górze dokumentu) ===== */
+    .global-stars {
       position: absolute;
-      inset: 0;
+      top: 0; left: 0; right: 0;
+      height: 3500px; /* Pokrywa tylko górne, nocne sekcje */
       z-index: 0;
-      background-image: 
-        radial-gradient(1px 1px at 15% 20%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1.5px 1.5px at 85% 35%, rgba(255,255,255,0.4), transparent),
-        radial-gradient(1px 1px at 45% 65%, rgba(255,255,255,0.5), transparent),
-        radial-gradient(2px 2px at 70% 80%, rgba(232, 184, 75, 0.3), transparent);
-      background-size: 250px 250px;
-    }
-
-    /* TŁO: Rozbłysk światła za telefonem (głębia) */
-    .apps-glow {
-      position: absolute;
-      top: 50%;
-      right: 15%; 
-      transform: translateY(-50%);
-      width: 50vw;
-      height: 50vw;
-      /* Ciepły, fioletowo-pomarańczowy glow nawiązujący do zachodu słońca */
-      background: radial-gradient(circle, rgba(201, 89, 107, 0.15) 0%, transparent 65%);
       pointer-events: none;
-      z-index: 1;
+      background-image: 
+        radial-gradient(1.5px 1.5px at 15% 2%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1px 1px at 30% 8%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(2px 2px at 65% 5%, rgba(255,248,240,0.5), transparent),
+        radial-gradient(1.5px 1.5px at 85% 15%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(1px 1px at 45% 22%, rgba(255,255,255,0.7), transparent),
+        radial-gradient(2px 2px at 75% 28%, rgba(232, 184, 75, 0.4), transparent);
+      background-size: 400px 400px;
+      /* Subtelny twinkle w CSS */
+      animation: twinkle 8s ease-in-out infinite alternate;
+      /* Maska, by gwiazdy płynnie zgasły zanim dotrą do zachodu słońca */
+      mask-image: linear-gradient(to bottom, black 20%, transparent 100%);
+      -webkit-mask-image: -webkit-linear-gradient(top, black 20%, transparent 100%);
     }
 
-    .cinematic-container {
-      /* Zmniejszony max-width dla lepszych proporcji po pomniejszeniu telefonu */
-      max-width: 1000px;
-      margin: 0 auto;
-      width: 100%;
-      display: grid;
-      grid-template-columns: 1.2fr 1fr;
-      gap: 60px;
+    @keyframes twinkle {
+      0% { opacity: 0.3; }
+      100% { opacity: 1; }
+    }
+
+    /* ===== TYPOGRAPHY & LEGIBILITY ===== */
+    h1, h2, h3, h4, h5 { 
+      font-weight: 700; 
+      line-height: 1.15; 
+      letter-spacing: -0.02em; 
+      margin-bottom: 0.5em;
+      text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2); /* Zabezpieczenie czytelności na gradiencie */
+    }
+    p { margin-bottom: 1.25em; text-shadow: 0 1px 5px rgba(0,0,0,0.15); }
+    strong { font-weight: 600; color: #FFF; }
+    
+    .text-mono { font-family: var(--font-mono); font-size: 0.85rem; letter-spacing: 0.02em; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
       align-items: center;
+      padding: 0 5%;
+      z-index: 1000;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease;
+    }
+    
+    .header.scrolled {
+      background: rgba(8, 6, 28, 0.4);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+
+    .logo {
+      font-weight: 800;
+      font-size: 1.25rem;
+      letter-spacing: -0.02em;
+    }
+
+    .lang-switcher { display: flex; gap: 16px; font-family: var(--font-mono); font-size: 0.85rem; }
+    .lang-btn { color: rgba(255, 255, 255, 0.5); transition: color 0.2s ease; }
+    .lang-btn:hover { color: rgba(255, 255, 255, 0.9); }
+    .lang-btn.active { color: #FFF; font-weight: 700; }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+    }
+    
+    .btn-primary {
+      background: rgba(255, 255, 255, 0.1);
+      color: #FFF;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+    
+    .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+      border-color: rgba(255, 255, 255, 0.35);
+    }
+
+    /* ===== SECTIONS STRUCTURE ===== */
+    section {
       position: relative;
       z-index: 10;
+      padding: 120px 5%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .section-fullscreen {
+      min-height: 100vh;
+      justify-content: center;
     }
 
-    /* ===== LEWA STRONA: TEKST ===== */
-    .product-info {
-      max-width: 480px;
+    .container {
+      max-width: 1200px;
+      width: 100%;
+    }
+
+    /* KARTY (GLASSMORPHISM) */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 16px;
+      padding: 32px;
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: transform 0.3s ease, background 0.3s ease;
+    }
+    .glass-card:hover {
+      background: rgba(255, 255, 255, 0.05);
+      border-color: rgba(255, 255, 255, 0.15);
+    }
+
+    /* ===== SCROLL ANIMATIONS ===== */
+    .fade-up {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+    /* =========================================
+       SEKCJA 1: HERO
+       ========================================= */
+    #hero {
+      text-align: center;
+    }
+    #hero h1 {
+      font-size: clamp(3rem, 7vw, 6rem);
+      max-width: 1000px;
+      margin: 0 auto 24px;
+    }
+    #hero p.lead {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      color: var(--c-text-muted);
+      max-width: 700px;
+      margin: 0 auto 48px;
+    }
+
+    /* =========================================
+       SEKCJA 2: APPS (IBRON EXO)
+       ========================================= */
+    .apps-layout {
+      display: grid;
+      grid-template-columns: 1.1fr 1fr;
+      gap: 60px;
+      align-items: center;
     }
 
     .badge-premium {
@@ -121,20 +262,12 @@
       font-weight: 700;
       text-transform: uppercase;
       letter-spacing: 0.08em;
-      color: var(--c-accent);
+      color: #E8B84B;
       background: rgba(232, 184, 75, 0.1);
       border: 1px solid rgba(232, 184, 75, 0.2);
       padding: 6px 12px;
-      border-radius: 6px;
+      border-radius: 4px;
       margin-bottom: 24px;
-    }
-
-    .product-info h2 {
-      font-size: clamp(2.5rem, 4vw, 3.5rem);
-      font-weight: 800;
-      line-height: 1.1;
-      letter-spacing: -0.03em;
-      margin-bottom: 8px;
     }
 
     .product-status {
@@ -146,232 +279,214 @@
       align-items: center;
       gap: 8px;
     }
-
     .product-status::before {
-      content: '';
-      display: block;
-      width: 6px;
-      height: 6px;
-      background: #00E676;
-      border-radius: 50%;
-      box-shadow: 0 0 8px #00E676;
+      content: ''; display: block; width: 6px; height: 6px;
+      background: #00E676; border-radius: 50%; box-shadow: 0 0 8px #00E676;
     }
 
-    .product-lead {
-      font-size: 1.05rem;
-      color: var(--c-app-muted);
-      margin-bottom: 40px;
-    }
-
-    /* Cechy */
     .minimal-features {
-      list-style: none;
-      margin-bottom: 48px;
       display: flex;
       flex-direction: column;
-      gap: 16px;
+      gap: 20px;
+      margin-top: 32px;
+      margin-bottom: 40px;
     }
-
     .feature-item {
       display: flex;
       align-items: flex-start;
       gap: 12px;
     }
-
     .feature-icon {
+      color: #E8B84B;
       flex-shrink: 0;
-      color: var(--c-accent);
-      margin-top: 2px;
+      margin-top: 3px;
     }
 
-    .feature-text h4 {
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 2px;
-      color: var(--c-app-text);
-    }
-
-    .feature-text p {
-      font-size: 0.85rem;
-      color: var(--c-app-muted);
-      margin: 0;
-    }
-
-    /* CTA Button */
-    .btn-cinematic {
-      display: inline-flex;
-      align-items: center;
-      gap: 12px;
-      background: var(--c-accent);
-      color: #000;
-      font-weight: 600;
-      font-size: 0.95rem;
-      padding: 14px 28px;
-      border-radius: 8px;
-      text-decoration: none;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      box-shadow: 0 4px 15px rgba(232, 184, 75, 0.2);
-    }
-
-    .btn-cinematic:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(232, 184, 75, 0.4);
-      background: var(--c-accent-hover);
-    }
-
-    /* ===== PRAWA STRONA: TELEFON (POMNIEJSZONY I DOPRACOWANY) ===== */
+    /* TELEFON KINOWY (PRAWA STRONA) */
     .product-showcase {
       display: flex;
       justify-content: center;
       align-items: center;
-      perspective: 1200px; 
+      perspective: 1200px;
       position: relative;
     }
 
-    /* Zmniejszony obrys telefonu (ok. 30% mniejszy niż poprzednio) */
     .device-chassis {
       position: relative;
       z-index: 10;
       width: 100%;
-      max-width: 230px; /* Zmniejszone z 320px! */
-      aspect-ratio: 9 / 19.5; /* Prawidłowe proporcje */
-      border-radius: 36px;
-      padding: 6px; 
+      max-width: 280px; 
+      max-height: 75vh;
+      aspect-ratio: 9 / 19.5;
+      border-radius: 40px; /* Zewnętrzny promień */
+      padding: 8px; /* Grubość ramki telefonu */
       
-      transform: rotateY(-5deg) rotateX(2deg);
+      /* Rotacja 3D dodająca realizmu */
+      transform: rotateY(-6deg) rotateX(3deg);
       transform-style: preserve-3d;
       
-      /* Gradient na ramce sugerujący odbicie nieba */
-      background: linear-gradient(160deg, #5C6A82 0%, #1F2937 40%, #08061C 100%);
+      /* Gradient na samej ramce imitujący odbicie nieba/światła */
+      background: linear-gradient(160deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.02) 40%, rgba(0,0,0,0.8) 100%);
       
+      /* Rozbudowany system cieni (miękki cień dolny + rim light z tła) */
       box-shadow: 
-        /* Rozmyty cień przestrzenny (odklejenie od tła) */
-        -15px 25px 40px rgba(0, 0, 0, 0.6),
-        /* Prawy górny rim-light (ciepły fiolet/pomarańcz) */
-        3px -2px 10px rgba(201, 89, 107, 0.25),
-        /* Lewy dolny rim-light (chłodny granat/biel) */
-        -2px 3px 10px rgba(255, 255, 255, 0.1);
+        -20px 30px 50px rgba(0, 0, 0, 0.5),              /* Twardy cień rzucany w bok */
+        3px -2px 15px rgba(232, 184, 75, 0.2),           /* Ciepły rim-light z prawego rogu */
+        -2px 4px 15px rgba(201, 89, 107, 0.15);          /* Fioletowy rim-light od dołu */
     }
 
-    /* Rozmyty cień pod telefonem */
+    /* Miękki rozmyty cień pod telefonem sugerujący zawieszenie w próżni */
     .levitation-shadow {
       position: absolute;
-      bottom: -30px;
+      bottom: -40px;
       left: 50%;
       transform: translateX(-50%) rotateX(75deg);
-      width: 200px;
-      height: 60px;
+      width: 250px;
+      height: 80px;
       background: rgba(0, 0, 0, 0.7);
-      filter: blur(15px);
+      filter: blur(20px);
       z-index: 1;
     }
 
-    /* Kontener ekranu - perfekcyjne dopasowanie */
+    /* Wnętrze telefonu i maskowanie ekranu */
     .device-screen {
       position: relative;
       width: 100%;
       height: 100%;
-      background: #050505;
-      /* Border radius idealnie spasowany (36px zewnątrz - 6px padding) */
-      border-radius: 30px; 
-      /* Ukrywamy wystające fragmenty obrazka */
+      background: #000;
+      /* Border radius idealnie spasowany (40px zewnątrz - 8px padding) */
+      border-radius: 32px; 
       overflow: hidden;
-      /* Wymuszenie obcinania rogów w Safari */
+      /* Wymuszenie obcinania rogów obrazka (szczególnie dla Safari) */
       transform: translateZ(0); 
     }
 
-    /* Notch proporcjonalnie zmniejszony */
     .device-notch {
       position: absolute;
-      top: 8px;
+      top: 10px;
       left: 50%;
       transform: translateX(-50%);
-      width: 80px;
-      height: 22px;
+      width: 90px;
+      height: 26px;
       background: #000;
-      border-radius: 12px;
+      border-radius: 14px;
       z-index: 30;
-      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
     }
 
-    /* Odbicie światła na szkle (glass reflection) */
-    .device-screen::after {
-      content: '';
-      position: absolute;
-      top: 0; left: -50%;
-      width: 200%; height: 100%;
-      background: linear-gradient(
-        to bottom right,
-        rgba(255, 255, 255, 0.08) 0%,
-        rgba(255, 255, 255, 0.01) 40%,
-        transparent 50%
-      );
-      pointer-events: none;
-      z-index: 20;
-    }
-
-    /* Obrazki wewnątrz telefonu (crossfade) */
+    /* Auto-przełączające się obrazy ekranu */
     .screen-img {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
-      /* Wymusza dokładne wypełnienie bez zniekształceń */
       object-fit: cover; 
-      object-position: center;
       opacity: 0;
-      transform: scale(1.03);
+      transform: scale(1.03); /* Start scale */
       transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
       z-index: 10;
     }
     
     .screen-img.active {
       opacity: 1;
-      transform: scale(1);
+      transform: scale(1); /* Smooth scale in */
     }
 
-    /* RWD */
-    @media (max-width: 900px) {
-      .cinematic-container {
+    /* =========================================
+       SEKCJA 3: PROTOCOLS
+       ========================================= */
+    #protocols {
+      align-items: center;
+    }
+    .protocols-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 24px;
+      max-width: 800px; /* Czytelny, wąski układ dokumentu */
+      margin: 0 auto;
+    }
+    .protocol-box h4 {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #FFF;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* =========================================
+       SEKCJA 4: ABOUT
+       ========================================= */
+    .about-layout {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: 60px;
+    }
+
+    /* =========================================
+       SEKCJA 5: OFFER
+       ========================================= */
+    .offer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 32px;
+    }
+
+    /* =========================================
+       SEKCJA 6: CONTACT
+       ========================================= */
+    #contact {
+      text-align: center;
+      min-height: 80vh; /* Ostania sekcja ma najcieplejszy kolor z gradientu */
+    }
+    
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+      .apps-layout, .about-layout {
         grid-template-columns: 1fr;
-        gap: 60px;
         text-align: center;
       }
-      .product-info {
-        max-width: 100%;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-      }
-      .minimal-features {
-        text-align: left;
-      }
-      .product-status {
-        justify-content: center;
-      }
-      .product-showcase {
-        order: -1; 
-      }
+      .minimal-features { text-align: left; }
+      .product-status { justify-content: center; }
+      .product-showcase { order: -1; margin-bottom: 40px; }
+      h1 { font-size: clamp(2.5rem, 10vw, 4rem) !important; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Language Switcher dla testów -->
-  <div style="position: absolute; top: 20px; right: 20px; z-index: 9999; display: flex; gap: 8px; font-family: sans-serif;">
-    <button onclick="setLang('pl')" style="color:#fff; padding:6px 12px; background: rgba(255,255,255,0.1); border-radius: 4px;">PL</button>
-    <button onclick="setLang('en')" style="color:#fff; padding:6px 12px; background: rgba(255,255,255,0.1); border-radius: 4px;">EN</button>
-  </div>
+  <div class="global-stars"></div>
 
-  <!-- WŁAŚCIWA SEKCJA APPS -->
-  <section id="apps-cinematic">
-    <div class="apps-stars"></div>
-    <div class="apps-glow"></div>
+  <header class="header" id="header">
+    <div class="logo">
+      IBRON INDUSTRIES
+    </div>
+    <div class="lang-switcher">
+      <button class="lang-btn active" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
+      <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
+    </div>
+  </header>
 
-    <div class="cinematic-container">
+  <section id="hero" class="section-fullscreen">
+    <div class="container fade-up">
+      <h1>
+        <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
+        <span class="lang-en">Software that puts you in control.</span>
+      </h1>
+      <p class="lead">
+        <span class="lang-pl">Tworzymy bezkompromisowe narzędzia prywatności. Zero chmury, zero telemetrii, 100% offline.</span>
+        <span class="lang-en">We build uncompromising privacy tools. Zero cloud, zero telemetry, 100% offline.</span>
+      </p>
+      <a href="#apps" class="btn btn-primary">
+        <span class="lang-pl">Poznaj IbronEXO</span>
+        <span class="lang-en">Explore IbronEXO</span>
+      </a>
+    </div>
+  </section>
+
+  <section id="apps">
+    <div class="container apps-layout">
       
-      <!-- LEWA: Tekst i cechy -->
-      <div class="product-info">
+      <div class="product-info fade-up" style="transition-delay: 0.1s;">
         <span class="badge-premium">
           <span class="lang-pl">Produkt Flagowy</span>
           <span class="lang-en">Flagship Product</span>
@@ -391,21 +506,21 @@
 
         <ul class="minimal-features">
           <li class="feature-item">
-            <svg class="feature-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
             <div class="feature-text">
               <h4><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN System</span></h4>
               <p><span class="lang-pl">Decoy PIN oraz Nuke PIN dla pełnej kontroli pod presją.</span><span class="lang-en">Decoy PIN and Nuke PIN for full control under duress.</span></p>
             </div>
           </li>
           <li class="feature-item">
-            <svg class="feature-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
             <div class="feature-text">
               <h4><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h4>
-              <p><span class="lang-pl">Niestandardowe timery destrukcji dla pojedynczych wpisów.</span><span class="lang-en">Custom destruction timers for individual entries.</span></p>
+              <p><span class="lang-pl">Timery destrukcji dla pojedynczych wpisów.</span><span class="lang-en">Destruction timers for individual entries.</span></p>
             </div>
           </li>
           <li class="feature-item">
-            <svg class="feature-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
             <div class="feature-text">
               <h4><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h4>
               <p><span class="lang-pl">Odłączony od sieci na poziomie manifestu systemu.</span><span class="lang-en">Disconnected from the network at the system manifest level.</span></p>
@@ -413,27 +528,178 @@
           </li>
         </ul>
 
-        <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-cinematic">
+        <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right:8px;"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
           <span class="lang-pl">Pobierz z Google Play</span>
           <span class="lang-en">Download on Google Play</span>
         </a>
       </div>
 
-      <!-- PRAWA: Lewitujący telefon -->
-      <div class="product-showcase">
+      <div class="product-showcase fade-up" style="transition-delay: 0.3s;">
         <div class="levitation-shadow"></div>
         <div class="device-chassis">
           <div class="device-screen">
             <div class="device-notch"></div>
             
-            <!-- Automatyczny Slideshow -->
             <img src="screen1pl.png" class="screen-img active" data-base="screen1" onerror="this.src='https://via.placeholder.com/320x650/08061C/E8B84B?text=Screen+1'" alt="IbronEXO Screen 1">
-            <img src="screen2pl.png" class="screen-img" data-base="screen2" onerror="this.src='https://via.placeholder.com/320x650/0E0B2E/E8B84B?text=Screen+2'" alt="IbronEXO Screen 2">
-            <img src="screen3pl.png" class="screen-img" data-base="screen3" onerror="this.src='https://via.placeholder.com/320x650/2A2356/E8B84B?text=Screen+3'" alt="IbronEXO Screen 3">
+            <img src="screen2pl.png" class="screen-img" data-base="screen2" onerror="this.src='https://via.placeholder.com/320x650/2A2356/E8B84B?text=Screen+2'" alt="IbronEXO Screen 2">
+            <img src="screen3pl.png" class="screen-img" data-base="screen3" onerror="this.src='https://via.placeholder.com/320x650/4A3B6B/E8B84B?text=Screen+3'" alt="IbronEXO Screen 3">
           </div>
         </div>
       </div>
 
+    </div>
+  </section>
+
+  <section id="protocols">
+    <div class="container fade-up">
+      <div style="text-align: center; margin-bottom: 60px;">
+        <span class="text-mono" style="color: #E8B84B;"><span class="lang-pl">Regulacje</span><span class="lang-en">Regulations</span></span>
+        <h2><span class="lang-pl">Dokumentacja Operacyjna.</span><span class="lang-en">Operational Documentation.</span></h2>
+      </div>
+
+      <div class="protocols-grid">
+        
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 1 ] Całkowite wyłączenie odpowiedzialności (As-Is)</span><span class="lang-en">[ Protocol 1 ] Full Disclaimer of Liability (As-Is)</span></h4>
+          <p class="lang-pl">W maksymalnym zakresie dozwolonym przez obowiązujące prawo, wszystkie aplikacje i narzędzia wydawane przez Ibron Industries dostarczane są w modelu „As-Is” (tak, jak są), bez jakichkolwiek gwarancji. Nie gwarantujemy nieprzerwanego działania oprogramowania. <strong>Ibron Industries nie ponosi żadnej odpowiedzialności finansowej ani prawnej</strong> za ewentualną utratę danych, uszkodzenie bazy notatek, awarie systemu czy szkody wynikające z użytkowania aplikacji.</p>
+          <p class="lang-en">To the maximum extent permitted by applicable law, all applications and tools released by Ibron Industries are provided "As-Is", without any warranties. We do not guarantee uninterrupted software operation. <strong>Ibron Industries bears no financial or legal responsibility</strong> for any data loss, database corruption, system failures, or damages resulting from the use of the application.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 2 ] Brak tylnej furtki (No Backdoor Policy)</span><span class="lang-en">[ Protocol 2 ] No Backdoor Policy</span></h4>
+          <p class="lang-pl">Architektura IbronEXO opiera się na bezwzględnym bezpieczeństwie. System nie posiada funkcji „zapomniałem hasła”, odzyskiwania konta przez e-mail ani ukrytych kluczy deweloperskich. Zgubienie Głównego PIN-u oznacza <strong>nieodwracalną i matematyczną utratę dostępu do danych</strong>. Ibron Industries nie ma technicznej, fizycznej ani teoretycznej możliwości odszyfrowania Twojego sejfu.</p>
+          <p class="lang-en">The IbronEXO architecture relies on absolute security. The system has no "forgot password" function, email account recovery, or hidden developer keys. Losing your Main PIN means <strong>an irreversible and mathematical loss of data access</strong>. Ibron Industries has no technical, physical, or theoretical ability to decrypt your vault.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 3 ] Kapitał i cyberataki (User Risk)</span><span class="lang-en">[ Protocol 3 ] Capital and Cyberattacks (User Risk)</span></h4>
+          <p class="lang-pl">Aplikacje Ibron to potężne narzędzia lokalne, jednak żadne cyfrowe zabezpieczenie nie jest w 100% niełamywalne. Jeśli użytkownik przechowuje w systemie frazy kryptowalutowe (Seed Phrase), hasła bankowe lub tajne dane korporacyjne, robi to wyłącznie na własne ryzyko. Ibron Industries nie odpowiada za kradzież środków w wyniku fizycznego przejęcia odblokowanego urządzenia użytkownika, infekcji złośliwym oprogramowaniem czy cyberataków.</p>
+          <p class="lang-en">Ibron apps are powerful local tools, but no digital security is 100% unbreakable. If a user stores cryptocurrency Seed Phrases, banking passwords, or secret corporate data in the system, they do so entirely at their own risk. Ibron Industries is not liable for theft of funds due to physical seizure of an unlocked device, malware infections, or targeted cyberattacks.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 4 ] Architektura Zero-Data</span><span class="lang-en">[ Protocol 4 ] Zero-Data Architecture</span></h4>
+          <p class="lang-pl">Szanujemy Twoją prywatność poprzez jej całkowite ignorowanie. Oprogramowanie Ibron działa całkowicie w modelu <strong>Zero-Data</strong> (Offline-First). Nie zbieramy, nie profilujemy, nie analizujemy i nie wysyłamy żadnych Twoich notatek ani metadanych na zewnętrzne serwery. Wszystko odbywa się lokalnie na Twoim urządzeniu. Administratorem Twoich danych jesteś wyłącznie Ty.</p>
+          <p class="lang-en">We respect your privacy by completely ignoring it. Ibron software operates entirely on a <strong>Zero-Data</strong> (Offline-First) model. We do not collect, profile, analyze, or send any of your notes or metadata to external servers. Everything happens locally on your device. You are the sole administrator of your data.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 5 ] Prawo Właściwe i Jurysdykcja</span><span class="lang-en">[ Protocol 5 ] Governing Law</span></h4>
+          <p class="lang-pl">Niniejsze Protokoły oraz wszelkie spory wynikające z korzystania z oprogramowania Ibron Industries podlegają prawu polskiemu. W przypadku jakichkolwiek roszczeń, właściwym sądem jest sąd według siedziby Ibron Industries w Polsce, o ile obowiązujące przepisy o ochronie konsumentów nie stanowią inaczej.</p>
+          <p class="lang-en">These Protocols and any disputes arising from the use of Ibron Industries software are governed by Polish law. For any claims, the competent court is the court of Ibron Industries' registered location in Poland, unless applicable consumer protection laws state otherwise.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 6 ] Klasyfikacja Wiekowa i Nadzór Rodzicielski</span><span class="lang-en">[ Protocol 6 ] Age Rating & Parental Responsibility</span></h4>
+          <p class="lang-pl">Aplikacje Ibron Industries posiadają klasyfikację PEGI 3 / dostępną dla wszystkich grup wiekowych. Aplikacja nie zbiera, nie weryfikuje i nie przechowuje żadnych danych dotyczących wieku użytkownika. Z uwagi na nieodwracalny charakter utraty dostępu do danych, w przypadku korzystania z aplikacji przez osoby niepełnoletnie odpowiedzialność za nadzór leży wyłącznie po stronie rodzica lub opiekuna prawnego.</p>
+          <p class="lang-en">Ibron Industries applications carry a PEGI 3 rating / are suitable for all age groups. The application does not collect, verify, or store any user age data. Due to the irreversible nature of data access loss, when the application is used by a minor, responsibility for supervision rests solely with the parent or legal guardian.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 7 ] Aktualizacje i Trwałość Danych</span><span class="lang-en">[ Protocol 7 ] Updates & Data Continuity</span></h4>
+          <p class="lang-pl">Aktualizacje aplikacji mogą wprowadzać zmiany w formacie bazy danych. Dokładamy starań, aby każda aktualizacja zachowywała kompatybilność, jednak nie gwarantujemy zachowania danych w przypadku poważnych zmian architektury. Przed każdą aktualizacją zalecamy wykonanie lokalnego backupu.</p>
+          <p class="lang-en">Application updates may introduce changes to the database format. We make every effort to ensure compatibility, however we do not guarantee data preservation in the event of major architectural changes. We recommend performing a local backup before any update.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 8 ] Status Audytu</span><span class="lang-en">[ Protocol 8 ] Audit Status</span></h4>
+          <p class="lang-pl">Architektura Zero-Data oraz mechanizmy silnego szyfrowania odzwierciedlają intencjonalny projekt aplikacji. <strong>Kod aplikacji nie został (jeszcze) poddany niezależnemu audytowi bezpieczeństwa przez stronę trzecią.</strong> Jeśli korzystasz z aplikacji do przechowywania danych o wysokiej wartości, uwzględnij ten fakt w swojej ocenie ryzyka.</p>
+          <p class="lang-en">The Zero-Data architecture and strong encryption mechanisms reflect the application's intentional design. <strong>The application's code has not (yet) undergone an independent third-party security audit.</strong> If you use the application to store high-value data, factor this into your risk assessment.</p>
+        </div>
+
+        <div class="glass-card protocol-box">
+          <h4><span class="lang-pl">[ Protokół 9 ] Dezinstalacja i Trwałe Usunięcie Danych</span><span class="lang-en">[ Protocol 9 ] Uninstall & Permanent Deletion</span></h4>
+          <p class="lang-pl">Odinstalowanie aplikacji z urządzenia powoduje <strong>nieodwracalne i trwałe usunięcie</strong> całej lokalnej bazy danych. Ibron Industries nie przechowuje żadnej kopii zapasowej poza Twoim urządzeniem i nie ma technicznej możliwości przywrócenia danych po dezinstalacji.</p>
+          <p class="lang-en">Uninstalling the application from your device results in the <strong>irreversible and permanent deletion</strong> of the entire local database. Ibron Industries does not store any backup outside your device and has no technical means of restoring data after uninstallation.</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="about">
+    <div class="container fade-up about-layout">
+      <div>
+        <span class="text-mono" style="color: #E8B84B; text-transform: uppercase;">
+          <span class="lang-pl">Aleksander // Founder</span>
+          <span class="lang-en">Aleksander // Founder</span>
+        </span>
+        <h2><span class="lang-pl">Projektant Systemów.</span><span class="lang-en">System Architect.</span></h2>
+      </div>
+      <div>
+        <p>
+          <span class="lang-pl">Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.</span>
+          <span class="lang-en">I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.</span>
+        </p>
+        <p>
+          <span class="lang-pl">Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.</span>
+          <span class="lang-en">I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices.</span>
+        </p>
+        <p>
+          <span class="lang-pl">Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. <strong>Płacisz za konkretną wartość, a nie swoimi danymi.</strong></span>
+          <span class="lang-en">Regardless of the business model, transparency always remains the priority. <strong>You pay for concrete value, not with your data.</strong></span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section id="offer">
+    <div class="container fade-up">
+      <div style="text-align: center; margin-bottom: 60px;">
+        <span class="text-mono" style="color: #E8B84B;"><span class="lang-pl">Współpraca B2B</span><span class="lang-en">B2B Partnership</span></span>
+        <h2><span class="lang-pl">Budujemy systemy.</span><span class="lang-en">We build systems.</span></h2>
+      </div>
+
+      <div class="offer-grid">
+        <div class="glass-card">
+          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Aplikacje Webowe</span><span class="lang-en">Web Apps</span></h3>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--c-text-muted);">
+            <span class="lang-pl">Zoptymalizowane pod kątem wydajności platformy SPA. Szybkość i czysty kod z zachowaniem najwyższych standardów bezpieczeństwa.</span>
+            <span class="lang-en">Highly optimized SPA platforms. Speed and clean code adhering to the highest security standards.</span>
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Środowiska Mobilne</span><span class="lang-en">Mobile Ecosystems</span></h3>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--c-text-muted);">
+            <span class="lang-pl">Natywne aplikacje z pełnym naciskiem na optymalne zużycie pamięci, lekkie biblioteki i płynność działania offline.</span>
+            <span class="lang-en">Native applications with a focus on optimal memory usage, lightweight libraries, and seamless offline capability.</span>
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Interfejsy UI/UX</span><span class="lang-en">UI/UX Interfaces</span></h3>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--c-text-muted);">
+            <span class="lang-pl">Projektowanie spójnych środowisk wizualnych i surowych systemów designu, zoptymalizowanych pod kątem natychmiastowej responsywności.</span>
+            <span class="lang-en">Designing cohesive visual environments and strict design systems, optimized for instant responsiveness.</span>
+          </p>
+        </div>
+        <div class="glass-card">
+          <h3 style="font-size: 1.25rem;"><span class="lang-pl">Skrypty & Automatyzacja</span><span class="lang-en">Scripts & Automation</span></h3>
+          <p style="margin: 0; font-size: 0.95rem; color: var(--c-text-muted);">
+            <span class="lang-pl">Bezpieczne mikronarzędzia i integracje z bazami danych działające w hermetycznych środowiskach klienta.</span>
+            <span class="lang-en">Secure micro-tools and database integrations operating strictly within the client's hermetic environments.</span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="section-fullscreen fade-up">
+    <div class="container">
+      <h2 style="font-size: clamp(2.5rem, 5vw, 4rem); letter-spacing: -0.04em;">
+        <span class="lang-pl">Nawiąż połączenie.</span><span class="lang-en">Establish connection.</span>
+      </h2>
+      <p style="font-size: 1.15rem; max-width: 500px; margin: 0 auto 40px; color: var(--c-text-main);">
+        <span class="lang-pl">Wsparcie techniczne, propozycje współpracy B2B lub audyty bezpieczeństwa — nasz terminal jest otwarty.</span>
+        <span class="lang-en">Technical support, B2B cooperation proposals, or security audits — our terminal is open.</span>
+      </p>
+      <a href="mailto:alex@ibronindustries.pl" class="btn btn-primary" style="font-size: 1.125rem; padding: 18px 36px;">
+        alex@ibronindustries.pl
+      </a>
+      <div style="margin-top: 40px;" class="text-mono">
+        <span style="display: inline-block; width: 8px; height: 8px; background: #00E676; box-shadow: 0 0 10px #00E676; border-radius: 50%; margin-right: 8px;"></span>
+        <span class="lang-pl">KANAŁ ZABEZPIECZONY</span><span class="lang-en">CHANNEL SECURED</span>
+      </div>
     </div>
   </section>
 
@@ -444,7 +710,10 @@
       document.documentElement.lang = langCode;
       try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
       
-      // Podmiana atrybutu src obrazków na podstawie j. polskiego / angielskiego
+      document.getElementById('lang-pl-btn').classList.remove('active');
+      document.getElementById('lang-en-btn').classList.remove('active');
+      document.getElementById('lang-' + langCode + '-btn').classList.add('active');
+
       document.querySelectorAll('.screen-img').forEach(img => {
         const base = img.getAttribute('data-base');
         if(base) {
@@ -453,7 +722,7 @@
       });
     }
 
-    /* ===== AUTO-SLIDESHOW ===== */
+    /* ===== AUTO-SLIDESHOW EKRANÓW ===== */
     let currentScreenIndex = 0;
     function cycleScreenshots() {
       const screens = document.querySelectorAll('.screen-img');
@@ -464,12 +733,33 @@
       screens[currentScreenIndex].classList.add('active');
     }
 
+    /* ===== OBSŁUGA SCROLLA (Header blur & Fade-up) ===== */
+    const header = document.getElementById('header');
+    const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+
+    const observer = new IntersectionObserver((entries, observer) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target); 
+        }
+      });
+    }, observerOptions);
+
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) header.classList.add('scrolled');
+      else header.classList.remove('scrolled');
+    });
+
     window.addEventListener('DOMContentLoaded', () => {
       const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
       setLang(initialLang);
       
-      // Zmiana co 3.5 sekundy
       setInterval(cycleScreenshots, 3500);
+
+      document.querySelectorAll('.fade-up').forEach(el => {
+        observer.observe(el);
+      });
     });
   </script>
 </body>
