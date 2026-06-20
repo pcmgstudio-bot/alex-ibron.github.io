@@ -1,4 +1,9 @@
 <!DOCTYPE html>
+<!-- 
+  ANTI-FOUC LANGUAGE SYSTEM
+  Skrypt wykonuje się przed renderowaniem DOM, ustalając atrybut data-lang.
+  CSS natychmiast ukrywa niepotrzebny język, gwarantując brak migotania (FOUC).
+-->
 <html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
@@ -33,7 +38,7 @@
       --c-bg: #FFFFFF;
       --c-bg-alt: #F8FAFC;
       
-      --c-text-main: #0A1628;    /* Głęboki, miękki granat zamiast czarnego */
+      --c-text-main: #0A1628;
       --c-text-muted: #5C6A82;
       
       --c-blue-primary: #1565C0;
@@ -89,7 +94,7 @@
       padding: 16px 36px;
       font-size: 1rem;
       font-weight: 600;
-      border-radius: 8px; /* Delikatne zaokrąglenie, profesjonalny wygląd */
+      border-radius: 8px;
       transition: transform 0.3s ease, box-shadow 0.3s ease;
       cursor: pointer;
     }
@@ -168,6 +173,8 @@
       max-width: 1200px;
       margin: 0 auto;
       width: 100%;
+      position: relative;
+      z-index: 2; /* Keeps content above animated bg */
     }
 
     /* ===== SCROLL ANIMATIONS (SUBTLE) ===== */
@@ -189,14 +196,63 @@
       overflow: hidden;
     }
 
-    /* Subtelny gradient mesh budujący głębię, bez konkretnych obrazków */
+    /* ANIMATED MESH GRADIENT */
     .hero-bg-mesh {
       position: absolute;
       inset: 0;
-      z-index: -1;
-      background: 
-        radial-gradient(circle at 15% 40%, rgba(21, 101, 192, 0.04) 0%, transparent 50%),
-        radial-gradient(circle at 85% 60%, rgba(13, 71, 161, 0.03) 0%, transparent 50%);
+      z-index: 1; /* Below container */
+      overflow: hidden;
+    }
+    
+    /* Using CSS mix-blend-mode or just overlapping absolute divs with blur */
+    .mesh-blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.25; /* Low opacity for subtlety */
+    }
+
+    .blob-1 {
+      top: -10%; left: -10%;
+      width: 60vw; height: 60vw;
+      background: radial-gradient(circle, #42A5F5 0%, transparent 70%);
+      animation: floatBlob1 25s ease-in-out infinite alternate;
+    }
+
+    .blob-2 {
+      bottom: -20%; right: -10%;
+      width: 70vw; height: 70vw;
+      background: radial-gradient(circle, #1565C0 0%, transparent 70%);
+      animation: floatBlob2 20s ease-in-out infinite alternate;
+    }
+    
+    .blob-3 {
+      top: 30%; left: 40%;
+      width: 50vw; height: 50vw;
+      background: radial-gradient(circle, #0D47A1 0%, transparent 60%);
+      animation: floatBlob3 30s ease-in-out infinite alternate;
+      opacity: 0.15;
+    }
+
+    @keyframes floatBlob1 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(10%, 15%) scale(1.1); }
+    }
+    @keyframes floatBlob2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-15%, -10%) scale(0.9); }
+    }
+    @keyframes floatBlob3 {
+      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
+      100% { transform: translate(-5%, 20%) rotate(15deg) scale(1.15); }
+    }
+
+    /* Optional white overlay to ensure text contrast stays perfect */
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.4);
     }
 
     #hero h1 {
@@ -239,7 +295,6 @@
       margin-bottom: 48px;
     }
 
-    /* Prosta, czytelna lista cech bez ciężkich cieni */
     .feature-list {
       display: flex;
       flex-direction: column;
@@ -267,7 +322,7 @@
       margin: 0;
     }
 
-    /* Minimalistyczny Device Frame (CSS) */
+    /* ===== DEVICE MOCKUP WITH ROTATING SCREENS ===== */
     .mockup-wrapper {
       display: flex;
       justify-content: center;
@@ -307,11 +362,21 @@
       position: relative;
     }
 
-    .device-screen img {
+    /* Screen Images container & logic */
+    .screen-img {
+      position: absolute;
+      inset: 0;
       width: 100%;
       height: 100%;
       object-fit: cover;
-      display: block;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    
+    .screen-img.active {
+      opacity: 1;
+      transform: scale(1);
     }
 
     /* Responsive */
@@ -324,13 +389,14 @@
         max-width: 100%;
       }
       .mockup-wrapper {
-        order: -1; /* Telefon na górze na mobile */
+        order: -1; 
       }
     }
   </style>
 </head>
 <body>
 
+  <!-- MINIMAL HEADER -->
   <header class="header">
     <div class="logo">
       IBRON INDUSTRIES
@@ -342,8 +408,17 @@
   </header>
 
   <main>
+    <!-- SECTION 1: HERO -->
     <section id="hero" class="section-fullscreen">
-      <div class="hero-bg-mesh"></div>
+      
+      <!-- Animated Mesh Gradient -->
+      <div class="hero-bg-mesh">
+        <div class="mesh-blob blob-1"></div>
+        <div class="mesh-blob blob-2"></div>
+        <div class="mesh-blob blob-3"></div>
+      </div>
+      <div class="hero-overlay"></div> <!-- Helps maintain text contrast -->
+
       <div class="container fade-up">
         <h1>
           <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
@@ -360,6 +435,7 @@
       </div>
     </section>
 
+    <!-- SECTION 2: APPS (IBRON EXO) -->
     <section id="apps" class="section-fullscreen">
       <div class="container apps-layout">
         
@@ -419,8 +495,11 @@
         <div class="mockup-wrapper fade-up" style="transition-delay: 0.3s;">
           <div class="device-frame">
             <div class="device-notch"></div>
-            <div class="device-screen">
-              <img src="screen1pl.png" id="exo-screen" alt="IbronEXO Interface" onerror="this.style.display='none'">
+            <div class="device-screen" id="device-screen-container">
+              <!-- JS will toggle the .active class on these -->
+              <img src="screen1pl.png" class="screen-img active" data-base="screen1" alt="IbronEXO Interface 1" onerror="this.src='https://via.placeholder.com/320x610/0A1628/ffffff?text=Screen+1'">
+              <img src="screen2pl.png" class="screen-img" data-base="screen2" alt="IbronEXO Interface 2" onerror="this.src='https://via.placeholder.com/320x610/1565C0/ffffff?text=Screen+2'">
+              <img src="screen3pl.png" class="screen-img" data-base="screen3" alt="IbronEXO Interface 3" onerror="this.src='https://via.placeholder.com/320x610/0D47A1/ffffff?text=Screen+3'">
             </div>
           </div>
         </div>
@@ -436,41 +515,62 @@
       document.documentElement.lang = langCode;
       try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
       
-      // Update active state of buttons
+      // Update buttons
       document.getElementById('lang-pl-btn').classList.remove('active');
       document.getElementById('lang-en-btn').classList.remove('active');
       document.getElementById('lang-' + langCode + '-btn').classList.add('active');
 
-      // Update mockup image based on language
-      const screenImg = document.getElementById('exo-screen');
-      if(screenImg) {
-        screenImg.src = langCode === 'pl' ? 'screen1pl.png' : 'screen1.png';
-      }
+      // Update image sources
+      document.querySelectorAll('.screen-img').forEach(img => {
+        const base = img.getAttribute('data-base');
+        if(base) {
+          img.src = langCode === 'pl' ? `${base}pl.png` : `${base}.png`;
+        }
+      });
     }
+
+    /* ===== SCREENSHOT ROTATION ===== */
+    let currentScreenIndex = 0;
+    function rotateScreenshots() {
+      const screens = document.querySelectorAll('.screen-img');
+      if (screens.length === 0) return;
+      
+      // Remove active from all
+      screens.forEach(s => s.classList.remove('active'));
+      
+      // Move to next index
+      currentScreenIndex = (currentScreenIndex + 1) % screens.length;
+      
+      // Add active to new current
+      screens[currentScreenIndex].classList.add('active');
+    }
+    
+    // Set interval for 3.5 seconds
+    setInterval(rotateScreenshots, 3500);
 
     /* ===== SCROLL ANIMATION (INTERSECTION OBSERVER) ===== */
     const observerOptions = {
       root: null,
       rootMargin: '0px',
-      threshold: 0.15 // 15% visibility triggers the animation
+      threshold: 0.15
     };
 
     const observer = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
-          observer.unobserve(entry.target); // Animate only once
+          observer.unobserve(entry.target); 
         }
       });
     }, observerOptions);
 
     /* ===== INIT ===== */
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Init Language
+      // 1. Language
       const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
       setLang(initialLang);
 
-      // 2. Init scroll animations
+      // 2. Scroll Observer
       document.querySelectorAll('.fade-up').forEach(el => {
         observer.observe(el);
       });
