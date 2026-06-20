@@ -2,337 +2,434 @@
 <html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-  <script>
-    (function(){
-      try {
-        var lang = localStorage.getItem('ibron_lang');
-        if(!lang) {
-          var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
-          lang = (browserLang === 'pl') ? 'pl' : 'en';
-        }
-        document.documentElement.setAttribute('data-lang', lang);
-        document.documentElement.lang = lang;
-      } catch(e) {
-        document.documentElement.setAttribute('data-lang', 'pl');
-        document.documentElement.lang = 'pl';
-      }
-    })();
-  </script>
-  
-  <title>IBRON INDUSTRIES | Privacy Software</title>
-  <meta name="description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IbronEXO - Cinematic Product Shot</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== DESIGN SYSTEM & VARIABLES ===== */
+    /* ===== PODSTAWOWE ZMIENNE (Dla spójności ze stylem Santorini/Premium) ===== */
     :root {
-      /* Typography */
-      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-sans: 'Inter', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
       
-      /* Colors */
-      --c-text-main: #FFF8F0; /* Kremowa biel dla najwyższej czytelności */
-      --c-text-muted: rgba(255, 248, 240, 0.85);
-      
-      /* Sky Gradient Stops (od góry do dołu) */
-      --sky-1: #08061C; /* Bardzo ciemne nocne niebo */
-      --sky-2: #0E0B2E; /* Głęboki granat */
-      --sky-3: #2A2356; /* Fiolet przejściowy */
-      --sky-4: #4A3B6B; /* Wrzosowy fiolet */
-      --sky-5: #C9596B; /* Głęboki róż zachodu */
-      --sky-6: #FF8C5A; /* Zachodzący pomarańcz */
-      --sky-7: #FFB347; /* Złoty horyzont */
-      
-      --header-height: 80px;
+      /* Kolory sekcji kinowej */
+      --c-app-bg: #060609; /* Bardzo głęboki, niemal czarny granat */
+      --c-app-glow: rgba(232, 184, 75, 0.08); /* Ciepła, złoto-pomarańczowa poświata tła */
+      --c-app-text: #FFFFFF;
+      --c-app-muted: #9CA3AF;
+      --c-accent: #E8B84B;
+      --c-accent-hover: #F2C966;
     }
 
-    /* ===== CSS LANGUAGE TOGGLE ===== */
+    /* ===== RESET & LANG TOGGLE (na potrzeby testu) ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: var(--font-sans); line-height: 1.6; background: #000; color: #fff; }
     [data-lang="en"] .lang-pl { display: none !important; }
     [data-lang="pl"] .lang-en { display: none !important; }
 
-    /* ===== RESET & GLOBAL ===== */
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    html { scroll-behavior: smooth; }
-    
-    body {
-      background-color: var(--sky-1);
-      color: var(--c-text-main);
-      font-family: var(--font-sans);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-
-    a { text-decoration: none; color: inherit; }
-    button { border: none; background: none; font-family: inherit; cursor: pointer; }
-
-    /* ===== TYPOGRAPHY ===== */
-    h1 { 
-      font-weight: 800; 
-      line-height: 1.05; 
-      letter-spacing: -0.03em; 
-      margin-bottom: 24px;
-    }
-    p { margin-bottom: 1.5em; }
-
-    /* ===== BUTTONS ===== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 16px 36px;
-      font-size: 1rem;
-      font-weight: 600;
-      border-radius: 8px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
-      cursor: pointer;
-    }
-    
-    .btn-primary {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--c-text-main);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      box-shadow: 0 8px 32px rgba(8, 6, 28, 0.3);
-    }
-    
-    .btn-primary:hover {
-      background: rgba(255, 255, 255, 0.2);
-      transform: translateY(-2px);
-      box-shadow: 0 12px 40px rgba(8, 6, 28, 0.4);
-      border-color: rgba(255, 255, 255, 0.3);
-    }
-
-    /* ===== HEADER ===== */
-    .header {
-      position: absolute; /* Minimalny header, nie musi być nawet sticky w tym etapie */
-      top: 0; left: 0; right: 0;
-      height: var(--header-height);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 0 5%;
-      z-index: 1000;
-    }
-
-    .logo {
-      font-weight: 800;
-      font-size: 1.25rem;
-      letter-spacing: -0.02em;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-
-    .lang-switcher {
-      display: flex;
-      gap: 16px;
-      font-size: 0.85rem;
-      font-weight: 600;
-    }
-    
-    .lang-btn {
-      color: rgba(255, 255, 255, 0.5);
-      transition: color 0.2s ease;
-      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
-    }
-    
-    .lang-btn:hover { color: rgba(255, 255, 255, 0.8); }
-    .lang-btn.active { color: #FFFFFF; }
-
-    /* ===== HERO SECTION ===== */
-    .hero {
+    /* ==============================================================
+       CINEMATIC APPS SECTION
+       ============================================================== */
+    #apps-cinematic {
       position: relative;
       min-height: 100vh;
-      width: 100%;
       display: flex;
       align-items: center;
-      justify-content: center;
-      text-align: center;
-      padding: 0 5%;
+      background-color: var(--c-app-bg);
       overflow: hidden;
+      padding: 100px 5%;
     }
 
-    /* SCENA NIEBA (LINEAR GRADIENT) */
-    .sky-background {
+    /* TŁO: Subtelna, ciepła poświata za telefonem */
+    #apps-cinematic::before {
+      content: '';
       position: absolute;
-      inset: 0;
-      z-index: 0;
-      background: linear-gradient(
-        180deg, 
-        var(--sky-1) 0%, 
-        var(--sky-2) 20%, 
-        var(--sky-3) 45%, 
-        var(--sky-4) 65%, 
-        var(--sky-5) 80%, 
-        var(--sky-6) 92%, 
-        var(--sky-7) 100%
-      );
-    }
-
-    /* GWIAZDY (CSS RADIAL GRADIENTS + ANIMACJA) */
-    .stars {
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 65%; /* Gwiazdy tylko w górnej/środkowej części nieba */
-      z-index: 1;
-      /* Maska, by gwiazdy płynnie zanikały w stronę zachodu słońca */
-      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
-      -webkit-mask-image: -webkit-linear-gradient(top, black 40%, transparent 100%);
-    }
-
-    /* Warstwa 1: małe statyczne gwiazdy */
-    .stars-layer-1 {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1.5px 1.5px at 25% 45%, rgba(255,255,255,0.6), transparent),
-        radial-gradient(1px 1px at 45% 15%, rgba(255,255,255,0.9), transparent),
-        radial-gradient(2px 2px at 60% 55%, rgba(255,248,240,0.5), transparent),
-        radial-gradient(1px 1px at 80% 25%, rgba(255,255,255,0.8), transparent),
-        radial-gradient(1.5px 1.5px at 95% 60%, rgba(255,255,255,0.7), transparent);
-      background-size: 200px 200px;
-    }
-
-    /* Warstwa 2: migoczące gwiazdy */
-    .stars-layer-2 {
-      position: absolute;
-      inset: 0;
-      background-image: 
-        radial-gradient(2px 2px at 15% 50%, #FFF8F0, transparent),
-        radial-gradient(1px 1px at 35% 30%, #FFFFFF, transparent),
-        radial-gradient(2.5px 2.5px at 55% 10%, #E8B84B, transparent),
-        radial-gradient(1.5px 1.5px at 75% 40%, #FFFFFF, transparent),
-        radial-gradient(2px 2px at 85% 15%, #FFF8F0, transparent);
-      background-size: 350px 350px;
-      animation: twinkle 6s ease-in-out infinite alternate;
-    }
-
-    @keyframes twinkle {
-      0% { opacity: 0.2; }
-      100% { opacity: 0.9; }
-    }
-
-    /* HORYZONT I PALMY (MIEJSCE NA PLIKI) */
-    .horizon {
-      position: absolute;
-      bottom: 0; left: 0; right: 0;
-      height: 35vh;
-      z-index: 2;
-      display: flex;
-      align-items: flex-end;
-      justify-content: space-between;
+      top: 50%;
+      right: 15%; /* Umiejscowione za telefonem */
+      transform: translateY(-50%);
+      width: 60vw;
+      height: 60vw;
+      background: radial-gradient(circle, var(--c-app-glow) 0%, transparent 60%);
       pointer-events: none;
-      /* Subtelne wyciemnienie samego dołu by połączyć korzenie palm z krawędzią ekranu */
-      background: linear-gradient(to top, rgba(8, 6, 28, 0.4) 0%, transparent 20%);
+      z-index: 0;
     }
 
-    .palm {
-      /* Zakładamy, że obrazek będzie miał naturalny kolor ciemnej sylwetki.
-         W razie czego brightness(0) robi z niego idealnie czarny cień (sylwetkę). */
-      filter: brightness(0) opacity(0.85); 
-      object-fit: contain;
-      transform-origin: bottom center;
-    }
-
-    /* HERO CONTENT (TEKST) */
-    .hero-content {
+    .cinematic-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
       position: relative;
-      z-index: 10; /* Powyżej tła i palm */
-      max-width: 900px;
-      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      z-index: 10;
+    }
+
+    /* ===== LEWA STRONA: ASYMETRYCZNY TEKST ===== */
+    .product-info {
+      max-width: 520px;
+    }
+
+    .badge-premium {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-accent);
+      background: rgba(232, 184, 75, 0.1);
+      border: 1px solid rgba(232, 184, 75, 0.2);
+      padding: 6px 12px;
+      border-radius: 4px;
+      margin-bottom: 24px;
+    }
+
+    .product-info h2 {
+      font-size: clamp(3rem, 5vw, 4.5rem);
+      font-weight: 800;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 8px;
+    }
+
+    .product-status {
+      font-family: var(--font-mono);
+      font-size: 0.9rem;
+      color: #00E676; /* Techniczny zielony dla statusu */
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .product-status::before {
+      content: '';
+      display: block;
+      width: 6px;
+      height: 6px;
+      background: #00E676;
+      border-radius: 50%;
+      box-shadow: 0 0 8px #00E676;
+    }
+
+    .product-lead {
+      font-size: 1.125rem;
+      color: var(--c-app-muted);
+      margin-bottom: 40px;
+    }
+
+    /* Minimalistyczna lista cech */
+    .minimal-features {
+      list-style: none;
+      margin-bottom: 48px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+
+    .feature-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+    }
+
+    .feature-icon {
+      flex-shrink: 0;
+      color: var(--c-accent);
+      margin-top: 2px;
+    }
+
+    .feature-text h4 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+      color: var(--c-app-text);
+    }
+
+    .feature-text p {
+      font-size: 0.875rem;
+      color: var(--c-app-muted);
+      margin: 0;
+    }
+
+    /* CTA Button */
+    .btn-cinematic {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--c-accent);
+      color: #000;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      box-shadow: 0 4px 15px rgba(232, 184, 75, 0.2);
+    }
+
+    .btn-cinematic:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(232, 184, 75, 0.4);
+      background: var(--c-accent-hover);
+    }
+
+    /* ===== PRAWA STRONA: LEWITUJĄCY TELEFON ===== */
+    .product-showcase {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      perspective: 1200px; /* Perspektywa dla głębi 3D */
+      position: relative;
+    }
+
+    /* Rozmyty cień na "podłodze" budujący iluzję lewitacji */
+    .levitation-shadow {
+      position: absolute;
+      bottom: -40px;
+      left: 50%;
+      transform: translateX(-50%) rotateX(75deg);
+      width: 280px;
+      height: 100px;
+      background: rgba(0, 0, 0, 0.8);
+      filter: blur(25px);
+      z-index: 1;
+    }
+
+    /* Obrys telefonu */
+    .device-chassis {
+      position: relative;
+      z-index: 10;
+      width: 100%;
+      max-width: 320px;
+      aspect-ratio: 9 / 19.5;
+      border-radius: 46px;
+      padding: 6px; /* Grubość bocznej ramki */
+      
+      /* Subtelny obrót i nachylenie telefonu */
+      transform: rotateY(-6deg) rotateX(3deg);
+      transform-style: preserve-3d;
+      
+      /* ŚWIATŁO I MATERIAŁ (Główna magia):
+        Tło to gradient imitujący światło padające od góry na metalową/szklaną ramkę.
+      */
+      background: linear-gradient(160deg, #4B5563 0%, #1F2937 30%, #030712 100%);
+      
+      box-shadow: 
+        /* Twardy cień rzucany w przestrzeń */
+        -20px 30px 50px rgba(0, 0, 0, 0.6),
+        /* Ciepły rim-light z prawej strony (odbicie poświaty tła) */
+        4px -2px 15px rgba(232, 184, 75, 0.15),
+        /* Chłodny rim-light u dołu dla kontrastu */
+        -2px 4px 10px rgba(255, 255, 255, 0.05);
+    }
+
+    /* Ekran (czarna tafla przed załadowaniem obrazka) */
+    .device-screen {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #050505;
+      border-radius: 40px; /* Wewnętrzne zaokrąglenie ekranu */
+      overflow: hidden;
+      box-shadow: inset 0 0 12px rgba(0,0,0,0.9);
+      
+      /* Fix dla Safari na zaokrąglenie ukryte przez overflow */
+      mask-image: radial-gradient(white, black);
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+
+    /* Odbicie światła na szkle ekranu (subtelny refleks) */
+    .device-screen::after {
+      content: '';
+      position: absolute;
+      top: 0; left: -50%;
+      width: 200%; height: 100%;
+      background: linear-gradient(
+        to bottom right,
+        rgba(255, 255, 255, 0.08) 0%,
+        rgba(255, 255, 255, 0.02) 40%,
+        transparent 50%
+      );
+      pointer-events: none;
+      z-index: 20;
+    }
+
+    /* Dynamic Island / Notch */
+    .device-notch {
+      position: absolute;
+      top: 10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 30px;
+      background: #000;
+      border-radius: 20px;
+      z-index: 30;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+    }
+
+    /* Auto-przełączające się obrazy ekranu */
+    .screen-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
       opacity: 0;
-      transform: translateY(30px);
+      /* Początkowy stan przed animacją - lekko przybliżone */
+      transform: scale(1.05);
+      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      z-index: 10;
+    }
+    
+    .screen-img.active {
+      opacity: 1;
+      transform: scale(1);
     }
 
-    @keyframes fadeUp {
-      to { opacity: 1; transform: translateY(0); }
+    /* RWD */
+    @media (max-width: 992px) {
+      .cinematic-container {
+        grid-template-columns: 1fr;
+        gap: 80px;
+        text-align: center;
+      }
+      .product-info {
+        max-width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .minimal-features {
+        text-align: left;
+      }
+      .product-status {
+        justify-content: center;
+      }
+      .product-showcase {
+        order: -1; /* Telefon ląduje nad tekstem w wersji mobilnej */
+        margin-top: 40px;
+      }
     }
-
-    .hero-content h1 {
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      /* Mocny cień, aby tekst nie zginął na jasnym dole zachodu słońca */
-      text-shadow: 0 4px 20px rgba(8, 6, 28, 0.4), 0 10px 40px rgba(8, 6, 28, 0.6);
-    }
-
-    .hero-content p {
-      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-      color: var(--c-text-muted);
-      max-width: 650px;
-      margin: 0 auto 48px;
-      text-shadow: 0 2px 10px rgba(8, 6, 28, 0.5);
-    }
-
   </style>
 </head>
 <body>
 
-  <header class="header">
-    <div class="logo">
-      IBRON INDUSTRIES
-    </div>
-    <div class="lang-switcher">
-      <button class="lang-btn active" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
-      <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
-    </div>
-  </header>
+  <div style="position: fixed; top: 20px; right: 20px; z-index: 9999; display: flex; gap: 10px;">
+    <button onclick="setLang('pl')" style="color:#fff; padding:5px 10px; border:1px solid #fff;">PL</button>
+    <button onclick="setLang('en')" style="color:#fff; padding:5px 10px; border:1px solid #fff;">EN</button>
+  </div>
 
-  <section class="hero" id="hero">
-    
-    <div class="sky-background"></div>
-    
-    <div class="stars">
-      <div class="stars-layer-1"></div>
-      <div class="stars-layer-2"></div>
-    </div>
-    
-    <div class="horizon">
-      <img src="palm.png" class="palm" style="height: 100%; margin-left: -5%;" onerror="this.style.display='none'" alt="">
-      <img src="palm.png" class="palm" style="height: 70%; margin-left: -2%; transform: scaleX(-1);" onerror="this.style.display='none'" alt="">
+  <section id="apps-cinematic">
+    <div class="cinematic-container">
       
-      <div style="flex: 1;"></div>
-      
-      <img src="palm.png" class="palm" style="height: 85%; transform: scaleX(-1);" onerror="this.style.display='none'" alt="">
-      <img src="palm.png" class="palm" style="height: 110%; margin-right: -8%;" onerror="this.style.display='none'" alt="">
-    </div>
+      <div class="product-info">
+        <span class="badge-premium">
+          <span class="lang-pl">Produkt Flagowy</span>
+          <span class="lang-en">Flagship Product</span>
+        </span>
+        
+        <h2>IbronEXO</h2>
+        
+        <div class="product-status">
+          <span class="lang-pl">DOSTĘPNE W GOOGLE PLAY</span>
+          <span class="lang-en">AVAILABLE ON GOOGLE PLAY</span>
+        </div>
+        
+        <p class="product-lead">
+          <span class="lang-pl">Hermetyczny kryptosejf offline. Architektura Zero-Data, brak chmury, brak telemetrii. Twój klucz to jedyna droga do danych.</span>
+          <span class="lang-en">Hermetic offline crypto-vault. Zero-Data architecture, no cloud, no telemetry. Your key is the only path to data.</span>
+        </p>
 
-    <div class="hero-content">
-      <h1>
-        <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
-        <span class="lang-en">Software that puts you in control.</span>
-      </h1>
-      <p>
-        <span class="lang-pl">Tworzymy bezkompromisowe narzędzia prywatności. Zero chmury, zero telemetrii, 100% offline.</span>
-        <span class="lang-en">We build uncompromising privacy tools. Zero cloud, zero telemetry, 100% offline.</span>
-      </p>
-      <a href="#apps" class="btn btn-primary">
-        <span class="lang-pl">Poznaj IbronEXO</span>
-        <span class="lang-en">Explore IbronEXO</span>
-      </a>
-    </div>
+        <ul class="minimal-features">
+          <li class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            <div class="feature-text">
+              <h4><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN System</span></h4>
+              <p><span class="lang-pl">Decoy PIN oraz Nuke PIN dla pełnej kontroli pod presją.</span><span class="lang-en">Decoy PIN and Nuke PIN for full control under duress.</span></p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+            <div class="feature-text">
+              <h4><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h4>
+              <p><span class="lang-pl">Niestandardowe timery destrukcji dla pojedynczych wpisów.</span><span class="lang-en">Custom destruction timers for individual entries.</span></p>
+            </div>
+          </li>
+          <li class="feature-item">
+            <svg class="feature-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <div class="feature-text">
+              <h4><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h4>
+              <p><span class="lang-pl">Odłączony od sieci na poziomie manifestu systemu.</span><span class="lang-en">Disconnected from the network at the system manifest level.</span></p>
+            </div>
+          </li>
+        </ul>
 
+        <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-cinematic">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+          <span class="lang-pl">Pobierz z Google Play</span>
+          <span class="lang-en">Download on Google Play</span>
+        </a>
+      </div>
+
+      <div class="product-showcase">
+        <div class="levitation-shadow"></div>
+        <div class="device-chassis">
+          <div class="device-screen">
+            <div class="device-notch"></div>
+            
+            <img src="screen1pl.png" class="screen-img active" data-base="screen1" onerror="this.src='https://via.placeholder.com/320x650/060609/E8B84B?text=Screen+1'" alt="IbronEXO 1">
+            <img src="screen2pl.png" class="screen-img" data-base="screen2" onerror="this.src='https://via.placeholder.com/320x650/111/E8B84B?text=Screen+2'" alt="IbronEXO 2">
+            <img src="screen3pl.png" class="screen-img" data-base="screen3" onerror="this.src='https://via.placeholder.com/320x650/222/E8B84B?text=Screen+3'" alt="IbronEXO 3">
+          </div>
+        </div>
+      </div>
+
+    </div>
   </section>
 
   <script>
-    /* ===== LOGIKA PRZEŁĄCZANIA JĘZYKA ===== */
+    /* ===== SKRYPT ZMIANY JĘZYKA (Współdzielony/Standalone) ===== */
     function setLang(langCode) {
       document.documentElement.setAttribute('data-lang', langCode);
       document.documentElement.lang = langCode;
       try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
       
-      document.getElementById('lang-pl-btn').classList.remove('active');
-      document.getElementById('lang-en-btn').classList.remove('active');
-      document.getElementById('lang-' + langCode + '-btn').classList.add('active');
+      // Podmiana obrazków wewnątrz ekranu
+      document.querySelectorAll('.screen-img').forEach(img => {
+        const base = img.getAttribute('data-base');
+        if(base) {
+          img.src = langCode === 'pl' ? `${base}pl.png` : `${base}.png`;
+        }
+      });
+    }
+
+    /* ===== AUTO-SLIDESHOW EKRANÓW ===== */
+    let currentScreenIndex = 0;
+    function cycleScreenshots() {
+      const screens = document.querySelectorAll('.screen-img');
+      if (screens.length <= 1) return; // Brak potrzeby animacji dla 1 lub 0 zdjęć
+      
+      // Zdejmij klasę z obecnego
+      screens[currentScreenIndex].classList.remove('active');
+      
+      // Oblicz następny indeks
+      currentScreenIndex = (currentScreenIndex + 1) % screens.length;
+      
+      // Nałóż klasę na nowy
+      screens[currentScreenIndex].classList.add('active');
     }
 
     window.addEventListener('DOMContentLoaded', () => {
+      // Inicjalizacja języka
       const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
       setLang(initialLang);
+
+      // Start pętli zmiany ekranów co 3.5 sekundy
+      setInterval(cycleScreenshots, 3500);
     });
   </script>
 </body>
