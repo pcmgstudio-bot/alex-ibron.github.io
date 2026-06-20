@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="pl" data-lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function(){
+      try {
+        var lang = localStorage.getItem('ibron_lang');
+        if(!lang) {
+          var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
+          lang = (browserLang === 'pl') ? 'pl' : 'en';
+        }
+        document.documentElement.setAttribute('data-lang', lang);
+        document.documentElement.lang = lang;
+      } catch(e) {
+        document.documentElement.setAttribute('data-lang', 'pl');
+        document.documentElement.lang = 'pl';
+      }
+    })();
+  </script>
+  
+  <title>IBRON INDUSTRIES | Dokumentacja Operacyjna</title>
+  <meta name="description" content="Protokoły bezpieczeństwa i dokumentacja operacyjna EULA Ibron Industries.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== DESIGN SYSTEM & VARIABLES ===== */
+    :root {
+      --font-main: 'Poppins', sans-serif;
+      
+      --c-text-main: #FFF8F0;
+      --c-text-muted: rgba(255, 248, 240, 0.75);
+      
+      --c-accent: #E8B84B; /* Złoty akcent do hoverów/badge'y */
+      
+      --header-height: 90px;
+    }
+
+    /* ===== CSS LANGUAGE TOGGLE ===== */
+    [data-lang="en"] .lang-pl { display: none !important; }
+    [data-lang="pl"] .lang-en { display: none !important; }
+
+    /* ===== RESET & GLOBAL ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    body {
+      color: var(--c-text-main);
+      font-family: var(--font-main);
+      line-height: 1.7; /* Zwiększony line-height dla lepszej czytelności długich bloków tekstu */
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #050505; 
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    ul { list-style: none; }
+
+    /* ===== BACKGROUND VIDEO & OVERLAY ===== */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      /* Wzmocniony ciemny overlay dla pewności czytelności długiego tekstu na każdym tle wideo */
+      background: rgba(0, 0, 0, 0.55); 
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 { 
+      font-weight: 800; 
+      line-height: 1.15; 
+      letter-spacing: -0.01em; 
+      margin-bottom: 0.5em;
+    }
+    p { margin-bottom: 1.25em; font-weight: 400; }
+    strong { font-weight: 600; color: #FFF; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      z-index: 1000;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    
+    .header.scrolled {
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #FFF;
+      text-transform: uppercase;
+    }
+
+    .nav-container { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 32px; }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--c-text-muted);
+      position: relative;
+    }
+    .nav-link:hover { color: #FFF; }
+    
+    /* Aktywny link: Protokoły */
+    .nav-link.active {
+      color: #FFF;
+      font-weight: 600;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 100%; height: 2px;
+      background: var(--c-accent);
+      border-radius: 2px;
+    }
+
+    .lang-switcher { 
+      display: flex; gap: 12px; 
+      border-left: 1px solid rgba(255, 255, 255, 0.2); 
+      padding-left: 32px;
+    }
+    .lang-btn { color: var(--c-text-muted); font-weight: 600; font-size: 0.9rem; transition: color 0.2s ease; }
+    .lang-btn:hover { color: #FFF; }
+    .lang-btn.active { color: var(--c-accent); }
+
+    /* ===== BADGE ===== */
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-accent);
+      background: rgba(232, 184, 75, 0.1);
+      border: 1px solid rgba(232, 184, 75, 0.25);
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    /* ===== LAYOUT & CONTAINERS ===== */
+    main { 
+      position: relative; 
+      z-index: 10; 
+      padding-top: calc(var(--header-height) + 60px); 
+      padding-bottom: 80px; 
+    }
+    
+    .container { 
+      /* Zawężony główny kontener na dokumenty tekstowe poprawia czytelność (optymalna długość wiersza) */
+      max-width: 800px; 
+      margin: 0 auto; 
+      padding: 0 5%; 
+      width: 100%; 
+    }
+
+    /* ===== SECTION: HEADER ===== */
+    .page-header {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .page-header h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .page-header p {
+      font-size: 1.15rem;
+      color: var(--c-text-muted);
+      margin: 0;
+    }
+
+    /* ===== SECTION: PROTOCOLS LIST ===== */
+    .protocols-list {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .protocol-card {
+      background: rgba(255, 255, 255, 0.03); /* Bardzo subtelne tło */
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 40px;
+      /* Subtelny glow box-shadow pomagający oddzielić kartę od wideo */
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15); 
+    }
+
+    .protocol-card h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: var(--c-accent);
+      margin-bottom: 16px;
+      text-transform: uppercase;
+      letter-spacing: 0.03em;
+    }
+
+    .protocol-card p {
+      margin: 0;
+      font-size: 1.05rem;
+      color: var(--c-text-main);
+    }
+
+    /* ===== LEGAL DISCLAIMER (FOOTER OF MAIN) ===== */
+    .legal-disclaimer {
+      text-align: center;
+      margin-top: 80px;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.3);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+      .nav-links { display: none; }
+      .lang-switcher { border-left: none; padding-left: 0; }
+      
+      .protocol-card { padding: 32px 24px; }
+      .protocol-card h2 { font-size: 1.15rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="videobl.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+
+  <header class="header" id="main-header">
+    <a href="index.html" class="logo">
+      IBRON INDUSTRIES
+    </a>
+    
+    <div class="nav-container">
+      <nav class="nav-links">
+        <a href="about.html" class="nav-link"><span class="lang-pl">O nas</span><span class="lang-en">About</span></a>
+        <a href="protocols.html" class="nav-link active"><span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span></a>
+        <a href="apps.html" class="nav-link"><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></a>
+        <a href="offer.html" class="nav-link"><span class="lang-pl">Współpraca</span><span class="lang-en">Partnership</span></a>
+      </nav>
+
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
+        <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      
+      <section class="page-header">
+        <span class="badge">
+          <span class="lang-pl">Zasady Bezpieczeństwa</span>
+          <span class="lang-en">Security Rules</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Dokumentacja Operacyjna.</span>
+          <span class="lang-en">Operational Documentation.</span>
+        </h1>
+        <p>
+          <span class="lang-pl">Poniższe protokoły stanowią wiążącą umowę (EULA) między użytkownikiem a Ibron Industries. Pobierając i korzystając z naszych narzędzi, w pełni akceptujesz te zasady.</span>
+          <span class="lang-en">The following protocols constitute a binding agreement (EULA) between the user and Ibron Industries. By downloading and using our tools, you fully accept these rules.</span>
+        </p>
+      </section>
+
+      <section class="protocols-list">
+        
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 1 ] Całkowite wyłączenie odpowiedzialności (As-Is)</span>
+            <span class="lang-en">[ Protocol 1 ] Full Disclaimer of Liability (As-Is)</span>
+          </h2>
+          <p class="lang-pl">W maksymalnym zakresie dozwolonym przez obowiązujące prawo, wszystkie aplikacje i narzędzia wydawane przez Ibron Industries dostarczane są w modelu „As-Is” (tak, jak są), bez jakichkolwiek gwarancji. Nie gwarantujemy nieprzerwanego działania oprogramowania. <strong>Ibron Industries nie ponosi żadnej odpowiedzialności finansowej ani prawnej</strong> za ewentualną utratę danych, uszkodzenie bazy notatek, awarie systemu czy szkody wynikające z użytkowania aplikacji.</p>
+          <p class="lang-en">To the maximum extent permitted by applicable law, all applications and tools released by Ibron Industries are provided "As-Is", without any warranties. We do not guarantee uninterrupted software operation. <strong>Ibron Industries bears no financial or legal responsibility</strong> for any data loss, database corruption, system failures, or damages resulting from the use of the application.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 2 ] Brak tylnej furtki (No Backdoor Policy)</span>
+            <span class="lang-en">[ Protocol 2 ] No Backdoor Policy</span>
+          </h2>
+          <p class="lang-pl">Architektura IbronEXO opiera się na bezwzględnym bezpieczeństwie. System nie posiada funkcji „zapomniałem hasła”, odzyskiwania konta przez e-mail ani ukrytych kluczy deweloperskich. Zgubienie Głównego PIN-u oznacza <strong>nieodwracalną i matematyczną utratę dostępu do danych</strong>. Ibron Industries nie ma technicznej, fizycznej ani teoretycznej możliwości odszyfrowania Twojego sejfu.</p>
+          <p class="lang-en">The IbronEXO architecture relies on absolute security. The system has no "forgot password" function, email account recovery, or hidden developer keys. Losing your Main PIN means <strong>an irreversible and mathematical loss of data access</strong>. Ibron Industries has no technical, physical, or theoretical ability to decrypt your vault.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 3 ] Kapitał i cyberataki (User Risk)</span>
+            <span class="lang-en">[ Protocol 3 ] Capital and Cyberattacks (User Risk)</span>
+          </h2>
+          <p class="lang-pl">Aplikacje Ibron to potężne narzędzia lokalne, jednak żadne cyfrowe zabezpieczenie nie jest w 100% niełamywalne. Jeśli użytkownik przechowuje w systemie frazy kryptowalutowe (Seed Phrase), hasła bankowe lub tajne dane korporacyjne, robi to wyłącznie na własne ryzyko. Ibron Industries nie odpowiada za kradzież środków w wyniku fizycznego przejęcia odblokowanego urządzenia użytkownika, infekcji złośliwym oprogramowaniem czy cyberataków.</p>
+          <p class="lang-en">Ibron apps are powerful local tools, but no digital security is 100% unbreakable. If a user stores cryptocurrency Seed Phrases, banking passwords, or secret corporate data in the system, they do so entirely at their own risk. Ibron Industries is not liable for theft of funds due to physical seizure of an unlocked device, malware infections, or targeted cyberattacks.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 4 ] Architektura Zero-Data (Prywatność i RODO)</span>
+            <span class="lang-en">[ Protocol 4 ] Zero-Data Architecture (Privacy & GDPR)</span>
+          </h2>
+          <p class="lang-pl">Szanujemy Twoją prywatność poprzez jej całkowite ignorowanie. Oprogramowanie Ibron działa całkowicie w modelu <strong>Zero-Data</strong> (Offline-First). Nie zbieramy, nie profilujemy, nie analizujemy i nie wysyłamy żadnych Twoich notatek ani metadanych na zewnętrzne serwery. Wszystko odbywa się lokalnie na Twoim urządzeniu. Administratorem Twoich danych jesteś wyłącznie Ty.</p>
+          <p class="lang-en">We respect your privacy by completely ignoring it. Ibron software operates entirely on a <strong>Zero-Data</strong> (Offline-First) model. We do not collect, profile, analyze, or send any of your notes or metadata to external servers. Everything happens locally on your device. You are the sole administrator of your data.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 5 ] Prawo Właściwe i Jurysdykcja (Governing Law)</span>
+            <span class="lang-en">[ Protocol 5 ] Governing Law</span>
+          </h2>
+          <p class="lang-pl">Niniejsze Protokoły oraz wszelkie spory wynikające z korzystania z oprogramowania Ibron Industries podlegają prawu polskiemu. W przypadku jakichkolwiek roszczeń, właściwym sądem jest sąd według siedziby Ibron Industries w Polsce, o ile obowiązujące przepisy o ochronie konsumentów nie stanowią inaczej.</p>
+          <p class="lang-en">These Protocols and any disputes arising from the use of Ibron Industries software are governed by Polish law. For any claims, the competent court is the court of Ibron Industries' registered location in Poland, unless applicable consumer protection laws state otherwise.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 6 ] Klasyfikacja Wiekowa i Nadzór Rodzicielski</span>
+            <span class="lang-en">[ Protocol 6 ] Age Rating & Parental Responsibility</span>
+          </h2>
+          <p class="lang-pl">Aplikacje Ibron Industries posiadają klasyfikację PEGI 3 / dostępną dla wszystkich grup wiekowych, zgodnie z wpisem w Google Play. Aplikacja nie zbiera, nie weryfikuje i nie przechowuje żadnych danych dotyczących wieku użytkownika. Z uwagi na nieodwracalny charakter utraty dostępu do danych (Protokół 2) oraz brak możliwości odzyskania PIN-u, w przypadku korzystania z aplikacji przez osoby niepełnoletnie odpowiedzialność za nadzór, konfigurację i zapamiętanie danych dostępowych leży wyłącznie po stronie rodzica lub opiekuna prawnego.</p>
+          <p class="lang-en">Ibron Industries applications carry a PEGI 3 rating / are suitable for all age groups, in accordance with their Google Play listing. The application does not collect, verify, or store any user age data. Due to the irreversible nature of data access loss (Protocol 2) and the impossibility of PIN recovery, when the application is used by a minor, responsibility for supervision, setup, and remembering access credentials rests solely with the parent or legal guardian.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 7 ] Aktualizacje i Trwałość Danych</span>
+            <span class="lang-en">[ Protocol 7 ] Updates & Data Continuity</span>
+          </h2>
+          <p class="lang-pl">Aktualizacje aplikacji mogą wprowadzać zmiany w wewnętrznej strukturze szyfrowania lub formacie bazy danych. Dokładamy starań, aby każda aktualizacja zachowywała kompatybilność z istniejącym sejfem użytkownika, jednak nie gwarantujemy zachowania danych w przypadku poważnych zmian architektury. Przed każdą aktualizacją zalecamy wykonanie lokalnego eksportu/backupu, jeśli funkcja ta jest dostępna w danej wersji aplikacji.</p>
+          <p class="lang-en">Application updates may introduce changes to the internal encryption structure or database format. We make every effort to ensure each update remains compatible with the user's existing vault, however we do not guarantee data preservation in the event of major architectural changes. We recommend performing a local export/backup before any update, if this feature is available in the given app version.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 8 ] Status Audytu (Audit Status)</span>
+            <span class="lang-en">[ Protocol 8 ] Audit Status</span>
+          </h2>
+          <p class="lang-pl">Architektura Zero-Data oraz mechanizmy silnego szyfrowania opisane na tej stronie odzwierciedlają intencjonalny projekt aplikacji. Kod aplikacji nie został (jeszcze) poddany niezależnemu audytowi bezpieczeństwa przez stronę trzecią. Jeśli korzystasz z aplikacji do przechowywania danych o wysokiej wartości (finansowych, korporacyjnych), uwzględnij ten fakt w swojej ocenie ryzyka. Plany dotyczące przyszłych audytów będą komunikowane w tej sekcji.</p>
+          <p class="lang-en">The Zero-Data architecture and strong encryption mechanisms described on this page reflect the application's intentional design. The application's code has not (yet) undergone an independent third-party security audit. If you use the application to store high-value data (financial, corporate), factor this into your risk assessment. Plans for future audits will be communicated in this section.</p>
+        </div>
+
+        <div class="protocol-card">
+          <h2>
+            <span class="lang-pl">[ Protokół 9 ] Dezinstalacja i Trwałe Usunięcie Danych</span>
+            <span class="lang-en">[ Protocol 9 ] Uninstall & Permanent Deletion</span>
+          </h2>
+          <p class="lang-pl">Odinstalowanie aplikacji z urządzenia powoduje <strong>nieodwracalne i trwałe usunięcie</strong> całej lokalnej bazy danych, w tym wszystkich zaszyfrowanych notatek. Ibron Industries nie przechowuje żadnej kopii zapasowej poza Twoim urządzeniem i nie ma technicznej możliwości przywrócenia danych po dezinstalacji. Upewnij się, że wykonałeś eksport ważnych danych przed usunięciem aplikacji.</p>
+          <p class="lang-en">Uninstalling the application from your device results in the <strong>irreversible and permanent deletion</strong> of the entire local database, including all encrypted notes. Ibron Industries does not store any backup outside your device and has no technical means of restoring data after uninstallation. Make sure you have exported any important data before removing the application.</p>
+        </div>
+
+      </section>
+
+      <div class="legal-disclaimer">
+        <span class="lang-pl">Niniejsze protokoły mają charakter informacyjny i nie zastępują profesjonalnej porady prawnej.</span>
+        <span class="lang-en">These protocols are informational in nature and do not replace professional legal advice.</span>
+      </div>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 Ibron Industries. Absolute Privacy.
+    </div>
+  </footer>
+
+  <script>
+    /* HEADER BLUR ON SCROLL */
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    /* LANGUAGE SWITCHER LOGIC */
+    function setLang(langCode) {
+      document.documentElement.setAttribute('data-lang', langCode);
+      document.documentElement.lang = langCode;
+      try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
+      
+      document.getElementById('lang-pl-btn').classList.remove('active');
+      document.getElementById('lang-en-btn').classList.remove('active');
+      document.getElementById('lang-' + langCode + '-btn').classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
+      setLang(initialLang);
+    });
+  </script>
+</body>
+</html>
