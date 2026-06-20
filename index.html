@@ -1,9 +1,4 @@
 <!DOCTYPE html>
-<!-- 
-  ANTI-FOUC LANGUAGE SYSTEM
-  Skrypt wykonuje się przed renderowaniem DOM, ustalając atrybut data-lang.
-  CSS natychmiast ukrywa niepotrzebny język, gwarantując brak migotania (FOUC).
--->
 <html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
@@ -30,22 +25,26 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   
   <style>
-    /* ===== SANTORINI DESIGN SYSTEM ===== */
+    /* ===== DESIGN SYSTEM & VARIABLES ===== */
     :root {
-      --c-bg: #FFFFFF;
-      --c-bg-alt: #F8FAFC;
+      /* Typography */
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
       
-      --c-text-main: #0A1628;
-      --c-text-muted: #5C6A82;
+      /* Colors */
+      --c-text-main: #FFF8F0; /* Kremowa biel dla najwyższej czytelności */
+      --c-text-muted: rgba(255, 248, 240, 0.85);
       
-      --c-blue-primary: #1565C0;
-      --c-blue-dark: #0D47A1;
-      
-      --font-sans: 'Inter', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      /* Sky Gradient Stops (od góry do dołu) */
+      --sky-1: #08061C; /* Bardzo ciemne nocne niebo */
+      --sky-2: #0E0B2E; /* Głęboki granat */
+      --sky-3: #2A2356; /* Fiolet przejściowy */
+      --sky-4: #4A3B6B; /* Wrzosowy fiolet */
+      --sky-5: #C9596B; /* Głęboki róż zachodu */
+      --sky-6: #FF8C5A; /* Zachodzący pomarańcz */
+      --sky-7: #FFB347; /* Złoty horyzont */
       
       --header-height: 80px;
     }
@@ -57,12 +56,10 @@
     /* ===== RESET & GLOBAL ===== */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     
-    html { 
-      scroll-behavior: smooth; 
-    }
+    html { scroll-behavior: smooth; }
     
     body {
-      background-color: var(--c-bg);
+      background-color: var(--sky-1);
       color: var(--c-text-main);
       font-family: var(--font-sans);
       line-height: 1.6;
@@ -73,57 +70,48 @@
 
     a { text-decoration: none; color: inherit; }
     button { border: none; background: none; font-family: inherit; cursor: pointer; }
-    ul { list-style: none; }
 
     /* ===== TYPOGRAPHY ===== */
-    h1, h2, h3, h4 { 
-      font-weight: 700; 
-      line-height: 1.1; 
+    h1 { 
+      font-weight: 800; 
+      line-height: 1.05; 
       letter-spacing: -0.03em; 
-      margin-bottom: 0.5em;
+      margin-bottom: 24px;
     }
-    p { color: var(--c-text-muted); margin-bottom: 1.25em; }
-    strong { color: var(--c-text-main); font-weight: 600; }
+    p { margin-bottom: 1.5em; }
 
-    /* ===== COMPONENTS ===== */
+    /* ===== BUTTONS ===== */
     .btn {
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 12px;
       padding: 16px 36px;
       font-size: 1rem;
       font-weight: 600;
       border-radius: 8px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
       cursor: pointer;
     }
     
     .btn-primary {
-      background: linear-gradient(135deg, var(--c-blue-primary), var(--c-blue-dark));
-      color: #FFFFFF;
-      box-shadow: 0 8px 24px rgba(13, 71, 161, 0.15);
+      background: rgba(255, 255, 255, 0.1);
+      color: var(--c-text-main);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      box-shadow: 0 8px 32px rgba(8, 6, 28, 0.3);
     }
     
     .btn-primary:hover {
+      background: rgba(255, 255, 255, 0.2);
       transform: translateY(-2px);
-      box-shadow: 0 12px 32px rgba(13, 71, 161, 0.25);
+      box-shadow: 0 12px 40px rgba(8, 6, 28, 0.4);
+      border-color: rgba(255, 255, 255, 0.3);
     }
 
-    .badge {
-      display: inline-block;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      color: var(--c-blue-primary);
-      margin-bottom: 1rem;
-    }
-
-    /* ===== HEADER (MINIMAL) ===== */
+    /* ===== HEADER ===== */
     .header {
-      position: fixed;
+      position: absolute; /* Minimalny header, nie musi być nawet sticky w tym etapie */
       top: 0; left: 0; right: 0;
       height: var(--header-height);
       display: flex;
@@ -131,449 +119,220 @@
       align-items: center;
       padding: 0 5%;
       z-index: 1000;
-      background: rgba(255, 255, 255, 0.9);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      transition: transform 0.3s ease;
     }
 
     .logo {
       font-weight: 800;
       font-size: 1.25rem;
       letter-spacing: -0.02em;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
 
     .lang-switcher {
       display: flex;
       gap: 16px;
-      font-family: var(--font-mono);
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
     }
     
     .lang-btn {
-      color: var(--c-text-muted);
+      color: rgba(255, 255, 255, 0.5);
       transition: color 0.2s ease;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.5);
     }
     
-    .lang-btn:hover { color: var(--c-text-main); }
-    .lang-btn.active { color: var(--c-blue-primary); font-weight: 700; }
+    .lang-btn:hover { color: rgba(255, 255, 255, 0.8); }
+    .lang-btn.active { color: #FFFFFF; }
 
-    /* ===== SECTIONS STRUCTURE ===== */
-    .section-fullscreen {
+    /* ===== HERO SECTION ===== */
+    .hero {
+      position: relative;
       min-height: 100vh;
       width: 100%;
       display: flex;
       align-items: center;
-      position: relative;
-      padding: calc(var(--header-height) + 40px) 5% 80px;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      width: 100%;
-      position: relative;
-      z-index: 2; /* Keeps content above animated bg */
-    }
-
-    /* ===== SCROLL ANIMATIONS (SUBTLE) ===== */
-    .fade-up {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .fade-up.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ===== HERO SECTION ===== */
-    #hero {
       justify-content: center;
       text-align: center;
-      background-color: var(--c-bg);
+      padding: 0 5%;
       overflow: hidden;
     }
 
-    /* ANIMATED MESH GRADIENT */
-    .hero-bg-mesh {
+    /* SCENA NIEBA (LINEAR GRADIENT) */
+    .sky-background {
       position: absolute;
       inset: 0;
-      z-index: 1; /* Below container */
-      overflow: hidden;
+      z-index: 0;
+      background: linear-gradient(
+        180deg, 
+        var(--sky-1) 0%, 
+        var(--sky-2) 20%, 
+        var(--sky-3) 45%, 
+        var(--sky-4) 65%, 
+        var(--sky-5) 80%, 
+        var(--sky-6) 92%, 
+        var(--sky-7) 100%
+      );
     }
-    
-    /* Using CSS mix-blend-mode or just overlapping absolute divs with blur */
-    .mesh-blob {
+
+    /* GWIAZDY (CSS RADIAL GRADIENTS + ANIMACJA) */
+    .stars {
       position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.25; /* Low opacity for subtlety */
-    }
-
-    .blob-1 {
-      top: -10%; left: -10%;
-      width: 60vw; height: 60vw;
-      background: radial-gradient(circle, #42A5F5 0%, transparent 70%);
-      animation: floatBlob1 25s ease-in-out infinite alternate;
-    }
-
-    .blob-2 {
-      bottom: -20%; right: -10%;
-      width: 70vw; height: 70vw;
-      background: radial-gradient(circle, #1565C0 0%, transparent 70%);
-      animation: floatBlob2 20s ease-in-out infinite alternate;
-    }
-    
-    .blob-3 {
-      top: 30%; left: 40%;
-      width: 50vw; height: 50vw;
-      background: radial-gradient(circle, #0D47A1 0%, transparent 60%);
-      animation: floatBlob3 30s ease-in-out infinite alternate;
-      opacity: 0.15;
-    }
-
-    @keyframes floatBlob1 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(10%, 15%) scale(1.1); }
-    }
-    @keyframes floatBlob2 {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(-15%, -10%) scale(0.9); }
-    }
-    @keyframes floatBlob3 {
-      0% { transform: translate(0, 0) rotate(0deg) scale(1); }
-      100% { transform: translate(-5%, 20%) rotate(15deg) scale(1.15); }
-    }
-
-    /* Optional white overlay to ensure text contrast stays perfect */
-    .hero-overlay {
-      position: absolute;
-      inset: 0;
+      top: 0; left: 0; right: 0;
+      height: 65%; /* Gwiazdy tylko w górnej/środkowej części nieba */
       z-index: 1;
-      background: rgba(255, 255, 255, 0.4);
+      /* Maska, by gwiazdy płynnie zanikały w stronę zachodu słońca */
+      mask-image: linear-gradient(to bottom, black 40%, transparent 100%);
+      -webkit-mask-image: -webkit-linear-gradient(top, black 40%, transparent 100%);
     }
 
-    #hero h1 {
-      font-size: clamp(3.5rem, 8vw, 6rem);
-      max-width: 1000px;
-      margin: 0 auto 24px;
-    }
-
-    #hero p {
-      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
-      max-width: 700px;
-      margin: 0 auto 48px;
-      line-height: 1.5;
-    }
-
-    /* ===== APPS SECTION (IBRON EXO) ===== */
-    #apps {
-      background-color: var(--c-bg-alt);
-      border-top: 1px solid rgba(10, 22, 40, 0.05);
-    }
-
-    .apps-layout {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: center;
-    }
-
-    .apps-content {
-      max-width: 500px;
-    }
-
-    .apps-content h2 {
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      margin-bottom: 24px;
-    }
-
-    .apps-content .lead-desc {
-      font-size: 1.125rem;
-      margin-bottom: 48px;
-    }
-
-    .feature-list {
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
-      margin-bottom: 48px;
-    }
-
-    .feature-item {
-      padding-left: 20px;
-      border-left: 2px solid rgba(21, 101, 192, 0.2);
-      transition: border-color 0.3s ease;
-    }
-    
-    .feature-item:hover {
-      border-left-color: var(--c-blue-primary);
-    }
-
-    .feature-item h3 {
-      font-size: 1.125rem;
-      margin-bottom: 8px;
-    }
-    
-    .feature-item p {
-      font-size: 0.95rem;
-      margin: 0;
-    }
-
-    /* ===== DEVICE MOCKUP WITH ROTATING SCREENS ===== */
-    .mockup-wrapper {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .device-frame {
-      position: relative;
-      width: 100%;
-      max-width: 320px;
-      aspect-ratio: 9 / 19.5;
-      background: var(--c-text-main);
-      border-radius: 40px;
-      padding: 12px;
-      box-shadow: 0 32px 64px rgba(10, 22, 40, 0.12);
-    }
-
-    .device-notch {
-      position: absolute;
-      top: 12px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 100px;
-      height: 24px;
-      background: var(--c-text-main);
-      border-bottom-left-radius: 12px;
-      border-bottom-right-radius: 12px;
-      z-index: 10;
-    }
-
-    .device-screen {
-      width: 100%;
-      height: 100%;
-      background: #000;
-      border-radius: 28px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    /* Screen Images container & logic */
-    .screen-img {
+    /* Warstwa 1: małe statyczne gwiazdy */
+    .stars-layer-1 {
       position: absolute;
       inset: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      opacity: 0;
-      transform: scale(1.05);
-      transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    
-    .screen-img.active {
-      opacity: 1;
-      transform: scale(1);
+      background-image: 
+        radial-gradient(1px 1px at 10% 20%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 25% 45%, rgba(255,255,255,0.6), transparent),
+        radial-gradient(1px 1px at 45% 15%, rgba(255,255,255,0.9), transparent),
+        radial-gradient(2px 2px at 60% 55%, rgba(255,248,240,0.5), transparent),
+        radial-gradient(1px 1px at 80% 25%, rgba(255,255,255,0.8), transparent),
+        radial-gradient(1.5px 1.5px at 95% 60%, rgba(255,255,255,0.7), transparent);
+      background-size: 200px 200px;
     }
 
-    /* Responsive */
-    @media (max-width: 992px) {
-      .apps-layout {
-        grid-template-columns: 1fr;
-        gap: 60px;
-      }
-      .apps-content {
-        max-width: 100%;
-      }
-      .mockup-wrapper {
-        order: -1; 
-      }
+    /* Warstwa 2: migoczące gwiazdy */
+    .stars-layer-2 {
+      position: absolute;
+      inset: 0;
+      background-image: 
+        radial-gradient(2px 2px at 15% 50%, #FFF8F0, transparent),
+        radial-gradient(1px 1px at 35% 30%, #FFFFFF, transparent),
+        radial-gradient(2.5px 2.5px at 55% 10%, #E8B84B, transparent),
+        radial-gradient(1.5px 1.5px at 75% 40%, #FFFFFF, transparent),
+        radial-gradient(2px 2px at 85% 15%, #FFF8F0, transparent);
+      background-size: 350px 350px;
+      animation: twinkle 6s ease-in-out infinite alternate;
     }
+
+    @keyframes twinkle {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.9; }
+    }
+
+    /* HORYZONT I PALMY (MIEJSCE NA PLIKI) */
+    .horizon {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      height: 35vh;
+      z-index: 2;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      pointer-events: none;
+      /* Subtelne wyciemnienie samego dołu by połączyć korzenie palm z krawędzią ekranu */
+      background: linear-gradient(to top, rgba(8, 6, 28, 0.4) 0%, transparent 20%);
+    }
+
+    .palm {
+      /* Zakładamy, że obrazek będzie miał naturalny kolor ciemnej sylwetki.
+         W razie czego brightness(0) robi z niego idealnie czarny cień (sylwetkę). */
+      filter: brightness(0) opacity(0.85); 
+      object-fit: contain;
+      transform-origin: bottom center;
+    }
+
+    /* HERO CONTENT (TEKST) */
+    .hero-content {
+      position: relative;
+      z-index: 10; /* Powyżej tła i palm */
+      max-width: 900px;
+      animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    @keyframes fadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero-content h1 {
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      /* Mocny cień, aby tekst nie zginął na jasnym dole zachodu słońca */
+      text-shadow: 0 4px 20px rgba(8, 6, 28, 0.4), 0 10px 40px rgba(8, 6, 28, 0.6);
+    }
+
+    .hero-content p {
+      font-size: clamp(1.125rem, 2.5vw, 1.5rem);
+      color: var(--c-text-muted);
+      max-width: 650px;
+      margin: 0 auto 48px;
+      text-shadow: 0 2px 10px rgba(8, 6, 28, 0.5);
+    }
+
   </style>
 </head>
 <body>
 
-  <!-- MINIMAL HEADER -->
   <header class="header">
     <div class="logo">
       IBRON INDUSTRIES
     </div>
     <div class="lang-switcher">
-      <button class="lang-btn" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
+      <button class="lang-btn active" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
       <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
     </div>
   </header>
 
-  <main>
-    <!-- SECTION 1: HERO -->
-    <section id="hero" class="section-fullscreen">
+  <section class="hero" id="hero">
+    
+    <div class="sky-background"></div>
+    
+    <div class="stars">
+      <div class="stars-layer-1"></div>
+      <div class="stars-layer-2"></div>
+    </div>
+    
+    <div class="horizon">
+      <img src="palm.png" class="palm" style="height: 100%; margin-left: -5%;" onerror="this.style.display='none'" alt="">
+      <img src="palm.png" class="palm" style="height: 70%; margin-left: -2%; transform: scaleX(-1);" onerror="this.style.display='none'" alt="">
       
-      <!-- Animated Mesh Gradient -->
-      <div class="hero-bg-mesh">
-        <div class="mesh-blob blob-1"></div>
-        <div class="mesh-blob blob-2"></div>
-        <div class="mesh-blob blob-3"></div>
-      </div>
-      <div class="hero-overlay"></div> <!-- Helps maintain text contrast -->
+      <div style="flex: 1;"></div>
+      
+      <img src="palm.png" class="palm" style="height: 85%; transform: scaleX(-1);" onerror="this.style.display='none'" alt="">
+      <img src="palm.png" class="palm" style="height: 110%; margin-right: -8%;" onerror="this.style.display='none'" alt="">
+    </div>
 
-      <div class="container fade-up">
-        <h1>
-          <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
-          <span class="lang-en">Software that puts you in control.</span>
-        </h1>
-        <p>
-          <span class="lang-pl">Tworzymy narzędzia skupione na prywatności — hermetyczne aplikacje, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</span>
-          <span class="lang-en">We build privacy-focused tools — hermetic apps where your data stays with you. No cloud, no telemetry, no exceptions.</span>
-        </p>
-        <a href="#apps" class="btn btn-primary">
-          <span class="lang-pl">Poznaj IbronEXO</span>
-          <span class="lang-en">Explore IbronEXO</span>
-        </a>
-      </div>
-    </section>
+    <div class="hero-content">
+      <h1>
+        <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
+        <span class="lang-en">Software that puts you in control.</span>
+      </h1>
+      <p>
+        <span class="lang-pl">Tworzymy bezkompromisowe narzędzia prywatności. Zero chmury, zero telemetrii, 100% offline.</span>
+        <span class="lang-en">We build uncompromising privacy tools. Zero cloud, zero telemetry, 100% offline.</span>
+      </p>
+      <a href="#apps" class="btn btn-primary">
+        <span class="lang-pl">Poznaj IbronEXO</span>
+        <span class="lang-en">Explore IbronEXO</span>
+      </a>
+    </div>
 
-    <!-- SECTION 2: APPS (IBRON EXO) -->
-    <section id="apps" class="section-fullscreen">
-      <div class="container apps-layout">
-        
-        <div class="apps-content fade-up" style="transition-delay: 0.1s;">
-          <span class="badge">
-            <span class="lang-pl">Produkt Flagowy</span>
-            <span class="lang-en">Flagship Product</span>
-          </span>
-          
-          <h2>IbronEXO</h2>
-          
-          <p class="lead-desc">
-            <span class="lang-pl">Hermetyczny kryptosejf offline zbudowany bez kompromisów. Oparty o silne szyfrowanie lokalne. Twój klucz to jedyna droga do danych.</span>
-            <span class="lang-en">A hermetic offline crypto-vault built without compromise. Based on strong local encryption. Your key is the only path to data.</span>
-          </p>
-
-          <div class="feature-list">
-            <div class="feature-item">
-              <h3><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN System</span></h3>
-              <p>
-                <span class="lang-pl">Główny PIN otwiera prawdziwe dane. Decoy PIN generuje fałszywy sejf. Nuke PIN bezpowrotnie niszczy wszystkie wpisy.</span>
-                <span class="lang-en">Main PIN opens real data. Decoy PIN generates a fake vault. Nuke PIN triggers an instant, irrecoverable wipe.</span>
-              </p>
-            </div>
-            
-            <div class="feature-item">
-              <h3><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h3>
-              <p>
-                <span class="lang-pl">Ustaw timer dla każdej notatki. Po upływie czasu zawartość jest nadpisywana zerami — nie zostawiając żadnego śladu.</span>
-                <span class="lang-en">Set a self-destruct timer for any note. When it expires, content is overwritten with zeros, leaving no trace.</span>
-              </p>
-            </div>
-
-            <div class="feature-item">
-              <h3>Dead Man's Switch</h3>
-              <p>
-                <span class="lang-pl">Brak logowania przez zdefiniowany czas powoduje automatyczne wymazanie lokalnej bazy danych.</span>
-                <span class="lang-en">Failing to log in within a defined period automatically triggers a complete database wipe.</span>
-              </p>
-            </div>
-
-            <div class="feature-item">
-              <h3><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h3>
-              <p>
-                <span class="lang-pl">Brak uprawnień sieciowych, brak chmury, brak telemetrii. Tylko wprowadzany ręcznie tekst na Twoim urządzeniu.</span>
-                <span class="lang-en">No network permissions, no cloud, no telemetry. Only manually entered text residing on your device.</span>
-              </p>
-            </div>
-          </div>
-
-          <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn btn-primary">
-            <span class="lang-pl">Pobierz z Google Play</span>
-            <span class="lang-en">Download on Google Play</span>
-          </a>
-        </div>
-
-        <div class="mockup-wrapper fade-up" style="transition-delay: 0.3s;">
-          <div class="device-frame">
-            <div class="device-notch"></div>
-            <div class="device-screen" id="device-screen-container">
-              <!-- JS will toggle the .active class on these -->
-              <img src="screen1pl.png" class="screen-img active" data-base="screen1" alt="IbronEXO Interface 1" onerror="this.src='https://via.placeholder.com/320x610/0A1628/ffffff?text=Screen+1'">
-              <img src="screen2pl.png" class="screen-img" data-base="screen2" alt="IbronEXO Interface 2" onerror="this.src='https://via.placeholder.com/320x610/1565C0/ffffff?text=Screen+2'">
-              <img src="screen3pl.png" class="screen-img" data-base="screen3" alt="IbronEXO Interface 3" onerror="this.src='https://via.placeholder.com/320x610/0D47A1/ffffff?text=Screen+3'">
-            </div>
-          </div>
-        </div>
-
-      </div>
-    </section>
-  </main>
+  </section>
 
   <script>
-    /* ===== LANGUAGE SWITCHING LOGIC ===== */
+    /* ===== LOGIKA PRZEŁĄCZANIA JĘZYKA ===== */
     function setLang(langCode) {
       document.documentElement.setAttribute('data-lang', langCode);
       document.documentElement.lang = langCode;
       try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
       
-      // Update buttons
       document.getElementById('lang-pl-btn').classList.remove('active');
       document.getElementById('lang-en-btn').classList.remove('active');
       document.getElementById('lang-' + langCode + '-btn').classList.add('active');
-
-      // Update image sources
-      document.querySelectorAll('.screen-img').forEach(img => {
-        const base = img.getAttribute('data-base');
-        if(base) {
-          img.src = langCode === 'pl' ? `${base}pl.png` : `${base}.png`;
-        }
-      });
     }
 
-    /* ===== SCREENSHOT ROTATION ===== */
-    let currentScreenIndex = 0;
-    function rotateScreenshots() {
-      const screens = document.querySelectorAll('.screen-img');
-      if (screens.length === 0) return;
-      
-      // Remove active from all
-      screens.forEach(s => s.classList.remove('active'));
-      
-      // Move to next index
-      currentScreenIndex = (currentScreenIndex + 1) % screens.length;
-      
-      // Add active to new current
-      screens[currentScreenIndex].classList.add('active');
-    }
-    
-    // Set interval for 3.5 seconds
-    setInterval(rotateScreenshots, 3500);
-
-    /* ===== SCROLL ANIMATION (INTERSECTION OBSERVER) ===== */
-    const observerOptions = {
-      root: null,
-      rootMargin: '0px',
-      threshold: 0.15
-    };
-
-    const observer = new IntersectionObserver((entries, observer) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          observer.unobserve(entry.target); 
-        }
-      });
-    }, observerOptions);
-
-    /* ===== INIT ===== */
     window.addEventListener('DOMContentLoaded', () => {
-      // 1. Language
       const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
       setLang(initialLang);
-
-      // 2. Scroll Observer
-      document.querySelectorAll('.fade-up').forEach(el => {
-        observer.observe(el);
-      });
     });
   </script>
 </body>
