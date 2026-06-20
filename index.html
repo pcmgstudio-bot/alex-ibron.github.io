@@ -1,1786 +1,885 @@
 <!DOCTYPE html>
-<html lang="pl" data-global-theme="nebula">
+<html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
   <script>
-(function(){
-  try{
-    var saved = JSON.parse(localStorage.getItem('ibron_prefs')||'null');
-    var lang = saved && saved.lang;
-    if(!lang){
-      var bl = (navigator.language||navigator.userLanguage||'en').toLowerCase().slice(0,2);
-      lang = (bl === 'pl' || bl === 'en') ? bl : 'en';
-    }
-    window.__ibronLang = lang;
-    document.documentElement.lang = lang;
-  }catch(e){ window.__ibronLang='pl'; }
-})();
-</script>
+    (function(){
+      try {
+        var lang = localStorage.getItem('ibron_lang');
+        if(!lang) {
+          var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
+          lang = (browserLang === 'pl') ? 'pl' : 'en';
+        }
+        document.documentElement.setAttribute('data-lang', lang);
+        document.documentElement.lang = lang;
+      } catch(e) {
+        document.documentElement.setAttribute('data-lang', 'pl');
+        document.documentElement.lang = 'pl';
+      }
+    })();
+  </script>
+  
   <title>IBRON INDUSTRIES | Absolute Privacy</title>
-  <meta name="description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
+  <meta name="description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
   <link rel="canonical" href="https://ibronindustries.pl/">
   
   <meta property="og:title" content="IBRON INDUSTRIES | Absolute Privacy">
-  <meta property="og:description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
-  <meta property="og:image" content="The unbidden (3).png">
-  <meta property="og:image:alt" content="IBRON INDUSTRIES Logo">
-  <meta property="og:url" content="https://ibronindustries.pl/">
+  <meta property="og:description" content="Niezależne studio oprogramowania prywatności. Architektura Zero-Data, offline-first.">
   <meta property="og:type" content="website">
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="IBRON INDUSTRIES | Absolute Privacy">
-  <meta name="twitter:description" content="Zdecentralizowane oprogramowanie inżynieryjne. Zero telemetrii, absolutna prywatność.">
-  <meta name="twitter:image" content="The unbidden (3).png">
-
-  <link rel="icon" href="The unbidden (3).png">
-  <link rel="apple-touch-icon" href="The unbidden (3).png">
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;700;900&family=Space+Grotesk:wght@400;700&family=Orbitron:wght@400;700;900&family=Outfit:wght@400;700;900&family=Space+Mono:wght@400;700&family=VT323&family=Bebas+Neue&family=DM+Serif+Display&family=IBM+Plex+Mono:wght@400;700&family=Syne:wght@400;700;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
   <style>
-  /* ===== CSS VARIABLES ===== */
-  :root {
-    --font-head:'Rajdhani',sans-serif; --font-body:'Space Grotesk',sans-serif; --font-mono:'Space Mono',monospace;
-    --card-radius:20px; --glow-spread:15px; --glow-color:var(--accent-glow);
-    --card-border-style:1px solid var(--border-glass);
-    --card-bg-style:linear-gradient(145deg,rgba(255,255,255,.03) 0%,rgba(255,255,255,.01) 100%);
-    --card-shadow:0 15px 35px rgba(0,0,0,.4);
-    --terminal-bg:rgba(0,0,0,.5); --terminal-text:#FFF;
-    --transition-theme:all 1.5s ease;
-    --transition-hover:transform .4s cubic-bezier(.25,1,.5,1),box-shadow .4s,border-color .4s;
-    --grid-gap:25px; --card-pad:35px 28px;
-  }
-  [data-global-theme="cyber"]{--bg-main:#05070A;--bg-glass:rgba(5,7,10,.7);--text-main:#FFF;--text-muted:#A1A1AA;--accent:#00F0FF;--accent-rgb:0,240,255;--accent-glow:rgba(0,240,255,.4);--danger:#FF3B30;--border-glass:rgba(255,255,255,.08);--border-hover:rgba(0,240,255,.5);--terminal-bg:rgba(0,0,0,.5);--terminal-text:#FFF;}
-  [data-global-theme="nature"]{--bg-main:#F4F7F5;--bg-glass:rgba(255,255,255,.85);--text-main:#111814;--text-muted:#4A6353;--accent:#27AE60;--accent-rgb:39,174,96;--accent-glow:rgba(39,174,96,.4);--danger:#E74C3C;--border-glass:rgba(39,174,96,.2);--border-hover:rgba(39,174,96,.8);--card-bg-style:linear-gradient(145deg,rgba(255,255,255,1) 0%,rgba(240,245,242,.9) 100%);--card-shadow:0 15px 35px rgba(0,0,0,.08);--terminal-bg:rgba(230,240,235,.8);--terminal-text:#111814;}
-  [data-global-theme="miami"] {--bg-main:#060913;--bg-glass:rgba(6,9,19,0.85);--text-main:#FFFFFF;--text-muted:#8E9EBE;--accent:#FF6EC7;--accent-rgb:255,110,199;--accent-glow:rgba(255,110,199,0.5);--danger:#FF3B76;--border-glass:rgba(0,229,255,0.2);--border-hover:rgba(0,229,255,0.8);--card-bg-style:linear-gradient(145deg,rgba(255,110,199,0.05) 0%,rgba(0,229,255,0.03) 100%);--card-shadow:0 15px 40px rgba(0,0,0,0.4);--terminal-bg:rgba(6,9,19,0.9);--terminal-text:#00E5FF;}
-  [data-global-theme="custom"]{--bg-main:#05070A;--bg-glass:rgba(5,7,10,.7);--text-main:#FFF;--text-muted:#A1A1AA;--accent:#FF6600;--accent-rgb:255,102,0;--accent-glow:rgba(255,102,0,.4);--danger:#FF3B30;--border-glass:rgba(255,255,255,.08);--border-hover:rgba(255,102,0,.5);--terminal-bg:rgba(0,0,0,.5);--terminal-text:#FFF;}
-  [data-global-theme="aurora"]{--bg-main:#0A0E1A;--bg-glass:rgba(10,14,26,.72);--text-main:#F5F3EE;--text-muted:#9BA3B4;--accent:#E8B84B;--accent-rgb:232,184,75;--accent-glow:rgba(232,184,75,.35);--danger:#E0526A;--border-glass:rgba(232,184,75,.14);--border-hover:rgba(232,184,75,.55);--card-bg-style:linear-gradient(145deg,rgba(232,184,75,.04) 0%,rgba(255,255,255,.01) 100%);--card-shadow:0 18px 40px rgba(0,0,0,.35);--terminal-bg:rgba(10,14,26,.85);--terminal-text:#E8B84B;}
-  [data-global-theme="nebula"]{
-    --bg-main: #04030C;
-    --bg-glass: rgba(4,3,12,0.75);
-    --text-main: #F0EEFF;
-    --text-muted: #8B85A8;
-    --accent: #A855F7;
-    --accent-rgb: 168,85,247;
-    --accent-glow: rgba(168,85,247,0.35);
-    --danger: #F43F5E;
-    --border-glass: rgba(168,85,247,0.12);
-    --border-hover: rgba(168,85,247,0.5);
-    --card-bg-style: linear-gradient(145deg,rgba(168,85,247,0.05) 0%,rgba(59,130,246,0.03) 100%);
-    --card-shadow: 0 18px 40px rgba(0,0,0,0.5);
-    --terminal-bg: rgba(4,3,12,0.9);
-    --terminal-text: #A855F7;
-  }
+    /* ===== VARIABLES & DESIGN SYSTEM ===== */
+    :root {
+      --bg-base: #090C15;
+      --bg-surface: #101522;
+      --bg-surface-hover: #151A29;
+      
+      --text-primary: #F3F4F6;
+      --text-secondary: #9CA3AF;
+      --text-muted: #6B7280;
+      
+      --accent: #E8B84B;
+      --accent-hover: #F2C966;
+      --accent-bg: rgba(232, 184, 75, 0.08);
+      
+      --border: rgba(255, 255, 255, 0.08);
+      --border-hover: rgba(255, 255, 255, 0.15);
+      
+      --font-sans: 'Inter', system-ui, -apple-system, sans-serif;
+      --font-mono: 'JetBrains Mono', monospace;
+      
+      --radius-sm: 6px;
+      --radius-md: 12px;
+      
+      --trans-fast: 0.15s ease;
+      --trans-base: 0.3s ease;
+    }
 
-  /* RESET: OS CURSOR EVERYWHERE */
-  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
-  html{scroll-behavior:smooth}
-  html,body{min-height:100vh;overflow-x:hidden}
-  body{background-color:var(--bg-main);color:var(--text-main);font-family:var(--font-body);line-height:1.6;transition:background-color 1.5s ease,color 1.5s ease;-webkit-font-smoothing:antialiased; animation: bodyFadeIn 1s ease-in-out; cursor:auto;}
-  @keyframes bodyFadeIn { from { opacity: 0; } to { opacity: 1; } }
+    /* ===== CSS LANGUAGE TOGGLE ===== */
+    [data-lang="en"] .lang-pl { display: none !important; }
+    [data-lang="pl"] .lang-en { display: none !important; }
 
-  a, button, [onclick], input, select, textarea, .app-row-card, .nav-item-row, .sleek-filter-btn, .color-btn, .screen-card, .tpl-card, .hv { cursor: pointer !important; }
+    /* ===== RESET ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      font-family: var(--font-sans);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      min-height: 100vh;
+      display: flex;
+    }
 
-  h1,h2,h3,h4,.logo-part-1,.logo-part-2{font-family:var(--font-head)}
-  .gradient-text{background:linear-gradient(135deg,var(--text-main) 0%,var(--accent) 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;transition:var(--transition-theme)}
-  [data-global-theme="miami"] .gradient-text{background:linear-gradient(135deg,#FF6EC7 0%,#00E5FF 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-  [data-global-theme="aurora"] .gradient-text{background:linear-gradient(135deg,#F5F3EE 0%,#E8B84B 100%);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+    a { text-decoration: none; color: inherit; transition: color var(--trans-fast); }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    ul { list-style: none; }
 
-  /* ===== SIDEBAR NAVIGATION ARCHITECTURE ===== */
-  .view-container{padding:60px 5% 100px;max-width:1300px;margin:0 auto 0 220px;position:relative;transition: margin-left .3s ease;}
-  
-  .fixed-sidebar { position: fixed; top: 0; left: 0; width: 220px; height: 100vh; background: var(--bg-glass); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border-right: 1px solid var(--border-glass); z-index: 2000; display: flex; flex-direction: column; justify-content: space-between; padding: 30px 0; transition: var(--transition-theme); }
-  .sidebar-top { padding: 0 24px; }
-  .sidebar-logo { display: flex; flex-direction: column; text-decoration: none; user-select: none; margin-bottom: 35px; }
-  .sidebar-logo .logo-part-1 { font-size: 22px; font-weight: 900; letter-spacing: 2px; color: var(--text-main); line-height: 1.1; }
-  .sidebar-logo .logo-part-2 { font-size: 16px; font-weight: 900; letter-spacing: 4px; color: var(--accent); text-shadow: 0 0 15px var(--accent-glow); line-height: 1.1; margin-top: 2px; }
-  
-  .sidebar-nav { display: flex; flex-direction: column; gap: 8px; flex-grow: 1; padding: 0 12px; }
-  .nav-item-row { display: flex; align-items: center; padding: 12px 14px; text-decoration: none; border-radius: 12px; border-left: 0px solid transparent; transition: background 0.3s, border-left 0.2s, color 0.3s; }
-  .nav-item-row:hover { background: rgba(255,255,255,0.03); }
-  .nav-item-row.active { border-left: 3px solid var(--accent); background: rgba(var(--accent-rgb), 0.08); }
-  .nav-item-icon { font-size: 18px; color: var(--text-muted); width: 24px; display: flex; justify-content: center; transition: color 0.3s; }
-  .nav-item-row.active .nav-item-icon { color: var(--accent); }
-  .nav-item-meta { display: flex; flex-direction: column; margin-left: 12px; overflow: hidden; }
-  .nav-item-label { font-family: var(--font-head); font-weight: 700; font-size: 14px; letter-spacing: 1px; color: var(--text-main); text-transform: uppercase; }
-  .nav-item-row.active .nav-item-label { color: var(--accent); }
-  .nav-item-desc { font-size: 10px; color: var(--text-muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; margin-top: 1px; }
-  
-  .sidebar-bottom { padding: 0 16px; display: flex; flex-direction: column; gap: 10px; }
-
-  /* SPA MODE STATES */
-  .view { display: block; opacity: 1; margin-bottom: 80px; padding-bottom: 40px; border-bottom: 1px dashed var(--border-glass); }
-  .view:last-child { border-bottom: none; }
-  .noscript-notice { background: var(--danger); color: #fff; padding: 10px; text-align: center; font-family: var(--font-mono); font-size: 12px; }
-
-  body.js-enabled .view { display: none; opacity: 0; margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
-  body.js-enabled .view.active { display: block; animation: viewIn .55s cubic-bezier(.16,1,.3,1) forwards; }
-  body.js-enabled .noscript-notice { display: none; }
-  
-  @keyframes viewIn{from{opacity:0;transform:translateY(24px) scale(.97);filter:blur(4px)}to{opacity:1;transform:translateY(0) scale(1);filter:blur(0)}}
-
-  /* ===== BACKGROUNDS ===== */
-  .bg-layer{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-3;pointer-events:none;transition:opacity 1.5s ease;opacity:0}
-  .bg-layer.active{opacity:1}
-  #bg-0{background:transparent}
-  #bg-1{background-image:linear-gradient(var(--border-glass) 1px,transparent 1px),linear-gradient(90deg,var(--border-glass) 1px,transparent 1px);background-size:60px 60px}
-  #bg-2{background-image:radial-gradient(var(--border-glass) 2px,transparent 2px);background-size:40px 40px}
-  #bg-3{background-image:radial-gradient(circle at 50% 50%,rgba(var(--accent-rgb),.05) 0%,transparent 50%);background-size:150px 150px}
-  #bg-4{background-image:repeating-linear-gradient(45deg,var(--border-glass) 0px,var(--border-glass) 1px,transparent 1px,transparent 20px)}
-  #bg-5{background-image:repeating-linear-gradient(0deg,var(--border-glass) 0,var(--border-glass) 1px,transparent 0,transparent 40px)}
-  #bg-6{background:radial-gradient(ellipse at 20% 80%,rgba(var(--accent-rgb),.08) 0%,transparent 50%),radial-gradient(ellipse at 80% 20%,rgba(var(--accent-rgb),.06) 0%,transparent 50%)}
-  #bg-7{background-image:conic-gradient(from 0deg at 50% 50%,transparent 0deg,rgba(var(--accent-rgb),.03) 60deg,transparent 120deg);background-size:200px 200px}
-  #bg-8{background-image:repeating-linear-gradient(60deg,var(--border-glass) 0px,var(--border-glass) 1px,transparent 1px,transparent 30px),repeating-linear-gradient(-60deg,var(--border-glass) 0px,var(--border-glass) 1px,transparent 1px,transparent 30px)}
-  #bg-nature{background-image:radial-gradient(rgba(39,174,96,.2) 1px,transparent 1px);background-size:30px 30px}
-  #bg-space{background-image:radial-gradient(circle,#E6E6FA 1px,transparent 1px);background-size:80px 80px;background-position:0 0,40px 40px}
-  #bg-scanlines{background:repeating-linear-gradient(0deg,rgba(0,0,0,.04) 0px,rgba(0,0,0,.04) 1px,transparent 1px,transparent 3px)}
-  #bg-hexagons{background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='49' viewBox='0 0 28 49'%3E%3Cg fill='%23ffffff' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M13.99 9.25l13 7.5v15l-13 7.5L1 31.75v-15l12.99-7.5z'/%3E%3C/g%3E%3C/svg%3E")}
-  #bg-circuit{background-image:linear-gradient(rgba(var(--accent-rgb),.07) 2px,transparent 2px),linear-gradient(90deg,rgba(var(--accent-rgb),.07) 2px,transparent 2px),linear-gradient(rgba(var(--accent-rgb),.03) 1px,transparent 1px),linear-gradient(90deg,rgba(var(--accent-rgb),.03) 1px,transparent 1px);background-size:100px 100px,100px 100px,20px 20px,20px 20px}
-  #bg-rings{background:radial-gradient(circle,transparent 30%,rgba(var(--accent-rgb),.04) 31%,transparent 32%),radial-gradient(circle,transparent 50%,rgba(var(--accent-rgb),.03) 51%,transparent 52%),radial-gradient(circle,transparent 70%,rgba(var(--accent-rgb),.02) 71%,transparent 72%);background-size:300px 300px;background-position:center}
-  
-  #bg-nebula {
-    background:
-      radial-gradient(ellipse 100% 70% at 15% 80%, rgba(43,30,140,0.55), transparent 60%),
-      radial-gradient(ellipse 75% 55% at 85% 12%, rgba(20,45,125,0.5), transparent 55%),
-      radial-gradient(ellipse 55% 60% at 60% 45%, rgba(95,35,165,0.28), transparent 65%),
-      radial-gradient(ellipse 45% 35% at 30% 25%, rgba(130,45,175,0.22), transparent 60%);
-  }
-
-  /* AURORA BG AND PARTICLES */
-  #bg-aurora{background:radial-gradient(ellipse 70% 50% at 50% -10%, rgba(232,184,75,.07) 0%, transparent 55%),radial-gradient(ellipse 90% 60% at 50% 110%, rgba(40,60,110,.18) 0%, transparent 70%),linear-gradient(rgba(232,184,75,.022) 1px, transparent 1px),linear-gradient(90deg, rgba(232,184,75,.022) 1px, transparent 1px);background-size:100% 100%,100% 100%,70px 70px,70px 70px}
-  [data-global-theme="aurora"] #aurora-sky{opacity:1}
-  #aurora-sky{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden;opacity:0;transition:opacity 1.5s ease}
-  .aur-band{position:absolute;width:140%;height:55%;left:-20%;border-radius:50%;filter:blur(35px);will-change:transform,opacity;mix-blend-mode:screen}
-  .aur-band.b1{top:-12%;background:radial-gradient(ellipse 50% 100% at 50% 50%, rgba(63,224,160,.22), transparent 70%);animation:aurWave1 16s ease-in-out infinite}
-  .aur-band.b2{top:-4%;background:radial-gradient(ellipse 55% 100% at 40% 50%, rgba(43,168,255,.16), transparent 70%);animation:aurWave2 22s ease-in-out infinite}
-  .aur-band.b3{top:2%;background:radial-gradient(ellipse 45% 100% at 60% 50%, rgba(155,107,255,.15), transparent 70%);animation:aurWave3 19s ease-in-out infinite}
-  .aur-band.b4{top:-8%;background:radial-gradient(ellipse 60% 100% at 50% 50%, rgba(232,184,75,.12), transparent 72%);animation:aurWave1 26s ease-in-out infinite reverse}
-  @keyframes aurWave1{0%,100%{transform:translate(-4%,0) scaleY(1) skewX(0deg);opacity:.7}50%{transform:translate(5%,3%) scaleY(1.25) skewX(-6deg);opacity:1}}
-  @keyframes aurWave2{0%,100%{transform:translate(3%,2%) scaleY(1.1) skewX(4deg);opacity:.8}50%{transform:translate(-5%,-2%) scaleY(.85) skewX(-4deg);opacity:1}}
-  @keyframes aurWave3{0%,100%{transform:translate(-2%,1%) scaleY(.9) skewX(-3deg);opacity:.6}50%{transform:translate(4%,-3%) scaleY(1.2) skewX(5deg);opacity:.95}}
-  [data-global-theme="aurora"] #aurora-particles{opacity:1}
-  #aurora-particles{position:fixed;inset:0;z-index:-1;pointer-events:none;opacity:0;transition:opacity 1.5s ease}
-
-  /* NEBULA SKY AND REALISTIC TWINKLING PARTICLES */
-  [data-global-theme="nebula"] #nebula-sky { opacity: 1; }
-  #nebula-sky { position: fixed; inset: 0; z-index: -2; pointer-events: none; overflow: hidden; opacity: 0; transition: opacity 1.5s ease; }
-  .neb-band { position: absolute; width: 140%; height: 65%; left: -20%; border-radius: 50%; filter: blur(60px); will-change: transform, opacity; mix-blend-mode: screen; }
-  .neb-band.b1 { top: -15%; background: radial-gradient(ellipse 50% 100% at 50% 50%, rgba(43,30,140,0.28), transparent 70%); animation: aurWave1 12s ease-in-out infinite; }
-  .neb-band.b2 { top: -2%; background: radial-gradient(ellipse 55% 100% at 40% 50%, rgba(20,45,125,0.24), transparent 70%); animation: aurWave2 15s ease-in-out infinite; }
-  .neb-band.b3 { top: 6%; background: radial-gradient(ellipse 45% 100% at 60% 50%, rgba(120,40,170,0.20), transparent 70%); animation: aurWave3 14s ease-in-out infinite; }
-  .neb-band.b4 { top: -8%; background: radial-gradient(ellipse 60% 100% at 50% 50%, rgba(95,35,165,0.16), transparent 72%); animation: aurWave1 18s ease-in-out infinite reverse; }
-  [data-global-theme="nebula"] #nebula-particles { opacity: 1; }
-  #nebula-particles { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.5s ease; }
-
-  .ambient-glow{position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;pointer-events:none;background:radial-gradient(circle at 50% 0%,var(--accent-glow),transparent 60%);opacity:.5;transition:background 1.5s ease}
-
-  /* ===== MIAMI VIBE LAYER ===== */
-  .miami-vibe-layer { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: -3; opacity: 0; transition: opacity 1.5s ease; background: radial-gradient(circle at 50% 80%, rgba(255, 110, 199, 0.15) 0%, rgba(0, 229, 255, 0.05) 50%, transparent 100%); overflow: hidden; }
-  [data-global-theme="miami"] .miami-vibe-layer { opacity: 1; }
-  .mv-blur-sun { position: absolute; bottom: 5%; left: 50%; transform: translateX(-50%); width: 60vw; max-width: 600px; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 110, 199, 0.6) 0%, rgba(255, 160, 122, 0.3) 40%, transparent 70%); filter: blur(50px); }
-  .mv-blur-palm { position: absolute; bottom: -5%; width: 45vw; max-width: 500px; height: 60vh; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 100 100' preserveAspectRatio='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M50 100 Q45 50 15 15 Q35 25 50 10 Q65 25 85 15 Q55 50 50 100' fill='%2303040A' opacity='0.7'/%3E%3C/svg%3E"); background-size: 100% 100%; background-position: bottom center; background-repeat: no-repeat; filter: blur(12px); }
-  .mv-blur-palm.left { left: -10%; transform: rotate(-15deg); }
-  .mv-blur-palm.right { right: -10%; transform: scaleX(-1) rotate(-15deg); }
-
-  .nav-btn{background:rgba(128,128,128,.1);border:1px solid var(--border-glass);color:var(--text-main);padding:8px 14px;border-radius:20px;font-size:10px;font-weight:bold;letter-spacing:2px;transition:var(--transition-theme);display:flex;align-items:center;justify-content:center;gap:7px;text-transform:uppercase;backdrop-filter:blur(10px);white-space:nowrap;}
-  .nav-btn:hover,.nav-btn.active{border-color:var(--accent);color:var(--accent);box-shadow:0 0 15px var(--accent-glow)}
-  .audio-dot{width:6px;height:6px;border-radius:50%;background:var(--danger);transition:.3s;flex-shrink:0}
-  .audio-dot.on{background:var(--accent);box-shadow:0 0 10px var(--accent)}
-
-  .lang-wrap{position:relative; width:100%;}
-  .lang-btn{background:rgba(128,128,128,.1);border:1px solid var(--border-glass);color:var(--text-main);padding:8px 14px;border-radius:20px;font-size:10px;font-weight:bold;letter-spacing:1px;display:flex;align-items:center;justify-content:center;gap:7px;text-transform:uppercase;backdrop-filter:blur(10px);white-space:nowrap;transition:var(--transition-theme); width:100%;}
-  .lang-btn:hover{border-color:var(--accent);color:var(--accent);box-shadow:0 0 15px var(--accent-glow)}
-  .lang-flag{width:18px;height:12px;border-radius:2px;overflow:hidden;flex-shrink:0;display:inline-block;vertical-align:middle;box-shadow:0 1px 3px rgba(0,0,0,.4)}
-  .lang-flag svg{width:100%;height:100%;display:block}
-  .lang-flag-wave{width:22px;height:15px;border-radius:2px;overflow:hidden;flex-shrink:0;position:relative}
-  .lang-flag-wave::after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,rgba(0,0,0,.1) 0%,transparent 40%,rgba(255,255,255,.06) 60%,transparent 100%);animation:flagWave 2s ease-in-out infinite}
-  @keyframes flagWave{0%,100%{transform:skewX(0deg) scaleX(1)}50%{transform:skewX(-4deg) scaleX(.97)}}
-  .lang-dropdown{position:absolute;bottom:calc(100% + 8px);left:0;right:0;background:var(--bg-glass);border:1px solid var(--border-glass);border-radius:12px;backdrop-filter:blur(20px);padding:6px;max-height:360px;overflow-y:auto;display:none;z-index:3000;box-shadow:0 20px 40px rgba(0,0,0,.5)}
-  .lang-dropdown.open{display:block;animation:dropIn .2s ease}
-  @keyframes dropIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
-  .lang-dropdown::-webkit-scrollbar{width:4px}
-  .lang-dropdown::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:4px}
-  .lang-item{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:8px;font-size:12px;letter-spacing:1px;color:var(--text-muted);transition:.2s;font-weight:600;}
-  .lang-item:hover,.lang-item.active{background:rgba(var(--accent-rgb),.12);color:var(--accent);border-radius:8px}
-
-  /* ===== HOME VIEWS LAYOUT ===== */
-  .hero-layout-block { display: flex; flex-direction: column; gap: 35px; margin-bottom: 50px; }
-  .stats-matrix-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-bottom: 50px; }
-  .stats-matrix-card { background: var(--card-bg-style); border: var(--card-border-style); border-top: 3px solid var(--border-glass); border-radius: 12px; padding: 25px 15px; text-align: center; box-shadow: var(--card-shadow); transition: var(--transition-theme), var(--transition-hover); }
-  .stats-matrix-card:hover { border-top-color: var(--accent); transform: translateY(-2px); box-shadow: 0 5px 25px rgba(var(--accent-rgb), 0.15); }
-  .stats-val { font-size: 32px; font-weight: 900; font-family: var(--font-head); color: var(--accent); line-height: 1.1; margin-bottom: 6px; }
-  .stats-lbl { font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; }
-
-  /* ===== FIX 2: NEW EXO AD BANNER ===== */
-  .home-exo-ad { display: grid; grid-template-columns: 1fr 1.2fr; gap: 50px; background: rgba(10,12,18,0.4); border: 1px solid var(--border-glass); border-radius: var(--card-radius); padding: 60px; align-items: center; opacity: 0; position: relative; overflow: hidden; backdrop-filter: blur(10px); text-decoration: none; }
-  .view.active .home-exo-ad { animation: viewIn .8s .2s forwards; }
-  .home-exo-ad:hover { border-color: var(--accent); transform: translateY(-3px); box-shadow: 0 10px 40px rgba(var(--accent-rgb), 0.15); }
-  .hea-left { position: relative; height: 350px; display: flex; justify-content: center; align-items: center; }
-  .hea-glow { position: absolute; width: 280px; height: 280px; background: radial-gradient(circle, var(--accent-glow) 0%, transparent 60%); filter: blur(40px); animation: pulseSlow 4s infinite alternate; }
-  
-  .phone-mockup-new { position: relative; z-index: 2; width: 190px; height: 380px; background: #000; border: 2px solid rgba(255,255,255,0.1); border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 25px rgba(var(--accent-rgb),0.25); padding: 6px; }
-  .phone-mockup-new::before { content: ''; position: absolute; top: 0; left: 50%; transform: translateX(-50%); width: 40%; height: 18px; background: #000; border-bottom-left-radius: 12px; border-bottom-right-radius: 12px; border: 1px solid rgba(255,255,255,0.1); border-top: none; z-index: 10; }
-  .exo-slides-container { position: relative; width: 100%; height: 100%; border-radius: 24px; overflow: hidden; background: #0a0c12; }
-  .exo-slides-container img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.08) translateY(15px); transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
-  .exo-slides-container img.active { opacity: 1; transform: scale(1) translateY(0); }
-  
-  .hea-right { z-index: 2; }
-  .hea-right h2 { font-family: var(--font-head); font-size: clamp(36px, 5vw, 64px); font-weight: 900; line-height: 1.1; margin: 15px 0; text-transform: uppercase; color: var(--text-main); }
-  .hea-right h3 { font-family: var(--font-mono); font-size: 14px; color: #00e676; text-shadow: 0 0 10px rgba(0, 230, 118, 0.4); margin-bottom: 20px; letter-spacing: 2px; }
-  .hea-right p { color: var(--text-muted); font-size: 15px; line-height: 1.6; margin-bottom: 30px; }
-  .exo-badges { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 30px; }
-  .exo-badge { background: rgba(var(--accent-rgb), 0.1); border: 1px solid var(--accent); color: var(--accent); padding: 6px 12px; font-family: var(--font-mono); font-size: 10px; font-weight: bold; letter-spacing: 1px; text-transform: uppercase; border-radius: 4px; }
-  @keyframes pulseSlow { from { transform: scale(0.8); opacity: 0.5; } to { transform: scale(1.1); opacity: 0.8; } }
-
-  /* ===== FIX 3: HORIZONTAL ROADMAP ===== */
-  .horizontal-roadmap { display: flex; justify-content: space-between; position: relative; margin: 60px 0 80px; padding-top: 30px; }
-  .horizontal-roadmap::before { content: ''; position: absolute; top: 35px; left: 10%; right: 10%; height: 2px; background: rgba(128,128,128,0.2); z-index: 1; }
-  .hrm-step { flex: 1; text-align: center; position: relative; z-index: 2; display: flex; flex-direction: column; align-items: center; }
-  .hrm-node { width: 14px; height: 14px; border-radius: 50%; background: var(--bg-main); border: 2px solid var(--border-glass); margin-bottom: 15px; transition: 0.4s; }
-  .hrm-step.glow .hrm-node { border-color: var(--accent); box-shadow: 0 0 15px var(--accent-glow); background: var(--accent); }
-  .hrm-label { font-family: var(--font-head); font-size: 16px; font-weight: 700; color: var(--text-main); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 5px; }
-  .hrm-desc { font-size: 13px; color: var(--text-muted); max-width: 80%; }
-
-  /* ===== FIX 4: HORIZONTAL APPS LIST ===== */
-  .app-row-card { display: flex; align-items: center; gap: 24px; background: var(--card-bg-style); border-radius: var(--card-radius); padding: 25px 35px; text-decoration: none; margin-bottom: 20px; transition: var(--transition-theme), transform 0.3s, box-shadow 0.3s; position: relative; overflow: hidden; background: rgba(10,12,18,0.4); backdrop-filter: blur(10px); }
-  
-  /* AVAILABLE STYLING */
-  .app-card-available { border: 1px solid rgba(0, 230, 118, 0.4) !important; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-  .app-card-available:hover { border-color: #00e676 !important; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(0, 230, 118, 0.15), 0 0 20px rgba(0, 230, 118, 0.3) !important; }
-  .app-card-available .status-tag { color: #00e676 !important; border-color: #00e676 !important; box-shadow: 0 0 10px rgba(0, 230, 118, 0.2) !important; background: transparent; }
-  .app-card-available .app-row-logo img { filter: drop-shadow(0 0 12px rgba(0, 230, 118, 0.6)) !important; }
-  
-  /* IN-DEV STYLING */
-  .app-card-indev { border: 1px solid rgba(255, 153, 0, 0.4) !important; box-shadow: 0 15px 35px rgba(0,0,0,0.4); }
-  .app-card-indev:hover { border-color: #FF9900 !important; transform: translateY(-3px); box-shadow: 0 15px 35px rgba(255, 153, 0, 0.15), 0 0 20px rgba(255, 153, 0, 0.3) !important; }
-  .app-card-indev .status-tag { color: #FF9900 !important; border-color: #FF9900 !important; box-shadow: 0 0 10px rgba(255, 153, 0, 0.2) !important; background: transparent; }
-  .app-card-indev .app-row-logo img { filter: drop-shadow(0 0 12px rgba(255, 153, 0, 0.6)) !important; }
-
-  .app-row-logo { width: 70px; height: 70px; background: rgba(0,0,0,0.6); border-radius: 16px; border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; flex-shrink: 0; box-shadow: inset 0 0 20px rgba(255,255,255,0.02); transition: 0.3s; }
-  .app-row-logo img { width: 60%; height: 60%; object-fit: contain; transition: 0.3s; }
-  .app-row-content { flex: 1; }
-  .app-row-content h3 { font-size: 24px; font-weight: 900; margin-bottom: 4px; color: var(--text-main); letter-spacing: 1px; }
-  .app-row-content p { font-size: 14px; color: var(--text-muted); margin: 0 0 10px 0; }
-  .app-row-action { flex-shrink: 0; }
-  
-  /* Sleek Filters */
-  .app-filters { display: flex; gap: 10px; margin-bottom: 40px; flex-wrap: wrap; justify-content: center; }
-  .sleek-filter-btn { background: transparent; border: 1px solid var(--border-glass); color: var(--text-muted); padding: 8px 20px; border-radius: 30px; font-family: var(--font-head); font-size: 13px; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; transition: var(--transition-theme); }
-  .sleek-filter-btn:hover { border-color: rgba(var(--accent-rgb), 0.5); color: var(--text-main); }
-  .sleek-filter-btn.active { background: var(--accent); border-color: var(--accent); color: #000; box-shadow: 0 0 15px var(--accent-glow); }
-
-  /* ===== FIX 5: OFFER PAGE ===== */
-  .offer-hero-new { text-align: center; padding: 40px 20px; margin-bottom: 50px; }
-  .offer-hero-new h1 { font-size: clamp(34px, 5vw, 64px); font-weight: 900; letter-spacing: -1px; margin-bottom: 20px; color: var(--text-main); text-transform: uppercase; }
-  .offer-hero-new p { font-size: clamp(14px, 2vw, 18px); color: var(--text-muted); max-width: 740px; margin: 0 auto 35px; line-height: 1.7; }
-  
-  .service-cards-clean { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 70px; }
-  .service-card-clean { background: rgba(128,128,128,0.03); border: 1px solid var(--border-glass); border-radius: 16px; padding: 35px 30px; transition: 0.3s; }
-  .service-card-clean:hover { border-color: var(--accent); box-shadow: 0 10px 30px rgba(var(--accent-rgb), 0.1); background: rgba(128,128,128,0.05); transform: translateY(-3px); }
-  .service-icon-clean { display: inline-flex; align-items: center; justify-content: center; margin-bottom: 15px; color: var(--accent); }
-  .service-icon-clean svg { width: 34px; height: 34px; stroke: var(--accent); filter: drop-shadow(0 0 8px var(--accent-glow)); }
-  .service-card-clean h3 { font-size: 18px; font-weight: 700; color: var(--text-main); margin-bottom: 10px; letter-spacing: 1px; }
-  .service-card-clean p { font-size: 13px; color: var(--text-muted); line-height: 1.6; margin: 0; }
-
-  .process-section { margin-bottom: 80px; }
-  .process-title { text-align: center; font-size: 24px; font-weight: 900; margin-bottom: 40px; text-transform: uppercase; letter-spacing: 2px; }
-  .process-row { display: flex; justify-content: space-between; gap: 20px; }
-  .process-step { flex: 1; background: var(--card-bg-style); border: var(--card-border-style); border-radius: 16px; padding: 25px; position: relative; }
-  .process-step-num { font-family: var(--font-mono); font-size: 12px; color: var(--accent); font-weight: bold; margin-bottom: 15px; display: block; border-bottom: 1px solid rgba(128,128,128,0.2); padding-bottom: 10px; }
-  .process-step h4 { font-size: 16px; font-weight: 700; color: var(--text-main); margin-bottom: 8px; }
-  .process-step p { font-size: 12px; color: var(--text-muted); margin: 0; line-height: 1.5; }
-
-  .offer-cta-band { background: linear-gradient(135deg, rgba(var(--accent-rgb),0.1) 0%, rgba(0,0,0,0) 100%); border: 1px solid var(--accent); border-radius: 20px; padding: 50px 30px; text-align: center; box-shadow: 0 0 30px rgba(var(--accent-rgb),0.1); }
-  .offer-cta-band h2 { font-size: clamp(24px, 4vw, 36px); font-weight: 900; color: var(--text-main); margin-bottom: 25px; }
-
-  /* ===== OFFER (BOTTOM OF HOME) ===== */
-  .offer-hero{position:relative;overflow:hidden;background:linear-gradient(135deg,rgba(var(--accent-rgb),.1) 0%,rgba(var(--accent-rgb),.03) 60%,rgba(128,128,128,.04) 100%);border:1px solid var(--accent);border-radius:var(--card-radius);padding:55px 45px;margin-top:4px;text-align:center;box-shadow:0 0 40px rgba(var(--accent-rgb),.12),inset 0 0 80px rgba(var(--accent-rgb),.03);transition:var(--transition-theme),var(--transition-hover); text-decoration:none; display:block;}
-  .offer-hero:hover{transform:translateY(-5px);box-shadow:0 0 60px rgba(var(--accent-rgb),.22)}
-  .offer-hero::before{content:'';position:absolute;top:-50%;left:-50%;width:200%;height:200%;background:conic-gradient(from 0deg,transparent 0deg,rgba(var(--accent-rgb),.06) 60deg,transparent 120deg);animation:rotateSlow 10s linear infinite;pointer-events:none}
-  .offer-hero::after{content:'';position:absolute;inset:1px;border-radius:calc(var(--card-radius) - 1px);background:var(--bg-main);z-index:0}
-  .offer-hero>*{position:relative;z-index:1}
-  @keyframes rotateSlow{to{transform:rotate(360deg)}}
-  .offer-label{display:inline-flex;align-items:center;gap:8px;background:rgba(var(--accent-rgb),.1);border:1px solid var(--accent);padding:5px 16px;border-radius:20px;font-family:var(--font-mono);font-size:10px;color:var(--accent);letter-spacing:2px;margin-bottom:22px}
-  .offer-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);animation:blink 1.5s infinite;box-shadow:0 0 8px var(--accent)}
-  @keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
-  .offer-tags { display: flex; flex-wrap: wrap; justify-content: center; gap: 9px; margin-bottom: 30px; }
-  .offer-tag { padding: 6px 16px; border: 1px solid var(--border-glass); border-radius: 30px; font-size: 11px; font-family: var(--font-mono); color: var(--text-muted); background: rgba(128,128,128,0.07); transition: .25s; }
-  .offer-tag:hover { border-color:var(--accent); color:var(--accent); }
-
-  /* ===== ELEMENTS, MODALS, OTHER ===== */
-  .section-badge{display:inline-block;background:rgba(128,128,128,.1);color:var(--accent);border:1px solid var(--accent);padding:5px 15px;border-radius:20px;font-size:10px;font-weight:800;letter-spacing:2px;text-transform:uppercase;margin-bottom:14px;transition:var(--transition-theme)}
-  .section-header{margin-bottom:38px;border-bottom:1px solid var(--border-glass);padding-bottom:28px;display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:10px;transition:var(--transition-theme)}
-  .section-header h1{font-size:clamp(24px,4vw,44px);font-weight:900;letter-spacing:-1px;text-transform:uppercase;margin:0;line-height:1}
-  .btn-back{background:transparent;border:1px solid var(--border-glass);color:var(--text-muted);font-size:11px;text-transform:uppercase;letter-spacing:2px;font-weight:700;margin-bottom:36px;display:inline-flex;align-items:center;gap:9px;padding:11px 22px;border-radius:30px;transition:var(--transition-theme),var(--transition-hover);text-decoration:none;}
-  .btn-back:hover{border-color:var(--accent);color:var(--text-main);background:rgba(128,128,128,.1);box-shadow:0 0 15px var(--accent-glow)}
-  .btn-primary{display:inline-flex;align-items:center;justify-content:center;gap:11px;background:var(--text-main);color:var(--bg-main);font-weight:900;letter-spacing:1px;padding:12px 26px;border-radius:30px;text-decoration:none;transition:var(--transition-theme),var(--transition-hover);border:1px solid transparent;font-size:13px;text-transform:uppercase;width:max-content;}
-  .btn-primary:hover{background:var(--accent);box-shadow:0 0 20px var(--accent-glow);transform:scale(1.02);color:#000;border-color:var(--accent)}
-  [data-global-theme="miami"] .btn-primary{background:linear-gradient(135deg,#FF6EC7,#00E5FF);color:#060913}
-  [data-global-theme="miami"] .btn-primary:hover{background:linear-gradient(135deg,#00E5FF,#FF6EC7);box-shadow:0 0 25px rgba(255,110,199,.5)}
-
-  .template-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:16px;margin-bottom:38px}
-  .tpl-card{text-align:center;padding:26px 16px;border-width:2px;}
-  .tpl-card.active{border-color:var(--accent);box-shadow:0 0 30px var(--accent-glow);transform:scale(1.02)}
-  .tpl-card h3{margin-top:10px;margin-bottom:4px;font-size:17px;text-transform:uppercase;letter-spacing:2px}
-  .advanced-panel{background:rgba(128,128,128,.06);border:1px solid var(--border-glass);border-radius:var(--card-radius);padding:32px;transition:var(--transition-theme);display:none}
-  .advanced-panel.revealed{display:block;animation:viewIn .5s ease}
-  .setting-group{margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border-glass)}
-  .setting-group:last-child{border-bottom:none;margin-bottom:0;padding-bottom:0}
-  .setting-header{font-size:13px;color:var(--text-main);margin-bottom:7px;text-transform:uppercase;letter-spacing:2px;display:flex;align-items:center;gap:9px;font-weight:700;font-family:var(--font-head)}
-  .setting-header::before{content:'';display:block;width:7px;height:7px;background:var(--accent);border-radius:50%;box-shadow:0 0 10px var(--accent);flex-shrink:0}
-  .setting-desc{font-size:11px;color:var(--text-muted);margin-bottom:16px;font-family:var(--font-mono)}
-  .opt-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px}
-  .opt-btn{padding:10px 9px;border:1px solid var(--border-glass);background:rgba(128,128,128,.1);color:var(--text-muted);border-radius:9px;font-family:var(--font-mono);font-size:11px;transition:var(--transition-theme);text-align:center;}
-  .opt-btn.active,.opt-btn:hover{border-color:var(--accent);color:var(--text-main);background:rgba(var(--accent-rgb),.1);box-shadow:0 0 10px var(--accent-glow)}
-  .color-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(34px,1fr));gap:11px;margin-bottom:16px}
-  .color-btn{width:100%;aspect-ratio:1;border-radius:50%;border:2px solid transparent;transition:.25s;}
-  .color-btn:hover { transform:scale(1.2); z-index:5; }
-  .color-btn.active{border-color:var(--text-main);box-shadow:0 0 15px currentColor;transform:scale(1.12)}
-  .custom-color-wrap{display:flex;align-items:center;gap:14px;background:rgba(128,128,128,.1);padding:14px;border-radius:11px;border:1px solid var(--border-glass)}
-  input[type=color]{-webkit-appearance:none;width:44px;height:44px;border:none;border-radius:50%;background:transparent;}
-  input[type=color]::-webkit-color-swatch-wrapper{padding:0}
-  input[type=color]::-webkit-color-swatch{border:2px solid var(--text-main);border-radius:50%;box-shadow:0 0 15px var(--accent-glow)}
-  .radius-wrap{display:flex;align-items:center;gap:16px;background:rgba(128,128,128,.1);padding:16px;border-radius:11px;border:1px solid var(--border-glass)}
-  input[type=range]{-webkit-appearance:none;width:100%;height:5px;background:rgba(128,128,128,.2);border-radius:5px;outline:none;}
-  input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:19px;height:19px;border-radius:50%;background:var(--accent);box-shadow:0 0 12px var(--accent);transition:.2s}
-  .music-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px}
-  .music-btn{padding:14px 10px;border:1px solid var(--border-glass);background:rgba(128,128,128,.1);color:var(--text-muted);border-radius:9px;font-family:var(--font-mono);font-size:11px;transition:var(--transition-theme);text-align:center;display:flex;flex-direction:column;align-items:center;gap:6px;}
-  .music-btn:hover,.music-btn.active{border-color:var(--accent);color:var(--accent);background:rgba(var(--accent-rgb),.1);box-shadow:0 0 10px var(--accent-glow)}
-  .music-icon{font-size:22px;line-height:1}
-  .save-bar{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:rgba(var(--accent-rgb),.06);border:1px solid rgba(var(--accent-rgb),.2);border-radius:12px;padding:14px 18px;margin-bottom:30px}
-  .save-bar-msg{font-family:var(--font-mono);font-size:11px;color:var(--accent);flex:1;min-width:150px}
-  .save-btn{padding:9px 20px;border:1px solid var(--accent);background:rgba(var(--accent-rgb),.15);color:var(--accent);border-radius:20px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;transition:.2s;font-weight:700;}
-  .save-btn:hover{background:var(--accent);color:#000}
-  .reset-btn{padding:9px 20px;border:1px solid var(--danger);background:transparent;color:var(--danger);border-radius:20px;font-family:var(--font-mono);font-size:11px;letter-spacing:1px;transition:.2s;}
-  .reset-btn:hover{background:var(--danger);color:#fff}
-  .custom-unlock-wrap{text-align:center;padding:50px 30px;border:1px solid var(--border-glass);border-radius:var(--card-radius);background:rgba(128,128,128,.04);transition:var(--transition-theme)}
-  .unlock-icon{font-size:60px;margin-bottom:20px;display:block;opacity:.8;filter:drop-shadow(0 0 20px var(--accent))}
-  .unlock-title{font-size:clamp(20px,3vw,34px);font-weight:900;letter-spacing:4px;margin-bottom:14px;text-transform:uppercase}
-  .unlock-desc{color:var(--text-muted);font-size:14px;max-width:560px;margin:0 auto 32px;line-height:1.8}
-  .unlock-btn{display:inline-flex;align-items:center;gap:12px;background:transparent;border:2px solid var(--accent);color:var(--accent);font-weight:900;letter-spacing:3px;padding:16px 40px;border-radius:40px;font-size:13px;text-transform:uppercase;transition:var(--transition-theme);font-family:var(--font-head);box-shadow:0 0 25px rgba(var(--accent-rgb),.2);}
-  .unlock-btn:hover{background:var(--accent);color:#000;box-shadow:0 0 40px rgba(var(--accent-rgb),.5);transform:scale(1.03)}
-  .unlock-access-bar{display:flex;justify-content:center;gap:20px;flex-wrap:wrap;margin-top:28px;font-family:var(--font-mono);font-size:11px;color:var(--text-muted)}
-  .access-item{display:flex;align-items:center;gap:7px}
-  .access-dot{width:6px;height:6px;border-radius:50%;background:var(--text-muted)}
-
-  /* Modal */
-  #unlock-modal, #freedom-modal{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.97);z-index:5000;display:flex;justify-content:center;align-items:center;opacity:0;visibility:hidden;transition:.5s;backdrop-filter:blur(25px)}
-  #unlock-modal.active, #freedom-modal.active{opacity:1;visibility:visible}
-  .unlock-modal-box, .freedom-box{max-width:680px;width:90%;text-align:center;border:2px solid var(--accent);border-radius:var(--card-radius);padding:55px 40px;background:rgba(5,7,10,.95);animation:popIn .7s cubic-bezier(.25,1,.5,1);box-shadow:0 0 80px rgba(var(--accent-rgb),.3)}
-  @keyframes popIn{from{transform:scale(.85);opacity:0}to{transform:scale(1);opacity:1}}
-  .modal-glitch{font-size:58px;margin-bottom:18px;display:block;animation:glitch 3s infinite}
-  @keyframes glitch{0%,90%,100%{filter:none;transform:translate(0)}92%{filter:hue-rotate(90deg);transform:translate(-3px,1px)}94%{filter:hue-rotate(180deg);transform:translate(3px,-1px)}96%{filter:hue-rotate(270deg);transform:translate(-2px,2px)}98%{filter:none;transform:translate(0)}}
-  .modal-title{font-size:clamp(22px,4vw,36px);font-weight:900;letter-spacing:6px;margin-bottom:16px;text-transform:uppercase}
-  .modal-lines{font-family:var(--font-mono);font-size:12px;color:var(--text-muted);margin-bottom:30px;line-height:2;text-align:left;display:inline-block}
-  .modal-lines span{color:var(--accent)}
-  .modal-confirm-btn{display:inline-flex;align-items:center;gap:12px;background:var(--accent);color:#000;font-weight:900;letter-spacing:3px;padding:16px 45px;border-radius:40px;font-size:13px;text-transform:uppercase;transition:.2s;font-family:var(--font-head);margin-top:10px;box-shadow:0 0 30px var(--accent-glow);}
-  .modal-confirm-btn:hover{transform:scale(1.03);box-shadow:0 0 50px var(--accent-glow)}
-
-  .terminal-box{background:var(--terminal-bg);color:var(--terminal-text);padding:28px 26px;border-radius:15px;border:1px solid var(--border-glass);margin-bottom:32px;font-family:var(--font-mono);border-top:3px solid var(--accent);transition:var(--transition-theme)}
-  .terminal-box h4{color:var(--accent);font-size:13px;text-transform:uppercase;letter-spacing:3px;margin-bottom:16px;font-weight:900}
-  .app-meta{display:flex;flex-wrap:wrap;gap:11px;margin-bottom:32px;padding-bottom:26px;border-bottom:1px solid var(--border-glass)}
-  .meta-tag{display:inline-flex;align-items:center;gap:7px;background:rgba(128,128,128,.1);padding:6px 13px;border-radius:11px;font-family:var(--font-mono);font-size:12px;color:var(--text-muted);border:1px solid var(--border-glass)}
-  .grid-container{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--grid-gap)}
-  .showcase-gallery{display:flex;gap:16px;overflow-x:auto;padding:8px 4px 26px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
-  .showcase-gallery::-webkit-scrollbar{height:4px}
-  .showcase-gallery::-webkit-scrollbar-thumb{background:var(--border-hover);border-radius:4px}
-  .screen-card{min-width:190px;height:400px;background:#000;border-radius:16px;border:1px solid var(--border-glass);overflow:hidden;scroll-snap-align:start;}
-  .screen-card img{width:100%;height:100%;object-fit:contain;transition:.4s;opacity:.8}
-  .screen-card:hover img{opacity:1;transform:scale(1.02)}
-  .protocol-rule{margin-bottom:26px;padding:26px;background:rgba(128,128,128,.05);border-radius:var(--card-radius);border:1px solid var(--border-glass);transition:var(--transition-theme)}
-  .protocol-rule h4{color:var(--accent);margin-bottom:12px;font-size:15px;text-transform:uppercase}
-  .build-box{text-align:center;padding:65px 20px;border:1px dashed var(--border-glass);background:rgba(128,128,128,.04);border-radius:var(--card-radius);transition:var(--transition-theme)}
-  .load-bar{width:100%;max-width:380px;height:4px;background:rgba(128,128,128,.2);margin:26px auto 10px;border-radius:2px;overflow:hidden}
-  .load-fill{width:30%;height:100%;background:var(--accent);animation:scan 2s ease-in-out infinite alternate;box-shadow:0 0 10px var(--accent)}
-  @keyframes scan{from{margin-left:0}to{margin-left:70%}}
-
-  .founder-card { display: flex; flex-direction: row; align-items: center; gap: 35px; border-color: var(--accent); box-shadow: 0 0 20px rgba(var(--accent-rgb), 0.1); margin-bottom: 35px; }
-  .founder-img-wrap { position: relative; width: 250px; height: 320px; flex-shrink: 0; border-radius: 12px; overflow: hidden; border: 2px solid var(--accent); box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.2); background: #000; }
-  .founder-img-wrap::after { content: ''; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.3) 2px, rgba(0,0,0,0.3) 4px); pointer-events: none; }
-  .founder-img { width: 100%; height: 100%; object-fit: cover; filter: grayscale(100%) contrast(1.2) brightness(0.9); transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1); }
-  .founder-card:hover .founder-img { filter: grayscale(0%) contrast(1.1) brightness(1); transform: scale(1.05); }
-
-  .miami-banner{display:none;text-align:center;padding:14px;margin-bottom:16px;font-family:'VT323',monospace;font-size:clamp(16px,2.5vw,26px);color:#FF6EC7;text-shadow:0 0 20px rgba(255,110,199,.9),0 0 40px rgba(0,229,255,.4);letter-spacing:4px;animation:mbPulse 3s ease-in-out infinite}
-  [data-global-theme="miami"] .miami-banner{display:block}
-  @keyframes mbPulse{0%,100%{opacity:1}50%{opacity:.75;text-shadow:0 0 40px rgba(255,110,199,1),0 0 80px rgba(0,229,255,.6)}}
-
-  #image-lightbox{position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,.96);z-index:3000;display:flex;justify-content:center;align-items:center;opacity:0;visibility:hidden;transition:.4s;backdrop-filter:blur(12px)}
-  .lb-close{position:absolute;top:24px;right:24px;color:var(--text-muted);font-size:34px;cursor:pointer;}
-  #lb-img{max-width:90%;max-height:90vh;border-radius:11px;transform:scale(.9);transition:.4s}
-
-  #cinematic-overlay { position: fixed; inset: 0; background: #000; z-index: 99999; display: none; overflow: hidden; }
-
-  /* ===== RESPONSIVE ===== */
-  @media(max-width:1024px){
-    .home-exo-ad { gap: 30px; padding: 40px; }
-    .service-cards-clean { grid-template-columns: 1fr; }
-  }
-  @media(max-width:768px) {
-    .fixed-sidebar { top: auto; bottom: 0; width: 100%; height: 70px; flex-direction: row; border-right: none; border-top: 1px solid var(--border-glass); padding: 0; box-shadow: 0 -10px 30px rgba(0,0,0,0.5); }
-    .sidebar-top { display: none; }
-    .sidebar-nav { flex-direction: row; width: 100%; height: 100%; padding: 0; gap: 0; justify-content: space-around; align-items: center; }
-    .nav-item-row { flex-direction: column; justify-content: center; padding: 8px 0; border-left: none; border-top: 3px solid transparent; border-radius: 0; flex: 1; height: 100%; }
-    .nav-item-row.active { border-left: none; border-top: 3px solid var(--accent); background: rgba(var(--accent-rgb),0.05); }
-    .nav-item-meta { margin-left: 0; margin-top: 2px; }
-    .nav-item-desc { display: none !important; }
-    .nav-item-label { font-size: 10px; display: none; }
-    .nav-item-row.active .nav-item-label { display: block; }
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4, h5 { font-weight: 700; line-height: 1.2; color: var(--text-primary); margin-bottom: 0.5em; letter-spacing: -0.02em; }
+    p { color: var(--text-secondary); margin-bottom: 1em; }
+    strong { color: var(--text-primary); font-weight: 600; }
     
-    .sidebar-bottom { position: absolute; top: -55px; right: 15px; flex-direction: row; background: var(--bg-glass); backdrop-filter: blur(15px); border: 1px solid var(--border-glass); border-radius: 30px; padding: 4px 10px; }
-    .sidebar-bottom .lang-btn, .sidebar-bottom .nav-btn { padding: 5px 12px; font-size: 9px; }
-    .lang-dropdown { bottom: calc(100% + 10px); }
-    
-    .view-container { margin-left: 0 !important; padding-bottom: 90px; padding-top: 80px; }
-    
-    .home-exo-ad { grid-template-columns: 1fr; padding: 30px 20px; }
-    .hea-left { height: 280px; }
-    .stats-matrix-row { grid-template-columns: repeat(2, 1fr); gap: 15px; }
-    .horizontal-roadmap { flex-direction: column; gap: 30px; padding-left: 20px; padding-top: 0; }
-    .horizontal-roadmap::before { top: 0; bottom: 0; left: 25px; width: 2px; height: auto; right: auto; }
-    .hrm-step { flex-direction: row; text-align: left; align-items: flex-start; }
-    .hrm-node { margin-bottom: 0; margin-right: 20px; margin-top: 4px; }
-    .hrm-desc { max-width: 100%; }
-    
-    .app-row-card { flex-direction: column; text-align: center; padding: 25px 20px; gap: 15px; }
-    .app-row-action { margin-top: 10px; width: 100%; }
-    .app-row-action .btn-primary { width: 100%; justify-content: center; }
+    .text-mono { font-family: var(--font-mono); font-size: 0.85em; letter-spacing: -0.01em; }
+    .text-accent { color: var(--accent); }
 
-    .grid-container{grid-template-columns:1fr}
-    .offer-hero{padding:35px 20px}
-    .template-grid{grid-template-columns:repeat(2,1fr)}
-    .founder-card { flex-direction: column; text-align: center; gap: 20px; padding: 25px; }
-    .founder-img-wrap { width: 200px; height: 260px; }
-    .founder-text-wrap { display: flex; flex-direction: column; align-items: center; }
+    /* ===== COMPONENTS ===== */
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 4px 10px;
+      border-radius: var(--radius-sm);
+      background: var(--accent-bg);
+      border: 1px solid rgba(232, 184, 75, 0.2);
+      color: var(--accent);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 1rem;
+    }
     
-    .process-row { flex-direction: column; }
-  }
-  @media(max-width:480px){.template-grid{grid-template-columns:1fr}}
-  @media(min-width:2000px){.view-container{max-width:1800px;padding-top:140px}}
+    .badge-outline {
+      background: transparent;
+      border-color: var(--border);
+      color: var(--text-secondary);
+    }
 
-  @keyframes pulseStatus{0%,100%{box-shadow:0 0 5px #00e676}50%{box-shadow:0 0 15px #00e676}}
-  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+    .btn-primary {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      background: var(--accent);
+      color: #000;
+      font-weight: 600;
+      font-size: 0.875rem;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      transition: background var(--trans-fast), transform var(--trans-fast);
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      background: var(--accent-hover);
+      transform: translateY(-1px);
+    }
+    
+    .btn-secondary {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      color: var(--text-primary);
+      border: 1px solid var(--border);
+      font-weight: 500;
+      font-size: 0.875rem;
+      padding: 12px 24px;
+      border-radius: var(--radius-sm);
+      transition: border-color var(--trans-fast), background var(--trans-fast);
+    }
+    .btn-secondary:hover {
+      border-color: var(--border-hover);
+      background: var(--bg-surface);
+    }
 
-  #boot-overlay{ position:fixed;top:0;left:0;width:100%;height:100%; background:#000;z-index:9999; display:flex;flex-direction:column;align-items:center;justify-content:center; opacity:0;visibility:hidden;transition:opacity .3s; font-family:var(--font-mono); overflow:hidden; }
-  #boot-overlay.active{opacity:1;visibility:visible}
-  #boot-overlay.fade-out{opacity:0;transition:opacity .6s ease}
-  .boot-scanline{ position:absolute;top:0;left:0;width:100%;height:4px; background:linear-gradient(90deg,transparent,rgba(var(--accent-rgb),.8),transparent); animation:bootScan 1.2s linear infinite; pointer-events:none; }
-  @keyframes bootScan{from{top:-4px}to{top:100%}}
-  .boot-grid-bg{ position:absolute;inset:0; background-image:linear-gradient(rgba(var(--accent-rgb),.04) 1px,transparent 1px), linear-gradient(90deg,rgba(var(--accent-rgb),.04) 1px,transparent 1px); background-size:40px 40px; animation:bootGridFade 3s ease forwards; }
-  @keyframes bootGridFade{0%{opacity:0}30%{opacity:1}100%{opacity:.3}}
-  .boot-center{position:relative;z-index:2;text-align:center;max-width:700px;padding:0 20px}
-  .boot-ring-wrap{position:relative;width:120px;height:120px;margin:0 auto 30px}
-  .boot-ring{ position:absolute;inset:0;border-radius:50%; border:2px solid transparent; }
-  .boot-ring-1{border-color:var(--accent);animation:bootRing1 2s linear infinite;box-shadow:0 0 20px var(--accent-glow),inset 0 0 20px rgba(var(--accent-rgb),.1)}
-  .boot-ring-2{inset:12px;border-color:rgba(var(--accent-rgb),.5);animation:bootRing1 1.5s linear infinite reverse}
-  .boot-ring-3{inset:24px;border-color:rgba(var(--accent-rgb),.3);animation:bootRing1 1s linear infinite}
-  @keyframes bootRing1{to{transform:rotate(360deg)}}
-  .boot-core{ position:absolute;inset:36px;border-radius:50%; background:radial-gradient(circle,var(--accent) 0%,rgba(var(--accent-rgb),.3) 50%,transparent 70%); animation:bootCore 2s ease-in-out infinite; }
-  @keyframes bootCore{0%,100%{transform:scale(.8);opacity:.8}50%{transform:scale(1.1);opacity:1}}
-  .boot-title{ font-family:var(--font-head);font-size:clamp(22px,4vw,38px); font-weight:900;letter-spacing:8px;text-transform:uppercase; color:var(--accent);text-shadow:0 0 30px var(--accent-glow); margin-bottom:8px; animation:bootTitleIn .6s ease .2s both; }
-  @keyframes bootTitleIn{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
-  .boot-sub{ font-size:11px;letter-spacing:3px;color:rgba(var(--accent-rgb),.6); margin-bottom:32px; animation:bootTitleIn .6s ease .4s both; }
-  .boot-lines{ text-align:left;display:inline-block;min-width:320px; animation:bootTitleIn .5s ease .6s both; }
-  .boot-line{ font-size:11px;color:rgba(var(--accent-rgb),.7);letter-spacing:1px; padding:3px 0;display:flex;align-items:center;gap:10px; opacity:0; }
-  .boot-line.show{animation:bootLineIn .3s ease forwards}
-  @keyframes bootLineIn{from{opacity:0;transform:translateX(-10px)}to{opacity:1;transform:translateX(0)}}
-  .boot-line-dot{width:6px;height:6px;border-radius:50%;background:var(--accent);box-shadow:0 0 8px var(--accent);flex-shrink:0}
-  .boot-line-ok{color:#00e676;font-weight:bold}
-  .boot-progress-wrap{ margin-top:28px;width:100%;max-width:400px; animation:bootTitleIn .5s ease .8s both; }
-  .boot-progress-bar{height:3px;background:rgba(var(--accent-rgb),.15);border-radius:2px;overflow:hidden;margin-bottom:6px}
-  .boot-progress-fill{height:100%;background:var(--accent);box-shadow:0 0 10px var(--accent);width:0%;transition:width .1s linear}
-  .boot-progress-label{font-size:10px;color:rgba(var(--accent-rgb),.5);letter-spacing:2px;text-align:right}
+    .card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 32px;
+      transition: border-color var(--trans-base), background var(--trans-base);
+    }
+    a.card:hover {
+      border-color: var(--accent);
+      background: var(--bg-surface-hover);
+    }
+
+    /* ===== LAYOUT & NAVIGATION ===== */
+    .sidebar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 240px;
+      height: 100vh;
+      border-right: 1px solid var(--border);
+      background: var(--bg-base);
+      display: flex;
+      flex-direction: column;
+      padding: 40px 24px;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      flex-direction: column;
+      margin-bottom: 48px;
+    }
+    .logo-main {
+      font-size: 1.25rem;
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      color: var(--text-primary);
+    }
+    .logo-sub {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      color: var(--text-muted);
+    }
+
+    .nav-links {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 1;
+    }
+    .nav-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 12px;
+      border-radius: var(--radius-sm);
+      color: var(--text-secondary);
+      font-size: 0.875rem;
+      font-weight: 500;
+      transition: color var(--trans-fast), background var(--trans-fast);
+    }
+    .nav-item:hover {
+      color: var(--text-primary);
+      background: rgba(255, 255, 255, 0.03);
+    }
+    .nav-item.active {
+      color: var(--text-primary);
+      background: var(--bg-surface);
+      border-left: 2px solid var(--accent);
+    }
+    .nav-item.active:hover {
+      background: var(--bg-surface);
+    }
+
+    .lang-toggle {
+      display: flex;
+      gap: 8px;
+    }
+    .lang-btn {
+      color: var(--text-secondary);
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      padding: 6px 10px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-sm);
+      transition: var(--trans-fast);
+    }
+    .lang-btn:hover { color: var(--text-primary); border-color: var(--border-hover); }
+    .lang-btn.active { color: var(--accent); border-color: rgba(232, 184, 75, 0.3); background: var(--accent-bg); }
+
+    .main-content {
+      flex: 1;
+      margin-left: 240px;
+      padding: 60px 5% 100px;
+      max-width: 1100px;
+    }
+
+    /* ===== SPA VIEWS ===== */
+    .view {
+      display: none;
+      opacity: 0;
+      animation: fadeIn var(--trans-base) forwards;
+    }
+    .view.active {
+      display: block;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .section-header {
+      margin-bottom: 48px;
+      padding-bottom: 24px;
+      border-bottom: 1px solid var(--border);
+    }
+    .section-header h1 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      margin: 0;
+    }
+
+    /* ===== HOME SECTIONS ===== */
+    .hero {
+      padding: 40px 0 80px;
+    }
+    .hero h1 {
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.03em;
+      max-width: 900px;
+      line-height: 1.1;
+      margin-bottom: 24px;
+    }
+    .hero p {
+      font-size: clamp(1.125rem, 2vw, 1.25rem);
+      max-width: 600px;
+    }
+
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 24px;
+      margin-bottom: 80px;
+    }
+    .stat-card {
+      border-top: 2px solid var(--border);
+      padding-top: 16px;
+    }
+    .stat-val {
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--text-primary);
+    }
+    .stat-label {
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-muted);
+      text-transform: uppercase;
+    }
+
+    .featured-app {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 48px;
+      align-items: center;
+      background: var(--bg-surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 48px;
+      margin-bottom: 80px;
+      text-decoration: none;
+    }
+    .featured-img-placeholder {
+      width: 100%;
+      aspect-ratio: 9/16;
+      max-width: 280px;
+      margin: 0 auto;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+    .featured-img-placeholder img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0.8;
+      transition: opacity var(--trans-base);
+    }
+    .featured-app:hover .featured-img-placeholder img {
+      opacity: 1;
+    }
+
+    /* ===== APPS & LISTS ===== */
+    .app-row {
+      display: flex;
+      align-items: flex-start;
+      gap: 24px;
+      padding: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: var(--bg-surface);
+      margin-bottom: 24px;
+      transition: var(--trans-base);
+      text-decoration: none;
+    }
+    .app-row:hover {
+      border-color: var(--accent);
+    }
+    .app-icon {
+      width: 64px;
+      height: 64px;
+      background: #000;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .app-icon img { width: 40px; height: 40px; object-fit: contain; }
+    .app-details { flex: 1; }
+    .app-details h3 { margin-bottom: 4px; }
+    .app-details p { font-size: 0.875rem; margin-bottom: 12px; }
+
+    /* ===== PROTOCOLS ===== */
+    .protocol-box {
+      border-left: 2px solid var(--accent);
+      padding-left: 24px;
+      margin-bottom: 40px;
+    }
+    .protocol-box h4 {
+      font-family: var(--font-mono);
+      font-size: 0.875rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-bottom: 12px;
+    }
+
+    /* ===== GRID ===== */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px;
+      margin-bottom: 40px;
+    }
+
+    /* ===== UTILS ===== */
+    .meta-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      padding: 16px 0;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 32px;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      color: var(--text-secondary);
+    }
+
+    /* ===== LIGHTBOX ===== */
+    #lightbox {
+      position: fixed; inset: 0; background: rgba(9, 12, 21, 0.95);
+      z-index: 9999; display: none; align-items: center; justify-content: center;
+      opacity: 0; transition: opacity 0.3s;
+    }
+    #lightbox.show { display: flex; opacity: 1; }
+    #lightbox img { max-width: 90%; max-height: 90vh; border-radius: var(--radius-sm); border: 1px solid var(--border); }
+    .lb-close { position: absolute; top: 32px; right: 32px; color: var(--text-secondary); font-size: 2rem; cursor: pointer; }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 768px) {
+      .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+        padding: 24px;
+      }
+      .logo { margin-bottom: 24px; }
+      .nav-links { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+      .main-content { margin-left: 0; padding: 32px 24px 80px; }
+      .featured-app { grid-template-columns: 1fr; padding: 24px; }
+      .app-row { flex-direction: column; }
+    }
   </style>
 </head>
 <body>
 
-<script>
-  document.body.classList.add('js-enabled');
-  function updateNavActive(id) {
-      document.querySelectorAll('.nav-item-row').forEach(el => el.classList.remove('active'));
-      const activeEl = document.getElementById('nav-item-' + id);
-      if(activeEl) activeEl.classList.add('active');
-  }
-</script>
+  <aside class="sidebar">
+    <a href="#home" class="logo" onclick="switchView('home')">
+      <span class="logo-main">IBRON</span>
+      <span class="logo-sub">INDUSTRIES</span>
+    </a>
 
-<noscript>
-  <div class="noscript-notice" style="position: fixed; top: 0; width: 100%; z-index: 9999;">
-    Pobierasz wersję statyczną (Multi-Page). Aby uruchomić środowisko UI Engine i aplikację SPA, włącz JavaScript.
-  </div>
-</noscript>
+    <nav class="nav-links">
+      <a href="#home" class="nav-item active" id="nav-home" onclick="switchView('home')">
+        <span class="lang-pl">Start</span><span class="lang-en">Home</span>
+      </a>
+      <a href="#apps" class="nav-item" id="nav-apps" onclick="switchView('apps')">
+        <span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span>
+      </a>
+      <a href="#protocols" class="nav-item" id="nav-protocols" onclick="switchView('protocols')">
+        <span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span>
+      </a>
+      <a href="#about" class="nav-item" id="nav-about" onclick="switchView('about')">
+        <span class="lang-pl">O nas</span><span class="lang-en">About Us</span>
+      </a>
+      <a href="#offer" class="nav-item" id="nav-offer" onclick="switchView('offer')">
+        <span class="lang-pl">Dla firm</span><span class="lang-en">For Business</span>
+      </a>
+      <a href="#contact" class="nav-item" id="nav-contact" onclick="switchView('contact')">
+        <span class="lang-pl">Kontakt</span><span class="lang-en">Contact</span>
+      </a>
+    </nav>
 
-<div id="bg-layers">
-  <div class="bg-layer" id="bg-1"></div><div class="bg-layer" id="bg-0"></div><div class="bg-layer" id="bg-2"></div>
-  <div class="bg-layer" id="bg-3"></div><div class="bg-layer" id="bg-4"></div><div class="bg-layer" id="bg-5"></div>
-  <div class="bg-layer" id="bg-6"></div><div class="bg-layer" id="bg-7"></div><div class="bg-layer" id="bg-8"></div>
-  <div class="bg-layer" id="bg-nature"></div><div class="bg-layer" id="bg-space"></div><div class="bg-layer" id="bg-scanlines"></div>
-  <div class="bg-layer" id="bg-hexagons"></div><div class="bg-layer" id="bg-circuit"></div><div class="bg-layer" id="bg-rings"></div>
-  <div class="bg-layer" id="bg-aurora"></div><div class="bg-layer active" id="bg-nebula"></div>
-</div>
-
-<div id="aurora-sky"><div class="aur-band b1"></div><div class="aur-band b2"></div><div class="aur-band b3"></div><div class="aur-band b4"></div></div>
-<canvas id="aurora-particles"></canvas>
-
-<div id="nebula-sky"><div class="neb-band b1"></div><div class="neb-band b2"></div><div class="neb-band b3"></div><div class="neb-band b4"></div></div>
-<canvas id="nebula-particles"></canvas>
-
-<div class="ambient-glow"></div>
-<div class="miami-vibe-layer"><div class="mv-blur-sun"></div><div class="mv-blur-palm left"></div><div class="mv-blur-palm right"></div></div>
-
-<div id="cinematic-overlay"></div>
-
-<div id="boot-overlay">
-  <div class="boot-grid-bg"></div><div class="boot-scanline"></div>
-  <div class="boot-corner tl"></div><div class="boot-corner tr"></div><div class="boot-corner bl"></div><div class="boot-corner br"></div>
-  <div class="boot-center">
-    <div class="boot-ring-wrap"><div class="boot-ring boot-ring-1"></div><div class="boot-ring boot-ring-2"></div><div class="boot-ring boot-ring-3"></div><div class="boot-core"></div></div>
-    <div class="boot-title" id="boot-title">TRYB WŁASNY</div>
-    <div class="boot-sub">IBRON INDUSTRIES // UI ENGINE v4.0</div>
-    <div class="boot-lines" id="boot-lines">
-      <div class="boot-line" id="bl-1"><div class="boot-line-dot"></div><span>[ SYS.AUTH ] Weryfikacja dostępu...</span></div>
-      <div class="boot-line" id="bl-2"><div class="boot-line-dot"></div><span>[ UI.ENGINE ] Ładowanie modułów...</span></div>
-      <div class="boot-line" id="bl-3"><div class="boot-line-dot"></div><span>[ CONTROLS ] Odblokowanie parametrów...</span></div>
-      <div class="boot-line" id="bl-4"><div class="boot-line-dot"></div><span>[ PALETTE ] Inicjalizacja kolorów...</span></div>
-      <div class="boot-line" id="bl-5"><div class="boot-line-dot"></div><span class="boot-line-ok">[ STATUS ] GOTOWY — Pełna kontrola przyznana ✓</span></div>
+    <div style="margin-top: 48px;">
+      <div class="lang-toggle">
+        <button class="lang-btn" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
+        <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
+      </div>
     </div>
-    <div class="boot-progress-wrap"><div class="boot-progress-bar"><div class="boot-progress-fill" id="boot-progress"></div></div><div class="boot-progress-label" id="boot-pct">0%</div></div>
-  </div>
-</div>
+  </aside>
 
-<div id="freedom-modal">
-  <div class="freedom-box">
-    <span style="font-size:54px;display:block;margin-bottom:18px;animation:pulse 2s infinite">⚙</span>
-    <h2 class="gradient-text" style="font-size:28px;letter-spacing:5px;margin-bottom:14px;font-family:var(--font-head);" data-lang-key="freedom_title">PROTOKÓŁ WOLNOŚCI</h2>
-    <p style="font-size:14px;margin-bottom:34px;color:var(--text-muted);line-height:1.85" data-lang-key="freedom_desc">Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, typografię. Przejmij stery.</p>
-    <button class="btn-primary" onclick="closeFreedomModal(event)" data-lang-key="freedom_btn">ZAINICJUJ</button>
-  </div>
-</div>
+  <main class="main-content">
 
-<div id="unlock-modal">
-  <div class="unlock-modal-box">
-    <span class="modal-glitch" style="color:var(--accent)">◈</span>
-    <h2 class="modal-title gradient-text" data-lang-key="custom_modal_title">TRYB WŁASNY — DOSTĘP</h2>
-    <div class="modal-lines">
-      <div>[ SYS.ACCESS ] <span data-lang-key="custom_modal_l1">PEŁNA KONTROLA NAD INTERFEJSEM</span></div>
-      <div>[ UI.ENGINE ] <span data-lang-key="custom_modal_l2">ODBLOKOWANY</span></div>
-      <div>[ CONTROLS ] <span data-lang-key="custom_modal_l3">NIELIMITOWANE</span></div>
-      <div>[ STATUS ] <span style="color:#00e676">READY</span></div>
-    </div>
-    <button class="modal-confirm-btn" onclick="confirmUnlock()" data-lang-key="custom_modal_btn">ZAINICJUJ DOSTĘP</button>
-  </div>
-</div>
+    <section id="home" class="view active">
+      <div class="hero">
+        <span class="badge text-mono">
+          <span class="lang-pl">Studio Oprogramowania Prywatności</span>
+          <span class="lang-en">Privacy Software Studio</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Oprogramowanie, które oddaje kontrolę Tobie.</span>
+          <span class="lang-en">Software that puts you in control.</span>
+        </h1>
+        <p>
+          <span class="lang-pl">Tworzymy narzędzia skupione na prywatności — aplikacje i systemy, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</span>
+          <span class="lang-en">We build privacy-focused tools — apps and systems where your data stays with you. No cloud, no telemetry, no exceptions.</span>
+        </p>
+      </div>
 
-<audio id="mus-cyber" loop><source src="bg-music.mp3" type="audio/mpeg"></audio>
-<audio id="mus-nature" loop><source src="b2-music.mp3" type="audio/mpeg"></audio>
-<audio id="mus-miami-a" loop><source src="bg3-music.mp3" type="audio/mpeg"></audio>
-<audio id="mus-miami-b" loop><source src="bg3b-music.mp3" type="audio/mpeg"></audio>
-<audio id="mus-custom-1" loop><source src="1m.mp3" type="audio/mpeg"></audio>
-<audio id="mus-custom-2" loop><source src="2m.mp3" type="audio/mpeg"></audio>
-<audio id="mus-custom-3" loop><source src="3m.mp3" type="audio/mpeg"></audio>
-<audio id="mus-custom-4" loop><source src="4m.mp3" type="audio/mpeg"></audio>
-<audio id="mus-custom-5" loop><source src="5m.mp3" type="audio/mpeg"></audio>
-<audio id="mus-aurora" loop><source src="bg-default.mp3" type="audio/mpeg"></audio>
-<audio id="mus-nebula" loop><source src="bg-nebula.mp3" type="audio/mpeg"></audio>
-
-<aside class="fixed-sidebar">
-  <div class="sidebar-top">
-    <a href="#home" class="sidebar-logo hv" onclick="switchView('home', event)">
-      <span class="logo-part-1">IBRON</span>
-      <span class="logo-part-2">INDUSTRIES</span>
-    </a>
-  </div>
-
-  <nav class="sidebar-nav">
-    <a href="#home" class="nav-item-row active hv" id="nav-item-home" onclick="switchView('home', event)">
-      <span class="nav-item-icon">⌂</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_start_label">Start</span><span class="nav-item-desc" data-lang-key="nav_start_desc">Czym się zajmujemy</span></div>
-    </a>
-    <a href="#apps-hub" class="nav-item-row hv" id="nav-item-apps-hub" onclick="switchView('apps-hub', event)">
-      <span class="nav-item-icon">⬡</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_apps_label">Aplikacje</span><span class="nav-item-desc" data-lang-key="nav_apps_desc">Nasze oprogramowanie</span></div>
-    </a>
-    <a href="#protocols" class="nav-item-row hv" id="nav-item-protocols" onclick="switchView('protocols', event)">
-      <span class="nav-item-icon">⎚</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_protocols_label">Protokoły</span><span class="nav-item-desc" data-lang-key="nav_protocols_desc">Zasady i bezpieczeństwo</span></div>
-    </a>
-    <a href="#personalize" class="nav-item-row hv" id="nav-item-personalize" onclick="openPersonalize(event)">
-      <span class="nav-item-icon">⚙</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_ui_label">UI System</span><span class="nav-item-desc" data-lang-key="nav_ui_desc">Personalizuj wygląd</span></div>
-    </a>
-    <a href="#offer" class="nav-item-row hv" id="nav-item-offer" onclick="switchView('offer', event)">
-      <span class="nav-item-icon">◈</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_offer_label">Dla firm</span><span class="nav-item-desc" data-lang-key="nav_offer_desc">Projekty na zamówienie</span></div>
-    </a>
-    <a href="#contact" class="nav-item-row hv" id="nav-item-contact" onclick="switchView('contact', event)">
-      <span class="nav-item-icon">✉</span>
-      <div class="nav-item-meta"><span class="nav-item-label" data-lang-key="nav_contact_label">Kontakt</span><span class="nav-item-desc" data-lang-key="nav_contact_desc">Napisz do nas</span></div>
-    </a>
-  </nav>
-
-  <div class="sidebar-bottom">
-    <div class="lang-wrap">
-      <button class="lang-btn hv" onclick="toggleLangDropdown()">
-        <div class="lang-flag-wave" id="nav-flag"><svg viewBox="0 0 22 15"><rect width="22" height="7.5" fill="#FFFFFF"/><rect y="7.5" width="22" height="7.5" fill="#DC143C"/></svg></div>
-        <span id="nav-lang-code" style="margin-left: 8px; font-family: var(--font-mono)">PL</span>
-        <svg width="10" height="6" viewBox="0 0 10 6" fill="none" style="margin-left: auto"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-      </button>
-      <div class="lang-dropdown" id="lang-dropdown"></div>
-    </div>
-    <button class="nav-btn hv" onclick="toggleMusic()">
-      <div class="audio-dot" id="audio-dot"></div>&nbsp;SYS.AUDIO
-    </button>
-  </div>
-</aside>
-
-<main class="view-container">
-
-<section id="home" class="view active">
-  <div class="miami-banner">♪ WELCOME TO MIAMI // 1986 // DRIVE INTO THE NIGHT ♪</div>
-
-  <div class="hero-layout-block">
-    <div style="padding: 10px 0;">
-      <div style="font-family:var(--font-mono); font-size: 11px; letter-spacing: 2px; color: var(--accent); margin-bottom: 14px; text-transform: uppercase;" data-lang-key="hero_label">NIEZALEŻNE STUDIO OPROGRAMOWANIA PRYWATNOŚCI</div>
-      <h1 style="font-size:clamp(38px,6vw,72px);font-weight:900;letter-spacing:-1.5px;margin-bottom:18px;line-height:1.15;text-transform:uppercase" class="gradient-text" data-lang-key="hero_title">Oprogramowanie, które oddaje kontrolę Tobie.</h1>
-      <p style="font-size:clamp(15px,2.2vw,18px);color:var(--text-muted);max-width: 760px;margin-bottom: 30px;line-height:1.6;" data-lang-key="hero_sub">Tworzymy narzędzia skupione na prywatności — aplikacje i systemy, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.</p>
-    </div>
-  </div>
-
-  <a href="#app-exo" class="home-exo-ad hv" onclick="switchView('app-exo', event)">
-    <div class="hea-left">
-      <div class="hea-glow"></div>
-      <div class="phone-mockup-new">
-        <div class="exo-slides-container" id="ad-slides">
-           <img class="dyn-img slide active" data-base="screen1" src="screen1pl.png" alt="EXO">
-           <img class="dyn-img slide" data-base="screen2" src="screen2pl.png" alt="EXO">
-           <img class="dyn-img slide" data-base="screen3" src="screen3pl.png" alt="EXO">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-val">1</div>
+          <div class="stat-label"><span class="lang-pl">aplikacja live</span><span class="lang-en">app live</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">0</div>
+          <div class="stat-label"><span class="lang-pl">telemetrii</span><span class="lang-en">telemetry</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">100%</div>
+          <div class="stat-label"><span class="lang-pl">offline</span><span class="lang-en">offline</span></div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-val">AES-256</div>
+          <div class="stat-label"><span class="lang-pl">szyfrowanie</span><span class="lang-en">encryption</span></div>
         </div>
       </div>
-    </div>
-    <div class="hea-right">
-      <span class="exo-badge" data-lang-key="flagship_badge" style="margin-bottom:15px; display:inline-block;">PRODUKT FLAGOWY</span>
-      <h2>IBRON EXO</h2>
-      <h3 data-lang-key="ad_live">JUŻ DOSTĘPNE W GOOGLE PLAY</h3>
-      <p data-lang-key="ad_desc">Hermetyczny sejf offline zbudowany bez kompromisów. Żadnej chmury, żadnej telemetrii. Twój klucz to jedyna droga do danych.</p>
-      <div class="exo-badges">
-         <span class="exo-badge" data-lang-key="badge_v">WERSJA 1.0.5</span>
-         <span class="exo-badge tag-active" data-lang-key="badge_update">NOWA AKTUALIZACJA</span>
-         <span class="exo-badge" data-lang-key="badge_off">TRYB OFFLINE</span>
+
+      <a href="#app-exo" class="featured-app" onclick="switchView('app-exo')">
+        <div class="featured-text">
+          <span class="badge badge-outline">
+            <span class="lang-pl">Produkt Flagowy</span><span class="lang-en">Flagship Product</span>
+          </span>
+          <h2>IBRON EXO</h2>
+          <p class="text-mono text-accent" style="margin-bottom: 24px;">
+            <span class="lang-pl">JUŻ DOSTĘPNE W GOOGLE PLAY</span>
+            <span class="lang-en">AVAILABLE ON GOOGLE PLAY</span>
+          </p>
+          <p>
+            <span class="lang-pl">Hermetyczny sejf offline zbudowany bez kompromisów. Żadnej chmury, żadnej telemetrii. Twój klucz to jedyna droga do danych.</span>
+            <span class="lang-en">A hermetic offline vault built without compromise. No cloud, no telemetry. Your key is the only path to data.</span>
+          </p>
+          <div style="display: flex; gap: 8px; margin-bottom: 32px; flex-wrap: wrap;">
+            <span class="badge badge-outline">V 1.0.5</span>
+            <span class="badge badge-outline"><span class="lang-pl">TRYB OFFLINE</span><span class="lang-en">OFFLINE MODE</span></span>
+          </div>
+          <span class="btn-primary">
+            <span class="lang-pl">Poznaj Ibron EXO</span><span class="lang-en">Explore Ibron EXO</span> &rarr;
+          </span>
+        </div>
+        <div class="featured-img-placeholder">
+          <img src="screen1pl.png" alt="IbronEXO Screenshot" id="dyn-hero-img" onerror="this.style.display='none'">
+        </div>
+      </a>
+    </section>
+
+    <section id="apps" class="view">
+      <div class="section-header">
+        <span class="badge badge-outline">
+          <span class="lang-pl">Oprogramowanie IbronIndustries</span><span class="lang-en">IbronIndustries Software</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Ekosystem Aplikacji.</span><span class="lang-en">Application Ecosystem.</span>
+        </h1>
       </div>
-      <span class="btn-primary" data-lang-key="ad_cta">POZNAJ IBRON EXO →</span>
-    </div>
-  </a>
 
-  <div class="stats-matrix-row">
-    <div class="stats-matrix-card hv">
-      <div class="stats-val">1</div><div class="stats-lbl" data-lang-key="stat_1">aplikacja live</div>
-    </div>
-    <div class="stats-matrix-card hv">
-      <div class="stats-val">0</div><div class="stats-lbl" data-lang-key="stat_2">telemetrii</div>
-    </div>
-    <div class="stats-matrix-card hv">
-      <div class="stats-val">100%</div><div class="stats-lbl" data-lang-key="stat_3">offline</div>
-    </div>
-    <div class="stats-matrix-card hv">
-      <div class="stats-val">∞</div><div class="stats-lbl" data-lang-key="stat_4_lbl">możliwości</div>
-    </div>
-  </div>
+      <a href="#app-exo" class="app-row" onclick="switchView('app-exo')">
+        <div class="app-icon"><img src="logoexo.png" alt="EXO" onerror="this.style.display='none'"></div>
+        <div class="app-details">
+          <h3>IbronEXO</h3>
+          <p>
+            <span class="lang-pl">Hermetyczny kryptosejf offline. Twój prywatny dziennik bez dostępu do sieci.</span>
+            <span class="lang-en">Hermetic offline crypto-vault. Your private journal with no network access.</span>
+          </p>
+          <span class="badge"><span class="lang-pl">Dostępne</span><span class="lang-en">Available</span></span>
+        </div>
+        <div style="align-self: center;">
+          <span class="btn-secondary"><span class="lang-pl">Czytaj więcej</span><span class="lang-en">Read more</span></span>
+        </div>
+      </a>
 
-  <div class="horizontal-roadmap">
-    <div class="hrm-step glow">
-      <div class="hrm-node"></div>
-      <div><div class="hrm-label" data-lang-key="rm_1_lbl">TERAZ / NOW</div><div class="hrm-desc" data-lang-key="rm_1_desc">IbronEXO live</div></div>
-    </div>
-    <div class="hrm-step">
-      <div class="hrm-node"></div>
-      <div><div class="hrm-label" data-lang-key="rm_2_lbl">WKRÓTCE / SOON</div><div class="hrm-desc" data-lang-key="rm_2_desc">Więcej narzędzi prywatności</div></div>
-    </div>
-    <div class="hrm-step">
-      <div class="hrm-node"></div>
-      <div><div class="hrm-label" data-lang-key="rm_3_lbl">PRZYSZŁOŚĆ / FUTURE</div><div class="hrm-desc" data-lang-key="rm_3_desc">Dedykowane urządzenia</div></div>
-    </div>
-  </div>
-
-  <a href="#offer" class="offer-hero hv" onclick="switchView('offer', event); updateNavActive('offer')">
-    <div class="offer-label"><div class="offer-dot"></div><span data-lang-key="offer_label">IBRON × WSPÓŁPRACA</span></div>
-    <h2 class="gradient-text" style="font-size:clamp(26px,4vw,50px);font-weight:900;letter-spacing:-1px;margin-bottom:12px;line-height:1.1" data-lang-key="offer_hero_title">Zbudujmy coś, co ma znaczenie.</h2>
-    <p style="color:var(--text-muted);font-size:clamp(13px,2vw,16px);max-width:680px;margin:0 auto 28px" data-lang-key="offer_hero_sub">Aplikacje webowe, narzędzia mobilne, systemy UI. Jeśli masz pomysł który zasługuje na istnienie — pomożemy Ci go zbudować porządnie.</p>
-    <div class="offer-tags">
-      <span class="offer-tag">Web Design</span><span class="offer-tag">Mobile Apps</span><span class="offer-tag">UI/UX</span>
-      <span class="offer-tag">Skrypty & Narzędzia</span><span class="offer-tag">Consulting</span><span class="offer-tag">Privacy Consulting</span>
-    </div>
-    <span class="btn-primary" style="margin:0 auto" data-lang-key="offer_hero_btn">SPRAWDŹ OFERTĘ →</span>
-  </a>
-</section>
-
-<section id="personalize" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header">
-    <div><div class="section-badge">SYS.PREFS_V4</div><h1 class="gradient-text">UI Framework</h1></div>
-  </div>
-
-  <div class="save-bar">
-    <span class="save-bar-msg" id="save-msg">[ PERSONALIZATION: UNSAVED ]</span>
-    <button class="save-btn hv" onclick="savePersonalization()" data-lang-key="save_btn">ZAPISZ</button>
-    <button class="reset-btn hv" onclick="resetPersonalization()" data-lang-key="reset_btn">RESET</button>
-  </div>
-
-  <div class="setting-group" style="margin-top:20px;margin-bottom:36px;padding-bottom:36px;border-bottom:1px solid var(--border-glass)">
-    <div class="setting-header" data-lang-key="tpl_header">GOTOWE SCHEMATY (MASTER TEMPLATES)</div>
-    <div class="setting-desc" data-lang-key="tpl_desc">Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.</div>
-    <div class="template-grid">
-      <div class="glass-card tpl-card active hv" id="tpl-nebula" onclick="applyMaster('nebula',this)">
-        <div style="font-size:44px;margin-bottom:14px;line-height:1;color:#A855F7">✦</div>
-        <h3>NEBULA</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_nebula_desc">Głęboki kosmos. Fiolet, róż, błękit.</p>
-      </div>
-      <div class="glass-card tpl-card hv" id="tpl-cyber" onclick="applyMaster('cyber',this)">
-        <div class="card-icon" style="color:#00F0FF">⎔</div>
-        <h3>CYBER CORE</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_cyber_desc">Szkło, neon i mrok.</p>
-      </div>
-      <div class="glass-card tpl-card hv" id="tpl-aurora" onclick="applyMaster('aurora',this)">
-        <div class="card-icon" style="color:#E8B84B">◇</div>
-        <h3>AURORA</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_aurora_desc">Granat i złoto. Elegancja.</p>
-      </div>
-      <div class="glass-card tpl-card hv" id="tpl-nature" onclick="applyMaster('nature',this)">
-        <div class="card-icon" style="color:#27AE60">✿</div>
-        <h3>BIO-NATURE</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_nature_desc">Jasny, organiczny kontrast.</p>
-      </div>
-      <div class="glass-card tpl-card hv" id="tpl-miami" onclick="applyMaster('miami',this)">
-        <div style="font-size:44px;margin-bottom:14px;line-height:1;filter:drop-shadow(0 0 12px rgba(255,110,199,.8))">🌴</div>
-        <h3 style="background:linear-gradient(135deg,#FF6EC7,#00E5FF);-webkit-background-clip:text;-webkit-text-fill-color:transparent">80s MIAMI</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_miami_desc">Granat, neon i synthwave.</p>
-      </div>
-      <div class="glass-card tpl-card hv" id="tpl-custom" onclick="requestCustomUnlock(this)">
-        <div class="card-icon" style="color:var(--accent,#FF6600)">◈</div>
-        <h3 data-lang-key="tpl_custom_name">TRYB WŁASNY</h3>
-        <p style="margin:0;font-size:12px;text-align:center" data-lang-key="tpl_custom_desc">Pełna kontrola nad każdym detalem.</p>
-      </div>
-    </div>
-  </div>
-
-  <div class="custom-unlock-wrap" id="unlock-prompt">
-    <span class="unlock-icon">◈</span>
-    <div class="unlock-title gradient-text" data-lang-key="unlock_title">TRYB WŁASNY</div>
-    <p class="unlock-desc" data-lang-key="unlock_desc">Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.</p>
-    <button class="unlock-btn hv" onclick="requestCustomUnlock(null)">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0110 0v4"/></svg>
-      <span data-lang-key="unlock_btn">PRZEJMIJ KONTROLĘ</span>
-    </button>
-    <div class="unlock-access-bar">
-      <div class="access-item"><div class="access-dot"></div><span data-lang-key="access_1">Kolory i akcenty</span></div>
-      <div class="access-item"><div class="access-dot"></div><span data-lang-key="access_2">Tła i animacje</span></div>
-      <div class="access-item"><div class="access-dot"></div><span data-lang-key="access_3">Muzyka i typografia</span></div>
-    </div>
-  </div>
-
-  <div class="advanced-panel" id="advanced-panel">
-    <div style="text-align:center;margin-bottom:32px">
-      <h2 class="gradient-text" style="font-size:22px;letter-spacing:5px;font-family:var(--font-head)" data-lang-key="adv_title">MODYFIKATORY ZAAWANSOWANE</h2>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_lighting">1. Motyw Oświetlenia</div>
-      <div class="setting-desc" data-lang-key="sd_lighting">Wybierz zachowanie cieni i poświaty elementów.</div>
-      <div class="opt-grid" id="sg-lighting"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_accent">2. Akcent Systemowy</div>
-      <div class="setting-desc" data-lang-key="sd_accent">12 presetów + niestandardowe koło barw.</div>
-      <div class="color-grid" id="sg-colors"></div>
-      <div class="custom-color-wrap">
-        <input type="color" id="color-picker" class="hv" value="#00F0FF" oninput="applyCustomColor(this.value)">
-        <div><span style="display:block;font-size:13px;font-weight:bold;color:var(--text-main)" data-lang-key="custom_color_label">Niestandardowy kolor</span><span style="font-size:11px;font-family:var(--font-mono);color:var(--text-muted)" id="hex-display">#00F0FF</span></div>
-      </div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_bg">3. Struktura Tła</div>
-      <div class="setting-desc" data-lang-key="sd_bg">Wybierz topografię cyfrowego płótna.</div>
-      <div class="opt-grid" id="sg-bg"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_card">4. Architektura Kafelek</div>
-      <div class="setting-desc" data-lang-key="sd_card">Szkło, solidne, kontury i więcej.</div>
-      <div class="opt-grid" id="sg-card"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_radius">5. Zaokrąglenie Rogów</div>
-      <div class="setting-desc" data-lang-key="sd_radius">Suwak 0px (ostry) do 50px (zaokrąglony).</div>
-      <div class="radius-wrap">
-        <span style="font-family:var(--font-mono);font-size:13px;font-weight:bold;width:40px;color:var(--accent)" id="radius-val">20px</span>
-        <input type="range" class="hv" id="radius-slider" min="0" max="50" value="20" oninput="setRadius(this.value)">
-      </div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_font">6. Typografia</div>
-      <div class="setting-desc" data-lang-key="sd_font">7 unikalnych par czcionek.</div>
-      <div class="opt-grid" id="sg-fonts"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_anim">7. Szybkość Animacji</div>
-      <div class="setting-desc" data-lang-key="sd_anim">Wpływa na przejścia i efekty hover.</div>
-      <div class="opt-grid" id="sg-anim"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_density">8. Gęstość Layoutu</div>
-      <div class="setting-desc" data-lang-key="sd_density">Kompaktowy, normalny lub przestronny.</div>
-      <div class="opt-grid" id="sg-density"></div>
-    </div>
-    <div class="setting-group">
-      <div class="setting-header" data-lang-key="sh_music">9. Muzyka Własna</div>
-      <div class="setting-desc" data-lang-key="sd_music">Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.</div>
-      <div class="music-grid" id="sg-music"></div>
-    </div>
-  </div>
-</section>
-
-<section id="about" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header">
-    <div><div class="section-badge" data-lang-key="about_badge">Misja & Wizja</div><h1 data-lang-key="about_h1">O NAS / WIZJA I PRZYSZŁOŚĆ</h1></div>
-  </div>
-  
-  <div class="glass-card founder-card hv">
-    <div class="founder-img-wrap">
-      <img src="image_c09130.jpg" alt="Alex - Founder" class="founder-img">
-      <div class="founder-overlay-tag">ID: ALEX</div>
-    </div>
-    <div class="founder-text-wrap">
-      <div class="status-tag-wrap" style="justify-content: flex-start; margin-bottom: 12px;">
-        <span class="status-tag tag-active" style="border-color: var(--accent); color: var(--accent);">FOUNDER // LEAD ARCHITECT</span>
-      </div>
-      <h3 style="font-size: clamp(20px, 3vw, 28px); font-weight: 900; letter-spacing: 2px; margin-bottom: 15px; text-transform: uppercase;">
-        <span class="gradient-text" data-lang-key="about_founder_h">PROJEKTANT SYSTEMÓW // FOUNDER</span>
-      </h3>
-      <p style="font-size: 14px; line-height: 1.8; color: var(--text-main); margin-bottom: 15px;" data-lang-key="about_founder_p1">Nazywam się Aleksander. Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.</p>
-      <p style="font-size: 14px; line-height: 1.8; color: var(--text-muted); margin-bottom: 15px;" data-lang-key="about_founder_p2">Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.</p>
-      <p style="font-size: 14px; line-height: 1.8; color: var(--text-muted);" data-lang-key="about_founder_p3">Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. Płacisz za konkretną wartość lub funkcjonalność, a nie swoimi prywatnymi danymi.</p>
-    </div>
-  </div>
-
-  <div class="glass-card hv" style="margin-bottom:28px">
-    <h3 data-lang-key="about_h3_1">Technologia, która po prostu działa.</h3>
-    <p data-lang-key="about_p1">Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.</p>
-  </div>
-  <div class="glass-card hv" style="margin-bottom:28px;border-color:var(--accent)">
-    <h3 data-lang-key="about_h3_2">Prywatność jako standard.</h3>
-    <p data-lang-key="about_p2">Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.</p>
-  </div>
-  <div class="grid-container">
-    <div class="glass-card hv"><div class="card-icon">◈</div><h3 data-lang-key="about_c1h">Lokalne, nie chmurowe</h3><p data-lang-key="about_c1p">100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.</p></div>
-    <div class="glass-card hv"><div class="card-icon">⎈</div><h3 data-lang-key="about_c2h">Dostępność dla każdego</h3><p data-lang-key="about_c2p">Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.</p></div>
-    <div class="glass-card hv"><div class="card-icon">⏣</div><h3 data-lang-key="about_c3h">Zrównoważony rozwój</h3><p data-lang-key="about_c3p">Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.</p></div>
-  </div>
-</section>
-
-<section id="apps-hub" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header">
-    <div><div class="section-badge" data-lang-key="apps_badge">Oprogramowanie IbronIndustries</div><h1 data-lang-key="apps_h1">Ekosystem Aplikacji.</h1></div>
-  </div>
-
-  <div class="app-filters">
-    <button class="sleek-filter-btn active hv" onclick="filterApps('all', this)" data-lang-key="filter_all">Wszystkie</button>
-    <button class="sleek-filter-btn hv" onclick="filterApps('avail', this)" data-lang-key="filter_avail">Dostępne</button>
-    <button class="sleek-filter-btn hv" onclick="filterApps('indev', this)" data-lang-key="filter_indev">W Budowie</button>
-    <button class="sleek-filter-btn hv" onclick="filterApps('android', this)">Android</button>
-    <button class="sleek-filter-btn hv" onclick="filterApps('ios', this)">iOS</button>
-    <button class="sleek-filter-btn hv" onclick="filterApps('pc', this)">PC</button>
-  </div>
-
-  <div id="app-grid-container" style="display:flex; flex-direction:column;">
-    <div id="empty-apps-msg" style="display:none; text-align:center; padding: 60px 20px; font-family:var(--font-mono); color:var(--text-muted); border: 1px dashed var(--border-glass); border-radius: var(--card-radius); background: rgba(128,128,128,0.04);" data-lang-key="empty_apps_msg">> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...</div>
-    
-    <!-- IbronEXO -->
-    <a href="#app-exo" class="app-row-card app-card app-card-available hv" data-category="avail android" onclick="switchView('app-exo', event)">
-       <div class="app-row-logo accent-glow"><img src="logoexo.png" alt="EXO" onerror="this.src='https://via.placeholder.com/76/000/00F0FF?text=EXO'"></div>
-       <div class="app-row-content">
-          <h3>Ibron<span class="gradient-text">EXO.</span></h3>
-          <p data-lang-key="app_exo_tagline">Hermetyczny kryptosejf offline.</p>
-          <span class="status-tag tag-active" data-lang-key="apps_exo_tag">DOSTĘPNE</span>
-       </div>
-       <div class="app-row-action"><span class="btn-primary" data-lang-key="read_more">Czytaj więcej →</span></div>
-    </a>
-    
-    <!-- IbronCHRONOS -->
-    <a href="#app-chronos" class="app-row-card app-card app-card-indev hv" data-category="indev" onclick="switchView('app-chronos', event)">
-       <div class="app-row-logo"><img src="logoclock.png" alt="CHR" style="filter:grayscale(1)" onerror="this.src='https://via.placeholder.com/76/000/8A95A5?text=CHR'"></div>
-       <div class="app-row-content">
+      <div class="app-row" style="opacity: 0.6; pointer-events: none;">
+        <div class="app-icon"><img src="logoclock.png" alt="CHR" onerror="this.style.display='none'"></div>
+        <div class="app-details">
           <h3>IbronCHRONOS</h3>
-          <p data-lang-key="app_chr_tagline">Silnik zarządzania operacyjnego.</p>
-          <span class="status-tag tag-locked" data-lang-key="apps_chr_tag">W BUDOWIE</span>
-       </div>
-       <div class="app-row-action"><span class="btn-primary" data-lang-key="read_more" style="background:transparent; color:var(--text-muted); border-color:var(--border-glass);">Czytaj więcej →</span></div>
-    </a>
-  </div>
-</section>
-
-<article id="app-exo" class="view">
-  <a href="#apps-hub" class="btn-back hv" onclick="switchView('apps-hub', event); updateNavActive('apps-hub')">← <span data-lang-key="back_apps">Powrót do Aplikacji</span></a>
-  <div style="display:flex;align-items:center;gap:20px;margin-bottom:26px;flex-wrap:wrap">
-    <div style="width:88px;height:88px;background:rgba(0,0,0,.5);border-radius:var(--card-radius);display:flex;justify-content:center;align-items:center;padding:12px;border:1px solid var(--border-glass);flex-shrink:0">
-      <img src="logoexo.png" alt="EXO" style="max-width:100%;filter:drop-shadow(0 0 10px var(--accent-glow))" onerror="this.src='https://via.placeholder.com/70/000/00F0FF?text=EXO'">
-    </div>
-    <div>
-      <h1 style="font-size:clamp(26px,5vw,38px);font-weight:900;margin-bottom:4px;text-transform:uppercase">Ibron<span class="gradient-text">EXO.</span></h1>
-      <p style="color:var(--text-muted);font-size:clamp(12px,2vw,15px)" data-lang-key="exo_tagline">Twój hermetyczny kryptosejf offline.</p>
-    </div>
-  </div>
-
-  <div class="showcase-gallery" style="margin-bottom: 30px;">
-    <div class="screen-card hv" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen1" src="screen1pl.png" alt="EXO 1"></div>
-    <div class="screen-card hv" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen2" src="screen2pl.png" alt="EXO 2"></div>
-    <div class="screen-card hv" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen3" src="screen3pl.png" alt="EXO 3"></div>
-    <div class="screen-card hv" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen4" src="screen4pl.png" alt="EXO 4"></div>
-    <div class="screen-card hv" onclick="openLightbox(this.querySelector('img').src)"><img class="dyn-img" data-base="screen5" src="screen5pl.png" alt="EXO 5"></div>
-  </div>
-
-  <div class="accepted-banner hv" style="background:rgba(0,230,118,0.1); border:1px solid #00e676; padding:26px; border-radius:var(--card-radius); margin-bottom:32px; text-align:center; transition:var(--transition-theme);">
-      <h3 style="color:#00e676; font-size:14px; margin-bottom:10px; letter-spacing:2px; text-transform:uppercase;">>> <span data-lang-key="exo_live_title">DOSTĘPNE W GOOGLE PLAY</span> <<</h3>
-      <p style="color:var(--text-main); font-size:13px; margin:0;" data-lang-key="exo_live_desc">Aktualna, stabilna wersja aplikacji jest już dostępna do pobrania. Pełna ochrona offline, zero telemetrii.</p>
-  </div>
-
-  <div class="app-meta">
-    <div class="meta-tag"><span data-lang-key="version">Wersja</span>: <strong>1.0.5</strong></div>
-    <div class="meta-tag">Publisher: <strong>IbronIndustries</strong></div>
-    <div class="meta-tag"><span data-lang-key="release">Data wydania</span>: <strong data-lang-key="release_date">15.06.2026</strong></div>
-    <div class="meta-tag"><span data-lang-key="update_date_key">Data aktualizacji</span>: <strong>17.06.2026</strong></div>
-    <div class="meta-tag"><span data-lang-key="license">Licencja</span>: <strong data-lang-key="license_val">Darmowa (Brak Reklam)</strong></div>
-  </div>
-  <div style="margin-bottom:40px;text-align:center">
-    <a href="https://play.google.com/store/apps/details?id=com.ibron.exo&pli=1" target="_blank" class="btn-primary hv" rel="noopener noreferrer">
-      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      <span data-lang-key="dl_play">POBIERZ Z GOOGLE PLAY</span>
-    </a>
-  </div>
-  <div class="terminal-box hv">
-    <h4 data-lang-key="exo_brief_title">> OPIS OPERACYJNY IBRON EXO</h4>
-    <p style="font-size:clamp(12px,2vw,14px);line-height:1.85" data-lang-key="exo_brief_body"><strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zaprojektowany do bezkompromisowej ochrony informacji tekstowych. Zbudowany w architekturze <span class="code">offline (Zero-Data)</span> — Twoje sekrety nigdy nie opuszczą urządzenia.</p>
-  </div>
-  <div class="grid-container" style="margin-bottom:32px">
-    <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f1h">Protokół "Podwójnego Dna"</h3><p data-lang-key="exo_f1p">Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.</p></div>
-    <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f2h">Znikające Notatki</h3><p data-lang-key="exo_f2p">Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.</p></div>
-    <div class="glass-card hv"><h3 style="font-size:17px">Dead Man's Switch</h3><p data-lang-key="exo_f3p">Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.</p></div>
-    <div class="glass-card hv"><h3 style="font-size:17px" data-lang-key="exo_f4h">Absolutna Izolacja</h3><p data-lang-key="exo_f4p">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</p></div>
-  </div>
-
-  <div class="section-header" style="margin-top: 50px; margin-bottom: 30px; border-top: 1px solid var(--border-glass); padding-top: 30px; border-bottom: none;">
-    <div><div class="section-badge" data-lang-key="changelog_badge">Dziennik Zmian</div><h2 style="font-size:clamp(20px,4vw,28px)" data-lang-key="changelog_title">HISTORIA AKTUALIZACJI</h2></div>
-  </div>
-
-  <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px;">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid var(--border-glass); padding-bottom: 16px; flex-wrap: wrap; gap: 10px; cursor: pointer;" onclick="const content = this.nextElementSibling; const icon = this.querySelector('.toggle-icon'); if(content.style.display==='none'){content.style.display='block'; icon.innerHTML='▼';}else{content.style.display='none'; icon.innerHTML='▶';}">
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <span class="toggle-icon" style="color:var(--accent); font-size:12px; font-family:var(--font-mono); width:15px;">▼</span>
-        <span style="font-family: var(--font-head); color: var(--text-main); font-weight: 900; font-size: 22px; letter-spacing: 1px;" data-lang-key="cl_105_title">Wersja 1.0.5</span>
-        <span class="status-tag tag-active">LATEST</span>
+          <p>
+            <span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span>
+            <span class="lang-en">Advanced operational management engine.</span>
+          </p>
+          <span class="badge badge-outline"><span class="lang-pl">W budowie</span><span class="lang-en">In Dev</span></span>
+        </div>
+        <div style="align-self: center;">
+          <span class="text-mono"><span class="lang-pl">Zablokowane</span><span class="lang-en">Locked</span></span>
+        </div>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--text-muted); letter-spacing: 1px;">
-        <span data-lang-key="cl_date">Data</span>: 17.06.2026 <span style="margin: 0 8px; color: var(--border-glass);">|</span> <span data-lang-key="cl_size">Całkowita waga aplikacji</span>: 13.2 MB
+    </section>
+
+    <section id="app-exo" class="view">
+      <div style="margin-bottom: 32px;">
+        <button class="btn-secondary" onclick="switchView('apps')" style="padding: 8px 16px; font-size: 0.75rem;">
+          &larr; <span class="lang-pl">Powrót do Aplikacji</span><span class="lang-en">Back to Apps</span>
+        </button>
       </div>
-    </div>
-    <div class="changelog-details" style="display:block;">
-        <p style="font-size: 14px; margin-bottom: 14px; color: var(--text-main);" data-lang-key="cl_105_desc">Najnowsza aktualizacja wprowadzająca nowe zabezpieczenia, personalizację i poprawki.</p>
-        <ul style="list-style: none; padding: 0; margin: 0; font-size: 13px; color: var(--text-muted); line-height: 1.8;">
-          <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">•</span> <span data-lang-key="cl_105_1">Bezpieczeństwo: Nowy system blokady po błędnych próbach PIN z eskalacją czasową.</span></li>
-          <li style="margin-bottom: 8px; display: flex; gap: 10px;"><span style="color: var(--accent);">•</span> <span data-lang-key="cl_105_2">Personalizacja interfejsu: 15 nowych wzorów tła i presety motywów.</span></li>
-          <li style="display: flex; gap: 10px;"><span style="color: var(--accent);">•</span> <span data-lang-key="cl_105_3">Poprawki: Naprawiono zasłanianie przycisków przez pasek systemowy.</span></li>
-        </ul>
-    </div>
-  </div>
 
-  <div class="glass-card hv" style="margin-bottom: 20px; padding: 25px; border-color: rgba(var(--accent-rgb), 0.5); box-shadow: 0 0 25px rgba(var(--accent-rgb), 0.1);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px dashed rgba(var(--accent-rgb), 0.3); padding-bottom: 16px; flex-wrap: wrap; gap: 10px;">
-      <div style="display: flex; gap: 10px; align-items: center;">
-        <div style="font-size:24px; color:var(--accent);">◈</div>
-        <span style="font-family: var(--font-head); color: var(--accent); font-weight: 900; font-size: 20px; letter-spacing: 1px; text-transform: uppercase;" data-lang-key="cl_start_title">Oficjalny Start Projektu</span>
+      <div style="display: flex; gap: 24px; align-items: center; margin-bottom: 32px;">
+        <div class="app-icon" style="width: 80px; height: 80px;"><img src="logoexo.png" alt="EXO" onerror="this.style.display='none'"></div>
+        <div>
+          <h1 style="margin: 0; font-size: 2.5rem;">IbronEXO</h1>
+          <p class="text-mono" style="margin: 0;">
+            <span class="lang-pl">Hermetyczny kryptosejf offline.</span>
+            <span class="lang-en">Hermetic offline crypto-vault.</span>
+          </p>
+        </div>
       </div>
-      <div style="font-family: var(--font-mono); font-size: 11px; color: var(--accent); letter-spacing: 1px;"><span data-lang-key="cl_date">Data</span>: 15.06.2026</div>
-    </div>
-    <p style="font-size: 14px; margin: 0 0 10px 0; color: var(--text-main); font-weight:bold;" data-lang-key="cl_start_desc_1">Pierwsza w historii aplikacja wydana przez Ibron Industries.</p>
-    <p style="font-size: 13px; margin: 0; color: var(--text-muted);" data-lang-key="cl_start_desc_2">Oficjalny debiut hermetycznego środowiska IbronEXO.</p>
-  </div>
-</article>
 
-<article id="app-chronos" class="view">
-  <a href="#apps-hub" class="btn-back hv" onclick="switchView('apps-hub', event); updateNavActive('apps-hub')">← <span data-lang-key="back_apps">Powrót do Aplikacji</span></a>
-  <div style="display:flex;align-items:center;gap:20px;margin-bottom:26px;flex-wrap:wrap">
-    <div style="width:88px;height:88px;background:rgba(0,0,0,.5);border-radius:var(--card-radius);display:flex;justify-content:center;align-items:center;padding:12px;border:1px solid var(--border-glass);flex-shrink:0">
-      <img src="logoclock.png" alt="CHR" style="max-width:100%;filter:grayscale(1)" onerror="this.src='https://via.placeholder.com/70/000/8A95A5?text=CHR'">
-    </div>
-    <div><div class="section-badge" data-lang-key="chr_badge">Moduł Operacyjny</div><h1 style="font-size:clamp(26px,5vw,38px)">IbronCHRONOS.</h1></div>
-  </div>
-  <div class="build-box hv">
-    <div class="card-icon" style="font-size:52px">⎔</div>
-    <h2 style="margin-bottom:9px;font-weight:900;letter-spacing:2px;color:#FF9900" data-lang-key="chr_locked_title">MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW</h2>
-    <p style="max-width:580px;margin:0 auto 26px" data-lang-key="chr_locked_desc">Chronos Protocol — zaawansowany silnik zarządzania operacyjnego. Dostęp tymczasowo zablokowany.</p>
-    <div class="load-bar"><div class="load-fill" style="background:#FF9900; box-shadow:0 0 10px #FF9900;"></div></div>
-    <p style="font-family:var(--font-mono);color:#FF9900;font-size:12px;letter-spacing:2px;margin-top:13px">> SYSTEM.DEPLOYMENT = PENDING...</p>
-  </div>
-</article>
-
-<section id="protocols" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header"><div><div class="section-badge" data-lang-key="proto_badge">Zasady Bezpieczeństwa</div><h1 data-lang-key="proto_h1">Dokumentacja Operacyjna.</h1></div></div>
-  <div class="hv" style="margin-bottom:30px;padding:20px;background:rgba(128,128,128,.1);border-radius:var(--card-radius);border:1px solid var(--border-glass);font-size:14px" data-lang-key="proto_intro"><strong>DOKUMENTACJA OPERACYJNA & PROTOKOŁY BEZPIECZEŃSTWA</strong><br><br>Poniższe protokoły stanowią wiążącą umowę (EULA) między użytkownikiem a Ibron Industries. Pobierając i korzystając z naszych narzędzi, w pełni akceptujesz te zasady.</div>
-  <div class="protocol-rule hv"><h4 data-lang-key="proto_1_title">[ PROTOKÓŁ 1 ] CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI (AS-IS)</h4><p data-lang-key="proto_1_body">W maksymalnym zakresie dozwolonym przez obowiązujące prawo, wszystkie aplikacje i narzędzia wydawane przez Ibron Industries dostarczane są w modelu „As-Is” (tak, jak są), bez jakichkolwiek gwarancji. Nie gwarantujemy nieprzerwanego działania oprogramowania. <strong>Ibron Industries nie ponosi żadnej odpowiedzialności finansowej ani prawnej</strong> za ewentualną utratę danych, uszkodzenie bazy notatek, awarie systemu czy szkody wynikające z użytkowania aplikacji.</p></div>
-  <div class="protocol-rule hv"><h4 data-lang-key="proto_2_title">[ PROTOKÓŁ 2 ] BRAK TYLNEJ FURTKI (NO BACKDOOR POLICY)</h4><p data-lang-key="proto_2_body">Architektura IbronEXO opiera się na bezwzględnym bezpieczeństwie. System nie posiada funkcji „zapomniałem hasła”, odzyskiwania konta przez e-mail ani ukrytych kluczy deweloperskich. Zgubienie Głównego PIN-u oznacza <strong>nieodwracalną i matematyczną utratę dostępu do danych</strong>. Ibron Industries nie ma technicznej, fizycznej ani teoretycznej możliwości odszyfrowania Twojego sejfu.</p></div>
-  <div class="protocol-rule hv"><h4 data-lang-key="proto_3_title">[ PROTOKÓŁ 3 ] KAPITAŁ I CYBERATAKI (USER RISK)</h4><p data-lang-key="proto_3_body">Aplikacje Ibron to potężne narzędzia lokalne, jednak żadne cyfrowe zabezpieczenie nie jest w 100% niełamywalne. Jeśli użytkownik przechowuje w systemie frazy kryptowalutowe (Seed Phrase), hasła bankowe lub tajne dane korporacyjne, robi to wyłącznie na własne ryzyko. Ibron Industries nie odpowiada za kradzież środków w wyniku fizycznego przejęcia odblokowanego urządzenia użytkownika, infekcji złośliwym oprogramowaniem czy cyberataków.</p></div>
-  <div class="protocol-rule hv"><h4 data-lang-key="proto_4_title">[ PROTOKÓŁ 4 ] ARCHITEKTURA ZERO-DATA (PRYWATNOŚĆ I RODO)</h4><p data-lang-key="proto_4_body">Szanujemy Twoją prywatność poprzez jej całkowite ignorowanie. Oprogramowanie Ibron działa całkowicie w modelu <strong>Zero-Data</strong> (Offline-First). Nie zbieramy, nie profilujemy, nie analizujemy i nie wysyłamy żadnych Twoich notatek ani metadanych na zewnętrzne serwery. Wszystko odbywa się lokalnie na Twoim urządzeniu. Administratorem Twoich danych jesteś wyłącznie Ty. Powiadomienia i procesy autodestrukcji realizowane są z poziomu procesora Twojego telefonu, bez udziału sieci.</p></div>
-  <div class="protocol-rule hv"><h4 data-lang-key="proto_5_title">[ PROTOKÓŁ 5 ] DYSTRYBUCJA I STATUS KOMERCYJNY</h4><p data-lang-key="proto_5_body">Wszystkie obecne cyfrowe aplikacje (w tym IbronEXO) udostępniane są całkowicie za darmo – bez ukrytych reklam, bez mikropłatności i bez handlu danymi. Projekt ma charakter technologicznej inicjatywy niezależnej. Pełny regulamin e-commerce zostanie opublikowany w momencie uruchomienia przez Ibron Industries sprzedaży fizycznego sprzętu (hardware) lub usług premium.</p></div>
-</section>
-
-<section id="contact" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header"><div><div class="section-badge" data-lang-key="contact_badge">Komunikacja 256-bit</div><h1 data-lang-key="contact_h1">KONTAKT.</h1></div></div>
-  <div class="glass-card hv" style="text-align:center;padding:65px 32px;margin:32px auto;max-width:780px">
-    <div class="card-icon" style="font-size:52px">✉</div>
-    <h3 style="font-size:28px;margin-bottom:16px" data-lang-key="contact_h3">Nawiąż połączenie</h3>
-    <p style="margin-bottom:32px;font-size:14px" data-lang-key="contact_desc">Wsparcie techniczne, propozycja współpracy, pytania operacyjne — nasz terminal jest otwarty.</p>
-    <a href="mailto:alex@ibronindustries.pl" class="btn-primary hv" style="font-size:14px;padding:16px 35px">alex@ibronindustries.pl</a>
-    <div style="margin-top:32px;font-family:var(--font-mono);font-size:12px;color:#00e676;letter-spacing:2px;display:flex;justify-content:center;align-items:center;gap:9px">
-      <div style="width:7px;height:7px;background:#00e676;border-radius:50%;box-shadow:0 0 10px #00e676;animation:blink 1.5s infinite"></div>
-      <span data-lang-key="contact_secure">KANAŁ ZABEZPIECZONY</span>
-    </div>
-  </div>
-</section>
-
-<section id="offer" class="view">
-  <a href="#home" class="btn-back hv" onclick="switchView('home', event); updateNavActive('home')">← <span data-lang-key="back">Powrót</span></a>
-  <div class="section-header" style="border:none; margin-bottom:0;"></div>
-  
-  <div class="offer-hero-new">
-    <div class="section-badge" data-lang-key="offer_badge" style="margin-bottom: 25px;">Współpraca & Realizacja</div>
-    <h1 data-lang-key="off_hero_title">BUDUJEMY SYSTEMY, KTÓRE DZIAŁAJĄ.</h1>
-    <p data-lang-key="off_hero_desc">Aplikacje webowe, natywne środowiska mobilne i zaawansowane systemy UI. Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem. Od pierwszej linii kodu po finalne wdrożenie.</p>
-    <a href="mailto:alex@ibronindustries.pl" class="btn-primary hv" style="font-size:15px; padding:16px 40px;" data-lang-key="off_hero_btn">ZACZNIJ PROJEKT →</a>
-  </div>
-
-  <div class="service-cards-clean">
-    <div class="service-card-clean hv">
-      <div class="service-icon-clean">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8"/><path d="M12 17v4"/></svg>
+      <div class="meta-bar">
+        <div><span class="lang-pl">Wersja:</span><span class="lang-en">Version:</span> <strong>1.0.5</strong></div>
+        <div>Publisher: <strong>IbronIndustries</strong></div>
+        <div><span class="lang-pl">Licencja:</span><span class="lang-en">License:</span> <strong><span class="lang-pl">Darmowa (Brak Reklam)</span><span class="lang-en">Free (No Ads)</span></strong></div>
       </div>
-      <h3 data-lang-key="off_srv_1_t">Aplikacje i Systemy Webowe</h3>
-      <p data-lang-key="off_srv_1_d">Zoptymalizowane pod kątem wydajności platformy SPA i nowoczesne wizytówki. Szybkość i czysty kod z zachowaniem standardów bezpieczeństwa.</p>
-    </div>
-    <div class="service-card-clean hv">
-      <div class="service-icon-clean">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="5" y="2" width="14" height="20" rx="2"/><path d="M12 18h.01"/></svg>
+
+      <div class="card" style="margin-bottom: 48px;">
+        <p style="font-size: 1.125rem;">
+          <strong><span class="lang-pl">IbronEXO to nie jest zwykły notatnik.</span><span class="lang-en">IbronEXO is not just a notepad.</span></strong> 
+          <span class="lang-pl">To Twój prywatny, hermetyczny kryptosejf zaprojektowany do bezkompromisowej ochrony informacji tekstowych. Zbudowany w architekturze <span class="text-mono">offline (Zero-Data)</span> — Twoje sekrety nigdy nie opuszczą urządzenia.</span>
+          <span class="lang-en">It's your private, hermetic crypto-vault built for uncompromising protection of text information. Built in an <span class="text-mono">offline (Zero-Data)</span> architecture — your secrets never leave your device.</span>
+        </p>
+        <br>
+        <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-primary">
+          <span class="lang-pl">Pobierz z Google Play</span><span class="lang-en">Download on Google Play</span>
+        </a>
       </div>
-      <h3 data-lang-key="off_srv_2_t">Środowiska Mobilne</h3>
-      <p data-lang-key="off_srv_2_d">Natywne aplikacje oraz rozwiązania hybrydowe z pełnym naciskiem na optymalne zużycie pamięci i płynność działania offline.</p>
-    </div>
-    <div class="service-card-clean hv">
-      <div class="service-icon-clean">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18"/><path d="M9 21V9"/></svg>
+
+      <div class="grid-2">
+        <div class="card">
+          <h3><span class="lang-pl">Protokół "Podwójnego Dna"</span><span class="lang-en">Triple PIN System</span></h3>
+          <p><span class="lang-pl">Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.</span><span class="lang-en">Main PIN — real data. Decoy PIN — fake vault. Nuke PIN — instant total wipe.</span></p>
+        </div>
+        <div class="card">
+          <h3><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h3>
+          <p><span class="lang-pl">Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.</span><span class="lang-en">Set a timer per note. When it expires — overwritten zeros, no trace left.</span></p>
+        </div>
+        <div class="card">
+          <h3>Dead Man's Switch</h3>
+          <p><span class="lang-pl">Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.</span><span class="lang-en">If you don't log in within the set period — the app automatically wipes the database.</span></p>
+        </div>
+        <div class="card">
+          <h3><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h3>
+          <p><span class="lang-pl">Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.</span><span class="lang-en">No media imports, no server notifications. Only a manually typed encrypted text log.</span></p>
+        </div>
       </div>
-      <h3 data-lang-key="off_srv_3_t">Interfejsy (UI/UX)</h3>
-      <p data-lang-key="off_srv_3_d">Projektowanie spójnych środowisk wizualnych, nowoczesnych kokpitów i pełnych systemów designu, które ułatwiają interakcję.</p>
-    </div>
-    <div class="service-card-clean hv">
-      <div class="service-icon-clean">
-        <svg width="34" height="34" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+    </section>
+
+    <section id="protocols" class="view">
+      <div class="section-header">
+        <span class="badge badge-outline">
+          <span class="lang-pl">Zasady Bezpieczeństwa</span><span class="lang-en">Security Rules</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Dokumentacja Operacyjna.</span><span class="lang-en">Operational Documentation.</span>
+        </h1>
       </div>
-      <h3 data-lang-key="off_srv_4_t">Narzędzia i Skrypty</h3>
-      <p data-lang-key="off_srv_4_d">Autorskie rozwiązania automatyzujące procesy, mikronarzędzia, bezpieczne integracje z bazami danych i własnymi systemami klienta.</p>
-    </div>
-  </div>
 
-  <div class="process-section">
-    <h2 class="process-title gradient-text" data-lang-key="off_proc_title">JAK PRACUJEMY</h2>
-    <div class="process-row">
-      <div class="process-step hv"><span class="process-step-num">01 / DISCOVERY</span><h4 data-lang-key="off_proc_1_t">Rozmowa i Analiza</h4><p data-lang-key="off_proc_1_d">Poznajemy cel projektu, weryfikujemy technologię i ustalamy architekturę.</p></div>
-      <div class="process-step hv"><span class="process-step-num">02 / DESIGN</span><h4 data-lang-key="off_proc_2_t">Projekt Systemu</h4><p data-lang-key="off_proc_2_d">Tworzymy wizualne fundamenty oraz planujemy przepływ danych i zabezpieczeń.</p></div>
-      <div class="process-step hv"><span class="process-step-num">03 / BUILD</span><h4 data-lang-key="off_proc_3_t">Kodowanie i Testy</h4><p data-lang-key="off_proc_3_d">Programowanie w ścisłej izolacji z zachowaniem najwyższych standardów optymalizacji.</p></div>
-      <div class="process-step hv"><span class="process-step-num">04 / DEPLOY</span><h4 data-lang-key="off_proc_4_t">Wdrożenie</h4><p data-lang-key="off_proc_4_d">Publikacja na serwerach lub przekazanie zamkniętych środowisk aplikacji.</p></div>
-    </div>
-  </div>
+      <p style="margin-bottom: 48px; font-size: 1.125rem;">
+        <span class="lang-pl">Poniższe protokoły stanowią wiążącą umowę (EULA) między użytkownikiem a Ibron Industries. Pobierając i korzystając z naszych narzędzi, w pełni akceptujesz te zasady.</span>
+        <span class="lang-en">The following protocols constitute a binding agreement (EULA) between the user and Ibron Industries. By downloading and using our tools, you fully accept these rules.</span>
+      </p>
 
-  <div class="offer-cta-band hv">
-    <h2 data-lang-key="off_cta_title">Masz pomysł? Zbudujmy go.</h2>
-    <a href="mailto:alex@ibronindustries.pl" class="btn-primary" data-lang-key="off_cta_btn">INICJUJ KONTRAKT PROJEKTOWY →</a>
-  </div>
-</section>
+      <div class="protocol-box">
+        <h4><span class="lang-pl">[ Protokół 1 ] Całkowite wyłączenie odpowiedzialności (As-Is)</span><span class="lang-en">[ Protocol 1 ] Full Disclaimer of Liability (As-Is)</span></h4>
+        <p>
+          <span class="lang-pl">W maksymalnym zakresie dozwolonym przez obowiązujące prawo, wszystkie aplikacje i narzędzia wydawane przez Ibron Industries dostarczane są w modelu „As-Is” (tak, jak są), bez jakichkolwiek gwarancji. Nie gwarantujemy nieprzerwanego działania oprogramowania. <strong>Ibron Industries nie ponosi żadnej odpowiedzialności finansowej ani prawnej</strong> za ewentualną utratę danych, uszkodzenie bazy notatek, awarie systemu czy szkody wynikające z użytkowania aplikacji.</span>
+          <span class="lang-en">To the maximum extent permitted by applicable law, all applications and tools released by Ibron Industries are provided "As-Is", without any warranties. We do not guarantee uninterrupted software operation. <strong>Ibron Industries bears no financial or legal responsibility</strong> for any data loss, database corruption, system failures, or damages resulting from the use of the application.</span>
+        </p>
+      </div>
 
-</main>
+      <div class="protocol-box">
+        <h4><span class="lang-pl">[ Protokół 2 ] Brak tylnej furtki (No Backdoor Policy)</span><span class="lang-en">[ Protocol 2 ] No Backdoor Policy</span></h4>
+        <p>
+          <span class="lang-pl">Architektura IbronEXO opiera się na bezwzględnym bezpieczeństwie. System nie posiada funkcji „zapomniałem hasła”, odzyskiwania konta przez e-mail ani ukrytych kluczy deweloperskich. Zgubienie Głównego PIN-u oznacza <strong>nieodwracalną i matematyczną utratę dostępu do danych</strong>. Ibron Industries nie ma technicznej, fizycznej ani teoretycznej możliwości odszyfrowania Twojego sejfu.</span>
+          <span class="lang-en">The IbronEXO architecture relies on absolute security. The system has no "forgot password" function, email account recovery, or hidden developer keys. Losing your Main PIN means <strong>an irreversible and mathematical loss of data access</strong>. Ibron Industries has no technical, physical, or theoretical ability to decrypt your vault.</span>
+        </p>
+      </div>
 
-<footer style="border-top: 1px solid var(--border-glass); padding: 40px 5%; margin-top: 60px; text-align: center; color: var(--text-muted); font-size: 12px; font-family: var(--font-mono);">
-  <p>© 2026 Ibron Industries. All rights reserved. Absolute Privacy.</p>
-</footer>
+      <div class="protocol-box">
+        <h4><span class="lang-pl">[ Protokół 3 ] Kapitał i cyberataki (User Risk)</span><span class="lang-en">[ Protocol 3 ] Capital and Cyberattacks (User Risk)</span></h4>
+        <p>
+          <span class="lang-pl">Aplikacje Ibron to potężne narzędzia lokalne, jednak żadne cyfrowe zabezpieczenie nie jest w 100% niełamywalne. Jeśli użytkownik przechowuje w systemie frazy kryptowalutowe (Seed Phrase), hasła bankowe lub tajne dane korporacyjne, robi to wyłącznie na własne ryzyko. Ibron Industries nie odpowiada za kradzież środków w wyniku fizycznego przejęcia odblokowanego urządzenia użytkownika, infekcji złośliwym oprogramowaniem czy cyberataków.</span>
+          <span class="lang-en">Ibron apps are powerful local tools, but no digital security is 100% unbreakable. If a user stores cryptocurrency Seed Phrases, banking passwords, or secret corporate data in the system, they do so entirely at their own risk. Ibron Industries is not liable for theft of funds due to physical seizure of an unlocked device, malware infections, or targeted cyberattacks.</span>
+        </p>
+      </div>
 
-<div id="image-lightbox" onclick="closeLightbox(event)">
-  <span class="lb-close hv">&times;</span>
-  <img id="lb-img" src="" alt="Zoom">
-</div>
+      <div class="protocol-box">
+        <h4><span class="lang-pl">[ Protokół 4 ] Architektura Zero-Data</span><span class="lang-en">[ Protocol 4 ] Zero-Data Architecture</span></h4>
+        <p>
+          <span class="lang-pl">Szanujemy Twoją prywatność poprzez jej całkowite ignorowanie. Oprogramowanie Ibron działa całkowicie w modelu <strong>Zero-Data</strong> (Offline-First). Nie zbieramy, nie profilujemy, nie analizujemy i nie wysyłamy żadnych Twoich notatek ani metadanych na zewnętrzne serwery. Wszystko odbywa się lokalnie na Twoim urządzeniu. Administratorem Twoich danych jesteś wyłącznie Ty.</span>
+          <span class="lang-en">We respect your privacy by completely ignoring it. Ibron software operates entirely on a <strong>Zero-Data</strong> (Offline-First) model. We do not collect, profile, analyze, or send any of your notes or metadata to external servers. Everything happens locally on your device. You are the sole administrator of your data.</span>
+        </p>
+      </div>
+    </section>
 
-<script>
-const LANGS = {
-  pl:{code:'pl',name:'Polski',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="7.5" fill="#FFFFFF"/><rect y="7.5" width="22" height="7.5" fill="#DC143C"/></svg>'},
-  en:{code:'en',name:'English',flag:'<svg viewBox="0 0 22 15"><rect width="22" height="15" fill="#012169"/><path d="M0 0l22 15M22 0L0 15" stroke="#fff" stroke-width="3"/><path d="M0 0l22 15M22 0L0 15" stroke="#C8102E" stroke-width="1.5"/><path d="M11 0v15M0 7.5h22" stroke="#fff" stroke-width="5"/><path d="M11 0v15M0 7.5h22" stroke="#C8102E" stroke-width="3"/></svg>'}
-};
+    <section id="about" class="view">
+      <div class="section-header">
+        <span class="badge badge-outline">
+          <span class="lang-pl">Misja i Wizja</span><span class="lang-en">Mission & Vision</span>
+        </span>
+        <h1>
+          <span class="lang-pl">O Nas / Przyszłość.</span><span class="lang-en">About Us / Future.</span>
+        </h1>
+      </div>
 
-const T = {
-  pl:{
-    nav_start_label: 'Start', nav_start_desc: 'Czym się zajmujemy',
-    nav_apps_label: 'Aplikacje', nav_apps_desc: 'Nasze oprogramowanie',
-    nav_protocols_label: 'Protokoły', nav_protocols_desc: 'Zasady i bezpieczeństwo',
-    nav_ui_label: 'UI System', nav_ui_desc: 'Personalizuj wygląd',
-    nav_offer_label: 'Dla firm', nav_offer_desc: 'Projekty na zamówienie',
-    nav_contact_label: 'Kontakt', nav_contact_desc: 'Napisz do nas',
-    hero_label:'NIEZALEŻNE STUDIO OPROGRAMOWANIA PRYWATNOŚCI',
-    hero_title:'Oprogramowanie, które oddaje kontrolę Tobie.',
-    hero_sub:'Tworzymy narzędzia skupione na prywatności — aplikacje i systemy, gdzie Twoje dane zostają z Tobą. Bez chmury, bez telemetrii, bez wyjątków.',
-    flagship_badge: 'PRODUKT FLAGOWY', flagship_desc: 'Szyfrowany sejf offline.',
-    ad_live: 'JUŻ DOSTĘPNE W GOOGLE PLAY', ad_desc: 'Hermetyczny sejf offline zbudowany bez kompromisów. Żadnej chmury, żadnej telemetrii. Twój klucz to jedyna droga do danych.', ad_cta: 'POZNAJ IBRON EXO →',
-    stat_1: 'aplikacja live', stat_2: 'telemetrii', stat_3: 'offline', stat_4_lbl: 'możliwości',
-    rm_1_lbl: 'TERAZ / NOW', rm_1_desc: 'IbronEXO live', rm_2_lbl: 'WKRÓTCE / SOON', rm_2_desc: 'Więcej narzędzi prywatności', rm_3_lbl: 'PRZYSZŁOŚĆ / FUTURE', rm_3_desc: 'Dedykowane urządzenia',
-    badge_update: 'NOWA AKTUALIZACJA', badge_off: 'TRYB OFFLINE', badge_v: 'WERSJA 1.0.5',
-    changelog_badge:'Dziennik Aktualizacji',changelog_title:'HISTORIA AKTUALIZACJI',cl_size:'Całkowita waga aplikacji',cl_date:'Data',
-    cl_105_title:'Wersja 1.0.5',cl_105_desc:'Najnowsza aktualizacja wprowadzająca nowe zabezpieczenia, personalizację i poprawki.',
-    cl_105_1:'Bezpieczeństwo: Nowy system blokady po błędnych próbach PIN z eskalacją czasową.',cl_105_2:'Personalizacja interfejsu: 15 nowych wzorów tła i presety motywów.',cl_105_3:'Poprawki: Naprawiono zasłanianie przycisków przez pasek systemowy.',
-    cl_start_title:'Oficjalny Start Projektu',cl_start_desc_1:'Pierwsza w historii aplikacja wydana przez Ibron Industries.',cl_start_desc_2:'Oficjalny debiut hermetycznego środowiska IbronEXO.',
-    empty_apps_msg:'> SYS.LOG: BRAK MODUŁÓW W TEJ KATEGORII...',freedom_title:'PROTOKÓŁ WOLNOŚCI',freedom_desc:'Wchodzisz w strefę absolutnej kontroli. Zmieniaj każdy detal interfejsu – motyw, kolory, typografię. Przejmij stery.',freedom_btn:'ZAINICJUJ',back:'Powrót',back_apps:'Powrót do Aplikacji',read_more:'Czytaj więcej →',nav_about:'O NAS',offer_label:'IBRON × WSPÓŁPRACA',offer_hero_title:'Zbudujmy coś, co ma znaczenie.',offer_hero_sub:'Aplikacje webowe, narzędzia mobilne, systemy UI. Jeśli masz pomysł który zasługuje na istnienie — pomożemy Ci go zbudować porządnie.',offer_hero_btn:'SPRAWDŹ OFERTĘ →',tpl_header:'GOTOWE SCHEMATY (MASTER TEMPLATES)',tpl_desc:'Każdy motyw oferuje unikalną ścieżkę dźwiękową i kompletną przebudowę interfejsu.',tpl_cyber_desc:'Szkło, neon i mrok.',tpl_aurora_desc:'Granat i złoto. Elegancja.',tpl_nature_desc:'Jasny, organiczny kontrast.',tpl_miami_desc:'Granat, neon i synthwave.',tpl_nebula_desc:'Głęboki kosmos. Fiolet, róż, błękit.',tpl_custom_name:'TRYB WŁASNY',tpl_custom_desc:'Pełna kontrola nad każdym detalem.',unlock_title:'TRYB WŁASNY',unlock_desc:'Tu wchodzisz głębiej. Odblokowujesz pełną kontrolę nad każdym aspektem interfejsu — oświetlenie, kolory, typografię, muzykę i więcej. To Twoja strona, Twoje zasady.',unlock_btn:'PRZEJMIJ KONTROLĘ',access_1:'Kolory i akcenty',access_2:'Tła i animacje',access_3:'Muzyka i typografia',custom_modal_title:'TRYB WŁASNY — DOSTĘP',custom_modal_l1:'PEŁNA KONTROLA NAD INTERFEJSEM',custom_modal_l2:'ODBLOKOWANY',custom_modal_l3:'NIELIMITOWANE',custom_modal_btn:'ZAINICJUJ DOSTĘP',adv_title:'MODYFIKATORY ZAAWANSOWANE',sh_lighting:'1. Motyw Oświetlenia',sd_lighting:'Wybierz zachowanie cieni i poświaty elementów.',sh_accent:'2. Akcent Systemowy',sd_accent:'12 presetów + niestandardowe koło barw.',sh_bg:'3. Struktura Tła',sd_bg:'Wybierz topografię cyfrowego płótna.',sh_card:'4. Architektura Kafelek',sd_card:'Szkło, solidne, kontury i więcej.',sh_radius:'5. Zaokrąglenie Rogów',sd_radius:'Suwak 0px (ostry) do 50px (zaokrąglony).',sh_font:'6. Typografia',sd_font:'7 unikalnych par czcionek.',sh_anim:'7. Szybkość Animacji',sd_anim:'Wpływa na przejścia i efekty hover.',sh_density:'8. Gęstość Layoutu',sd_density:'Kompaktowy, normalny lub przestronny.',sh_music:'9. Muzyka Własna',sd_music:'Wybierz ścieżkę dźwiękową (1m–5m.mp3). Zapisuje się z personalizacją.',save_btn:'ZAPISZ',reset_btn:'RESET',custom_color_label:'Niestandardowy kolor',about_badge:'Misja & Wizja',about_h1:'O NAS / WIZJA I PRZYSZŁOŚĆ',about_h3_1:'Technologia, która po prostu działa.',about_p1:'Wierzymy, że technologia powinna służyć użytkownikowi. IbronIndustries skupia się na dostarczaniu oprogramowania, które działa płynnie, szanuje prywatność i realizuje swoje zadania bez zbędnych dodatków. Tworzymy dla świadomych użytkowników.',about_h3_2:'Prywatność jako standard.',about_p2:'Podstawowe i lokalne wersje naszych narzędzi ochronnych (jak IbronEXO) są i pozostaną darmowe. Rozwój firmy chcemy oprzeć na uczciwym modelu – w przyszłości udostępnimy wysoce specjalistyczne moduły premium oraz sprzęt fizyczny za przejrzystą opłatą.',about_c1h:'Lokalne, nie chmurowe',about_c1p:'100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.',about_c2h:'Dostępność dla każdego',about_c2p:'Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.',about_c3h:'Zrównoważony rozwój',about_c3p:'Finansowanie projektów opieramy na transparentnych zasadach. Darmowe, otwarte funkcje dla wszystkich oraz płatne, zaawansowane moduły i sprzęt dla wymagających.',apps_badge:'Oprogramowanie IbronIndustries',apps_h1:'Ekosystem Aplikacji.',
-    filter_all: 'Wszystkie', filter_avail: 'Dostępne', filter_indev: 'W Budowie', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
-    apps_chr_tag:'W BUDOWIE',apps_chr_desc:'Silnik zarządzania operacyjnego.', apps_exo_tag:'DOSTĘPNE',apps_exo_desc:'Hermetyczny kryptosejf offline.',
-    app_exo_tagline: 'Hermetyczny kryptosejf offline.', app_chr_tagline: 'Silnik zarządzania operacyjnego.',
-    exo_live_title:'DOSTĘPNE W GOOGLE PLAY',exo_live_desc:'Aktualna, stabilna wersja aplikacji jest już dostępna do pobrania. Pełna ochrona offline, zero telemetrii.',
-    exo_tagline:'Twój hermetyczny kryptosejf offline.',version:'Wersja',release:'Data wydania',release_date:'15.06.2026', update_date_key: 'Data aktualizacji', license:'Licencja',license_val:'Darmowa (Brak Reklam)',dl_play:'POBIERZ Z GOOGLE PLAY',exo_brief_title:'> OPIS OPERACYJNY IBRON EXO',exo_brief_body:'<strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zaprojektowany do bezkompromisowej ochrony informacji tekstowych. Zbudowany w architekturze <span class="code">offline (Zero-Data)</span> — Twoje sekrety nigdy nie opuszczą urządzenia.',exo_f1h:'Protokół "Podwójnego Dna"',exo_f1p:'Główny PIN — prawdziwe dane. Decoy PIN — fałszywy sejf. Nuke PIN — natychmiastowe zniszczenie wszystkich danych.',exo_f2h:'Znikające Notatki',exo_f2p:'Ustaw timer dla każdej notatki. Po upływie czasu — nadpisane zera, żaden ślad nie zostaje.',exo_f3p:'Jeśli przez ustalony czas nie zalogujesz się — aplikacja automatycznie wymazuje bazę danych.',exo_f4h:'Absolutna Izolacja',exo_f4p:'Brak multimediów, brak powiadomień serwera. Tylko zaszyfrowany dziennik tekstowy wpisywany ręcznie.',chr_badge:'Moduł Operacyjny',chr_locked_title:'MODUŁ W FAZIE ZAMKNIĘTYCH TESTÓW',chr_locked_desc:'Chronos Protocol — zaawansowany silnik zarządzania operacyjnego. Dostęp tymczasowo zablokowany.',
-    proto_badge:'Zasady Bezpieczeństwa', proto_h1:'Dokumentacja Operacyjna.',
-    proto_intro:'<strong>DOKUMENTACJA OPERACYJNA & PROTOKOŁY BEZPIECZEŃSTWA</strong><br><br>Poniższe protokoły stanowią wiążącą umowę (EULA) między użytkownikiem a Ibron Industries. Pobierając i korzystając z naszych narzędzi, w pełni akceptujesz te zasady.',
-    proto_1_title:'[ PROTOKÓŁ 1 ] CAŁKOWITE WYŁĄCZENIE ODPOWIEDZIALNOŚCI (AS-IS)', proto_1_body:'W maksymalnym zakresie dozwolonym przez obowiązujące prawo, wszystkie aplikacje i narzędzia wydawane przez Ibron Industries dostarczane są w modelu „As-Is” (tak, jak są), bez jakichkolwiek gwarancji. Nie gwarantujemy nieprzerwanego działania oprogramowania. <strong>Ibron Industries nie ponosi żadnej odpowiedzialności finansowej ani prawnej</strong> za ewentualną utratę danych, uszkodzenie bazy notatek, awarie systemu czy szkody wynikające z użytkowania aplikacji.',
-    proto_2_title:'[ PROTOKÓŁ 2 ] BRAK TYLNEJ FURTKI (NO BACKDOOR POLICY)', proto_2_body:'Architektura IbronEXO opiera się na bezwzględnym bezpieczeństwie. System nie posiada funkcji „zapomniałem hasła”, odzyskiwania konta przez e-mail ani ukrytych kluczy deweloperskich. Zgubienie Głównego PIN-u oznacza <strong>nieodwracalną i matematyczną utratę dostępu do danych</strong>. Ibron Industries nie ma technicznej, fizycznej ani teoretycznej możliwości odszyfrowania Twojego sejfu.',
-    proto_3_title:'[ PROTOKÓŁ 3 ] KAPITAŁ I CYBERATAKI (USER RISK)', proto_3_body:'Aplikacje Ibron to potężne narzędzia lokalne, jednak żadne cyfrowe zabezpieczenie nie jest w 100% niełamywalne. Jeśli użytkownik przechowuje w systemie frazy kryptowalutowe (Seed Phrase), hasła bankowe lub tajne dane korporacyjne, robi to wyłącznie na własne ryzyko. Ibron Industries nie odpowiada za kradzież środków w wyniku fizycznego przejęcia odblokowanego urządzenia użytkownika, infekcji złośliwym oprogramowaniem czy cyberataków.',
-    proto_4_title:'[ PROTOKÓŁ 4 ] ARCHITEKTURA ZERO-DATA (PRYWATNOŚĆ I RODO)', proto_4_body:'Szanujemy Twoją prywatność poprzez jej całkowite ignorowanie. Oprogramowanie Ibron działa całkowicie w modelu <strong>Zero-Data</strong> (Offline-First). Nie zbieramy, nie profilujemy, nie analizujemy i nie wysyłamy żadnych Twoich notatek ani metadanych na zewnętrzne serwery. Wszystko odbywa się lokalnie na Twoim urządzeniu. Administratorem Twoich danych jesteś wyłącznie Ty. Powiadomienia i procesy autodestrukcji realizowane są z poziomu procesora Twojego telefonu, bez udziału sieci.',
-    proto_5_title:'[ PROTOKÓŁ 5 ] DYSTRYBUCJA I STATUS KOMERCYJNY', proto_5_body:'Wszystkie obecne cyfrowe aplikacje (w tym IbronEXO) udostępniane są całkowicie za darmo – bez ukrytych reklam, bez mikropłatności i bez handlu danymi. Projekt ma charakter technologicznej inicjatywy niezależnej. Pełny regulamin e-commerce zostanie opublikowany w momencie uruchomienia przez Ibron Industries sprzedaży fizycznego sprzętu (hardware) lub usług premium.',
-    contact_badge:'Komunikacja 256-bit',contact_h1:'KONTAKT.',contact_h3:'Nawiąż połączenie',contact_desc:'Wsparcie techniczne, propozycja współpracy, pytania operacyjne — nasz terminal jest otwarty.',contact_secure:'KANAŁ ZABEZPIECZONY',contact_us:'NAPISZ DO NAS',
-    off_hero_title: 'BUDUJEMY SYSTEMY, KTÓRE DZIAŁAJĄ.', off_hero_desc: 'Aplikacje webowe, natywne środowiska mobilne i zaawansowane systemy UI. Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem. Od pierwszej linii kodu po finalne wdrożenie.', off_hero_btn: 'ZACZNIJ PROJEKT →',
-    off_srv_1_t: 'Aplikacje i Systemy Webowe', off_srv_1_d: 'Zoptymalizowane pod kątem wydajności platformy SPA i nowoczesne wizytówki. Szybkość i czysty kod z zachowaniem standardów bezpieczeństwa.',
-    off_srv_2_t: 'Środowiska Mobilne', off_srv_2_d: 'Natywne aplikacje oraz rozwiązania hybrydowe z pełnym naciskiem na optymalne zużycie pamięci i płynność działania offline.',
-    off_srv_3_t: 'Interfejsy (UI/UX)', off_srv_3_d: 'Projektowanie spójnych środowisk wizualnych, nowoczesnych kokpitów i pełnych systemów designu, które ułatwiają interakcję.',
-    off_srv_4_t: 'Narzędzia i Skrypty', off_srv_4_d: 'Autorskie rozwiązania automatyzujące procesy, mikronarzędzia, bezpieczne integracje z bazami danych i własnymi systemami klienta.',
-    off_proc_title: 'JAK PRACUJEMY', off_proc_1_t: 'Rozmowa i Analiza', off_proc_1_d: 'Poznajemy cel projektu, weryfikujemy technologię i ustalamy architekturę.',
-    off_proc_2_t: 'Projekt Systemu', off_proc_2_d: 'Tworzymy wizualne fundamenty oraz planujemy przepływ danych i zabezpieczeń.',
-    off_proc_3_t: 'Kodowanie i Testy', off_proc_3_d: 'Programowanie w ścisłej izolacji z zachowaniem najwyższych standardów optymalizacji.',
-    off_proc_4_t: 'Wdrożenie', off_proc_4_d: 'Publikacja na serwerach lub przekazanie zamkniętych środowisk aplikacji.',
-    off_cta_title: 'Masz pomysł? Zbudujmy go.', off_cta_btn: 'INICJUJ KONTRAKT PROJEKTOWY →',
-    about_founder_h: 'PROJEKTANT SYSTEMÓW // FOUNDER',
-    about_founder_p1: 'Nazywam się Aleksander. Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.',
-    about_founder_p2: 'Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne.',
-    about_founder_p3: 'Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. Płacisz za konkretną wartość lub funkcjonalność, a nie swoimi prywatnymi danymi.'
-  },
-  en:{
-    nav_start_label: 'Home', nav_start_desc: 'What we do',
-    nav_apps_label: 'Apps', nav_apps_desc: 'Our software',
-    nav_protocols_label: 'Protocols', nav_protocols_desc: 'Rules & security',
-    nav_ui_label: 'UI System', nav_ui_desc: 'Personalize',
-    nav_offer_label: 'For Business', nav_offer_desc: 'Custom projects',
-    nav_contact_label: 'Contact', nav_contact_desc: 'Get in touch',
-    hero_label:'INDEPENDENT PRIVACY SOFTWARE STUDIO',
-    hero_title:'Software that puts you in control.',
-    hero_sub:'We build privacy-focused tools — apps and systems where your data stays with you. No cloud, no telemetry, no exceptions.',
-    flagship_badge: 'FLAGSHIP PRODUCT', flagship_desc: 'Offline encrypted vault.',
-    ad_live: 'AVAILABLE ON GOOGLE PLAY', ad_desc: 'A hermetic offline vault built without compromise. No cloud, no telemetry. Your key is the only path to data.', ad_cta: 'EXPLORE IBRON EXO →',
-    stat_1: 'app live', stat_2: 'telemetry', stat_3: 'offline', stat_4_lbl: 'possibilities',
-    rm_1_lbl: 'NOW', rm_1_desc: 'IbronEXO live', rm_2_lbl: 'SOON', rm_2_desc: 'More privacy tools', rm_3_lbl: 'FUTURE', rm_3_desc: 'Dedicated hardware',
-    badge_update: 'NEW UPDATE', badge_off: 'OFFLINE MODE', badge_v: 'VERSION 1.0.5',
-    changelog_badge:'Changelog',changelog_title:'UPDATE HISTORY',cl_size:'Total app weight',cl_date:'Date',
-    cl_105_title:'Version 1.0.5',cl_105_desc:'Major update introducing new security standards and advanced environment personalization.',
-    cl_105_1:'Security: New PIN lockout system with time-based escalation.',cl_105_2:'Interface personalization: 15 new background patterns and presets.',cl_105_3:'Fixes: Fixed buttons hidden behind the Android system navigation bar.',
-    cl_start_title:'Official Project Launch',cl_start_desc_1:'The first application in history released by Ibron Industries.',cl_start_desc_2:'Official debut of the IbronEXO hermetic environment in Google Play store.',
-    empty_apps_msg:'> SYS.LOG: NO MODULES IN THIS CATEGORY...',freedom_title:'FREEDOM PROTOCOL',freedom_desc:'You are entering the zone of absolute control. Change every interface detail — theme, colors, typography. Take the helm.',freedom_btn:'INITIATE',back:'Back',back_apps:'Back to Apps',read_more:'Read more →',nav_about:'ABOUT US',offer_label:'IBRON × PARTNERSHIP',offer_hero_title:"Let's build something that matters.",offer_hero_sub:"Web apps, mobile tools, UI systems. If you have an idea that deserves to exist — we'll help you build it right.",offer_hero_btn:'CHECK OFFER →',tpl_header:'READY SCHEMAS (MASTER TEMPLATES)',tpl_desc:'Each theme offers a unique soundtrack and complete UI overhaul.',tpl_cyber_desc:'Glass, neon, and dark.',tpl_aurora_desc:'Navy and gold. Elegance.',tpl_nature_desc:'Bright, organic contrast.',tpl_miami_desc:'Navy, neon, synthwave.',tpl_nebula_desc:'Deep space. Purple, pink, blue.',tpl_custom_name:'CUSTOM MODE',tpl_custom_desc:'Full control over every detail.',unlock_title:'CUSTOM MODE',unlock_desc:'You go deeper here. Unlock full control over every aspect of the interface — lighting, colors, typography, music and more. Your site, your rules.',unlock_btn:'TAKE CONTROL',access_1:'Colors & accents',access_2:'Backgrounds & animation',access_3:'Music & typography',custom_modal_title:'CUSTOM MODE — ACCESS',custom_modal_l1:'FULL INTERFACE CONTROL',custom_modal_l2:'UNLOCKED',custom_modal_l3:'UNLIMITED',custom_modal_btn:'INITIATE ACCESS',adv_title:'ADVANCED OVERRIDES',sh_lighting:'1. Lighting Engine',sd_lighting:'Choose shadow & glow behavior.',sh_accent:'2. System Accent Color',sd_accent:'12 presets + custom color wheel.',sh_bg:'3. Background Structure',sd_bg:'Select digital canvas topography.',sh_card:'4. Card Architecture',sd_card:'Glass, solid, wireframe and more.',sh_radius:'5. Corner Rounding',sd_radius:'Slider 0px (sharp) to 50px (pill).',sh_font:'6. Typography',sd_font:'7 distinctive font pairs.',sh_anim:'7. Animation Speed',sd_anim:'Affects transitions and hover effects.',sh_density:'8. Layout Density',sd_density:'Compact, normal or spacious.',sh_music:'9. Custom Music',sd_music:'Choose soundtrack (1m–5m.mp3). Saves with personalization.',save_btn:'SAVE',reset_btn:'RESET',custom_color_label:'Custom color',about_badge:'Mission & Vision',about_h1:'ABOUT US / VISION & FUTURE',about_h3_1:'Technology that just works.',about_p1:'We believe technology should serve the user. IbronIndustries focuses on delivering software that runs smoothly, respects privacy, and accomplishes tasks without bloatware. We build for conscious users.',about_h3_2:'Privacy as a standard.',about_p2:'The core and local versions of our protection tools (like IbronEXO) are and will remain free. We plan to build our future growth on a fair model – providing highly specialized premium modules and physical hardware for transparent fees.',about_c1h:'Local, not cloud',about_c1p:'100% locally on your device. No servers, no data collection. Zero-Data architecture by design.',about_c2h:'Accessible to everyone',about_c2p:'Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.',about_c3h:'Sustainable growth',about_c3p:'Our projects are funded on transparent rules. Free, open features for everyone, and paid advanced modules and hardware for demanding users.',apps_badge:'IbronIndustries Software',apps_h1:'Application Ecosystem.',
-    filter_all: 'All', filter_avail: 'Available', filter_indev: 'In Dev', filter_android: 'Android', filter_ios: 'iOS', filter_pc: 'PC',
-    apps_chr_tag:'IN DEV',apps_chr_desc:'Operational management engine.', apps_exo_tag:'AVAILABLE',apps_exo_desc:'Hermetic offline crypto-vault.',
-    app_exo_tagline: 'Hermetic offline crypto-vault.', app_chr_tagline: 'Operational management engine.',
-    exo_live_title:'AVAILABLE ON GOOGLE PLAY',exo_live_desc:'The current stable version of the application is now available for download. Full offline protection, zero telemetry.',
-    exo_tagline:'Your hermetic offline crypto-vault.',version:'Version',release:'Release date',release_date:'15.06.2026', update_date_key: 'Last updated', license:'License',license_val:'Free (No Ads)',dl_play:'DOWNLOAD ON GOOGLE PLAY',exo_brief_title:'> IBRON EXO OPERATIONAL BRIEF',exo_brief_body:'<strong>IbronEXO is not just a notepad.</strong> It\'s your private, hermetic crypto-vault built for uncompromising protection of text information. Built in an <span class="code">offline (Zero-Data)</span> architecture — your secrets never leave your device.',exo_f1h:'Triple PIN System',exo_f1p:'Main PIN — real data. Decoy PIN — fake vault. Nuke PIN — instant total wipe.',exo_f2h:'Vanishing Notes',exo_f2p:'Set a timer per note. When it expires — overwritten zeros, no trace left.',exo_f3p:'If you don\'t log in within the set period — the app automatically wipes the database.',exo_f4h:'Absolute Isolation',exo_f4p:'No media imports, no server notifications. Only a manually typed encrypted text log.',chr_badge:'Operational Module',chr_locked_title:'MODULE IN CLOSED BETA TESTING',chr_locked_desc:'Chronos Protocol — advanced operational management engine. Access temporarily restricted.',
-    proto_badge:'Security Protocols', proto_h1:'Operational Documentation.',
-    proto_intro:'<strong>OPERATIONAL DOCUMENTATION & SECURITY PROTOCOLS</strong><br><br>The following protocols constitute a binding agreement (EULA) between the user and Ibron Industries. By downloading and using our tools, you fully accept these rules.',
-    proto_1_title:'[ PROTOCOL 1 ] FULL DISCLAIMER OF LIABILITY (AS-IS)', proto_1_body:'To the maximum extent permitted by applicable law, all applications and tools released by Ibron Industries are provided "As-Is", without any warranties. We do not guarantee uninterrupted software operation. <strong>Ibron Industries bears no financial or legal responsibility</strong> for any data loss, database corruption, system failures, or damages resulting from the use of the application.',
-    proto_2_title:'[ PROTOCOL 2 ] NO BACKDOOR POLICY', proto_2_body:'The IbronEXO architecture relies on absolute security. The system has no "forgot password" function, email account recovery, or hidden developer keys. Losing your Main PIN means <strong>an irreversible and mathematical loss of data access</strong>. Ibron Industries has no technical, physical, or theoretical ability to decrypt your vault.',
-    proto_3_title:'[ PROTOCOL 3 ] CAPITAL AND CYBERATTACKS (USER RISK)', proto_3_body:'Ibron apps are powerful local tools, but no digital security is 100% unbreakable. If a user stores cryptocurrency Seed Phrases, banking passwords, or secret corporate data in the system, they do so entirely at their own risk. Ibron Industries is not liable for theft of funds due to physical seizure of an unlocked device, malware infections, or targeted cyberattacks.',
-    proto_4_title:'[ PROTOCOL 4 ] ZERO-DATA ARCHITECTURE (PRIVACY & GDPR)', proto_4_body:'We respect your privacy by completely ignoring it. Ibron software operates entirely on a <strong>Zero-Data</strong> (Offline-First) model. We do not collect, profile, analyze, or send any of your notes or metadata to external servers. Everything happens locally on your device. You are the sole administrator of your data. Notifications and self-destruct processes are handled by your phone\'s processor, with no network involvement.',
-    proto_5_title:'[ PROTOCOL 5 ] DISTRIBUTION & COMMERCIAL STATUS', proto_5_body:'All current digital applications (including IbronEXO) are provided completely free of charge – with no hidden ads, no microtransactions, and no data trading. The project is an independent technological initiative. A full e-commerce regulation will be published when Ibron Industries launches the sale of physical hardware or premium services.',
-    contact_badge:'256-bit Communication',contact_h1:'CONTACT.',contact_h3:'Establish Connection',contact_desc:'Technical support, business proposals, operational questions — our terminal is open.',contact_secure:'CHANNEL SECURED',contact_us:'CONTACT US',
-    off_hero_title: 'WE BUILD SYSTEMS THAT WORK.', off_hero_desc: 'Web applications, native mobile environments, and advanced UI systems. We build engineering-grade software where privacy and performance are foundational. From the first line of code to final deployment.', off_hero_btn: 'START A PROJECT →',
-    off_srv_1_t: 'Web Apps & Systems', off_srv_1_d: 'Highly optimized SPA platforms and modern digital portfolios. Speed and clean code adhering to security standards.',
-    off_srv_2_t: 'Mobile Ecosystems', off_srv_2_d: 'Native applications and hybrid solutions with a focus on optimal memory usage and seamless offline capability.',
-    off_srv_3_t: 'Interfaces (UI/UX)', off_srv_3_d: 'Designing cohesive visual environments, modern dashboards, and full design systems that facilitate interaction.',
-    off_srv_4_t: 'Automations & Scripts', off_srv_4_d: 'Proprietary solutions automating processes, micro-tools, secure database integrations, and custom client systems.',
-    off_proc_title: 'HOW WE WORK', off_proc_1_t: 'Discovery', off_proc_1_d: 'We understand the project goal, verify technology, and establish architecture.',
-    off_proc_2_t: 'Design', off_proc_2_d: 'We create visual foundations and map data flows and security measures.',
-    off_proc_3_t: 'Build & Test', off_proc_3_d: 'Programming in strict isolation while adhering to highest optimization standards.',
-    off_proc_4_t: 'Deploy', off_proc_4_d: 'Publication to servers or transfer of closed application environments.',
-    off_cta_title: 'Got an idea? Let\'s build it.', off_cta_btn: 'INITIATE PROJECT CONTRACT →',
-    about_founder_h: 'SYSTEM ARCHITECT // FOUNDER',
-    about_founder_p1: 'My name is Aleksander. I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.',
-    about_founder_p2: 'I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices.',
-    about_founder_p3: 'Regardless of the business model, transparency always remains the priority. You pay for concrete value or functionality, not with your private data.'
-  },
-};
+      <div class="card" style="margin-bottom: 40px;">
+        <h3 class="text-accent text-mono" style="font-size: 0.875rem; text-transform: uppercase;">
+          <span class="lang-pl">Aleksander // Projektant Systemów, Founder</span>
+          <span class="lang-en">Aleksander // System Architect, Founder</span>
+        </h3>
+        <p>
+          <span class="lang-pl">Nazywam się Aleksander. Projektuję i programuję systemy z myślą o realnej ochronie prywatności. IbronIndustries to moje niezależne studio technologiczne, w którym realizuję autorskie rozwiązania z zakresu aplikacji mobilnych, kryptografii użytkowej i web-developmentu.</span>
+          <span class="lang-en">My name is Aleksander. I design and program systems with real privacy protection in mind. IbronIndustries is my independent tech studio where I implement proprietary solutions in mobile applications, applied cryptography, and web development.</span>
+        </p>
+        <p>
+          <span class="lang-pl">Odchodzę od korporacyjnego bełkotu. Tworzę narzędzia, z których sam chcę korzystać. Moja obecna linia produktów bazuje na architekturze Zero-Data – działają lokalnie i są darmowe. W przyszłości planuję rozszerzyć ekosystem o moduły z opcjami premium oraz dedykowane urządzenia fizyczne. Niezależnie od modelu biznesowego, priorytetem zawsze pozostaje transparentność. Płacisz za konkretną wartość, a nie swoimi danymi.</span>
+          <span class="lang-en">I stay away from corporate talk. I build tools that I actually want to use myself. My current line of products is based on Zero-Data architecture — they work locally and are free. In the future, I plan to expand the ecosystem with premium modules and dedicated physical devices. Regardless of the business model, transparency always remains the priority. You pay for concrete value, not with your data.</span>
+        </p>
+      </div>
 
-let currentLang = window.__ibronLang || 'pl';
+      <div class="grid-2">
+        <div class="card">
+          <h3><span class="lang-pl">Lokalne, nie chmurowe</span><span class="lang-en">Local, not cloud</span></h3>
+          <p><span class="lang-pl">100% lokalnie na Twoim urządzeniu. Zero serwerów, zero zbierania danych. Architektura Zero-Data z założenia.</span><span class="lang-en">100% locally on your device. No servers, no data collection. Zero-Data architecture by design.</span></p>
+        </div>
+        <div class="card">
+          <h3><span class="lang-pl">Dostępność dla każdego</span><span class="lang-en">Accessible to everyone</span></h3>
+          <p><span class="lang-pl">Prywatność cyfrowa nie jest dla wybranych. Intuicyjny design, zerowy próg wejścia, każdy może z tego korzystać.</span><span class="lang-en">Digital privacy is not for the elite. Intuitive design, zero entry barrier, anyone can use this.</span></p>
+        </div>
+      </div>
+    </section>
 
-function t(key){ return (T[currentLang]||T.pl)[key] || (T.pl[key]) || key; }
+    <section id="offer" class="view">
+      <div class="section-header">
+        <span class="badge badge-outline">
+          <span class="lang-pl">Współpraca B2B</span><span class="lang-en">B2B Partnership</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Budujemy systemy, które działają.</span><span class="lang-en">We build systems that work.</span>
+        </h1>
+        <p style="font-size: 1.125rem; max-width: 700px; margin-top: 16px;">
+          <span class="lang-pl">Aplikacje webowe, natywne środowiska mobilne i zaawansowane systemy UI. Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem.</span>
+          <span class="lang-en">Web applications, native mobile environments, and advanced UI systems. We build engineering-grade software where privacy and performance are foundational.</span>
+        </p>
+      </div>
 
-function applyTranslations(){
-  document.querySelectorAll('[data-lang-key]').forEach(el=>{
-    const key = el.getAttribute('data-lang-key');
-    const val = t(key);
-    if(val) el.innerHTML = val;
-  });
-}
+      <div class="grid-2">
+        <div class="card">
+          <h3><span class="lang-pl">Aplikacje Webowe</span><span class="lang-en">Web Apps</span></h3>
+          <p><span class="lang-pl">Zoptymalizowane pod kątem wydajności platformy SPA. Szybkość i czysty kod z zachowaniem standardów bezpieczeństwa.</span><span class="lang-en">Highly optimized SPA platforms. Speed and clean code adhering to security standards.</span></p>
+        </div>
+        <div class="card">
+          <h3><span class="lang-pl">Środowiska Mobilne</span><span class="lang-en">Mobile Ecosystems</span></h3>
+          <p><span class="lang-pl">Natywne aplikacje oraz rozwiązania hybrydowe z pełnym naciskiem na optymalne zużycie pamięci i płynność działania offline.</span><span class="lang-en">Native applications and hybrid solutions with a focus on optimal memory usage and seamless offline capability.</span></p>
+        </div>
+        <div class="card">
+          <h3><span class="lang-pl">Interfejsy UI/UX</span><span class="lang-en">UI/UX Interfaces</span></h3>
+          <p><span class="lang-pl">Projektowanie spójnych środowisk wizualnych i pełnych systemów designu, które ułatwiają interakcję.</span><span class="lang-en">Designing cohesive visual environments and full design systems that facilitate interaction.</span></p>
+        </div>
+      </div>
 
-function buildLangDropdown(){
-  const dd = document.getElementById('lang-dropdown');
-  dd.innerHTML = Object.entries(LANGS).map(([code,l])=>`
-    <div class="lang-item hv ${code===currentLang?'active':''}" onclick="setLang('${code}')">
-      <div class="lang-flag-wave">${l.flag}</div>
-      <span style="margin-left:8px">${l.name}</span>
-    </div>
-  `).join('');
-  bindHv();
-}
+      <div style="margin-top: 60px;">
+        <h2 style="margin-bottom: 24px;">
+          <span class="lang-pl">Jak pracujemy</span><span class="lang-en">How we work</span>
+        </h2>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px;">
+          <div>
+            <span class="text-mono text-accent" style="display: block; margin-bottom: 8px;">01 / DISCOVERY</span>
+            <strong><span class="lang-pl">Analiza</span><span class="lang-en">Analysis</span></strong>
+          </div>
+          <div>
+            <span class="text-mono text-accent" style="display: block; margin-bottom: 8px;">02 / DESIGN</span>
+            <strong><span class="lang-pl">Projekt Systemu</span><span class="lang-en">System Design</span></strong>
+          </div>
+          <div>
+            <span class="text-mono text-accent" style="display: block; margin-bottom: 8px;">03 / BUILD</span>
+            <strong><span class="lang-pl">Kodowanie i Testy</span><span class="lang-en">Build & Test</span></strong>
+          </div>
+          <div>
+            <span class="text-mono text-accent" style="display: block; margin-bottom: 8px;">04 / DEPLOY</span>
+            <strong><span class="lang-pl">Wdrożenie</span><span class="lang-en">Deployment</span></strong>
+          </div>
+        </div>
+      </div>
+    </section>
 
-function toggleLangDropdown(){
-  const dd = document.getElementById('lang-dropdown');
-  dd.classList.toggle('open');
-}
+    <section id="contact" class="view">
+      <div class="section-header">
+        <span class="badge badge-outline">
+          <span class="lang-pl">Komunikacja</span><span class="lang-en">Communication</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Nawiąż połączenie.</span><span class="lang-en">Establish Connection.</span>
+        </h1>
+      </div>
 
-document.addEventListener('click', e=>{
-  if(!e.target.closest('.lang-wrap')) document.getElementById('lang-dropdown').classList.remove('open');
-});
+      <div class="card" style="text-align: center; padding: 80px 32px; max-width: 600px; margin: 0 auto;">
+        <p style="margin-bottom: 32px; font-size: 1.125rem;">
+          <span class="lang-pl">Wsparcie techniczne, propozycja współpracy, pytania operacyjne — nasz terminal jest otwarty.</span>
+          <span class="lang-en">Technical support, business proposals, operational questions — our terminal is open.</span>
+        </p>
+        <a href="mailto:alex@ibronindustries.pl" class="btn-primary">
+          alex@ibronindustries.pl
+        </a>
+        <div style="margin-top: 32px;" class="text-mono">
+          <span style="display: inline-block; width: 8px; height: 8px; background: var(--accent); border-radius: 50%; margin-right: 8px;"></span>
+          <span class="lang-pl">KANAŁ ZABEZPIECZONY</span><span class="lang-en">CHANNEL SECURED</span>
+        </div>
+      </div>
+    </section>
 
-function setLang(code){
-  currentLang = code;
-  document.documentElement.lang = code;
-  document.getElementById('nav-flag').innerHTML = LANGS[code].flag;
-  document.getElementById('nav-lang-code').textContent = code.toUpperCase();
-  document.getElementById('lang-dropdown').classList.remove('open');
-  buildLangDropdown();
-  applyTranslations();
-  
-  document.querySelectorAll('.dyn-img').forEach(img=>{
-    const base = img.getAttribute('data-base');
-    img.src = code==='pl' ? base+'pl.png' : base+'.png';
-  });
+    <footer style="margin-top: 100px; border-top: 1px solid var(--border); padding-top: 32px; text-align: center; color: var(--text-muted); font-size: 0.875rem;">
+      &copy; 2026 Ibron Industries. Absolute Privacy.
+    </footer>
 
-  if(adSliderTimer) clearTimeout(adSliderTimer);
-  showAdSlide(currentAdSlide);
-}
+  </main>
 
-function updateActiveSidebarClass(id) {
-  document.querySelectorAll('.nav-item-row').forEach(row => {
-    row.classList.remove('active');
-  });
-  const currentActive = document.getElementById('nav-item-' + id);
-  if (currentActive) currentActive.classList.add('active');
-}
+  <script>
+    /* ===== SPA ROUTING ===== */
+    const views = ['home', 'apps', 'app-exo', 'protocols', 'about', 'offer', 'contact'];
+    
+    function switchView(id) {
+      if(window.location.hash !== '#' + id) history.pushState(null, null, '#' + id);
+      
+      views.forEach(v => {
+        const el = document.getElementById(v);
+        if(el) el.classList.remove('active');
+        
+        const navEl = document.getElementById('nav-' + v);
+        if(navEl) navEl.classList.remove('active');
+      });
 
-/* ============================================================
-   AUDIO POLYPHONY HOVER
-============================================================ */
-const hoverPool = [];
-const poolSize = 10;
-for (let i = 0; i < poolSize; i++) {
-    let audio = new Audio('hover.mp3');
-    audio.volume = 0.3;
-    hoverPool.push(audio);
-}
-let poolIndex = 0;
+      const targetView = document.getElementById(id);
+      if(targetView) {
+        targetView.classList.add('active');
+        window.scrollTo({top:0, behavior:'smooth'});
+      }
+      
+      // Dla podstron (np. app-exo) podświetl 'apps' w menu
+      const navTarget = id === 'app-exo' ? 'apps' : id;
+      const targetNav = document.getElementById('nav-' + navTarget);
+      if(targetNav) targetNav.classList.add('active');
+    }
 
-function playHoverSound() {
-    try {
-        hoverPool[poolIndex].currentTime = 0;
-        let playPromise = hoverPool[poolIndex].play();
-        if (playPromise !== undefined) {
-            playPromise.catch(error => { });
-        }
-        poolIndex = (poolIndex + 1) % poolSize;
-    } catch (e) {}
-}
-
-function bindHv(){
-  document.querySelectorAll('a, button, .app-row-card, .nav-item-row, .sleek-filter-btn, .color-btn, .screen-card, .tpl-card, .hv').forEach(el=>{
-    el.removeEventListener('mouseenter', playHoverSound);
-    el.addEventListener('mouseenter', playHoverSound);
-  });
-}
-
-/* ============================================================
-   META TAGS UPDATER
-============================================================ */
-function updateMetaTags(id) {
-  const titles = {
-    'home': 'IBRON INDUSTRIES | Absolute Privacy',
-    'about': 'O nas - Wizja & Przyszłość | IBRON INDUSTRIES',
-    'apps-hub': 'Ekosystem Aplikacji | IBRON INDUSTRIES',
-    'app-exo': 'IbronEXO - Offline Crypto-Vault | IBRON INDUSTRIES',
-    'app-chronos': 'IbronCHRONOS | IBRON INDUSTRIES',
-    'protocols': 'Dokumentacja Operacyjna | IBRON INDUSTRIES',
-    'contact': 'Kontakt | IBRON INDUSTRIES',
-    'offer': 'Projektowanie i Realizacja | IBRON INDUSTRIES',
-    'personalize': 'UI Framework | IBRON INDUSTRIES'
-  };
-  document.title = titles[id] || 'IBRON INDUSTRIES | Absolute Privacy';
-}
-
-/* ============================================================
-   VIEWS & ROUTER
-============================================================ */
-function switchView(id, event){
-  if(event) event.preventDefault();
-  if(window.location.hash !== '#' + id) history.pushState(null, null, '#' + id);
-  if(!document.body.classList.contains('js-enabled')) document.body.classList.add('js-enabled');
-
-  document.querySelectorAll('.view').forEach(v=>{v.style.animation='none';v.classList.remove('active')});
-  const tEl=document.getElementById(id);if(!tEl)return;
-  
-  tEl.classList.add('active');
-  void tEl.offsetWidth;
-  tEl.style.animation='viewIn .55s cubic-bezier(.16,1,.3,1) forwards';
-  
-  window.scrollTo({top:0,behavior:'smooth'});
-  updateMetaTags(id);
-  updateActiveSidebarClass(id);
-}
-
-window.addEventListener('popstate', () => {
-  const hash = window.location.hash.substring(1) || 'home';
-  switchView(hash);
-});
-
-/* ============================================================
-   DYNAMIC APP FILTERING
-============================================================ */
-function filterApps(category, btnEl) {
-    document.querySelectorAll('.app-filters .sleek-filter-btn').forEach(btn => btn.classList.remove('active'));
-    if(btnEl) btnEl.classList.add('active');
-
-    let visibleCount = 0;
-    document.querySelectorAll('#app-grid-container .app-card').forEach(card => {
-        const cats = card.getAttribute('data-category') || '';
-        if (category === 'all' || cats.split(' ').includes(category)) {
-            card.style.display = '';
-            card.style.animation = 'none';
-            void card.offsetWidth; 
-            card.style.animation = 'viewIn 0.5s cubic-bezier(.16,1,.3,1) forwards';
-            visibleCount++;
-        } else {
-            card.style.display = 'none';
-        }
+    window.addEventListener('popstate', () => {
+      const hash = window.location.hash.substring(1) || 'home';
+      switchView(hash);
     });
 
-    const emptyMsg = document.getElementById('empty-apps-msg');
-    if (emptyMsg) {
-        emptyMsg.style.display = visibleCount === 0 ? 'block' : 'none';
+    /* ===== LANGUAGE TOGGLE ===== */
+    function setLang(langCode) {
+      document.documentElement.setAttribute('data-lang', langCode);
+      document.documentElement.lang = langCode;
+      try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
+      updateLangButtons(langCode);
+      updateDynamicImages(langCode);
     }
-}
 
-/* ============================================================
-   DYNAMIC IBRON EXO AD SLIDER (Home)
-============================================================ */
-let currentAdSlide = 0;
-let adSliderTimer;
-function showAdSlide(idx) {
-  const slides = document.querySelectorAll('#ad-slides img.slide');
-  if(!slides.length) return;
-  slides.forEach(s => s.classList.remove('active'));
-  slides[idx].classList.add('active');
-  adSliderTimer = setTimeout(() => {
-     currentAdSlide = (currentAdSlide + 1) % slides.length;
-     showAdSlide(currentAdSlide);
-  }, 3500);
-}
-
-/* ============================================================
-   FREEDOM POPUP & UNLOCK
-============================================================ */
-let freedomShown=false;
-function openPersonalize(event){
-  if(event) event.preventDefault();
-  switchView('personalize');
-  if(!freedomShown){document.getElementById('freedom-modal').classList.add('active');}
-}
-function closeFreedomModal(event){
-  if(event) event.preventDefault();
-  document.getElementById('freedom-modal').classList.remove('active');
-  freedomShown=true;
-  if(!musicOn)toggleMusic();
-}
-
-let customUnlocked = false;
-let pendingUnlockBtn = null;
-function requestCustomUnlock(btnEl){
-  if(customUnlocked){applyMaster('custom',btnEl||document.getElementById('tpl-custom'));return;}
-  document.getElementById('unlock-modal').classList.add('active');
-  pendingUnlockBtn = btnEl;
-}
-function confirmUnlock(){
-  document.getElementById('unlock-modal').classList.remove('active');
-  runBootSequence(()=>{
-    customUnlocked = true;
-    applyMaster('custom', pendingUnlockBtn||document.getElementById('tpl-custom'));
-    document.getElementById('unlock-prompt').style.display='none';
-    document.getElementById('advanced-panel').classList.add('revealed');
-    rebuildUI();
-  });
-}
-
-function runBootSequence(onComplete){
-  const overlay = document.getElementById('boot-overlay');
-  const progress = document.getElementById('boot-progress');
-  const pct = document.getElementById('boot-pct');
-  const lines = [1,2,3,4,5];
-
-  overlay.classList.add('active');
-  overlay.classList.remove('fade-out');
-
-  lines.forEach(i=>{const el=document.getElementById('bl-'+i);if(el)el.classList.remove('show');});
-  progress.style.width='0%';pct.textContent='0%';
-
-  const steps = [{delay:400, line:1}, {delay:900, line:2}, {delay:1400, line:3}, {delay:1900, line:4}, {delay:2500, line:5}];
-  let currentPct = 0;
-  const progInterval = setInterval(()=>{
-    if(currentPct < 100){currentPct=Math.min(100,currentPct+0.8);progress.style.width=currentPct+'%';pct.textContent=Math.floor(currentPct)+'%';}
-    else clearInterval(progInterval);
-  },25);
-
-  steps.forEach(({delay,line})=>{
-    setTimeout(()=>{const el=document.getElementById('bl-'+line);if(el)el.classList.add('show');},delay);
-  });
-
-  setTimeout(()=>{
-    clearInterval(progInterval);
-    progress.style.width='100%';pct.textContent='100%';
-    setTimeout(()=>{
-      overlay.classList.add('fade-out');
-      setTimeout(()=>{overlay.classList.remove('active','fade-out');if(onComplete)onComplete();},650);
-    },600);
-  },3200);
-}
-
-/* ============================================================
-   AUDIO
-============================================================ */
-const musMap = {
-  cyber: document.getElementById('mus-cyber'), nature: document.getElementById('mus-nature'),
-  'miami-a': document.getElementById('mus-miami-a'), 'miami-b': document.getElementById('mus-miami-b'),
-  'custom-1': document.getElementById('mus-custom-1'), 'custom-2': document.getElementById('mus-custom-2'),
-  'custom-3': document.getElementById('mus-custom-3'), 'custom-4': document.getElementById('mus-custom-4'),
-  'custom-5': document.getElementById('mus-custom-5'), 'aurora': document.getElementById('mus-aurora'),
-  'nebula': document.getElementById('mus-nebula')
-};
-let musicOn=false, currentMusicKey='cyber', miamiListener=null, miamiIsA=true;
-
-function toggleMusic(){
-  const dot=document.getElementById('audio-dot');
-  if(musicOn){Object.values(musMap).forEach(a=>{if(a) a.pause();});dot.classList.remove('on');}
-  else{playThemeMusic();dot.classList.add('on');}
-  musicOn=!musicOn;
-}
-
-function playThemeMusic(themeId){
-  const theme = themeId || document.documentElement.getAttribute('data-global-theme');
-  if(theme==='miami'){
-    if(miamiListener){if(musMap['miami-a']) musMap['miami-a'].removeEventListener('ended',miamiListener);if(musMap['miami-b']) musMap['miami-b'].removeEventListener('ended',miamiListener);}
-    miamiIsA=true;
-    miamiListener=function(){
-      miamiIsA=!miamiIsA;
-      const nxt=miamiIsA?musMap['miami-a']:musMap['miami-b'];
-      const cur=miamiIsA?musMap['miami-b']:musMap['miami-a'];
-      if(cur) { cur.pause(); cur.currentTime=0; }
-      if(nxt) { nxt.volume=0.2; nxt.play().catch(()=>{}); nxt.addEventListener('ended',miamiListener,{once:true}); }
-    };
-    const a=musMap['miami-a']; if(a){a.volume=0.2;a.currentTime=0;a.play().catch(()=>{}); a.addEventListener('ended',miamiListener,{once:true});}
-  } else if(theme==='custom'){
-    const sel = currentCustomMusic || 'custom-1';
-    const a = musMap[sel]; if(!a)return;
-    a.volume=0.2;a.currentTime=0;a.play().catch(()=>{});
-  } else {
-    const a = musMap[theme]||musMap.cyber;
-    if(a) { a.volume=0.2;a.currentTime=0;a.play().catch(()=>{}); }
-  }
-}
-
-function crossfade(newTheme){
-  if(!musicOn)return;
-  if(miamiListener){if(musMap['miami-a']) musMap['miami-a'].removeEventListener('ended',miamiListener);if(musMap['miami-b']) musMap['miami-b'].removeEventListener('ended',miamiListener);}
-  Object.values(musMap).forEach(a=>{
-    if(a && !a.paused){
-      let v=a.volume;
-      const fi=setInterval(()=>{v=Math.max(0,v-.025);a.volume=v;if(v<=0){a.pause();a.currentTime=0;clearInterval(fi);}},80);
+    function updateLangButtons(langCode) {
+      document.getElementById('lang-pl-btn').classList.remove('active');
+      document.getElementById('lang-en-btn').classList.remove('active');
+      document.getElementById('lang-' + langCode + '-btn').classList.add('active');
     }
-  });
-  setTimeout(()=>playThemeMusic(newTheme),650);
-}
 
-/* ============================================================
-   MASTER THEMES
-============================================================ */
-function applyMaster(themeId, btnEl){
-  document.documentElement.setAttribute('data-global-theme',themeId);
-  document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('active'));
-  if(btnEl)btnEl.classList.add('active');
-  const bgMap={cyber:'bg-1',nature:'bg-nature',miami:'bg-0',custom:'bg-1',aurora:'bg-aurora',nebula:'bg-nebula'}; 
-  setActiveBg(bgMap[themeId]||'bg-1');
-  crossfade(themeId);
-  if(themeId!=='custom')resetOverrides();
-}
-function setActiveBg(bgId){
-  document.querySelectorAll('.bg-layer').forEach(l=>l.classList.remove('active'));
-  const t=document.getElementById(bgId);if(t)t.classList.add('active');
-}
-function resetOverrides(){
-  ['--accent','--accent-rgb','--glow-spread','--glow-color','--card-shadow','--card-border-style','--card-bg-style','--font-head','--font-body','--card-radius'].forEach(p=>document.documentElement.style.removeProperty(p));
-  const sl=document.getElementById('radius-slider');if(sl){sl.value=20;document.getElementById('radius-val').innerText='20px';}
-  document.querySelectorAll('.opt-btn,.color-btn,.music-btn').forEach(b=>b.classList.remove('active'));
-}
-
-/* ============================================================
-   UI FRAMEWORK DATA & LOGIC
-============================================================ */
-const lightingOpts=[
-  {n:'Cyber Glow',sh:'0 15px 35px rgba(0,0,0,.4)',gs:'15px',gc:'var(--accent-glow)'}, {n:'Neon Edge',sh:'none',gs:'5px',gc:'var(--accent)'},
-  {n:'Dark Shadow',sh:'0 20px 50px rgba(0,0,0,.8)',gs:'0px',gc:'transparent'}, {n:'Hologram',sh:'0 10px 30px rgba(var(--accent-rgb),.2)',gs:'25px',gc:'rgba(var(--accent-rgb),.5)'},
-  {n:'Matrix Drop',sh:'5px 5px 0px var(--accent)',gs:'0px',gc:'transparent'}, {n:'Soft Bloom',sh:'0 5px 25px rgba(255,255,255,.05)',gs:'30px',gc:'rgba(255,255,255,.2)'},
-  {n:'Hard Outline',sh:'10px 10px 0px rgba(0,0,0,1)',gs:'0px',gc:'var(--accent)'}, {n:'Flat Light',sh:'none',gs:'0px',gc:'transparent'},
-  {n:'Deep Abyss',sh:'inset 0 0 50px rgba(0,0,0,.8)',gs:'0px',gc:'transparent'}, {n:'Overdrive',sh:'0 0 50px var(--accent-glow)',gs:'50px',gc:'var(--accent)'},
-  {n:'Frosted Glass',sh:'0 8px 32px rgba(255,255,255,.08)',gs:'12px',gc:'rgba(255,255,255,.15)'}, {n:'Vapor Wave',sh:'0 0 30px rgba(255,110,199,.3)',gs:'20px',gc:'rgba(255,110,199,.4)'}
-];
-const baseColors=[
-  {h:'#00F0FF',r:'0,240,255'},{h:'#00FF41',r:'0,255,65'},{h:'#FF9900',r:'255,153,0'},{h:'#FF2A2A',r:'255,42,42'},
-  {h:'#B026FF',r:'176,38,255'},{h:'#FFFFFF',r:'255,255,255'},{h:'#FF0055',r:'255,0,85'},{h:'#FFFF00',r:'255,255,0'},
-  {h:'#0088FF',r:'0,136,255'},{h:'#27AE60',r:'39,174,96'},{h:'#FF6EC7',r:'255,110,199'},{h:'#00E5FF',r:'0,229,255'}
-];
-const bgOpts=[
-  {id:'bg-0',n:'Clean Minimal'},{id:'bg-1',n:'Grid (60px)'},{id:'bg-2',n:'Dense Dots'},{id:'bg-3',n:'Center Flare'},
-  {id:'bg-4',n:'Diagonal Lines'},{id:'bg-5',n:'H-Lines'},{id:'bg-6',n:'Dual Radial'},{id:'bg-7',n:'Conic Sweep'},
-  {id:'bg-8',n:'Hex Mesh'},{id:'bg-nature',n:'Bio-Grid'},{id:'bg-space',n:'Stardust'},{id:'bg-scanlines',n:'Scanlines'},
-  {id:'bg-hexagons',n:'Hexagons'},{id:'bg-circuit',n:'Circuit Board'},{id:'bg-rings',n:'Rings'}
-];
-const cardOpts=[
-  {n:'Glassmorphism',bg:'linear-gradient(145deg,rgba(255,255,255,.03) 0%,rgba(255,255,255,.01) 100%)',b:'1px solid var(--border-glass)'},
-  {n:'Solid Dark',bg:'#080A0E',b:'1px solid #111'}, {n:'Wireframe',bg:'transparent',b:'1px solid var(--accent)'},
-  {n:'Frosted Fog',bg:'rgba(255,255,255,.05)',b:'none'}, {n:'Minimal Flat',bg:'rgba(0,0,0,.8)',b:'none'},
-  {n:'Neumorphic',bg:'linear-gradient(145deg,rgba(255,255,255,.06) 0%,rgba(0,0,0,.06) 100%)',b:'1px solid rgba(255,255,255,.06)'},
-  {n:'Gradient Edge',bg:'linear-gradient(135deg,rgba(var(--accent-rgb),.08) 0%,transparent 100%)',b:'1px solid rgba(var(--accent-rgb),.3)'},
-  {n:'Brutalist',bg:'var(--bg-main)',b:'3px solid var(--text-main)'}
-];
-const fontOpts=[
-  {n:'Rajdhani / Grotesk',h:"'Rajdhani',sans-serif",b:"'Space Grotesk',sans-serif"}, {n:'Outfit / Outfit',h:"'Outfit',sans-serif",b:"'Outfit',sans-serif"},
-  {n:'Orbitron / Mono',h:"'Orbitron',sans-serif",b:"'Space Mono',monospace"}, {n:'Space Mono (All)',h:"'Space Mono',monospace",b:"'Space Mono',monospace"},
-  {n:'Bebas / IBM Plex',h:"'Bebas Neue',sans-serif",b:"'IBM Plex Mono',monospace"}, {n:'Syne / Grotesk',h:"'Syne',sans-serif",b:"'Space Grotesk',sans-serif"},
-  {n:'DM Serif / Mono',h:"'DM Serif Display',serif",b:"'IBM Plex Mono',monospace"}
-];
-const animOpts=[{n:'Instant',v:'.1s'},{n:'Fast',v:'.3s'},{n:'Normal',v:'.4s'},{n:'Smooth',v:'.8s'},{n:'Cinematic',v:'1.5s'}];
-const densityOpts=[{n:'Compact',g:'14px',p:'22px 18px'},{n:'Normal',g:'25px',p:'35px 28px'},{n:'Spacious',g:'40px',p:'50px 40px'}];
-const musicOpts=[
-  {n:'Track 1',key:'custom-1',icon:'♪'}, {n:'Track 2',key:'custom-2',icon:'♫'}, {n:'Track 3',key:'custom-3',icon:'♬'},
-  {n:'Track 4',key:'custom-4',icon:'◎'}, {n:'Track 5',key:'custom-5',icon:'▶'}
-];
-
-let currentCustomMusic = 'custom-1';
-
-function rebuildUI(){
-  function opt(cont,items,onclick){document.getElementById(cont).innerHTML=items.map(i=>`<button class="opt-btn hv" onclick="${onclick(i)}">${i.n}</button>`).join('');}
-  opt('sg-lighting',lightingOpts,i=>`setLighting('${i.sh}','${i.gs}','${i.gc}',this)`);
-  document.getElementById('sg-colors').innerHTML=baseColors.map(c=>`<button class="color-btn hv" style="background:${c.h}" onclick="setAccent('${c.r}','${c.h}',this)"></button>`).join('');
-  opt('sg-bg',bgOpts,i=>`setBg('${i.id}',this)`);
-  opt('sg-card',cardOpts,i=>`setCard('${encodeAttr(i.bg)}','${i.b}',this)`);
-  opt('sg-fonts',fontOpts,i=>`setFont('${i.h}','${i.b}',this)`);
-  opt('sg-anim',animOpts,i=>`setAnim('${i.v}',this)`);
-  opt('sg-density',densityOpts,i=>`setDensity('${i.g}','${i.p}',this)`);
-  document.getElementById('sg-music').innerHTML=musicOpts.map(m=>`<button class="music-btn hv" onclick="setMusic('${m.key}',this)"><div class="music-icon">${m.icon}</div>${m.n}</button>`).join('');
-  bindHv();
-}
-
-function encodeAttr(s){return s.replace(/'/g,"\\'");}
-function setLighting(sh,gs,gc,btn){setProp('--card-shadow',sh);setProp('--glow-spread',gs);setProp('--glow-color',gc);actBtn(btn,'sg-lighting');}
-function setAccent(rgb,hex,btn){setProp('--accent',hex);setProp('--accent-rgb',rgb);document.getElementById('color-picker').value=hex;document.getElementById('hex-display').innerText=hex;actBtn(btn,'sg-colors');}
-function applyCustomColor(hex){const r=parseInt(hex.substr(1,2),16),g=parseInt(hex.substr(3,2),16),b=parseInt(hex.substr(5,2),16);setAccent(`${r},${g},${b}`,hex,null);}
-function setBg(id,btn){document.querySelectorAll('.bg-layer').forEach(l=>l.classList.remove('active'));const t=document.getElementById(id);if(t)t.classList.add('active');actBtn(btn,'sg-bg');}
-function setCard(bg,b,btn){setProp('--card-bg-style',bg.replace(/\\'/g,"'"));setProp('--card-border-style',b);actBtn(btn,'sg-card');}
-function setRadius(v){setProp('--card-radius',v+'px');document.getElementById('radius-val').innerText=v+'px';}
-function setFont(h,b,btn){setProp('--font-head',h);setProp('--font-body',b);actBtn(btn,'sg-fonts');}
-function setAnim(v,btn){setProp('--transition-hover',`transform ${v} cubic-bezier(.25,1,.5,1),box-shadow ${v},border-color ${v}`);actBtn(btn,'sg-anim');}
-function setDensity(g,p,btn){setProp('--grid-gap',g);setProp('--card-pad',p);actBtn(btn,'sg-density');}
-function setMusic(key,btn){
-  currentCustomMusic=key; actBtn(btn,'sg-music');
-  if(musicOn&&document.documentElement.getAttribute('data-global-theme')==='custom'){
-    Object.values(musMap).forEach(a=>{if(a){a.pause();a.currentTime=0;}});
-    const a=musMap[key];if(a){a.volume=0.2;a.play().catch(()=>{});}
-  }
-}
-function setProp(p,v){document.documentElement.style.setProperty(p,v);}
-function actBtn(btn,containerId){if(!containerId)return;const c=document.getElementById(containerId);if(!c)return;c.querySelectorAll('button').forEach(b=>b.classList.remove('active'));if(btn)btn.classList.add('active');}
-
-function savePersonalization(){
-  const theme = document.documentElement.getAttribute('data-global-theme');
-  const style = document.documentElement.getAttribute('style')||'';
-  const data = {theme,style,currentCustomMusic,lang:currentLang,unlocked:customUnlocked,timestamp:Date.now()};
-  try{localStorage.setItem('ibron_prefs',JSON.stringify(data));}catch(e){}
-  document.getElementById('save-msg').textContent='[ PERSONALIZATION: SAVED ✓ ]';
-  setTimeout(()=>document.getElementById('save-msg').textContent='[ PERSONALIZATION: ACTIVE ]',2500);
-}
-function loadPersonalization(){
-  try{
-    const raw=localStorage.getItem('ibron_prefs'); if(!raw)return;
-    const d=JSON.parse(raw);
-    if(d.theme){document.documentElement.setAttribute('data-global-theme',d.theme);document.querySelectorAll('.tpl-card').forEach(c=>c.classList.remove('active'));const tplBtn=document.getElementById('tpl-'+d.theme);if(tplBtn)tplBtn.classList.add('active');}
-    if(d.style)document.documentElement.setAttribute('style',d.style);
-    if(d.currentCustomMusic)currentCustomMusic=d.currentCustomMusic;
-    if(d.unlocked){customUnlocked=true;document.getElementById('unlock-prompt').style.display='none';document.getElementById('advanced-panel').classList.add('revealed');}
-    document.getElementById('save-msg').textContent='[ PERSONALIZATION: RESTORED ✓ ]';
-    setTimeout(()=>document.getElementById('save-msg').textContent='[ PERSONALIZATION: ACTIVE ]',2500);
-    if(d.unlocked)setTimeout(rebuildUI,100);
-  }catch(e){}
-}
-function resetPersonalization(){try{localStorage.removeItem('ibron_prefs');}catch(e){}location.reload();}
-
-function openLightbox(src){const lb=document.getElementById('image-lightbox'),img=document.getElementById('lb-img');img.src=src;lb.style.visibility='visible';lb.style.opacity='1';img.style.transform='scale(1)';}
-function closeLightbox(e){const lb=document.getElementById('image-lightbox');if(e.target.id==='image-lightbox'||e.target.classList.contains('lb-close')){lb.style.opacity='0';document.getElementById('lb-img').style.transform='scale(.9)';setTimeout(()=>lb.style.visibility='hidden',400);}}
-
-/* ============================================================
-   INIT & ANIMATION ENGINES
-============================================================ */
-window.addEventListener('load',()=>{
-  document.getElementById('nav-flag').innerHTML = LANGS[currentLang].flag;
-  document.getElementById('nav-lang-code').textContent = currentLang.toUpperCase();
-  buildLangDropdown();
-  applyTranslations();
-  loadPersonalization();
-  bindHv();
-  if(customUnlocked)rebuildUI();
-  
-  showAdSlide(0);
-
-  const hash = window.location.hash.substring(1);
-  if(hash && document.getElementById(hash)) {
-    switchView(hash);
-  } else {
-    if(document.body.classList.contains('js-enabled')){
-       switchView('home');
+    function updateDynamicImages(langCode) {
+      const heroImg = document.getElementById('dyn-hero-img');
+      if(heroImg) {
+        heroImg.src = langCode === 'pl' ? 'screen1pl.png' : 'screen1.png';
+      }
     }
-  }
 
-  // --- AURORA PARTICLES ENGINE ---
-  const pc = document.getElementById('aurora-particles');
-  if(pc) {
-      const px=pc.getContext('2d');
-      let PW,PH,parts=[];
-      function psize(){PW=pc.width=innerWidth;PH=pc.height=innerHeight;}
-      psize();
-      window.addEventListener('resize',psize);
-      for(let i=0;i<34;i++){parts.push({x:Math.random()*PW,y:Math.random()*PH,s:Math.random()*5+3,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18});}
-      function makeGlow(size){
-        const c=document.createElement('canvas');c.width=c.height=size;
-        const g=c.getContext('2d');
-        const grd=g.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-        grd.addColorStop(0,'rgba(232,184,75,1)'); grd.addColorStop(0.35,'rgba(232,184,75,.55)'); grd.addColorStop(1,'rgba(232,184,75,0)');
-        g.fillStyle=grd;g.fillRect(0,0,size,size); return c;
+    /* ===== INIT ===== */
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
+      updateLangButtons(initialLang);
+      updateDynamicImages(initialLang);
+
+      const hash = window.location.hash.substring(1);
+      if(views.includes(hash)) {
+        switchView(hash);
+      } else {
+        switchView('home');
       }
-      const GLOW = makeGlow(28);
-      function pdraw(){
-        px.clearRect(0,0,PW,PH);
-        for(let i=0;i<parts.length;i++){
-          const p=parts[i]; p.x+=p.vx;p.y+=p.vy;
-          if(p.x<-10)p.x=PW;if(p.x>PW+10)p.x=0;if(p.y<-10)p.y=PH;if(p.y>PH+10)p.y=0;
-          px.drawImage(GLOW,p.x-p.s/2,p.y-p.s/2,p.s,p.s);
-        }
-        requestAnimationFrame(pdraw);
-      }
-      pdraw();
-  }
-
-  // --- HIGH REALISM INDEPENDENT TWINKLING NEBULA PARTICLES ---
-  const np = document.getElementById('nebula-particles');
-  let isScrollingNebula = false;
-  if(np) {
-      const nx = np.getContext('2d');
-      let NW, NH, stars = [];
-      function nsize() { NW = np.width = innerWidth; NH = np.height = innerHeight; }
-      nsize();
-      window.addEventListener('resize', nsize);
-
-      const glowCanvas = document.createElement('canvas');
-      glowCanvas.width = 16; glowCanvas.height = 16;
-      const gCtx = glowCanvas.getContext('2d');
-      const grad = gCtx.createRadialGradient(8, 8, 0, 8, 8, 8);
-      grad.addColorStop(0, 'rgba(240,238,255,1)');
-      grad.addColorStop(0.25, 'rgba(196,168,255,0.4)');
-      grad.addColorStop(1, 'rgba(168,85,247,0)');
-      gCtx.fillStyle = grad; gCtx.fillRect(0, 0, 16, 16);
-
-      for(let i = 0; i < 350; i++) {
-          let colorRoll = Math.random();
-          let color = '#F0EEFF';
-          if (colorRoll > 0.55 && colorRoll <= 0.80) color = '#C4A8FF';
-          else if (colorRoll > 0.80 && colorRoll <= 0.92) color = '#9DCBFF';
-          else if (colorRoll > 0.92) color = '#FFB8E0';
-
-          stars.push({
-              x: Math.random() * NW,
-              y: Math.random() * NH,
-              r: Math.random() * 1.7 + 0.3,
-              color: color,
-              speed: Math.random() * 0.010 + 0.002,
-              phase: Math.random() * Math.PI * 2
-          });
-      }
-
-      function ndraw() {
-          if(!isScrollingNebula && document.documentElement.getAttribute('data-global-theme') === 'nebula') {
-              nx.clearRect(0, 0, NW, NH);
-              for(let i = 0; i < stars.length; i++) {
-                  let s = stars[i];
-                  s.phase += s.speed;
-                  let opacity = 0.1 + (Math.sin(s.phase) + 1) / 2 * 0.9;
-                  if(opacity > 1.0) opacity = 1.0;
-                  if(opacity < 0.1) opacity = 0.1;
-                  
-                  if(s.r > 1.3) {
-                      s.x += 0.015; s.y += 0.008;
-                      if(s.x > NW) s.x = 0;
-                      if(s.y > NH) s.y = 0;
-                  }
-                  nx.globalAlpha = opacity;
-                  if(s.r > 1.4) {
-                      nx.drawImage(glowCanvas, s.x - 8, s.y - 8, 16, 16);
-                  } else {
-                      nx.fillStyle = s.color;
-                      nx.beginPath(); nx.arc(s.x, s.y, s.r, 0, Math.PI * 2); nx.fill();
-                  }
-              }
-              nx.globalAlpha = 1.0;
-          }
-          requestAnimationFrame(ndraw);
-      }
-      ndraw();
-
-      let nebScrollTimeout;
-      window.addEventListener('scroll', () => {
-          isScrollingNebula = true;
-          window.clearTimeout(nebScrollTimeout);
-          nebScrollTimeout = setTimeout(() => isScrollingNebula = false, 300);
-      }, { passive: true });
-  }
-});
-
-let isScrolling;
-const pcCanvas = document.getElementById('aurora-particles');
-if(pcCanvas) {
-    window.addEventListener('scroll', () => {
-        pcCanvas.style.willChange = 'auto';
-        window.clearTimeout(isScrolling);
-        isScrolling = setTimeout(() => {
-            pcCanvas.style.willChange = 'transform';
-        }, 300);
-    }, { passive: true });
-}
-</script>
-
+    });
+  </script>
 </body>
 </html>
