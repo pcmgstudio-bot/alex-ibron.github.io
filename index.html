@@ -66,7 +66,7 @@
       --radius-sm: 6px;
       --radius-md: 16px;
       --trans-fast: 0.2s ease;
-      --trans-base: 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      --trans-base: 0.4s cubic-bezier(0.25, 1, 0.5, 1);
       
       --header-height: 80px;
     }
@@ -248,13 +248,8 @@
     /* ===== MAIN CONTAINER & SECTIONS ===== */
     main { padding-top: var(--header-height); }
     
-    section {
-      padding: 120px 5%;
-    }
-    .section-inner {
-      max-width: 1100px;
-      margin: 0 auto;
-    }
+    section { padding: 120px 5%; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
 
     /* Alternating Backgrounds */
     section:nth-of-type(even) { background-color: var(--bg-alt); border-top: 1px solid var(--border); border-bottom: 1px solid var(--border); }
@@ -295,24 +290,135 @@
       margin-top: 60px;
       max-width: 800px;
     }
-    .stat-card {
-      border-left: 2px solid var(--border);
-      padding-left: 20px;
-    }
+    .stat-card { border-left: 2px solid var(--border); padding-left: 20px; }
     .stat-val { font-size: 2rem; font-weight: 700; color: var(--text-primary); letter-spacing: -0.02em; }
     .stat-label { font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-top: 4px; }
 
-    /* RHYTHM 2: APPS (Featured Block + List) */
-    .featured-app {
+
+    /* =========================================================
+       RHYTHM 2: APPS (SCROLL-DRIVEN PHONE MOCKUP)
+       ========================================================= */
+    #apps {
+      padding-top: 80px;
+      padding-bottom: 80px;
+      overflow: hidden; /* prevents 3D bleeding out of bounds */
+    }
+
+    .showcase-container {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 60px;
-      align-items: center;
-      margin-bottom: 40px;
-      padding: 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      position: relative;
+      align-items: flex-start;
     }
-    .featured-img { width: 100%; max-width: 320px; border-radius: 12px; border: 1px solid var(--border); margin: 0 auto; display: block; box-shadow: var(--shadow-md); }
-    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 32px 0; border-top: 1px solid var(--border); padding-top: 32px; }
+
+    /* Left side: Sticky Phone */
+    .showcase-visual {
+      position: sticky;
+      top: 15vh; /* centers the phone vertically */
+      height: 70vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      perspective: 1200px; /* enables 3D cinematic depth */
+    }
+
+    /* The Phone Frame */
+    .phone-frame {
+      position: relative;
+      width: 300px;
+      height: 610px; /* ~19.5:9 aspect ratio */
+      border-radius: 46px;
+      background: #000;
+      border: 12px solid #151A29; /* Dark Navy Case */
+      box-shadow: 
+        0 24px 60px rgba(11, 18, 32, 0.2), 
+        inset 0 0 0 2px rgba(255, 255, 255, 0.1); /* Subtle metallic highlight inside */
+      transform-style: preserve-3d;
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      /* Initial state */
+      transform: rotateY(-8deg) rotateX(4deg);
+      z-index: 10;
+    }
+
+    /* Hardware Details */
+    .phone-notch {
+      position: absolute;
+      top: 0; left: 50%;
+      transform: translateX(-50%);
+      width: 100px; height: 26px;
+      background: #151A29;
+      border-bottom-left-radius: 16px; 
+      border-bottom-right-radius: 16px;
+      z-index: 20;
+    }
+    .phone-button {
+      position: absolute;
+      background: #151A29;
+      border-top-left-radius: 3px;
+      border-bottom-left-radius: 3px;
+    }
+    .btn-silent { left: -15px; top: 110px; width: 3px; height: 20px; }
+    .btn-vol-up { left: -15px; top: 150px; width: 3px; height: 40px; }
+    .btn-vol-down { left: -15px; top: 200px; width: 3px; height: 40px; }
+    .btn-power { 
+      right: -15px; top: 160px; width: 3px; height: 60px; 
+      border-radius: 0; border-top-right-radius: 3px; border-bottom-right-radius: 3px;
+    }
+
+    /* The Screen */
+    .phone-screen {
+      position: absolute;
+      inset: 0;
+      background: #000;
+      border-radius: 32px; /* inner border radius */
+      overflow: hidden;
+      mask-image: radial-gradient(white, black); /* fixes edge bleed on safari */
+      -webkit-mask-image: -webkit-radial-gradient(white, black);
+    }
+
+    .phone-screen img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      opacity: 0;
+      transform: scale(1.05);
+      transition: opacity 0.5s ease, transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .phone-screen img.active {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    /* Right side: Scrolling Text Blocks */
+    .showcase-content {
+      padding-top: 10vh;
+      padding-bottom: 20vh;
+    }
+
+    .step-block {
+      min-height: 80vh; /* creates the scrolling distance */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      opacity: 0.3;
+      transform: translateY(20px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    .step-block.focused {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    
+    .step-block h3 { font-size: clamp(2rem, 3vw, 2.5rem); margin-bottom: 16px; }
+    .step-block p { font-size: 1.125rem; max-width: 480px; }
+
+    /* Meta bar inside the first step block */
+    .meta-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin: 24px 0; border-top: 1px solid var(--border); padding-top: 24px; }
     .meta-item label { display: block; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; margin-bottom: 4px; }
     .meta-item span { font-size: 0.95rem; font-weight: 500; color: var(--text-primary); }
 
@@ -325,8 +431,11 @@
       border-radius: var(--radius-md);
       background: var(--bg-surface);
       box-shadow: var(--shadow-sm);
+      margin: 0 auto;
+      max-width: 1100px;
     }
     .app-row .app-icon { width: 56px; height: 56px; background: var(--bg-alt); border: 1px solid var(--border); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+
 
     /* RHYTHM 3: PROTOCOLS (Document style, centered, narrow) */
     .doc-container { max-width: 800px; margin: 0 auto; }
@@ -382,11 +491,36 @@
       .mobile-menu-btn { display: block; }
       .lang-toggle { margin-left: 0; border-left: none; padding-left: 0; }
       
-      .about-grid, .featured-app, .offer-grid { grid-template-columns: 1fr; gap: 40px; }
-      .featured-app { display: flex; flex-direction: column-reverse; padding: 32px; }
-      .meta-grid { grid-template-columns: 1fr; }
+      .about-grid, .offer-grid { grid-template-columns: 1fr; gap: 40px; }
       #hero { min-height: 60vh; }
       section { padding: 80px 5%; }
+
+      /* Scroll-Driven Section on Mobile */
+      .showcase-container {
+        grid-template-columns: 1fr;
+        gap: 0;
+      }
+      .showcase-visual {
+        /* On mobile, phone stays sticky at top under header, text scrolls over/under it */
+        top: calc(var(--header-height) + 20px);
+        height: 45vh; /* smaller area */
+        background: var(--bg-alt); 
+        margin-left: -5%; margin-right: -5%; /* full width bleed to mask text behind */
+        width: 110%;
+        z-index: 10;
+        border-bottom: 1px solid var(--border);
+      }
+      .phone-frame {
+        transform: scale(0.65) !important; /* Force scale down on mobile */
+        margin-top: -30px;
+      }
+      .showcase-content {
+        padding-top: 5vh;
+        padding-bottom: 10vh;
+      }
+      .step-block {
+        min-height: 60vh;
+      }
     }
   </style>
 </head>
@@ -461,7 +595,7 @@
     </section>
 
     <section id="apps">
-      <div class="section-inner">
+      <div class="section-inner" style="margin-bottom: 40px;">
         <div class="section-header">
           <svg class="section-header-icon" width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
           <div>
@@ -469,13 +603,35 @@
             <h2><span class="lang-pl">Oprogramowanie.</span><span class="lang-en">Software.</span></h2>
           </div>
         </div>
+      </div>
 
-        <div class="featured-app card">
-          <div>
+      <div class="showcase-container">
+        
+        <div class="showcase-visual">
+          <div class="phone-frame" id="phone-3d-frame">
+            <div class="phone-button btn-silent"></div>
+            <div class="phone-button btn-vol-up"></div>
+            <div class="phone-button btn-vol-down"></div>
+            <div class="phone-button btn-power"></div>
+            <div class="phone-notch"></div>
+            
+            <div class="phone-screen" id="phone-screen-container">
+              <img src="screen1pl.png" class="phone-screen-img active" data-step="0" data-base="screen1" onerror="this.src='screen1pl.png'">
+              <img src="screen2pl.png" class="phone-screen-img" data-step="1" data-base="screen2" onerror="this.src='screen1pl.png'">
+              <img src="screen3pl.png" class="phone-screen-img" data-step="2" data-base="screen3" onerror="this.src='screen1pl.png'">
+              <img src="screen4pl.png" class="phone-screen-img" data-step="3" data-base="screen4" onerror="this.src='screen1pl.png'">
+              <img src="screen5pl.png" class="phone-screen-img" data-step="4" data-base="screen5" onerror="this.src='screen1pl.png'">
+            </div>
+          </div>
+        </div>
+
+        <div class="showcase-content">
+          
+          <div class="step-block focused" data-step="0">
             <span class="badge">
               <span class="lang-pl">Produkt Flagowy</span><span class="lang-en">Flagship Product</span>
             </span>
-            <h3 style="font-size: 2.25rem; margin-bottom: 8px;">IbronEXO</h3>
+            <h3>IbronEXO</h3>
             <p class="text-mono text-accent" style="margin-bottom: 24px;">
               <span class="lang-pl">DOSTĘPNE W GOOGLE PLAY</span>
               <span class="lang-en">AVAILABLE ON GOOGLE PLAY</span>
@@ -484,39 +640,51 @@
               <span class="lang-pl"><strong>IbronEXO to nie jest zwykły notatnik.</strong> To Twój prywatny, hermetyczny kryptosejf zbudowany w architekturze Zero-Data. Brak multimediów, brak powiadomień serwera. Tylko silnie zaszyfrowany dziennik tekstowy. Zgubisz klucz — tracisz dane na zawsze.</span>
               <span class="lang-en"><strong>IbronEXO is not just a notepad.</strong> It's your private, hermetic crypto-vault built on Zero-Data architecture. No media, no server pings. Just a strongly encrypted text log. Lose the key — lose the data forever.</span>
             </p>
-            
             <div class="meta-grid">
               <div class="meta-item">
-                <label><span class="lang-pl">Ochrona</span><span class="lang-en">Protection</span></label>
-                <span><span class="lang-pl">Protokół Podwójnego Dna</span><span class="lang-en">Triple PIN Decoy System</span></span>
-              </div>
-              <div class="meta-item">
                 <label><span class="lang-pl">Środowisko</span><span class="lang-en">Environment</span></label>
-                <span><span class="lang-pl">100% Offline (Zero Telemetrii)</span><span class="lang-en">100% Offline (Zero Telemetry)</span></span>
+                <span><span class="lang-pl">100% Offline</span><span class="lang-en">100% Offline</span></span>
               </div>
               <div class="meta-item">
-                <label><span class="lang-pl">Wersja / Licencja</span><span class="lang-en">Version / License</span></label>
-                <span>v1.0.5 / <span class="lang-pl">Darmowa</span><span class="lang-en">Free</span></span>
+                <label><span class="lang-pl">Wersja</span><span class="lang-en">Version</span></label>
+                <span>v1.0.5</span>
               </div>
             </div>
+            <div style="margin-top: 16px;">
+              <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-primary">
+                <span class="lang-pl">Pobierz z Google Play</span><span class="lang-en">Download on Google Play</span> &rarr;
+              </a>
+            </div>
+          </div>
 
-            <a href="https://play.google.com/store/apps/details?id=com.ibron.exo" target="_blank" rel="noopener noreferrer" class="btn-primary">
-              <span class="lang-pl">Pobierz z Google Play</span><span class="lang-en">Download on Google Play</span> &rarr;
-            </a>
+          <div class="step-block" data-step="1">
+            <h3><span class="lang-pl">Protokół "Podwójnego Dna"</span><span class="lang-en">Triple PIN System</span></h3>
+            <p><span class="lang-pl">Ochrona przed wymuszeniem hasła. Główny PIN otwiera prawdziwe dane. Decoy PIN generuje fałszywy sejf. Nuke PIN powoduje natychmiastowe, bezpowrotne zniszczenie wszystkich danych.</span><span class="lang-en">Protection against forced entry. Main PIN opens real data. Decoy PIN generates a fake vault. Nuke PIN triggers an instant, irrecoverable wipe of all data.</span></p>
           </div>
-          <div>
-            <img src="screen1pl.png" alt="IbronEXO" class="featured-img" id="dyn-app-img" onerror="this.style.display='none'">
-          </div>
-        </div>
 
-        <div class="app-row">
-          <div class="app-icon"><span style="color:var(--text-muted); font-weight: 600;">CHR</span></div>
-          <div style="flex: 1;">
-            <h4 style="margin-bottom: 4px; font-size: 1.125rem;">IbronCHRONOS</h4>
-            <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span><span class="lang-en">Advanced operational management engine.</span></p>
+          <div class="step-block" data-step="2">
+            <h3><span class="lang-pl">Znikające Notatki</span><span class="lang-en">Vanishing Notes</span></h3>
+            <p><span class="lang-pl">Ustaw timer samozniszczenia dla każdej pojedynczej notatki. Po upływie ustalonego czasu zawartość jest nadpisywana zerami — nie pozostawiając absolutnie żadnego śladu w pamięci.</span><span class="lang-en">Set a self-destruct timer for any individual note. Once the time elapses, the content is zeroed out—leaving absolutely no forensic trace in memory.</span></p>
           </div>
-          <span class="badge badge-outline" style="margin:0;"><span class="lang-pl">Moduł Zablokowany (In Dev)</span><span class="lang-en">Locked Module (In Dev)</span></span>
+
+          <div class="step-block" data-step="3">
+            <h3>Dead Man's Switch</h3>
+            <p><span class="lang-pl">Twoje ostateczne zabezpieczenie. Jeśli nie zalogujesz się do systemu przez ustalony wcześniej okres (np. 14 dni), aplikacja automatycznie i bez ostrzeżenia wymaże całą bazę danych.</span><span class="lang-en">Your ultimate failsafe. If you fail to log into the system for a pre-configured period (e.g., 14 days), the application will automatically wipe the entire database without warning.</span></p>
+          </div>
+
+          <div class="step-block" data-step="4">
+            <h3><span class="lang-pl">Absolutna Izolacja</span><span class="lang-en">Absolute Isolation</span></h3>
+            <p><span class="lang-pl">Oprogramowanie pozbawione dostępu do internetu (wymuszone w kodzie na poziomie uprawnień manifestu). Brak multimediów, brak logowania, brak powiadomień. Tylko szyfrowany tekst.</span><span class="lang-en">Software utterly detached from the internet (enforced directly at the manifest permissions level). No media, no analytics, no pings. Just encrypted text.</span></p>
+          </div>
+
         </div>
+      </div> <div class="app-row" style="margin-top: 80px;">
+        <div class="app-icon"><span style="color:var(--text-muted); font-weight: 600;">CHR</span></div>
+        <div style="flex: 1;">
+          <h4 style="margin-bottom: 4px; font-size: 1.125rem;">IbronCHRONOS</h4>
+          <p style="margin: 0; font-size: 0.95rem;"><span class="lang-pl">Zaawansowany silnik zarządzania operacyjnego.</span><span class="lang-en">Advanced operational management engine.</span></p>
+        </div>
+        <span class="badge badge-outline" style="margin:0;"><span class="lang-pl">Moduł Zablokowany (In Dev)</span><span class="lang-en">Locked Module (In Dev)</span></span>
       </div>
     </section>
 
@@ -722,10 +890,12 @@
     }
 
     function updateDynamicImages(langCode) {
-      const appImg = document.getElementById('dyn-app-img');
-      if(appImg) {
-        appImg.src = langCode === 'pl' ? 'screen1pl.png' : 'screen1.png';
-      }
+      document.querySelectorAll('.phone-screen-img').forEach(img => {
+        const base = img.getAttribute('data-base');
+        if(base) {
+          img.src = langCode === 'pl' ? `${base}pl.png` : `${base}.png`;
+        }
+      });
     }
 
     /* ===== SCROLL BEHAVIOR: STICKY HEADER & NAV HIGHLIGHTING ===== */
@@ -744,7 +914,6 @@
       // 2. Scroll Spy (Highlight active navigation item)
       let currentSectionId = '';
       sections.forEach(section => {
-        // Offset by 150 to trigger highlight slightly before the section hits top
         const sectionTop = section.offsetTop - 150; 
         if (window.scrollY >= sectionTop) {
           currentSectionId = section.getAttribute('id');
@@ -758,6 +927,54 @@
         }
       });
     });
+
+    /* ===== SCROLL-DRIVEN PHONE MOCKUP ANIMATION ===== */
+    const stepBlocks = document.querySelectorAll('.step-block');
+    const phoneFrame = document.getElementById('phone-3d-frame');
+    const screenImages = document.querySelectorAll('.phone-screen-img');
+
+    // Tablica transformacji 3D dopasowana do kolejnych kroków (krok 0 do 4)
+    const phoneTransforms = [
+      "rotateY(-12deg) rotateX(4deg) translateY(0px)",
+      "rotateY(8deg) rotateX(-2deg) translateY(-10px)",
+      "rotateY(-6deg) rotateX(2deg) translateY(-20px)",
+      "rotateY(10deg) rotateX(-4deg) translateY(-10px)",
+      "rotateY(0deg) rotateX(0deg) translateY(0px)"
+    ];
+
+    const observerOptions = {
+      root: null,
+      rootMargin: "-40% 0px -40% 0px", // Triggeruje, gdy element przecina sam środek ekranu
+      threshold: 0
+    };
+
+    const scrollObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const stepIndex = parseInt(entry.target.getAttribute('data-step'), 10);
+          
+          // 1. Animacja tekstu
+          stepBlocks.forEach(b => b.classList.remove('focused'));
+          entry.target.classList.add('focused');
+          
+          // 2. Obrót telefonu (nie wykonuj na mobile, gdy telefon przestaje być interaktywny w ten sam sposób)
+          if(window.innerWidth > 900 && phoneFrame) {
+            phoneFrame.style.transform = phoneTransforms[stepIndex] || phoneTransforms[0];
+          }
+
+          // 3. Crossfade obrazków na ekranie
+          screenImages.forEach((img, i) => {
+            if(i === stepIndex) {
+              img.classList.add('active');
+            } else {
+              img.classList.remove('active');
+            }
+          });
+        }
+      });
+    }, observerOptions);
+
+    stepBlocks.forEach(block => scrollObserver.observe(block));
 
     /* ===== INIT ===== */
     window.addEventListener('DOMContentLoaded', () => {
