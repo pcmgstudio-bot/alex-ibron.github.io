@@ -1,0 +1,647 @@
+<!DOCTYPE html>
+<html lang="pl" data-lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script>
+    (function(){
+      try {
+        var lang = localStorage.getItem('ibron_lang');
+        if(!lang) {
+          var browserLang = (navigator.language || navigator.userLanguage || 'en').toLowerCase().slice(0,2);
+          lang = (browserLang === 'pl') ? 'pl' : 'en';
+        }
+        document.documentElement.setAttribute('data-lang', lang);
+        document.documentElement.lang = lang;
+      } catch(e) {
+        document.documentElement.setAttribute('data-lang', 'pl');
+        document.documentElement.lang = 'pl';
+      }
+    })();
+  </script>
+  
+  <title>IBRON INDUSTRIES | Współpraca B2B</title>
+  <meta name="description" content="Budujemy aplikacje webowe i natywne systemy o inżynieryjnej jakości. Oferta współpracy B2B Ibron Industries.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    /* ===== DESIGN SYSTEM & VARIABLES ===== */
+    :root {
+      --font-main: 'Poppins', sans-serif;
+      
+      --c-text-main: #FFF8F0;
+      --c-text-muted: rgba(255, 248, 240, 0.75);
+      
+      --c-accent: #E8B84B; /* Złoty akcent */
+      
+      --header-height: 90px;
+    }
+
+    /* ===== CSS LANGUAGE TOGGLE ===== */
+    [data-lang="en"] .lang-pl { display: none !important; }
+    [data-lang="pl"] .lang-en { display: none !important; }
+
+    /* ===== RESET & GLOBAL ===== */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { 
+      scroll-behavior: smooth; 
+    }
+    
+    body {
+      color: var(--c-text-main);
+      font-family: var(--font-main);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+      background-color: #050505; /* Fallback dla tła wideo */
+      overflow-x: hidden;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.3s ease; }
+    button { border: none; background: none; font-family: inherit; cursor: pointer; }
+    ul { list-style: none; }
+
+    /* ===== BACKGROUND VIDEO & OVERLAY ===== */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      object-fit: cover;
+      z-index: -2;
+      pointer-events: none;
+    }
+
+    .video-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: rgba(0, 0, 0, 0.45); /* Gwarantuje idealny kontrast dla tekstu na każdym wideo */
+      z-index: -1;
+      pointer-events: none;
+    }
+
+    /* ===== TYPOGRAPHY ===== */
+    h1, h2, h3, h4 { 
+      font-weight: 800; 
+      line-height: 1.15; 
+      letter-spacing: -0.01em; 
+      margin-bottom: 0.5em;
+    }
+    p { margin-bottom: 1.25em; font-weight: 400; }
+    strong { font-weight: 600; color: #FFF; }
+    
+    .text-mono { font-family: monospace; font-size: 0.85rem; letter-spacing: 0.02em; }
+
+    /* ===== HEADER ===== */
+    .header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: var(--header-height);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 5%;
+      z-index: 1000;
+      transition: background 0.4s ease, backdrop-filter 0.4s ease, border-bottom 0.4s ease;
+      border-bottom: 1px solid transparent;
+    }
+    
+    .header.scrolled {
+      background: rgba(10, 10, 15, 0.7);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .logo {
+      font-weight: 900;
+      font-size: 1.4rem;
+      letter-spacing: -0.02em;
+      color: #FFF;
+      text-transform: uppercase;
+    }
+
+    .nav-container { display: flex; align-items: center; gap: 40px; }
+    .nav-links { display: flex; gap: 32px; }
+
+    .nav-link {
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: var(--c-text-muted);
+      position: relative;
+    }
+    .nav-link:hover { color: #FFF; }
+    
+    /* Aktywny link (Współpraca) */
+    .nav-link.active {
+      color: #FFF;
+      font-weight: 600;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px; left: 0;
+      width: 100%; height: 2px;
+      background: var(--c-accent);
+      border-radius: 2px;
+    }
+
+    .lang-switcher { 
+      display: flex; gap: 12px; 
+      border-left: 1px solid rgba(255, 255, 255, 0.2); 
+      padding-left: 32px;
+    }
+    .lang-btn { color: var(--c-text-muted); font-weight: 600; font-size: 0.9rem; transition: color 0.2s ease; }
+    .lang-btn:hover { color: #FFF; }
+    .lang-btn.active { color: var(--c-accent); }
+
+    /* ===== BUTTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 16px 36px;
+      font-size: 1.05rem;
+      font-weight: 700;
+      border-radius: 50px; 
+      cursor: pointer;
+      transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    
+    .btn-primary {
+      background: #FFF;
+      color: #000;
+      box-shadow: 0 8px 24px rgba(255, 255, 255, 0.15);
+    }
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 32px rgba(255, 255, 255, 0.25);
+      background: var(--c-text-muted);
+      color: #000;
+    }
+    
+    .btn-link {
+      background: transparent;
+      color: var(--c-accent);
+      padding: 0;
+      font-size: 1rem;
+      text-transform: none;
+      letter-spacing: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .btn-link:hover {
+      transform: translateX(4px);
+      color: #FFF;
+    }
+
+    /* ===== BADGE ===== */
+    .badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--c-accent);
+      background: rgba(232, 184, 75, 0.1);
+      border: 1px solid rgba(232, 184, 75, 0.25);
+      padding: 6px 14px;
+      border-radius: 50px;
+      margin-bottom: 24px;
+    }
+
+    /* ===== LAYOUT & CONTAINERS ===== */
+    main { position: relative; z-index: 10; padding-top: calc(var(--header-height) + 60px); padding-bottom: 100px; }
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 5%; width: 100%; }
+
+    /* ===== SECTION 1: HEADER ===== */
+    .section-intro {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+    .section-intro h1 {
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      margin-bottom: 20px;
+      text-shadow: 0 4px 20px rgba(0,0,0,0.4);
+    }
+    .section-intro p {
+      font-size: 1.15rem;
+      color: var(--c-text-muted);
+      max-width: 750px;
+      margin: 0 auto;
+    }
+
+    /* ===== CARDS (GLASSMORPHISM) ===== */
+    .glass-card {
+      background: rgba(255, 255, 255, 0.04);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 24px;
+      padding: 40px;
+      color: var(--c-text-main);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+      transition: transform 0.4s ease, border-color 0.4s ease, background 0.4s ease;
+    }
+    .glass-card:hover {
+      transform: translateY(-8px);
+      background: rgba(255, 255, 255, 0.08);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    /* ===== SECTION 2: CASE STUDY ===== */
+    .case-study-section {
+      margin-bottom: 120px;
+    }
+    
+    .case-study-card {
+      padding: 60px;
+      border-color: rgba(232, 184, 75, 0.3);
+      background: rgba(20, 20, 25, 0.6); /* Lekko przyciemniona baza dla podkreślenia "dokumentu" */
+    }
+    .case-study-card:hover {
+      transform: none; /* Hero card zostaje statyczny, nie podskakuje na hoverze */
+      border-color: rgba(232, 184, 75, 0.5);
+    }
+
+    .case-study-header {
+      margin-bottom: 40px;
+      border-bottom: 1px solid rgba(255,255,255,0.1);
+      padding-bottom: 24px;
+    }
+    .case-study-header h2 { font-size: 2.5rem; margin-bottom: 0; }
+
+    .case-steps-container {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-bottom: 40px;
+    }
+
+    .case-step {
+      position: relative;
+      padding-top: 24px;
+      border-top: 2px solid rgba(255, 255, 255, 0.1);
+      transition: border-color 0.3s ease;
+    }
+    .case-step:hover {
+      border-top-color: var(--c-accent);
+    }
+
+    .step-bg-number {
+      position: absolute;
+      top: -20px;
+      left: 0;
+      font-size: 6rem;
+      font-weight: 900;
+      color: rgba(255, 255, 255, 0.04);
+      z-index: 0;
+      line-height: 1;
+      pointer-events: none;
+      transition: color 0.3s ease;
+    }
+    .case-step:hover .step-bg-number {
+      color: rgba(232, 184, 75, 0.08);
+    }
+
+    .case-step-content {
+      position: relative;
+      z-index: 1;
+    }
+    .case-step h3 {
+      font-size: 1.25rem;
+      margin-bottom: 12px;
+      color: #FFF;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .case-step h3 span { color: var(--c-accent); font-family: var(--font-mono); font-size: 0.9rem; }
+    .case-step p { font-size: 0.95rem; color: var(--c-text-muted); margin: 0; }
+
+    /* ===== SECTION 3: SERVICES GRID ===== */
+    .services-section { margin-bottom: 120px; }
+    .services-section h2 { margin-bottom: 40px; text-align: center; font-size: 2.5rem; }
+    
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    .services-grid .card-icon {
+      color: var(--c-accent);
+      margin-bottom: 24px;
+    }
+    .services-grid h3 { font-size: 1.5rem; margin-bottom: 12px; }
+    .services-grid p { font-size: 0.95rem; color: var(--c-text-muted); margin: 0; }
+
+    /* ===== SECTION 4: PROCESS ===== */
+    .process-section { margin-bottom: 120px; }
+    .process-section h2 { margin-bottom: 40px; text-align: center; font-size: 2.5rem; }
+    
+    .process-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 24px;
+    }
+    
+    .process-item {
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 16px;
+      padding: 32px;
+    }
+    .process-item .step-badge {
+      display: block;
+      font-family: var(--font-mono);
+      color: var(--c-accent);
+      font-size: 0.8rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
+    .process-item h4 { font-size: 1.25rem; margin-bottom: 12px; color: #FFF; }
+    .process-item p { font-size: 0.9rem; color: var(--c-text-muted); margin: 0; }
+
+    /* ===== SECTION 5: FINAL CTA ===== */
+    .cta-section {
+      text-align: center;
+      padding: 80px 40px;
+      background: rgba(232, 184, 75, 0.05);
+      border: 1px solid rgba(232, 184, 75, 0.2);
+      border-radius: 24px;
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+    }
+    .cta-section h2 { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 32px; }
+
+    /* ===== FOOTER ===== */
+    footer {
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 40px 0;
+      text-align: center;
+      color: var(--c-text-muted);
+      font-size: 0.9rem;
+      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,0.3);
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 992px) {
+      .nav-links { display: none; }
+      .lang-switcher { border-left: none; padding-left: 0; }
+      
+      .case-study-card { padding: 40px 24px; }
+      .case-steps-container { grid-template-columns: 1fr; gap: 60px; }
+      
+      .process-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 600px) {
+      .process-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <video class="video-bg" autoplay muted loop playsinline>
+    <source src="videobl.mp4" type="video/mp4">
+  </video>
+  <div class="video-overlay"></div>
+
+  <header class="header" id="main-header">
+    <a href="index.html" class="logo">
+      IBRON INDUSTRIES
+    </a>
+    
+    <div class="nav-container">
+      <nav class="nav-links">
+        <a href="about.html" class="nav-link"><span class="lang-pl">O nas</span><span class="lang-en">About</span></a>
+        <a href="protocols.html" class="nav-link"><span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span></a>
+        <a href="apps.html" class="nav-link"><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></a>
+        <a href="offer.html" class="nav-link active"><span class="lang-pl">Współpraca</span><span class="lang-en">Partnership</span></a>
+      </nav>
+
+      <div class="lang-switcher">
+        <button class="lang-btn active" id="lang-pl-btn" onclick="setLang('pl')">PL</button>
+        <button class="lang-btn" id="lang-en-btn" onclick="setLang('en')">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <div class="container">
+      
+      <section class="section-intro">
+        <span class="badge">
+          <span class="lang-pl">Współpraca & Realizacja</span>
+          <span class="lang-en">Partnership & Delivery</span>
+        </span>
+        <h1>
+          <span class="lang-pl">Budujemy systemy, które działają.</span>
+          <span class="lang-en">We build systems that work.</span>
+        </h1>
+        <p>
+          <span class="lang-pl">Aplikacje webowe, natywne środowiska mobilne i zaawansowane systemy UI. Tworzymy oprogramowanie o inżynieryjnej jakości, gdzie prywatność i wydajność są fundamentem.</span>
+          <span class="lang-en">Web applications, native mobile environments, and advanced UI systems. We build engineering-grade software where privacy and performance are foundational.</span>
+        </p>
+      </section>
+
+      <section class="case-study-section">
+        <div class="glass-card case-study-card">
+          <div class="case-study-header">
+            <span class="badge">Case Study</span>
+            <h2>IbronEXO</h2>
+          </div>
+          
+          <div class="case-steps-container">
+            <div class="case-step">
+              <div class="step-bg-number">01</div>
+              <div class="case-step-content">
+                <h3><span>01</span> <span class="lang-pl">PROBLEM</span><span class="lang-en">PROBLEM</span></h3>
+                <p>
+                  <span class="lang-pl">Potrzeba notatnika, który nie wysyła absolutnie nic do internetu i nie ma żadnego backdoora — nawet dla twórcy aplikacji.</span>
+                  <span class="lang-en">The need for a notepad that sends absolutely nothing to the internet and has no backdoor — not even for the app's creator.</span>
+                </p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="step-bg-number">02</div>
+              <div class="case-step-content">
+                <h3><span>02</span> <span class="lang-pl">ROZWIĄZANIE</span><span class="lang-en">SOLUTION</span></h3>
+                <p>
+                  <span class="lang-pl">Zaprojektowałem i zbudowałem IbronEXO od zera w React Native — z architekturą Zero-Data, systemem potrójnego PIN-u (główny / decoy / nuke) i pełną izolacją od sieci na poziomie uprawnień aplikacji.</span>
+                  <span class="lang-en">I designed and built IbronEXO from scratch in React Native — with Zero-Data architecture, a triple-PIN system (main / decoy / nuke), and full network isolation at the application permissions level.</span>
+                </p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="step-bg-number">03</div>
+              <div class="case-step-content">
+                <h3><span>03</span> <span class="lang-pl">WYNIK</span><span class="lang-en">RESULT</span></h3>
+                <p>
+                  <span class="lang-pl">Aplikacja żyje w Google Play. Realni użytkownicy korzystają z niej codziennie do ochrony swoich najbardziej prywatnych notatek.</span>
+                  <span class="lang-en">The application is live on Google Play. Real users rely on it daily to protect their most private notes.</span>
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <a href="apps.html" class="btn-link">
+            <span class="lang-pl">Zobacz IbronEXO</span><span class="lang-en">View IbronEXO</span>
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </a>
+        </div>
+      </section>
+
+      <section class="services-section">
+        <h2>
+          <span class="lang-pl">Nasze Usługi</span>
+          <span class="lang-en">Our Services</span>
+        </h2>
+        <div class="services-grid">
+          
+          <div class="glass-card">
+            <svg class="card-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="14" rx="2"></rect><line x1="8" y1="21" x2="16" y2="21"></line><line x1="12" y1="17" x2="12" y2="21"></line></svg>
+            <h3><span class="lang-pl">Aplikacje i Systemy Webowe</span><span class="lang-en">Web Apps & Systems</span></h3>
+            <p>
+              <span class="lang-pl">Zoptymalizowane pod kątem wydajności platformy SPA i nowoczesne wizytówki. Szybkość i czysty kod z zachowaniem standardów bezpieczeństwa.</span>
+              <span class="lang-en">Highly optimized SPA platforms and modern digital portfolios. Speed and clean code adhering to security standards.</span>
+            </p>
+          </div>
+          
+          <div class="glass-card">
+            <svg class="card-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+            <h3><span class="lang-pl">Środowiska Mobilne</span><span class="lang-en">Mobile Ecosystems</span></h3>
+            <p>
+              <span class="lang-pl">Natywne aplikacje oraz rozwiązania hybrydowe z pełnym naciskiem na optymalne zużycie pamięci i płynność działania offline.</span>
+              <span class="lang-en">Native applications and hybrid solutions with a focus on optimal memory usage and seamless offline capability.</span>
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <svg class="card-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20.94c1.5 0 2.75 1.06 4 1.06 3 0 6-8 6-12.22A4.91 4.91 0 0 0 17 5c-2.22 0-4 1.44-5 2-1-.56-2.78-2-5-2a4.9 4.9 0 0 0-5 4.78C2 14 5 22 8 22c1.25 0 2.5-1.06 4-1.06Z"></path><polygon points="10 2 12 6 14 2"></polygon></svg>
+            <h3><span class="lang-pl">Interfejsy (UI/UX)</span><span class="lang-en">Interfaces (UI/UX)</span></h3>
+            <p>
+              <span class="lang-pl">Projektowanie spójnych środowisk wizualnych i pełnych systemów designu, które ułatwiają interakcję.</span>
+              <span class="lang-en">Designing cohesive visual environments and full design systems that facilitate interaction.</span>
+            </p>
+          </div>
+
+          <div class="glass-card">
+            <svg class="card-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            <h3><span class="lang-pl">Narzędzia i Skrypty</span><span class="lang-en">Tools & Scripts</span></h3>
+            <p>
+              <span class="lang-pl">Autorskie rozwiązania automatyzujące procesy, mikronarzędzia, bezpieczne integracje z bazami danych.</span>
+              <span class="lang-en">Proprietary solutions automating processes, micro-tools, secure database integrations.</span>
+            </p>
+          </div>
+
+        </div>
+      </section>
+
+      <section class="process-section">
+        <h2>
+          <span class="lang-pl">Jak pracujemy</span>
+          <span class="lang-en">How We Work</span>
+        </h2>
+        
+        <div class="process-grid">
+          <div class="process-item">
+            <span class="step-badge">01 / DISCOVERY</span>
+            <h4><span class="lang-pl">Rozmowa i Analiza</span><span class="lang-en">Discovery</span></h4>
+            <p>
+              <span class="lang-pl">Poznajemy cel projektu, weryfikujemy technologię i ustalamy architekturę.</span>
+              <span class="lang-en">We understand the project goal, verify technology, and establish architecture.</span>
+            </p>
+          </div>
+          
+          <div class="process-item">
+            <span class="step-badge">02 / DESIGN</span>
+            <h4><span class="lang-pl">Projekt Systemu</span><span class="lang-en">System Design</span></h4>
+            <p>
+              <span class="lang-pl">Tworzymy wizualne fundamenty oraz planujemy przepływ danych i zabezpieczeń.</span>
+              <span class="lang-en">We create visual foundations and map data flows and security measures.</span>
+            </p>
+          </div>
+          
+          <div class="process-item">
+            <span class="step-badge">03 / BUILD</span>
+            <h4><span class="lang-pl">Kodowanie i Testy</span><span class="lang-en">Build & Test</span></h4>
+            <p>
+              <span class="lang-pl">Programowanie w ścisłej izolacji z zachowaniem najwyższych standardów optymalizacji.</span>
+              <span class="lang-en">Programming in strict isolation while adhering to highest optimization standards.</span>
+            </p>
+          </div>
+
+          <div class="process-item">
+            <span class="step-badge">04 / DEPLOY</span>
+            <h4><span class="lang-pl">Wdrożenie</span><span class="lang-en">Deployment</span></h4>
+            <p>
+              <span class="lang-pl">Publikacja na serwerach lub przekazanie zamkniętych środowisk aplikacji.</span>
+              <span class="lang-en">Publication to servers or transfer of closed application environments.</span>
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="cta-section">
+        <h2>
+          <span class="lang-pl">Masz pomysł? Zbudujmy go.</span>
+          <span class="lang-en">Got an idea? Let's build it.</span>
+        </h2>
+        <a href="mailto:alex@ibronindustries.pl" class="btn btn-primary">
+          <span class="lang-pl">Zacznij projekt</span><span class="lang-en">Start a project</span>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <footer>
+    <div class="container">
+      &copy; 2026 Ibron Industries. Absolute Privacy.
+    </div>
+  </footer>
+
+  <script>
+    /* 1. SCROLL HEADER LOGIC */
+    const header = document.getElementById('main-header');
+    window.addEventListener('scroll', () => {
+      if(window.scrollY > 50) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+
+    /* 2. LANGUAGE SWITCHER LOGIC */
+    function setLang(langCode) {
+      document.documentElement.setAttribute('data-lang', langCode);
+      document.documentElement.lang = langCode;
+      try { localStorage.setItem('ibron_lang', langCode); } catch(e) {}
+      
+      document.getElementById('lang-pl-btn').classList.remove('active');
+      document.getElementById('lang-en-btn').classList.remove('active');
+      document.getElementById('lang-' + langCode + '-btn').classList.add('active');
+    }
+
+    window.addEventListener('DOMContentLoaded', () => {
+      const initialLang = document.documentElement.getAttribute('data-lang') || 'pl';
+      setLang(initialLang);
+    });
+  </script>
+</body>
+</html>
