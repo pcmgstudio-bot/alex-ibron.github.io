@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<!-- ANTI-FOUC LANGUAGE SYSTEM: Zapobiega migotaniu tekstu przed załadowaniem -->
 <html lang="pl" data-lang="pl">
 <head>
   <meta charset="UTF-8">
@@ -24,7 +23,6 @@
   <title>IBRON INDUSTRIES | O nas</title>
   <meta name="description" content="Poznaj wizję i misję Ibron Industries. Niezależne studio oprogramowania stawiające na prywatność i architekturę Zero-Data.">
   
-  <!-- Czysta typografia Poppins dla całej witryny -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -261,12 +259,11 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
-      filter: grayscale(100%);
-      transition: filter 0.5s ease, transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+      filter: grayscale(100%); /* Obraz jest zawsze czarno-biały */
+      transition: transform 0.6s cubic-bezier(0.25, 1, 0.5, 1);
     }
 
     .founder-card:hover .founder-img-wrapper img {
-      filter: grayscale(0%);
       transform: scale(1.05);
     }
 
@@ -362,13 +359,11 @@
 </head>
 <body>
 
-  <!-- BACKGROUND VIDEO DLA PODSTRON -->
   <video class="video-bg" autoplay muted loop playsinline>
     <source src="videobl.mp4" type="video/mp4">
   </video>
   <div class="video-overlay"></div>
 
-  <!-- HEADER -->
   <header class="header" id="main-header">
     <a href="index.html" class="logo">
       IBRON INDUSTRIES
@@ -379,7 +374,6 @@
         <a href="about.html" class="nav-link active"><span class="lang-pl">O nas</span><span class="lang-en">About</span></a>
         <a href="protocols.html" class="nav-link"><span class="lang-pl">Protokoły</span><span class="lang-en">Protocols</span></a>
         <a href="apps.html" class="nav-link"><span class="lang-pl">Aplikacje</span><span class="lang-en">Apps</span></a>
-        <!-- Usunięto link "Design" -->
         <a href="offer.html" class="nav-link"><span class="lang-pl">Współpraca</span><span class="lang-en">Partnership</span></a>
       </nav>
 
@@ -393,7 +387,6 @@
   <main>
     <div class="container">
       
-      <!-- NAGŁÓWEK STRONY -->
       <section class="page-header">
         <span class="badge badge-accent">
           <span class="lang-pl">Misja & Wizja</span>
@@ -405,10 +398,8 @@
         </h1>
       </section>
 
-      <!-- SEKCJA FOUNDERA -->
       <section class="glass-card founder-card">
         <div class="founder-img-wrapper">
-          <!-- Wygodny SVG Placeholder renderujący się, jeśli brakuje pliku "image_c09130.jpg" -->
           <img src="image_c09130.jpg" alt="Aleksander - Founder" 
                onerror="this.onerror=null; this.src='data:image/svg+xml;utf8,<svg xmlns=\'http://www.w3.org/2000/svg\' width=\'300\' height=\'400\'><rect width=\'100%\' height=\'100%\' fill=\'%231a1a24\'/><text x=\'50%\' y=\'50%\' font-family=\'sans-serif\' font-weight=\'bold\' font-size=\'80\' fill=\'%233a3a4a\' dominant-baseline=\'middle\' text-anchor=\'middle\'>A</text></svg>'">
         </div>
@@ -435,7 +426,6 @@
         </div>
       </section>
 
-      <!-- WARTOŚCI (KARTY) -->
       <section class="cards-grid">
         
         <div class="glass-card value-card">
@@ -485,14 +475,12 @@
     </div>
   </main>
 
-  <!-- FOOTER -->
   <footer>
     <div class="container">
       &copy; 2026 Ibron Industries. Absolute Privacy.
     </div>
   </footer>
 
-  <!-- ===== SCRIPTS ===== -->
   <script>
     /* 1. HEADER BLUR ON SCROLL */
     const header = document.getElementById('main-header');
