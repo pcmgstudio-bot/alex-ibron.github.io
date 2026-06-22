@@ -226,14 +226,17 @@
       max-width: 900px;
     }
 
-     .hero h1 {
-      /* Zmniejszono dolny zakres z 3rem na 2.2rem, dodano break-word */
-      font-size: clamp(2.2rem, 8vw, 5.5rem);
+    .hero h1 {
+      /* Płynne skalowanie: na małych ekranach dostosuje się idealnie do szerokości */
+      font-size: clamp(1.6rem, 4vw + 1rem, 5.5rem);
       margin-bottom: 24px;
       text-shadow: 0 4px 20px rgba(0,0,0,0.4);
-      overflow-wrap: break-word;
-      word-wrap: break-word;
-      hyphens: auto;
+      
+      /* Blokada łamania słów w środku */
+      word-break: keep-all;
+      overflow-wrap: normal;
+      word-wrap: normal;
+      hyphens: none;
     }
 
     .hero p.lead {
@@ -371,7 +374,8 @@
         padding: 0 20px;
       }
       .hero h1 {
-        font-size: 2.2rem; 
+        /* Pozwalamy na automatyczne i bezpieczne dopasowanie fontu na małych smartfonach */
+        font-size: clamp(1.5rem, 7vw, 2rem); 
       }
       .btn {
         width: 100%;
