@@ -579,7 +579,7 @@
       font-weight: bold;
     }
 
-    /* ===== ZMIANA 1: STYL DLA PODZIĘKOWANIA ===== */
+    /* ===== STYL DLA PODZIĘKOWANIA (ZMIANA 1) ===== */
     .history-thanks {
       background: rgba(232, 184, 75, 0.06);
       border: 1px dashed rgba(232, 184, 75, 0.3);
@@ -602,7 +602,7 @@
       color: var(--c-text-main);
     }
 
-    /* ===== ZMIANA 2: STYLE DLA WIDOKU KODU & BLOKÓW ===== */
+    /* ===== STYLE DLA WIDOKU KODU & OBRAZKÓW (ZMIANA 2) ===== */
     .code-warning-box {
       background: rgba(232, 184, 75, 0.04);
       border: 1px solid rgba(232, 184, 75, 0.25);
@@ -629,7 +629,7 @@
       border: 1px solid rgba(255, 255, 255, 0.08);
       border-radius: 16px;
       padding: 28px;
-      margin-bottom: 32px;
+      margin-bottom: 40px;
     }
     .code-block-header {
       display: flex;
@@ -647,34 +647,45 @@
     .code-block-desc {
       font-size: 0.95rem;
       color: var(--c-text-muted);
-      margin-bottom: 18px;
+      margin-bottom: 24px;
       line-height: 1.5;
     }
-    .code-block-pre {
-      background: #050505;
-      padding: 20px;
+    
+    /* System obrazków kodu (Lightbox / Zoom effect) */
+    .code-images-wrapper {
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      align-items: center;
+      width: 100%;
+    }
+    .code-img {
+      width: 100%;
+      max-width: 750px;
       border-radius: 12px;
-      overflow-x: auto;
-      font-family: 'JetBrains Mono', 'Courier New', monospace;
-      font-size: 0.9rem;
-      color: #A3E635; /* Lekko zielonkawy monospace text */
-      border: 1px solid rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.6);
+      object-fit: contain;
+      cursor: zoom-in;
+      transition: transform 0.3s cubic-bezier(0.25, 1, 0.5, 1), box-shadow 0.3s ease;
+      background: #000;
     }
-    .btn-copy {
-      font-size: 0.75rem;
-      font-weight: 600;
-      color: var(--c-text-muted);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      padding: 6px 14px;
-      border-radius: 6px;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      transition: all 0.2s ease;
+    .code-img:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.8), 0 0 15px rgba(255,255,255,0.05);
     }
-    .btn-copy:hover {
-      color: #FFF;
-      border-color: rgba(255, 255, 255, 0.4);
-      background: rgba(255, 255, 255, 0.05);
+    .code-img.zoomed {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: auto;
+      max-width: 95vw;
+      max-height: 95vh;
+      z-index: 9999;
+      box-shadow: 0 0 0 100vmax rgba(0, 0, 0, 0.9);
+      cursor: zoom-out;
+      border-radius: 8px;
     }
 
     /* ===== FOOTER ===== */
@@ -707,6 +718,8 @@
       .history-header-left { flex-direction: column; align-items: flex-start; gap: 8px; }
       .history-meta { flex-direction: column; align-items: flex-start; gap: 4px; }
       .chevron { position: absolute; right: 32px; top: 32px; }
+      
+      .code-block-container { padding: 20px; }
     }
   </style>
 </head>
@@ -905,8 +918,8 @@
               <div class="history-content">
                 <div class="history-content-inner">
                   <div class="history-desc">
-                    <span class="lang-pl">Krytyczna poprawka usuwająca nadmiarowe uprawnienia frameworku oraz audyt rurociągu kryptograficznego.</span>
-                    <span class="lang-en">Critical patch removing redundant framework permissions and auditing the cryptographic pipeline.</span>
+                    <span class="lang-pl">Krytyczna poprawka konfiguracji i audyt algorytmów zabezpieczających.</span>
+                    <span class="lang-en">Critical configuration patch and security algorithms audit.</span>
                   </div>
                   <ul class="history-list">
                     <li>
@@ -914,8 +927,8 @@
                       <span class="lang-en"><strong>Security:</strong> Removed an unnecessary internet access permission. The app was and remains 100% offline — this permission was automatically added by the build framework and has now been explicitly blocked.</span>
                     </li>
                     <li>
-                      <span class="lang-pl">Zweryfikowano całą logikę szyfrowania (AES-256-GCM, PBKDF2) pod kątem poprawności implementacji.</span>
-                      <span class="lang-en">Verified the entire encryption pipeline (AES-256-GCM, PBKDF2) for implementation correctness.</span>
+                      <span class="lang-pl">Zweryfikowano logikę szyfrowania pod kątem poprawności implementacji.</span>
+                      <span class="lang-en">Verified the encryption logic for implementation correctness.</span>
                     </li>
                   </ul>
                   
@@ -1035,8 +1048,8 @@
             <span class="lang-en">How this is built</span>
           </h1>
           <p>
-            <span class="lang-pl">Dowód transparentności — kluczowe architektury kryptograficzne i systemowe.</span>
-            <span class="lang-en">Proof of transparency — key cryptographic and system architectures.</span>
+            <span class="lang-pl">Dowód transparentności — wybrane zrzuty architektur systemowych.</span>
+            <span class="lang-en">Proof of transparency — selected system architecture screenshots.</span>
           </p>
         </div>
 
@@ -1055,31 +1068,35 @@
           <div class="code-block-container">
             <div class="code-block-header">
               <div class="code-block-title">
-                <span class="lang-pl">Szyfrowanie (AES-256-GCM)</span>
-                <span class="lang-en">Encryption (AES-256-GCM)</span>
+                <span class="lang-pl">Szyfrowanie</span>
+                <span class="lang-en">Encryption</span>
               </div>
-              <button class="btn-copy">Copy</button>
             </div>
             <div class="code-block-desc">
-              <span class="lang-pl">Każda notatka jest szyfrowana przy użyciu AES-256-GCM — tego samego standardu, który stosują Signal, Apple FileVault i Google. Korzystamy z audytowanej, open-source biblioteki @noble/ciphers, nie własnej implementacji.</span>
-              <span class="lang-en">Every note is encrypted using AES-256-GCM — the same standard used by Signal, Apple FileVault, and Google. We use the audited, open-source @noble/ciphers library, not a custom implementation.</span>
+              <span class="lang-pl">Każda notatka jest szyfrowana przy użyciu AES-256-GCM — powszechnie używanego, sprawdzonego standardu szyfrowania uwierzytelnionego.</span>
+              <span class="lang-en">Every note is encrypted using AES-256-GCM — a widely used, proven authenticated encryption standard.</span>
             </div>
-            <pre class="code-block-pre"><code>// CIPHER_CODE_PLACEHOLDER</code></pre>
+            <div class="code-images-wrapper">
+              <img src="c1.png" class="code-img" onclick="this.classList.toggle('zoomed')" alt="AES-256-GCM Encryption Part 1">
+              <img src="c2.png" class="code-img" onclick="this.classList.toggle('zoomed')" alt="AES-256-GCM Encryption Part 2">
+            </div>
           </div>
 
           <div class="code-block-container">
             <div class="code-block-header">
               <div class="code-block-title">
-                <span class="lang-pl">Wyprowadzanie klucza z PIN-u (PBKDF2)</span>
-                <span class="lang-en">Key derivation from PIN (PBKDF2)</span>
+                <span class="lang-pl">Wyprowadzanie klucza z PIN-u</span>
+                <span class="lang-en">Key derivation from PIN</span>
               </div>
-              <button class="btn-copy">Copy</button>
             </div>
             <div class="code-block-desc">
               <span class="lang-pl">Twój PIN nie jest przechowywany — jest przepuszczany przez PBKDF2 (100 000 iteracji, SHA-256), zgodnie z rekomendacją OWASP, żeby wygenerować silny klucz kryptograficzny.</span>
               <span class="lang-en">Your PIN is never stored — it's passed through PBKDF2 (100,000 iterations, SHA-256), in line with OWASP recommendations, to generate a strong cryptographic key.</span>
             </div>
-            <pre class="code-block-pre"><code>// KDF_CODE_PLACEHOLDER</code></pre>
+            <div class="code-images-wrapper">
+              <img src="kd1.png" class="code-img" onclick="this.classList.toggle('zoomed')" alt="PBKDF2 Key Derivation Part 1">
+              <img src="kd2.png" class="code-img" onclick="this.classList.toggle('zoomed')" alt="PBKDF2 Key Derivation Part 2">
+            </div>
           </div>
 
           <div class="code-block-container">
@@ -1088,13 +1105,14 @@
                 <span class="lang-pl">Konfiguracja uprawnień</span>
                 <span class="lang-en">Permissions configuration</span>
               </div>
-              <button class="btn-copy">Copy</button>
             </div>
             <div class="code-block-desc">
               <span class="lang-pl">Pełna lista uprawnień systemowych, które aplikacja jawnie blokuje — w tym dostęp do internetu, kamery, mikrofonu i lokalizacji.</span>
               <span class="lang-en">The full list of system permissions the app explicitly blocks — including internet access, camera, microphone, and location.</span>
             </div>
-            <pre class="code-block-pre"><code>// PERMISSIONS_CODE_PLACEHOLDER</code></pre>
+            <div class="code-images-wrapper">
+              <img src="a1.png" class="code-img" onclick="this.classList.toggle('zoomed')" alt="Permissions Configuration">
+            </div>
           </div>
 
         </div>
