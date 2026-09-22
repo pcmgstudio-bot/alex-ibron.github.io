@@ -13,6 +13,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 
 <style>
 :root{
@@ -207,6 +208,88 @@ img{max-width:100%}
 .lightbox-close{position:absolute;right:28px;top:22px;background:none;color:#fff;font-size:1.8rem;cursor:pointer}
 .lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:70px;border:1px solid rgba(255,255,255,.13);background:rgba(3,7,12,.65);color:#fff;cursor:pointer;font-size:1.5rem}
 .lightbox-prev{left:22px}.lightbox-next{right:22px}
+
+
+/* =========================================================
+   V6.2 — MEDIA VIEWER / GALLERY STORY PANEL
+========================================================= */
+.media-play{
+  position:absolute;left:50%;top:50%;z-index:3;transform:translate(-50%,-50%);
+  width:58px;height:58px;border-radius:50%;display:grid;place-items:center;
+  border:1px solid rgba(255,255,255,.30);background:rgba(3,8,13,.58);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  color:#fff;font-size:1.05rem;box-shadow:0 16px 45px rgba(0,0,0,.35);
+  transition:.25s;pointer-events:none
+}
+.video-card:hover .media-play,.short-card:hover .media-play{
+  transform:translate(-50%,-50%) scale(1.08);background:rgba(125,203,255,.18);
+  border-color:rgba(125,203,255,.60)
+}
+.media-open-hint{
+  position:absolute;right:14px;top:14px;z-index:3;padding:7px 9px;
+  border:1px solid rgba(255,255,255,.13);background:rgba(3,8,13,.62);
+  color:#d7e3ec;font-size:.44rem;font-weight:850;letter-spacing:.11em
+}
+
+/* VIDEO MODAL */
+.video-modal{position:fixed;inset:0;z-index:460;display:none;align-items:center;justify-content:center;padding:26px;background:rgba(0,0,0,.94);backdrop-filter:blur(20px)}
+.video-modal.open{display:flex}
+.video-modal-shell{width:min(1180px,96vw);max-height:94vh;overflow:auto;border:1px solid rgba(255,255,255,.12);background:#04080d;box-shadow:0 45px 140px rgba(0,0,0,.72)}
+.video-modal-top{display:flex;justify-content:space-between;align-items:center;padding:17px 19px;border-bottom:1px solid rgba(255,255,255,.08)}
+.video-modal-kicker{color:var(--blue);font-size:.52rem;font-weight:900;letter-spacing:.15em}
+.video-modal-close{width:42px;height:42px;border:1px solid rgba(255,255,255,.10);background:transparent;color:#fff;font-size:1.4rem;cursor:pointer}
+.video-modal-frame{position:relative;aspect-ratio:16/9;background:#000}
+.video-modal-frame.short{aspect-ratio:9/16;max-height:72vh;width:min(405px,100%);margin:0 auto}
+.video-modal-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-modal-info{display:flex;justify-content:space-between;gap:24px;align-items:end;padding:22px 24px 25px}
+.video-modal-info h4{font-size:clamp(1.25rem,2.6vw,2rem);letter-spacing:-.04em;margin:7px 0 0}
+.video-modal-info .btn{flex:0 0 auto}
+
+/* GALLERY DETAIL VIEWER */
+.lightbox{padding:0;background:rgba(0,0,0,.96)}
+.lightbox-shell{
+  width:min(1540px,96vw);height:min(880px,92vh);display:grid;
+  grid-template-columns:minmax(0,1.55fr) minmax(330px,.45fr);
+  border:1px solid rgba(255,255,255,.12);background:#03070b;
+  box-shadow:0 45px 150px rgba(0,0,0,.78);overflow:hidden
+}
+.lightbox-visual{position:relative;min-width:0;background:#000;display:flex;align-items:center;justify-content:center}
+.lightbox-img{max-width:100%;max-height:100%;width:100%;height:100%;object-fit:contain;box-shadow:none}
+.lightbox-details{position:relative;padding:46px 38px 34px;border-left:1px solid rgba(255,255,255,.09);background:
+  radial-gradient(circle at 20% 0%,rgba(125,203,255,.06),transparent 34%),#050a10;overflow:auto}
+.lightbox-close{z-index:5;right:18px;top:16px;width:42px;height:42px;border:1px solid rgba(255,255,255,.12);display:grid;place-items:center}
+.lightbox-nav{z-index:5}
+.lightbox-details .archive-tag{color:var(--blue);font-size:.52rem;font-weight:900;letter-spacing:.17em}
+.lightbox-details h3{margin-top:14px;font-size:clamp(1.7rem,3vw,3rem);line-height:1;letter-spacing:-.05em}
+.lightbox-meta{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:27px}
+.lightbox-meta-box{padding:14px 0;border-top:1px solid rgba(255,255,255,.10)}
+.lightbox-meta-box span{display:block;color:#566678;font-size:.48rem;font-weight:850;letter-spacing:.13em}
+.lightbox-meta-box b{display:block;margin-top:7px;color:#dbe5ec;font-size:.72rem;line-height:1.4}
+.lightbox-description{margin-top:26px;color:#8594a4;font-size:.78rem;line-height:1.78;white-space:pre-line}
+.lightbox-video-link{margin-top:28px;width:100%}
+.lightbox-counter{margin-top:18px;color:#4f6072;font-size:.49rem;letter-spacing:.14em}
+
+.gallery-item::before{
+  content:"OTWÓRZ KADR";position:absolute;left:14px;bottom:14px;z-index:2;
+  opacity:0;transform:translateY(6px);padding:7px 9px;border:1px solid rgba(255,255,255,.14);
+  background:rgba(3,8,13,.64);color:#e3ebf1;font-size:.44rem;font-weight:850;letter-spacing:.11em;transition:.24s
+}
+.gallery-item:hover::before{opacity:1;transform:none}
+
+@media(max-width:900px){
+  .lightbox{align-items:flex-start;overflow:auto;padding:12px}
+  .lightbox-shell{height:auto;min-height:calc(100svh - 24px);grid-template-columns:1fr}
+  .lightbox-visual{height:min(62svh,650px)}
+  .lightbox-details{border-left:0;border-top:1px solid rgba(255,255,255,.09);padding:30px 24px 32px}
+  .video-modal{padding:12px}.video-modal-info{display:block}.video-modal-info .btn{width:100%;margin-top:18px}
+}
+@media(max-width:600px){
+  .lightbox-visual{height:48svh}
+  .lightbox-details h3{font-size:2rem}
+  .lightbox-meta{grid-template-columns:1fr}
+  .lightbox-nav{top:24svh}
+  .video-modal-frame.short{max-height:68vh}
+}
 
 /* MODALS + FORMS */
 .modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.82);backdrop-filter:blur(18px)}
@@ -659,7 +742,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
         <div>
           <div class="eyebrow">GALERIA / HIGH QUALITY</div>
           <h3>Kadry z filmów</h3>
-          <p class="gallery-sub">Wybrane klatki, screeny i materiały wizualne z kolejnych rozdziałów projektu.</p>
+          <p class="gallery-sub">Kliknij dowolny kadr, aby otworzyć zdjęcie wraz z opisem, datą, miejscem i powiązanym filmem.</p>
         </div>
         <div class="gallery-controls">
           <button class="icon-btn" data-scroll-target="gallery-track" data-dir="-1" aria-label="Poprzednie zdjęcia">←</button>
@@ -681,6 +764,16 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   <p class="modal-copy">Wystarczy imię lub pseudonim. Po zapisaniu otrzymasz własny numer uczestnika i kartę pokładową.</p>
   <form id="standard-form">
     <div class="field"><label>IMIĘ / PSEUDONIM</label><input class="input" id="standard-name" maxlength="24" required autocomplete="off" placeholder="np. Olkuson"></div>
+
+    <!-- Honeypot: normalny użytkownik tego pola nie widzi i nie wypełnia -->
+    <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
+      <label for="standard-website">Website</label>
+      <input id="standard-website" name="website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+
+    <!-- Cloudflare Turnstile Invisible / explicit execution -->
+    <div id="standard-turnstile" style="min-height:1px"></div>
+
     <label class="check"><input type="checkbox" id="standard-accept" required><span>Rozumiem, że udział oznacza cyfrowy wpis w manifeście, a nie fizyczny lot człowieka.</span></label>
     <button class="btn btn-primary" id="standard-submit" style="width:100%;margin-top:20px">DOŁĄCZ DO MISJI</button>
     <div class="message" id="standard-message"></div>
@@ -708,12 +801,60 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   <div class="ticket-result" id="early-ticket-result"><img id="early-ticket-image" alt="Bilet Wczesnej Załogi"><div class="ticket-actions"><a id="early-download" class="btn btn-primary" download style="background:var(--gold2);border-color:var(--gold2)">POBIERZ BILET WCZESNEJ ZAŁOGI</a></div></div>
 </div></div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox">
-  <button class="lightbox-close" onclick="closeLightbox()">×</button>
-  <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)">‹</button>
-  <img class="lightbox-img" id="lightbox-img" alt="">
-  <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)">›</button>
+<!-- GALLERY STORY VIEWER -->
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <div class="lightbox-shell">
+    <div class="lightbox-visual">
+      <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)" aria-label="Poprzednie zdjęcie">‹</button>
+      <img class="lightbox-img" id="lightbox-img" alt="">
+      <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)" aria-label="Następne zdjęcie">›</button>
+    </div>
+
+    <aside class="lightbox-details">
+      <button class="lightbox-close" onclick="closeLightbox()" aria-label="Zamknij">×</button>
+      <div class="archive-tag">ARCHIWUM / KADR Z FILMU</div>
+      <h3 id="lightbox-title">Kadr z filmu</h3>
+
+      <div class="lightbox-meta">
+        <div class="lightbox-meta-box" id="lightbox-date-box">
+          <span>DATA</span>
+          <b id="lightbox-date">—</b>
+        </div>
+        <div class="lightbox-meta-box" id="lightbox-place-box">
+          <span>MIEJSCE</span>
+          <b id="lightbox-place">—</b>
+        </div>
+      </div>
+
+      <p class="lightbox-description" id="lightbox-description"></p>
+
+      <a class="btn lightbox-video-link" id="lightbox-video-link" href="#" target="_blank" rel="noopener" style="display:none">
+        ZOBACZ POWIĄZANY FILM ↗
+      </a>
+
+      <div class="lightbox-counter" id="lightbox-counter"></div>
+    </aside>
+  </div>
+</div>
+
+<!-- VIDEO VIEWER -->
+<div class="video-modal" id="video-modal" aria-hidden="true">
+  <div class="video-modal-shell">
+    <div class="video-modal-top">
+      <div class="video-modal-kicker" id="video-modal-type">MEDIA / YOUTUBE</div>
+      <button class="video-modal-close" onclick="closeVideoModal()" aria-label="Zamknij">×</button>
+    </div>
+    <div class="video-modal-frame" id="video-modal-frame">
+      <iframe id="video-modal-iframe" src="" title="Materiał YouTube" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+    </div>
+    <div class="video-modal-info">
+      <div>
+        <div class="media-label">MISJA STRATOSFERA / MEDIA</div>
+        <h4 id="video-modal-title">Materiał</h4>
+      </div>
+      <a class="btn" id="video-modal-youtube" href="#" target="_blank" rel="noopener">OTWÓRZ NA YOUTUBE ↗</a>
+    </div>
+  </div>
 </div>
 
 <script>
@@ -763,10 +904,129 @@ const MEDIA_CONFIG = {
     }
   ],
 
-  gallery: Array.from({length:14}, (_,i) => ({
-    src: `media/gallery/${String(i+1).padStart(2,"0")}.png`,
-    label: `KADR ${String(i+1).padStart(2,"0")}`
-  }))
+  /*
+    GALERIA — tutaj wpisujesz opis każdego zdjęcia.
+    file = nazwa pliku bez rozszerzenia, np. "01"
+    title = tytuł po prawej po kliknięciu zdjęcia
+    date = np. "21.09.2026"
+    place = np. "Krotoszyn, Polska"
+    description = dowolny dłuższy opis
+    videoUrl = opcjonalny link do filmu / Shortsa
+  */
+  gallery: [
+    {
+      file: "01",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "02",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "03",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "04",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "05",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "06",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "07",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "08",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "09",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "10",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "11",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "12",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "13",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    },
+    {
+      file: "14",
+      title: "",
+      date: "",
+      place: "",
+      description: "",
+      videoUrl: ""
+    }
+  ]
 };
 
 /* =========================================================
@@ -776,6 +1036,37 @@ const SUPABASE_URL="https://elpedksjfpmsepjiknwy.supabase.co";
 const SUPABASE_PUBLISHABLE_KEY="sb_publishable_WcgvYPzgSVBp-FtHcY3Tew_7mkXrLS2";
 const onlineMode=Boolean(window.supabase && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY);
 const db=onlineMode?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
+
+/* CLOUDFLARE TURNSTILE */
+const TURNSTILE_SITE_KEY="0x4AAAAAAFAZKFbyG2TlSGBt";
+const REGISTER_FUNCTION_URL="https://elpedksjfpmsepjiknwy.supabase.co/functions/v1/register-participant";
+let standardTurnstileWidget=null;
+let pendingStandardRegistration=null;
+
+function initStandardTurnstile(){
+  if(!window.turnstile || standardTurnstileWidget!==null)return;
+  standardTurnstileWidget=window.turnstile.render("#standard-turnstile",{
+    sitekey:TURNSTILE_SITE_KEY,
+    execution:"execute",
+    appearance:"interaction-only",
+    action:"standard_register",
+    callback:token=>void finishStandardRegistration(token),
+    "error-callback":code=>{
+      console.error("Turnstile error:",code);
+      const msg=$("#standard-message"),btn=$("#standard-submit");
+      msg.textContent="Nie udało się przeprowadzić kontroli antyspam. Spróbuj ponownie.";
+      btn.disabled=false;
+      btn.textContent="DOŁĄCZ DO MISJI";
+      pendingStandardRegistration=null;
+    },
+    "expired-callback":()=>{
+      if(standardTurnstileWidget!==null)window.turnstile.reset(standardTurnstileWidget);
+    }
+  });
+}
+
+window.addEventListener("load",initStandardTurnstile);
+
 
 const $=s=>document.querySelector(s);
 const pad=n=>String(n).padStart(6,"0");
@@ -795,26 +1086,53 @@ function applySocials(){
 }
 
 /* media library */
+function youtubeIdFromUrl(url){
+  try{
+    const u=new URL(url);
+    if(u.hostname.includes("youtu.be")) return u.pathname.replace(/^\/+/,"").split("/")[0];
+    if(u.pathname.startsWith("/shorts/")) return u.pathname.split("/shorts/")[1].split("/")[0];
+    return u.searchParams.get("v")||"";
+  }catch(_){return ""}
+}
+
 function createVideoCard(v, shortMode=false){
   const a=document.createElement("a");
   a.className=shortMode?"short-card":"video-card";
-  a.href=v.url;a.target="_blank";a.rel="noopener";
+  a.href=v.url;
+  a.setAttribute("role","button");
+  a.setAttribute("aria-label",`Odtwórz: ${v.title}`);
 
   a.innerHTML=`
     <img src="${v.thumbnail}" alt="${escapeHtml(v.title)}">
+    <div class="media-play">▶</div>
+    <div class="media-open-hint">ODTWÓRZ</div>
     <div class="video-card-info">
       <div class="video-card-type">${escapeHtml(v.type)}</div>
       <div class="video-card-title">${escapeHtml(v.title)}</div>
     </div>`;
 
   const img=a.querySelector("img");
+  img.dataset.fallback="0";
   img.onerror=()=>{
+    const id=youtubeIdFromUrl(v.url);
+    const stage=Number(img.dataset.fallback||0);
+    if(id && stage===0){
+      img.dataset.fallback="1";
+      img.src=`https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+      return;
+    }
     img.remove();
     const p=document.createElement("div");
     p.className="video-placeholder";
     p.textContent=shortMode?"SHORT / MEDIA":"FILM / MEDIA";
     a.prepend(p);
   };
+
+  a.addEventListener("click",e=>{
+    e.preventDefault();
+    openVideoModal(v,shortMode);
+  });
+
   return a;
 }
 
@@ -851,31 +1169,177 @@ document.querySelectorAll(".media-tab").forEach(btn=>{
   btn.addEventListener("click",()=>setMediaTab(btn.dataset.mediaTab));
 });
 
+/* video viewer */
+function openVideoModal(v,shortMode=false){
+  const id=youtubeIdFromUrl(v.url);
+  if(!id){
+    window.open(v.url,"_blank","noopener");
+    return;
+  }
+
+  $("#video-modal-type").textContent=escapeHtml(v.type||"MEDIA / YOUTUBE");
+  $("#video-modal-title").textContent=v.title||"Materiał";
+  $("#video-modal-youtube").href=v.url;
+  $("#video-modal-frame").classList.toggle("short",Boolean(shortMode));
+  $("#video-modal-iframe").src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+  $("#video-modal").classList.add("open");
+  $("#video-modal").setAttribute("aria-hidden","false");
+  document.body.classList.add("lock");
+}
+
+function closeVideoModal(){
+  $("#video-modal").classList.remove("open");
+  $("#video-modal").setAttribute("aria-hidden","true");
+  $("#video-modal-iframe").src="";
+  document.body.classList.remove("lock");
+}
+window.closeVideoModal=closeVideoModal;
+
+$("#video-modal").addEventListener("click",e=>{
+  if(e.target.id==="video-modal")closeVideoModal();
+});
+
 /* gallery */
 let galleryValid=[];
 let lightboxIndex=0;
+
+function galleryCandidates(file){
+  const base=`media/gallery/${file}`;
+  return [
+    `${base}.png`,
+    `${base}.PNG`,
+    `${base}.jpg`,
+    `${base}.JPG`,
+    `${base}.jpeg`,
+    `${base}.webp`
+  ];
+}
+
+function loadGalleryImage(img,candidates,onSuccess,onFail,index=0){
+  if(index>=candidates.length){onFail();return}
+  img.onload=()=>onSuccess(candidates[index]);
+  img.onerror=()=>loadGalleryImage(img,candidates,onSuccess,onFail,index+1);
+  img.src=candidates[index];
+}
+
+function normalizeGalleryItem(g,index,resolvedSrc){
+  return {
+    ...g,
+    resolvedSrc,
+    fallbackTitle:`Kadr z filmów`,
+    index
+  };
+}
+
 function renderGallery(){
-  const track=$("#gallery-track");track.innerHTML="";galleryValid=[];
+  const track=$("#gallery-track");
+  track.innerHTML="";
+  galleryValid=[];
+
   MEDIA_CONFIG.gallery.forEach((g,i)=>{
-    const item=document.createElement("div");item.className="gallery-item";
-    const img=document.createElement("img");img.src=g.src;img.alt=g.label;
+    const item=document.createElement("div");
+    item.className="gallery-item";
+
+    const img=document.createElement("img");
+    img.alt=g.title||"Kadr z filmów";
     item.append(img);
-    img.onload=()=>{galleryValid.push({src:g.src,label:g.label});item.onclick=()=>openLightboxBySrc(g.src)};
-    img.onerror=()=>{img.remove();const miss=document.createElement("div");miss.className="gallery-missing";miss.innerHTML=`<b>${g.label}</b><span>WRZUĆ PLIK: ${g.src}</span>`;item.prepend(miss);item.style.cursor="default"};
+
+    loadGalleryImage(
+      img,
+      galleryCandidates(g.file),
+      resolved=>{
+        const record=normalizeGalleryItem(g,i,resolved);
+        galleryValid.push(record);
+        galleryValid.sort((a,b)=>a.index-b.index);
+        item.onclick=()=>openLightboxByIndex(i);
+      },
+      ()=>{
+        img.remove();
+        const miss=document.createElement("div");
+        miss.className="gallery-missing";
+        miss.innerHTML=`<b>BRAK ZDJĘCIA</b><span>SPRAWDŹ: media/gallery/${g.file}.png</span>`;
+        item.prepend(miss);
+        item.style.cursor="default";
+      }
+    );
+
     track.appendChild(item);
-  })
+  });
 }
-function openLightboxBySrc(src){
-  const idx=galleryValid.findIndex(x=>x.src===src);lightboxIndex=Math.max(0,idx);
-  $("#lightbox-img").src=galleryValid[lightboxIndex]?.src||src;$("#lightbox").classList.add("open");document.body.classList.add("lock")
+
+function getGalleryByOriginalIndex(originalIndex){
+  return galleryValid.find(x=>x.index===originalIndex)||null;
 }
-function closeLightbox(){$("#lightbox").classList.remove("open");document.body.classList.remove("lock")}
+
+function updateLightbox(record){
+  if(!record)return;
+
+  $("#lightbox-img").src=record.resolvedSrc;
+  $("#lightbox-img").alt=record.title||record.fallbackTitle;
+  $("#lightbox-title").textContent=record.title||record.fallbackTitle;
+
+  const date=clean(record.date||"");
+  const place=clean(record.place||"");
+  const desc=clean(record.description||"");
+
+  $("#lightbox-date").textContent=date||"—";
+  $("#lightbox-place").textContent=place||"—";
+  $("#lightbox-date-box").style.display=date?"block":"none";
+  $("#lightbox-place-box").style.display=place?"block":"none";
+  $("#lightbox-description").textContent=desc||"Ten kadr należy do wizualnego archiwum Misji Stratosfera.";
+
+  const link=$("#lightbox-video-link");
+  if(record.videoUrl){
+    link.href=record.videoUrl;
+    link.style.display="inline-flex";
+  }else{
+    link.removeAttribute("href");
+    link.style.display="none";
+  }
+
+  const pos=galleryValid.findIndex(x=>x.index===record.index);
+  $("#lightbox-counter").textContent=`KADR ${String(pos+1).padStart(2,"0")} / ${String(galleryValid.length).padStart(2,"0")}`;
+}
+
+function openLightboxByIndex(originalIndex){
+  const record=getGalleryByOriginalIndex(originalIndex);
+  if(!record)return;
+
+  lightboxIndex=galleryValid.findIndex(x=>x.index===record.index);
+  updateLightbox(record);
+  $("#lightbox").classList.add("open");
+  $("#lightbox").setAttribute("aria-hidden","false");
+  document.body.classList.add("lock");
+}
+
+function closeLightbox(){
+  $("#lightbox").classList.remove("open");
+  $("#lightbox").setAttribute("aria-hidden","true");
+  document.body.classList.remove("lock");
+}
+
 function shiftLightbox(dir){
   if(!galleryValid.length)return;
   lightboxIndex=(lightboxIndex+dir+galleryValid.length)%galleryValid.length;
-  $("#lightbox-img").src=galleryValid[lightboxIndex].src;
+  updateLightbox(galleryValid[lightboxIndex]);
 }
-window.closeLightbox=closeLightbox;window.shiftLightbox=shiftLightbox;
+window.closeLightbox=closeLightbox;
+window.shiftLightbox=shiftLightbox;
+
+$("#lightbox").addEventListener("click",e=>{
+  if(e.target.id==="lightbox")closeLightbox();
+});
+
+document.addEventListener("keydown",e=>{
+  if($("#lightbox").classList.contains("open")){
+    if(e.key==="Escape")closeLightbox();
+    if(e.key==="ArrowLeft")shiftLightbox(-1);
+    if(e.key==="ArrowRight")shiftLightbox(1);
+  }
+  if($("#video-modal").classList.contains("open") && e.key==="Escape"){
+    closeVideoModal();
+  }
+});
 
 /* horizontal controls + drag */
 document.querySelectorAll("[data-scroll-target]").forEach(btn=>{
@@ -966,21 +1430,112 @@ async function outputTicket(canvas,imgSel,downloadSel,file){
 }
 
 /* forms */
-$("#standard-form").addEventListener("submit",async e=>{
-  e.preventDefault();const name=clean($("#standard-name").value).slice(0,24),msg=$("#standard-message"),btn=$("#standard-submit");
-  if(name.length<2){msg.textContent="Wpisz co najmniej dwa znaki.";return}
-  if(!$("#standard-accept").checked){msg.textContent="Potwierdź zasady manifestu.";return}
-  btn.disabled=true;btn.textContent="DODAWANIE...";
+async function finishStandardRegistration(turnstileToken){
+  const pending=pendingStandardRegistration;
+  if(!pending)return;
+
+  const {name,website}=pending;
+  const msg=$("#standard-message"),btn=$("#standard-submit");
+
   try{
-    let id,returned=name;
-    if(db){const {data,error}=await db.rpc("ms_register_standard",{p_display_name:name});if(error)throw error;const row=Array.isArray(data)?data[0]:data;id=Number(row.participant_no);returned=row.display_name}
-    else{id=Number(localStorage.getItem("ms_demo_standard")||0)+1;localStorage.setItem("ms_demo_standard",id)}
-    const t={id,name:returned,code:code(id)};await outputTicket(await createStandardTicket(t),"#standard-ticket-image","#standard-download",`${t.code}_MISJA_STRATOSFERA.png`);
+    const response=await fetch(REGISTER_FUNCTION_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        displayName:name,
+        turnstileToken,
+        website
+      })
+    });
+
+    const result=await response.json().catch(()=>({}));
+
+    if(!response.ok){
+      console.error("Registration function:",response.status,result);
+      if(result?.error==="turnstile_failed"){
+        msg.textContent="Kontrola antyspam nie została zaliczona. Spróbuj ponownie.";
+      }else if(result?.error==="invalid_name"){
+        msg.textContent="Sprawdź wpisaną nazwę.";
+      }else{
+        msg.textContent="Nie udało się zapisać. Spróbuj ponownie za chwilę.";
+      }
+      return;
+    }
+
+    const id=Number(result.participant_no);
+    const returned=String(result.display_name||name);
+
+    const t={id,name:returned,code:code(id)};
+    await outputTicket(
+      await createStandardTicket(t),
+      "#standard-ticket-image",
+      "#standard-download",
+      `${t.code}_MISJA_STRATOSFERA.png`
+    );
+
     $("#standard-download").dataset.participantNo=String(id);
     $("#standard-download").dataset.ticketKind="standard";
-    $("#standard-ticket-result").classList.add("show");msg.textContent=db?"Witaj na pokładzie.":"TRYB DEMO — zapis lokalny.";await refreshCount()
-  }catch(err){console.error(err);msg.textContent="Nie udało się zapisać."}
-  finally{btn.disabled=false;btn.textContent="DOŁĄCZ DO MISJI"}
+    $("#standard-ticket-result").classList.add("show");
+    msg.textContent="Witaj na pokładzie.";
+    await refreshCount();
+
+  }catch(err){
+    console.error(err);
+    msg.textContent="Nie udało się połączyć z systemem zapisów.";
+  }finally{
+    pendingStandardRegistration=null;
+    btn.disabled=false;
+    btn.textContent="DOŁĄCZ DO MISJI";
+
+    if(window.turnstile && standardTurnstileWidget!==null){
+      window.turnstile.reset(standardTurnstileWidget);
+    }
+  }
+}
+
+$("#standard-form").addEventListener("submit",async e=>{
+  e.preventDefault();
+
+  const name=clean($("#standard-name").value).slice(0,24);
+  const website=$("#standard-website").value||"";
+  const msg=$("#standard-message");
+  const btn=$("#standard-submit");
+
+  if(name.length<2){
+    msg.textContent="Wpisz co najmniej dwa znaki.";
+    return;
+  }
+
+  if(!$("#standard-accept").checked){
+    msg.textContent="Potwierdź zasady manifestu.";
+    return;
+  }
+
+  if(!window.turnstile){
+    msg.textContent="Ochrona formularza jeszcze się ładuje. Spróbuj za sekundę.";
+    return;
+  }
+
+  initStandardTurnstile();
+
+  if(standardTurnstileWidget===null){
+    msg.textContent="Nie udało się uruchomić ochrony formularza. Odśwież stronę.";
+    return;
+  }
+
+  pendingStandardRegistration={name,website};
+  btn.disabled=true;
+  btn.textContent="SPRAWDZANIE...";
+
+  try{
+    window.turnstile.execute(standardTurnstileWidget);
+  }catch(err){
+    console.error(err);
+    pendingStandardRegistration=null;
+    btn.disabled=false;
+    btn.textContent="DOŁĄCZ DO MISJI";
+    msg.textContent="Nie udało się uruchomić kontroli antyspam.";
+  }
 });
 
 let earlyMatch=null;
