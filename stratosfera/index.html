@@ -1204,15 +1204,16 @@ let galleryValid=[];
 let lightboxIndex=0;
 
 function galleryCandidates(file){
-  const base=`media/gallery/${file}`;
-  return [
-    `${base}.png`,
-    `${base}.PNG`,
-    `${base}.jpg`,
-    `${base}.JPG`,
-    `${base}.jpeg`,
-    `${base}.webp`
+  /* Najpierw sprawdzamy układ, który faktycznie masz na GitHubie:
+     /stratosfera/gallery/01.png
+     a dopiero potem starszy wariant /stratosfera/media/gallery/01.png */
+  const bases=[
+    `gallery/${file}`,
+    `media/gallery/${file}`
   ];
+
+  const extensions=["png","PNG","jpg","JPG","jpeg","webp"];
+  return bases.flatMap(base=>extensions.map(ext=>`${base}.${ext}`));
 }
 
 function loadGalleryImage(img,candidates,onSuccess,onFail,index=0){
@@ -1257,7 +1258,7 @@ function renderGallery(){
         img.remove();
         const miss=document.createElement("div");
         miss.className="gallery-missing";
-        miss.innerHTML=`<b>BRAK ZDJĘCIA</b><span>SPRAWDŹ: media/gallery/${g.file}.png</span>`;
+        miss.innerHTML=`<b>BRAK ZDJĘCIA</b><span>SPRAWDŹ: gallery/${g.file}.png</span>`;
         item.prepend(miss);
         item.style.cursor="default";
       }
