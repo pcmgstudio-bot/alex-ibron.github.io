@@ -351,34 +351,239 @@
     }
 
 
-    /* ===== MISJA STRATOSFERA — CINEMATIC PROJECT PORTAL ===== */
-    .mission-launch{position:relative;display:block;width:min(1120px,100%);min-height:340px;margin-top:54px;border:1px solid rgba(255,255,255,.14);border-radius:28px;overflow:hidden;isolation:isolate;color:#fff;box-shadow:0 32px 90px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.06);transition:.45s}
-    .mission-launch::before{content:"";position:absolute;inset:0;z-index:-3;background:linear-gradient(90deg,rgba(3,6,10,.95) 0%,rgba(3,6,10,.72) 42%,rgba(3,6,10,.20) 78%,rgba(3,6,10,.36) 100%),linear-gradient(0deg,rgba(3,6,10,.88) 0%,transparent 52%),url("stratosfera/ticket-bg.png") center 55%/cover no-repeat;transform:scale(1.03);transition:.7s}
-    .mission-launch::after{content:"";position:absolute;top:-65%;left:-22%;z-index:-1;width:24%;height:230%;transform:rotate(18deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.09),transparent);transition:left 1s ease;pointer-events:none}
-    .mission-launch:hover{transform:translateY(-8px);border-color:rgba(125,203,255,.46);box-shadow:0 42px 120px rgba(0,0,0,.58),0 0 70px rgba(83,167,230,.10),inset 0 1px 0 rgba(255,255,255,.08)}
-    .mission-launch:hover::before{transform:scale(1.075)} .mission-launch:hover::after{left:118%}
-    .mission-launch-inner{min-height:340px;padding:42px 46px;display:flex;flex-direction:column;justify-content:flex-end;position:relative}
-    .mission-status{position:absolute;top:28px;right:30px;display:flex;align-items:center;gap:9px;color:rgba(255,255,255,.72);font-size:.68rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
-    .mission-status-dot{width:8px;height:8px;border-radius:50%;background:#76e0aa;box-shadow:0 0 15px rgba(118,224,170,.8);animation:missionPulse 1.7s ease-in-out infinite}
-    @keyframes missionPulse{50%{opacity:.35}}
-    .mission-kicker{color:#7dcbff;font-size:.68rem;font-weight:800;letter-spacing:.18em;text-transform:uppercase;margin-bottom:12px}
-    .mission-title{font-size:clamp(2.8rem,6vw,6.2rem);line-height:.86;letter-spacing:-.065em;margin:0;text-transform:uppercase;text-shadow:0 16px 50px rgba(0,0,0,.35)}
-    .mission-copy{max-width:690px;margin:18px 0 0;color:rgba(235,242,248,.76);font-size:.95rem;line-height:1.7}
-    .mission-enter{margin-top:25px;display:inline-flex;align-items:center;gap:15px;width:fit-content;font-size:.72rem;font-weight:800;letter-spacing:.11em;text-transform:uppercase}
-    .mission-enter-arrow{width:42px;height:42px;display:grid;place-items:center;border:1px solid rgba(125,203,255,.36);color:#7dcbff;border-radius:50%;transition:.3s}
-    .mission-launch:hover .mission-enter-arrow{transform:translateX(6px);background:#7dcbff;color:#07131d;box-shadow:0 0 26px rgba(125,203,255,.25)}
+    /* ===== MISJA STRATOSFERA — WIDE CINEMATIC PORTAL ===== */
+    .mission-stage {
+      width: min(1500px, 90vw);
+      margin: 46px auto 0;
+    }
+
+    .mission-launch {
+      position: relative;
+      display: grid;
+      grid-template-columns: minmax(0, 1.2fr) minmax(280px, .8fr);
+      min-height: 390px;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.14);
+      border-radius: 30px;
+      background: #03070c;
+      color: #fff;
+      isolation: isolate;
+      box-shadow:
+        0 45px 120px rgba(0,0,0,.48),
+        inset 0 1px 0 rgba(255,255,255,.05);
+      transition:
+        transform .45s cubic-bezier(.2,.75,.2,1),
+        border-color .45s ease,
+        box-shadow .45s ease;
+    }
+
+    .mission-launch::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -3;
+      background:
+        linear-gradient(90deg,
+          rgba(2,5,9,.98) 0%,
+          rgba(2,5,9,.86) 29%,
+          rgba(2,5,9,.42) 59%,
+          rgba(2,5,9,.10) 100%),
+        linear-gradient(0deg, rgba(2,5,9,.75), transparent 48%),
+        url("stratosfera/ticket-bg.png") 64% 51% / cover no-repeat;
+      transform: scale(1.035);
+      transition: transform .8s cubic-bezier(.2,.75,.2,1);
+    }
+
+    .mission-launch::after {
+      content: "";
+      position: absolute;
+      top: -70%;
+      left: -20%;
+      z-index: -1;
+      width: 22%;
+      height: 240%;
+      transform: rotate(18deg);
+      background: linear-gradient(90deg,transparent,rgba(255,255,255,.085),transparent);
+      transition: left 1.05s ease;
+      pointer-events: none;
+    }
+
+    .mission-launch:hover {
+      transform: translateY(-8px);
+      border-color: rgba(125,203,255,.48);
+      box-shadow:
+        0 58px 150px rgba(0,0,0,.58),
+        0 0 90px rgba(61,154,225,.11),
+        inset 0 1px 0 rgba(255,255,255,.07);
+    }
+
+    .mission-launch:hover::before { transform: scale(1.075); }
+    .mission-launch:hover::after { left: 120%; }
+
+    .mission-main {
+      min-height: 390px;
+      padding: 44px 52px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      position: relative;
+    }
+
+    .mission-kicker {
+      color: #83ceff;
+      font-size: .66rem;
+      font-weight: 800;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+      margin-bottom: 13px;
+    }
+
+    .mission-title {
+      font-size: clamp(3.8rem, 7.4vw, 8rem);
+      line-height: .80;
+      letter-spacing: -.075em;
+      margin: 0;
+      text-transform: uppercase;
+      text-shadow: 0 15px 55px rgba(0,0,0,.35);
+    }
+
+    .mission-copy {
+      max-width: 680px;
+      margin: 22px 0 0;
+      color: rgba(232,240,247,.76);
+      font-size: .96rem;
+      line-height: 1.75;
+    }
+
+    .mission-enter {
+      margin-top: 27px;
+      display: inline-flex;
+      align-items: center;
+      gap: 16px;
+      width: fit-content;
+      font-size: .70rem;
+      font-weight: 800;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+
+    .mission-enter-arrow {
+      width: 44px;
+      height: 44px;
+      display: grid;
+      place-items: center;
+      border: 1px solid rgba(125,203,255,.38);
+      border-radius: 50%;
+      color: #83ceff;
+      transition: .3s ease;
+    }
+
+    .mission-launch:hover .mission-enter-arrow {
+      transform: translateX(7px);
+      background: #83ceff;
+      color: #06111a;
+      box-shadow: 0 0 28px rgba(125,203,255,.28);
+    }
+
+    .mission-side {
+      min-height: 390px;
+      padding: 36px 36px 34px 26px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: space-between;
+      text-align: right;
+      position: relative;
+    }
+
+    .mission-status {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      padding: 10px 13px;
+      border: 1px solid rgba(255,255,255,.10);
+      background: rgba(3,9,15,.48);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      color: rgba(255,255,255,.78);
+      font-size: .58rem;
+      font-weight: 800;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    .mission-status-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #70e0a8;
+      box-shadow: 0 0 15px rgba(112,224,168,.82);
+      animation: missionPulse 1.7s ease-in-out infinite;
+    }
+
+    @keyframes missionPulse { 50% { opacity: .35; } }
+
+    .mission-specs {
+      display: grid;
+      gap: 10px;
+      width: min(300px, 100%);
+    }
+
+    .mission-spec {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      padding: 11px 0;
+      border-top: 1px solid rgba(255,255,255,.09);
+      color: rgba(255,255,255,.55);
+      font-size: .58rem;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+    }
+
+    .mission-spec strong {
+      color: #fff;
+      font-size: .66rem;
+      letter-spacing: .04em;
+      white-space: nowrap;
+    }
 
     /* ===== MISSION AUDIO ===== */
-    .sound-control{position:fixed;left:22px;bottom:22px;z-index:1200;min-width:154px;height:46px;padding:0 14px;display:flex;align-items:center;gap:11px;color:#d9e5ee;background:rgba(4,9,15,.80);border:1px solid rgba(255,255,255,.12);border-radius:999px;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);box-shadow:0 16px 55px rgba(0,0,0,.38);cursor:pointer;transition:.25s}
-    .sound-control:hover{border-color:rgba(125,203,255,.38);transform:translateY(-2px)}
-    .sound-control.playing{border-color:rgba(125,203,255,.34);background:rgba(6,16,25,.90)}
-    .sound-bars{width:20px;height:17px;display:flex;align-items:center;justify-content:center;gap:2px}
-    .sound-bars i{display:block;width:2px;height:5px;background:#7dcbff;opacity:.55}
-    .sound-control.playing .sound-bars i{animation:soundBar .85s ease-in-out infinite alternate}
-    .sound-control.playing .sound-bars i:nth-child(2){animation-delay:.12s}.sound-control.playing .sound-bars i:nth-child(3){animation-delay:.24s}.sound-control.playing .sound-bars i:nth-child(4){animation-delay:.36s}
-    @keyframes soundBar{to{height:16px;opacity:1}}
-    .sound-copy{display:flex;flex-direction:column;text-align:left;line-height:1}
-    .sound-copy b{font-size:.56rem;letter-spacing:.13em}.sound-copy small{margin-top:5px;color:#627386;font-size:.46rem;letter-spacing:.10em}
+    .sound-control {
+      position: fixed;
+      left: 22px;
+      bottom: 22px;
+      z-index: 1200;
+      min-width: 154px;
+      height: 46px;
+      padding: 0 14px;
+      display: flex;
+      align-items: center;
+      gap: 11px;
+      color: #d9e5ee;
+      background: rgba(4,9,15,.80);
+      border: 1px solid rgba(255,255,255,.12);
+      border-radius: 999px;
+      backdrop-filter: blur(18px);
+      -webkit-backdrop-filter: blur(18px);
+      box-shadow: 0 16px 55px rgba(0,0,0,.38);
+      cursor: pointer;
+      transition: .25s ease;
+    }
+
+    .sound-control:hover { border-color: rgba(125,203,255,.38); transform: translateY(-2px); }
+    .sound-control.playing { border-color: rgba(125,203,255,.34); background: rgba(6,16,25,.90); }
+    .sound-bars { width:20px;height:17px;display:flex;align-items:center;justify-content:center;gap:2px; }
+    .sound-bars i { display:block;width:2px;height:5px;background:#7dcbff;opacity:.55; }
+    .sound-control.playing .sound-bars i { animation:soundBar .85s ease-in-out infinite alternate; }
+    .sound-control.playing .sound-bars i:nth-child(2){animation-delay:.12s}
+    .sound-control.playing .sound-bars i:nth-child(3){animation-delay:.24s}
+    .sound-control.playing .sound-bars i:nth-child(4){animation-delay:.36s}
+    @keyframes soundBar { to { height:16px;opacity:1; } }
+    .sound-copy { display:flex;flex-direction:column;text-align:left;line-height:1; }
+    .sound-copy b { font-size:.56rem;letter-spacing:.13em; }
+    .sound-copy small { margin-top:5px;color:#627386;font-size:.46rem;letter-spacing:.10em; }
+
 
     /* ===== FOOTER ===== */
     footer {
@@ -418,13 +623,50 @@
       .hub-section {
         padding: 60px 0 80px;
       }
-      .mission-launch{min-height:430px;margin-top:36px;border-radius:22px}
-      .mission-launch::before{background:linear-gradient(180deg,rgba(3,6,10,.12) 0%,rgba(3,6,10,.40) 42%,rgba(3,6,10,.96) 78%),url("stratosfera/ticket-bg.png") 65% center/cover no-repeat}
-      .mission-launch-inner{min-height:430px;padding:28px 24px 30px}
-      .mission-status{top:18px;right:18px;font-size:.56rem}
-      .mission-kicker{font-size:.57rem}.mission-title{font-size:clamp(2.6rem,14vw,4.2rem)}.mission-copy{font-size:.82rem}.mission-enter{font-size:.62rem}
-      .sound-control{left:14px;bottom:14px;min-width:142px;height:43px;padding:0 12px}
-      .sound-copy b{font-size:.52rem}.sound-copy small{font-size:.42rem}
+
+      .mission-stage { width: 100%; margin-top: 34px; }
+
+      .mission-launch {
+        display: block;
+        min-height: 520px;
+        border-radius: 24px;
+      }
+
+      .mission-launch::before {
+        background:
+          linear-gradient(180deg, rgba(2,5,9,.10) 0%, rgba(2,5,9,.30) 36%, rgba(2,5,9,.96) 76%),
+          url("stratosfera/ticket-bg.png") 67% center / cover no-repeat;
+      }
+
+      .mission-main {
+        min-height: 520px;
+        padding: 30px 24px 30px;
+      }
+
+      .mission-title { font-size: clamp(3.1rem, 15.5vw, 5rem); }
+      .mission-copy { font-size: .82rem; }
+      .mission-enter { font-size: .62rem; }
+
+      .mission-side {
+        position: absolute;
+        inset: 18px 18px auto auto;
+        min-height: auto;
+        padding: 0;
+      }
+
+      .mission-specs { display: none; }
+      .mission-status { font-size: .51rem; padding: 8px 10px; }
+
+      .sound-control {
+        left: 14px;
+        bottom: 14px;
+        min-width: 142px;
+        height: 43px;
+        padding: 0 12px;
+      }
+
+      .sound-copy b { font-size:.52rem; }
+      .sound-copy small { font-size:.42rem; }
     }
   </style>
 </head>
@@ -479,14 +721,45 @@
           <span class="lang-pl">Poznaj IbronEXO</span>
           <span class="lang-en">Explore IbronEXO</span>
         </a>
+      </div>
 
-        <a href="stratosfera/" class="mission-launch" aria-label="Wejdź do programu Misja Stratosfera">
-          <div class="mission-launch-inner">
-            <div class="mission-status"><span class="mission-status-dot"></span><span>PROJECT 01 / ACTIVE</span></div>
-            <div class="mission-kicker"><span class="lang-pl">OLKUSON PRESENTS / PROGRAM STRATOSFERYCZNY</span><span class="lang-en">OLKUSON PRESENTS / STRATOSPHERE PROGRAM</span></div>
-            <h2 class="mission-title"><span class="lang-pl">MISJA<br>STRATOSFERA</span><span class="lang-en">STRATOSPHERE<br>MISSION</span></h2>
-            <p class="mission-copy"><span class="lang-pl">Wejdź do programu, dołącz do pokładu, odbierz własny bilet i śledź rozwój misji od projektu do prawdziwego startu.</span><span class="lang-en">Enter the program, join the crew, claim your boarding pass and follow the mission from development to launch.</span></p>
-            <div class="mission-enter"><span class="lang-pl">WEJDŹ DO PROGRAMU</span><span class="lang-en">ENTER THE PROGRAM</span><span class="mission-enter-arrow">→</span></div>
+      <div class="mission-stage">
+        <a href="./stratosfera/index.html" class="mission-launch" aria-label="Wejdź do programu Misja Stratosfera">
+          <div class="mission-main">
+            <div class="mission-kicker">
+              <span class="lang-pl">OLKUSON PRESENTS / PROGRAM STRATOSFERYCZNY</span>
+              <span class="lang-en">OLKUSON PRESENTS / STRATOSPHERE PROGRAM</span>
+            </div>
+
+            <h2 class="mission-title">
+              <span class="lang-pl">MISJA<br>STRATOSFERA</span>
+              <span class="lang-en">STRATOSPHERE<br>MISSION</span>
+            </h2>
+
+            <p class="mission-copy">
+              <span class="lang-pl">Dołącz do pokładu, odbierz własny bilet i śledź rozwój projektu od budowy systemów aż do startu.</span>
+              <span class="lang-en">Join the crew, claim your boarding pass and follow the project from system development to launch.</span>
+            </p>
+
+            <div class="mission-enter">
+              <span class="lang-pl">WEJDŹ DO PROGRAMU</span>
+              <span class="lang-en">ENTER THE PROGRAM</span>
+              <span class="mission-enter-arrow">→</span>
+            </div>
+          </div>
+
+          <div class="mission-side">
+            <div class="mission-status">
+              <span class="mission-status-dot"></span>
+              <span>PROJECT 01 / ACTIVE</span>
+            </div>
+
+            <div class="mission-specs">
+              <div class="mission-spec"><span>PROGRAM</span><strong>STRATOSFERA</strong></div>
+              <div class="mission-spec"><span>PUŁAP</span><strong>20 000 M</strong></div>
+              <div class="mission-spec"><span>SYSTEM</span><strong>ANTHONY</strong></div>
+              <div class="mission-spec"><span>STATUS</span><strong>W BUDOWIE</strong></div>
+            </div>
           </div>
         </a>
       </div>
@@ -587,24 +860,92 @@
     });
 
     /* 3. MISSION AUDIO — DEFAULT ON */
-    const missionAudio=document.getElementById('mission-audio');
-    const soundControl=document.getElementById('sound-control');
-    const soundLabel=document.getElementById('sound-label');
-    const AUDIO_PREF_KEY='ibron_audio_enabled', AUDIO_TIME_KEY='ibron_audio_time';
-    const audioWanted=()=>localStorage.getItem(AUDIO_PREF_KEY)!=='0';
-    missionAudio.volume=.30;
-    function setSoundUI(state){const on=state==='on';soundControl.classList.toggle('playing',on);soundControl.setAttribute('aria-pressed',on?'true':'false');soundLabel.textContent=state==='on'?'DŹWIĘK WŁ.':state==='blocked'?'KLIKNIJ — DŹWIĘK':'DŹWIĘK WYŁ.'}
-    function restoreAudioTime(){const saved=Number(sessionStorage.getItem(AUDIO_TIME_KEY)||0);if(Number.isFinite(saved)&&saved>0&&missionAudio.duration&&saved<missionAudio.duration)missionAudio.currentTime=saved}
-    function rememberAudioTime(){if(Number.isFinite(missionAudio.currentTime))sessionStorage.setItem(AUDIO_TIME_KEY,String(missionAudio.currentTime))}
-    async function startMissionAudio(){if(!audioWanted()){setSoundUI('off');return false}try{await missionAudio.play();setSoundUI('on');return true}catch(e){setSoundUI('blocked');return false}}
-    async function toggleMissionAudio(e){if(e)e.stopPropagation();if(!missionAudio.paused){missionAudio.pause();localStorage.setItem(AUDIO_PREF_KEY,'0');rememberAudioTime();setSoundUI('off');return}localStorage.setItem(AUDIO_PREF_KEY,'1');await startMissionAudio()}
-    missionAudio.addEventListener('loadedmetadata',()=>{restoreAudioTime();void startMissionAudio()});
-    missionAudio.addEventListener('timeupdate',()=>{if(Math.floor(missionAudio.currentTime)%2===0)rememberAudioTime()});
-    window.addEventListener('pagehide',rememberAudioTime);
-    soundControl.addEventListener('click',toggleMissionAudio);
-    const unlockAudio=async()=>{if(audioWanted()&&missionAudio.paused){const ok=await startMissionAudio();if(ok){document.removeEventListener('pointerdown',unlockAudio,true);document.removeEventListener('keydown',unlockAudio,true)}}};
-    document.addEventListener('pointerdown',unlockAudio,true);
-    document.addEventListener('keydown',unlockAudio,true);
+    const missionAudio = document.getElementById('mission-audio');
+    const soundControl = document.getElementById('sound-control');
+    const soundLabel = document.getElementById('sound-label');
+    const AUDIO_PREF_KEY = 'ibron_audio_enabled';
+    const AUDIO_TIME_KEY = 'ibron_audio_time';
+    const audioWanted = () => localStorage.getItem(AUDIO_PREF_KEY) !== '0';
+
+    missionAudio.volume = 0.30;
+
+    function setSoundUI(state) {
+      const isOn = state === 'on';
+      soundControl.classList.toggle('playing', isOn);
+      soundControl.setAttribute('aria-pressed', isOn ? 'true' : 'false');
+      if(state === 'on') soundLabel.textContent = 'DŹWIĘK WŁ.';
+      else if(state === 'blocked') soundLabel.textContent = 'KLIKNIJ — DŹWIĘK';
+      else soundLabel.textContent = 'DŹWIĘK WYŁ.';
+    }
+
+    function restoreAudioTime() {
+      const saved = Number(sessionStorage.getItem(AUDIO_TIME_KEY) || 0);
+      if(Number.isFinite(saved) && saved > 0 && missionAudio.duration && saved < missionAudio.duration) {
+        missionAudio.currentTime = saved;
+      }
+    }
+
+    function rememberAudioTime() {
+      if(Number.isFinite(missionAudio.currentTime)) {
+        sessionStorage.setItem(AUDIO_TIME_KEY, String(missionAudio.currentTime));
+      }
+    }
+
+    async function startMissionAudio() {
+      if(!audioWanted()) {
+        setSoundUI('off');
+        return false;
+      }
+
+      try {
+        await missionAudio.play();
+        setSoundUI('on');
+        return true;
+      } catch(err) {
+        setSoundUI('blocked');
+        return false;
+      }
+    }
+
+    async function toggleMissionAudio(event) {
+      if(event) event.stopPropagation();
+
+      if(!missionAudio.paused) {
+        missionAudio.pause();
+        localStorage.setItem(AUDIO_PREF_KEY, '0');
+        rememberAudioTime();
+        setSoundUI('off');
+        return;
+      }
+
+      localStorage.setItem(AUDIO_PREF_KEY, '1');
+      await startMissionAudio();
+    }
+
+    missionAudio.addEventListener('loadedmetadata', () => {
+      restoreAudioTime();
+      void startMissionAudio();
+    });
+
+    missionAudio.addEventListener('timeupdate', () => {
+      if(Math.floor(missionAudio.currentTime) % 2 === 0) rememberAudioTime();
+    });
+
+    window.addEventListener('pagehide', rememberAudioTime);
+    soundControl.addEventListener('click', toggleMissionAudio);
+
+    const unlockAudio = async () => {
+      if(audioWanted() && missionAudio.paused) {
+        const ok = await startMissionAudio();
+        if(ok) {
+          document.removeEventListener('pointerdown', unlockAudio, true);
+          document.removeEventListener('keydown', unlockAudio, true);
+        }
+      }
+    };
+
+    document.addEventListener('pointerdown', unlockAudio, true);
+    document.addEventListener('keydown', unlockAudio, true);
     void startMissionAudio();
 
   </script>
