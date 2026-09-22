@@ -1,0 +1,1204 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta name="theme-color" content="#020407">
+<title>MISJA STRATOSFERA | Olkuson × Ibron Industries</title>
+<meta name="description" content="Misja Stratosfera — projekt Olkusona i Ibron Industries. Program stratosferyczny, Anthony Mission Control, cyfrowy manifest, filmy i archiwum misji.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+
+<style>
+:root{
+  --bg:#020407;--bg2:#05090e;--text:#f7f9fb;--muted:#8b98a7;
+  --blue:#7dcbff;--blue2:#b4e3ff;--gold:#dfb354;--gold2:#f5d88f;
+  --line:rgba(255,255,255,.09);--panel:rgba(5,10,16,.72);--max:1320px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+body.lock{overflow:hidden}
+a{color:inherit;text-decoration:none}
+button,input,select,textarea{font:inherit}
+button{border:0}
+img{max-width:100%}
+.wrap{width:min(var(--max),92vw);margin:auto}
+#stars{position:fixed;inset:0;width:100%;height:100%;z-index:-40;pointer-events:none}
+.bg-aurora{position:fixed;width:1100px;height:650px;right:-420px;top:8%;z-index:-38;background:radial-gradient(ellipse,rgba(50,137,205,.14),transparent 68%);filter:blur(62px);pointer-events:none;animation:aurora 14s ease-in-out infinite alternate}
+.bg-horizon{position:fixed;left:50%;bottom:-600px;width:1450px;height:820px;transform:translateX(-50%);border-radius:50%;border-top:1px solid rgba(119,205,255,.34);box-shadow:0 -10px 120px rgba(65,157,226,.13);z-index:-37;pointer-events:none}
+@keyframes aurora{to{transform:translate(90px,40px) scale(1.18)}}
+
+/* COMMAND RAIL */
+.site-header{position:fixed;left:0;right:0;top:0;z-index:150;padding:16px 0;transition:.3s}
+.command-rail{
+  width:min(1380px,94vw);height:64px;margin:auto;padding:0 18px 0 20px;
+  display:grid;grid-template-columns:auto 1fr auto;align-items:center;gap:24px;
+  background:linear-gradient(180deg,rgba(8,14,21,.83),rgba(4,8,13,.72));
+  border:1px solid rgba(255,255,255,.105);box-shadow:0 20px 70px rgba(0,0,0,.35),inset 0 1px rgba(255,255,255,.035);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+}
+.site-header.scrolled .command-rail{background:rgba(4,8,13,.91);box-shadow:0 18px 65px rgba(0,0,0,.58)}
+.brand-lockup{display:flex;align-items:center;gap:13px;min-width:max-content}
+.brand-orb{width:9px;height:9px;border-radius:50%;background:var(--blue);box-shadow:0 0 8px var(--blue),0 0 24px rgba(125,203,255,.7)}
+.brand-copy{display:flex;align-items:baseline;gap:9px}
+.brand-main{font-size:.71rem;font-weight:900;letter-spacing:.13em}
+.brand-x{color:#566678;font-size:.61rem;font-weight:800}
+.brand-sub{color:#8d9aaa;font-size:.63rem;font-weight:700;letter-spacing:.11em}
+.main-nav{display:flex;justify-content:center;align-items:center;gap:6px}
+.nav-link{position:relative;padding:11px 12px;color:#8390a0;font-size:.66rem;font-weight:800;letter-spacing:.09em;text-transform:uppercase;transition:.22s}
+.nav-link:hover,.nav-link.active{color:#fff}
+.nav-link::after{content:"";position:absolute;left:12px;right:12px;bottom:2px;height:1px;transform:scaleX(0);background:linear-gradient(90deg,transparent,var(--blue),transparent);transition:.25s}
+.nav-link:hover::after,.nav-link.active::after{transform:scaleX(1)}
+.rail-status{display:flex;align-items:center;gap:11px;padding-left:16px;border-left:1px solid rgba(255,255,255,.08)}
+.status-led{width:7px;height:7px;border-radius:50%;background:#71e1aa;box-shadow:0 0 14px rgba(113,225,170,.75);animation:pulse 1.8s ease-in-out infinite}
+@keyframes pulse{50%{opacity:.35}}
+.status-copy span{display:block}
+.status-title{font-size:.60rem;color:#dfe6ec;font-weight:900;letter-spacing:.12em}
+.status-phase{margin-top:2px;color:#657487;font-size:.52rem;letter-spacing:.10em}
+.mobile-menu{display:none;background:none;color:#fff;font-size:1.3rem;cursor:pointer}
+
+/* HERO */
+.hero{position:relative;min-height:100vh;display:flex;align-items:center;overflow:hidden}
+.hero-bg{position:absolute;inset:0;z-index:-20;background:
+  linear-gradient(90deg,rgba(1,3,6,.99) 0%,rgba(1,3,6,.85) 34%,rgba(1,3,6,.28) 72%,rgba(1,3,6,.49) 100%),
+  linear-gradient(0deg,#020407 0%,transparent 35%),
+  url("ticket-bg.png") center/cover;
+  transform:scale(1.045);animation:heroZoom 22s ease-in-out infinite alternate}
+@keyframes heroZoom{to{transform:scale(1.095)}}
+.hero-scan{position:absolute;top:0;bottom:0;left:-10%;width:1px;background:linear-gradient(transparent,rgba(125,203,255,.85),transparent);box-shadow:0 0 44px rgba(125,203,255,.46);opacity:.2;animation:scan 12s linear infinite}
+@keyframes scan{to{left:110%}}
+.hero-content{padding-top:105px;max-width:1040px}
+.kicker{display:flex;align-items:center;gap:12px;color:var(--blue);font-size:.61rem;font-weight:800;letter-spacing:.2em;text-transform:uppercase}
+.kicker::before{content:"";width:34px;height:1px;background:var(--blue)}
+.hero-title{margin-top:23px;font-size:clamp(4.6rem,10vw,9.4rem);line-height:.78;letter-spacing:-.078em;font-weight:900;text-shadow:0 15px 60px rgba(0,0,0,.25)}
+.hero-title span{display:block}
+.hero-byline{margin-top:23px;display:flex;align-items:center;gap:10px;color:#9facba;font-size:.72rem;font-weight:700;letter-spacing:.05em}
+.hero-byline strong{color:#fff}
+.hero-sub{margin-top:17px;font-size:clamp(1.2rem,2.3vw,1.9rem);font-weight:750}
+.hero-copy{width:min(670px,100%);margin-top:16px;color:var(--muted);font-size:.94rem;line-height:1.85}
+.hero-bottom{display:flex;align-items:center;gap:34px;flex-wrap:wrap;margin-top:40px}
+.count{font-size:clamp(3rem,7vw,5.5rem);line-height:.84;font-weight:900;letter-spacing:-.065em;font-variant-numeric:tabular-nums}
+.count-label{margin-top:10px;color:#9ba8b7;font-size:.59rem;font-weight:800;letter-spacing:.17em}
+.mode{margin-top:5px;color:#5c6b7d;font-size:.56rem}
+.btn{min-height:52px;display:inline-flex;align-items:center;justify-content:center;padding:0 24px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.028);color:#fff;cursor:pointer;font-size:.69rem;font-weight:900;letter-spacing:.075em;text-transform:uppercase;transition:.25s}
+.btn:hover{transform:translateY(-2px);border-color:rgba(125,203,255,.45);background:rgba(255,255,255,.05)}
+.btn-primary{background:#f4f7f9;color:#061018;border-color:#f4f7f9}
+.hero-meta{position:absolute;right:4vw;bottom:46px;display:grid;grid-template-columns:auto auto;gap:9px 24px;color:#6f7f90;font-size:.53rem;letter-spacing:.12em;text-transform:uppercase}
+.hero-meta b{color:#c5d0da;font-weight:800}
+
+/* GENERAL */
+.section{padding:110px 0;position:relative}
+.section-head{width:min(830px,100%);margin:0 auto 55px;text-align:center}
+.eyebrow{color:var(--blue);font-size:.60rem;font-weight:850;letter-spacing:.22em;text-transform:uppercase}
+.section-head h2{margin-top:14px;font-size:clamp(2.35rem,5vw,4.7rem);line-height:.98;letter-spacing:-.055em}
+.section-head p{margin-top:19px;color:var(--muted);line-height:1.8}
+.reveal{opacity:0;transform:translateY(38px);transition:opacity .85s ease,transform .85s cubic-bezier(.2,.7,.2,1)}
+.reveal.visible{opacity:1;transform:none}
+
+/* JOIN CHOICE */
+.choice-section{padding:95px 0 110px;border-bottom:1px solid rgba(255,255,255,.055)}
+.choice-grid{width:min(1120px,100%);margin:auto;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:stretch}
+.choice-card{position:relative;display:flex;flex-direction:column;min-height:485px;padding:31px 29px 29px;overflow:hidden;cursor:pointer;border:1px solid rgba(255,255,255,.105);background:linear-gradient(180deg,rgba(255,255,255,.035),rgba(255,255,255,.012)),rgba(4,10,18,.7);transition:.3s}
+.choice-card::after{content:"";position:absolute;top:-60%;left:-80%;width:38%;height:220%;transform:rotate(20deg);background:linear-gradient(90deg,transparent,rgba(255,255,255,.065),transparent);transition:left .8s ease;pointer-events:none}
+.choice-card:hover{transform:translateY(-7px);border-color:rgba(125,203,255,.34);box-shadow:0 32px 85px rgba(0,0,0,.4),0 0 45px rgba(125,203,255,.07)}
+.choice-card:hover::after{left:135%}
+.choice-card.early{border-color:rgba(223,179,84,.25);background:radial-gradient(circle at 86% 4%,rgba(223,179,84,.13),transparent 30%),linear-gradient(180deg,rgba(223,179,84,.04),rgba(255,255,255,.01)),rgba(7,8,12,.8)}
+.choice-card.early:hover{border-color:rgba(223,179,84,.48);box-shadow:0 32px 85px rgba(0,0,0,.42),0 0 54px rgba(223,179,84,.1)}
+.choice-badge{display:inline-flex;align-self:flex-start;padding:8px 12px;border:1px solid rgba(125,203,255,.21);background:rgba(125,203,255,.05);color:#9dcbef;font-size:.60rem;font-weight:850;letter-spacing:.14em}
+.choice-badge.gold{color:var(--gold2);border-color:rgba(223,179,84,.3);background:rgba(223,179,84,.065)}
+.choice-line{width:74px;height:1px;margin-top:16px;background:linear-gradient(90deg,var(--blue),transparent)}
+.choice-line.gold{background:linear-gradient(90deg,var(--gold2),transparent)}
+.choice-card h3{margin-top:27px;font-size:clamp(1.55rem,3vw,2.15rem);line-height:1.08;letter-spacing:-.03em}
+.choice-card.early h3{color:var(--gold2)}
+.choice-lead{margin-top:16px;color:#9eabb9;line-height:1.72;font-size:.91rem}
+.choice-lead strong{color:#e7c67b}
+.choice-features{margin-top:22px;color:#cbd4dc;font-size:.82rem}
+.choice-features div{position:relative;padding:11px 0 11px 19px;border-top:1px solid rgba(255,255,255,.06)}
+.choice-features div::before{content:"";position:absolute;left:2px;top:17px;width:5px;height:5px;border-radius:50%;background:var(--blue);box-shadow:0 0 9px rgba(125,203,255,.6)}
+.choice-card.early .choice-features div::before{background:var(--gold2);box-shadow:0 0 9px rgba(223,179,84,.55)}
+.choice-button{width:100%;min-height:56px;margin-top:auto;padding:0 18px;display:flex;align-items:center;justify-content:center;border:1px solid rgba(255,255,255,.15);background:rgba(255,255,255,.035);color:#fff;cursor:pointer;font-size:.70rem;font-weight:900;letter-spacing:.08em;text-transform:uppercase}
+.choice-button.gold{color:#090c10;border-color:var(--gold2);background:linear-gradient(180deg,#f4d793,#dfb354)}
+.choice-trust{text-align:center;margin-top:24px;color:#5f6e80;font-size:.66rem;line-height:1.6}
+
+/* STORY / TIMELINE */
+.story{width:min(900px,100%);margin:auto;text-align:center}
+.story-main{font-size:clamp(1.95rem,4vw,3.55rem);font-weight:780;line-height:1.24;letter-spacing:-.043em}
+.story-main b{color:var(--blue)}
+.story-copy{width:min(690px,100%);margin:28px auto 0;color:var(--muted);line-height:1.85}
+.timeline{position:relative;display:flex;width:min(930px,100%);margin:auto}
+.timeline::before{content:"";position:absolute;left:10%;right:10%;top:6px;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.16),transparent)}
+.tstep{position:relative;width:20%;padding-top:33px;text-align:center}
+.tstep::before{content:"";position:absolute;left:50%;top:2px;transform:translateX(-50%);width:9px;height:9px;border-radius:50%;background:#111a24;border:1px solid #637386}
+.tstep.done::before{background:var(--blue);border-color:var(--blue);box-shadow:0 0 17px rgba(125,203,255,.6)}
+.tstep span{color:#59687a;font-size:.55rem;letter-spacing:.12em}
+.tstep strong{display:block;margin-top:6px;font-size:.70rem}
+
+/* ANTHONY */
+.anthony{width:min(980px,100%);margin:auto;padding:75px 4%;text-align:center;position:relative}
+.anthony::before,.anthony::after{content:"";position:absolute;left:50%;width:58%;height:1px;transform:translateX(-50%);background:linear-gradient(90deg,transparent,rgba(125,203,255,.5),transparent)}
+.anthony::before{top:0}.anthony::after{bottom:0}
+.anthony-quote{margin-top:21px;font-size:clamp(2rem,4vw,3.8rem);line-height:1.17;font-weight:850;letter-spacing:-.045em}
+.anthony-quote b{color:var(--blue)}
+.anthony-copy{width:min(660px,100%);margin:25px auto 0;color:var(--muted);line-height:1.8}
+.wave{height:31px;display:flex;justify-content:center;align-items:center;gap:4px;margin-top:28px}
+.wave i{width:2px;height:7px;background:var(--blue);opacity:.5;animation:wave 1.5s ease-in-out infinite}
+.wave i:nth-child(2){animation-delay:.12s}.wave i:nth-child(3){animation-delay:.24s}.wave i:nth-child(4){animation-delay:.36s}.wave i:nth-child(5){animation-delay:.48s}.wave i:nth-child(6){animation-delay:.60s}
+@keyframes wave{50%{height:28px;opacity:1}}
+
+/* MEDIA */
+.media-section{padding:120px 0 125px;border-top:1px solid rgba(255,255,255,.05);background:linear-gradient(180deg,rgba(7,16,26,.18),transparent 18%,transparent 82%,rgba(7,16,26,.13))}
+.media-lockup{display:flex;justify-content:space-between;align-items:flex-end;gap:30px;margin-bottom:40px}
+.media-lockup .section-head{text-align:left;margin:0;max-width:850px}
+.archive-code{color:#526174;font-size:.58rem;font-weight:800;letter-spacing:.17em;white-space:nowrap}
+.social-grid{display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);border-bottom:1px solid var(--line);margin-bottom:72px}
+.social-card{position:relative;padding:28px 24px;min-height:145px;border-right:1px solid var(--line);overflow:hidden;cursor:pointer;transition:.25s}
+.social-card:last-child{border-right:0}
+.social-card:hover{background:rgba(255,255,255,.025)}
+.social-card .social-index{color:#536375;font-size:.52rem;letter-spacing:.14em}
+.social-name{margin-top:18px;font-size:1.42rem;font-weight:850;letter-spacing:-.035em}
+.social-desc{margin-top:7px;color:#788798;font-size:.72rem;line-height:1.6}
+.social-arrow{position:absolute;right:22px;bottom:22px;color:#7fbfe9;font-size:1.1rem}
+.social-card:nth-child(2) .social-arrow{color:#d9dae0}.social-card:nth-child(3) .social-arrow{color:#d7b967}
+
+.featured-video{display:grid;grid-template-columns:1.4fr .6fr;min-height:520px;border:1px solid rgba(255,255,255,.09);background:#03070b;margin-bottom:70px}
+.video-frame{position:relative;min-height:520px;background:#000}
+.video-frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.video-info{padding:42px 36px;display:flex;flex-direction:column;justify-content:flex-end;border-left:1px solid var(--line);background:linear-gradient(180deg,rgba(125,203,255,.035),transparent 40%)}
+.media-label{color:var(--blue);font-size:.56rem;font-weight:850;letter-spacing:.16em}
+.video-info h3{margin-top:14px;font-size:clamp(1.55rem,3vw,2.5rem);line-height:1.05;letter-spacing:-.04em}
+.video-info p{margin-top:14px;color:var(--muted);font-size:.82rem;line-height:1.7}
+
+.reel-head,.gallery-head{display:flex;justify-content:space-between;align-items:end;gap:20px;margin:0 0 22px}
+.reel-head h3,.gallery-head h3{font-size:clamp(1.55rem,3vw,2.45rem);letter-spacing:-.04em}
+.reel-controls,.gallery-controls{display:flex;gap:8px}
+.icon-btn{width:44px;height:44px;border:1px solid rgba(255,255,255,.11);background:rgba(255,255,255,.025);color:#dce5eb;cursor:pointer;transition:.2s}
+.icon-btn:hover{border-color:rgba(125,203,255,.4);background:rgba(125,203,255,.05)}
+.media-reel,.gallery-track{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:12px;cursor:grab}
+.media-reel::-webkit-scrollbar,.gallery-track::-webkit-scrollbar{display:none}
+.media-reel.dragging,.gallery-track.dragging{cursor:grabbing;scroll-snap-type:none}
+.video-card{position:relative;flex:0 0 min(390px,80vw);aspect-ratio:16/9;scroll-snap-align:start;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:#080d13;cursor:pointer}
+.video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:.45s}
+.video-card:hover img{transform:scale(1.035)}
+.video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent 62%)}
+.video-card-info{position:absolute;left:18px;right:18px;bottom:16px;z-index:2}
+.video-card-type{color:var(--blue);font-size:.50rem;font-weight:850;letter-spacing:.14em}
+.video-card-title{margin-top:6px;font-size:.92rem;font-weight:800;line-height:1.25}
+.video-placeholder{display:flex;align-items:center;justify-content:center;height:100%;background:radial-gradient(circle at 70% 30%,rgba(125,203,255,.10),transparent 35%),#060b11;color:#637386;font-size:.61rem;letter-spacing:.15em}
+
+.gallery-wrap{margin-top:78px}
+.gallery-track{gap:12px}
+.gallery-item{position:relative;flex:0 0 min(520px,86vw);aspect-ratio:16/10;scroll-snap-align:start;border:1px solid rgba(255,255,255,.09);overflow:hidden;background:#050a10;cursor:pointer}
+.gallery-item img{width:100%;height:100%;display:block;object-fit:cover;transition:.45s}
+.gallery-item:hover img{transform:scale(1.025)}
+.gallery-item::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.08),transparent 35%);pointer-events:none}
+.gallery-missing{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;background:radial-gradient(circle at 50% 45%,rgba(125,203,255,.08),transparent 34%),#060b11;color:#526274}
+.gallery-missing b{font-size:.66rem;letter-spacing:.13em}.gallery-missing span{font-size:.54rem;color:#455567}
+
+/* LIGHTBOX */
+.lightbox{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:32px;background:rgba(0,0,0,.93);backdrop-filter:blur(18px)}
+.lightbox.open{display:flex}
+.lightbox-img{max-width:min(1500px,92vw);max-height:88vh;object-fit:contain;box-shadow:0 40px 120px rgba(0,0,0,.65)}
+.lightbox-close{position:absolute;right:28px;top:22px;background:none;color:#fff;font-size:1.8rem;cursor:pointer}
+.lightbox-nav{position:absolute;top:50%;transform:translateY(-50%);width:52px;height:70px;border:1px solid rgba(255,255,255,.13);background:rgba(3,7,12,.65);color:#fff;cursor:pointer;font-size:1.5rem}
+.lightbox-prev{left:22px}.lightbox-next{right:22px}
+
+/* MODALS + FORMS */
+.modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.82);backdrop-filter:blur(18px)}
+.modal.open{display:flex}
+.modal-box{position:relative;width:min(690px,100%);max-height:92vh;overflow:auto;padding:34px;background:#060a0f;border:1px solid rgba(255,255,255,.12);box-shadow:0 50px 130px rgba(0,0,0,.68)}
+.modal-box.early{border-color:rgba(223,179,84,.3);background:radial-gradient(700px 320px at 50% -10%,rgba(223,179,84,.1),transparent 65%),#060a0f}
+.close{position:absolute;right:16px;top:12px;background:none;color:#718093;cursor:pointer;font-size:1.6rem}
+.modal-title{margin-top:10px;font-size:clamp(1.7rem,4vw,2.6rem);letter-spacing:-.04em}
+.modal-copy{margin-top:10px;color:var(--muted);line-height:1.7}
+.field{margin-top:22px}
+.field label{display:block;margin-bottom:8px;color:#8291a2;font-size:.60rem;font-weight:850;letter-spacing:.13em}
+.input,.select{width:100%;height:56px;padding:0 16px;color:#fff;background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.13);outline:none}
+.input:focus,.select:focus{border-color:rgba(125,203,255,.5)}
+.select option{background:#060a0f}
+textarea.input{height:122px;padding-top:14px;resize:vertical}
+.check{display:flex;gap:10px;align-items:flex-start;margin-top:15px;color:#778697;font-size:.72rem;line-height:1.5}
+.check input{margin-top:3px}
+.message{min-height:20px;margin-top:12px;text-align:center;color:#95a5b7;font-size:.76rem}
+.ticket-result{display:none;margin-top:28px}.ticket-result.show{display:block;animation:ticketIn .65s ease}
+@keyframes ticketIn{from{opacity:0;transform:translateY(18px)}}
+.ticket-result img{display:block;width:100%;height:auto;border:1px solid rgba(223,179,84,.55);box-shadow:0 35px 90px rgba(0,0,0,.55)}
+.ticket-actions{margin-top:17px}.ticket-actions .btn{width:100%}
+
+/* FOOTER */
+footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#566677;font-size:.68rem}
+.footer-in{display:flex;justify-content:space-between;gap:18px;flex-wrap:wrap}
+
+/* RESPONSIVE */
+@media(max-width:980px){
+  .command-rail{grid-template-columns:1fr auto}.main-nav{display:none}.rail-status{display:none}.mobile-menu{display:block}
+  .choice-grid{grid-template-columns:1fr}.choice-card{min-height:auto}.choice-button{margin-top:30px}
+  .featured-video{grid-template-columns:1fr}.video-frame{min-height:52vw}.video-info{border-left:0;border-top:1px solid var(--line);min-height:260px}
+  .social-grid{grid-template-columns:1fr}.social-card{border-right:0;border-bottom:1px solid var(--line)}.social-card:last-child{border-bottom:0}
+}
+@media(max-width:720px){
+  .site-header{padding:10px 0}.command-rail{height:58px;padding:0 14px}.brand-sub,.brand-x{display:none}
+  .hero-title{font-size:19vw}.hero-bottom{display:block}.hero-bottom .btn{width:100%;margin-top:23px}.hero-meta{display:none}
+  .section{padding:82px 0}.choice-section{padding:80px 0 88px}
+  .timeline{display:block}.timeline::before{display:none}.tstep{width:100%;text-align:left;padding:14px 0 14px 28px;border-bottom:1px solid rgba(255,255,255,.07)}.tstep::before{left:5px;top:18px}
+  .media-lockup{display:block}.archive-code{margin-top:14px}.video-frame{min-height:56vw}
+  .lightbox-nav{width:42px;height:58px}.lightbox-prev{left:8px}.lightbox-next{right:8px}
+}
+
+/* =========================================================
+   V5 — NAV SYNC + MEDIA TABS + CINEMATIC MOBILE
+========================================================= */
+.rail-right{display:flex;align-items:center;gap:14px}
+.mobile-current{display:none;color:#dce6ee;font-size:.56rem;font-weight:900;letter-spacing:.14em}
+.mobile-menu{width:39px;height:39px;display:none;position:relative;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.025);cursor:pointer}
+.mobile-menu span{position:absolute;left:10px;right:10px;height:1px;background:#dce5ec;transition:.3s}
+.mobile-menu span:first-child{top:14px}.mobile-menu span:last-child{bottom:14px}
+
+.mobile-nav-overlay{position:fixed;inset:0;z-index:500;display:none;background:
+  radial-gradient(circle at 80% 10%,rgba(78,169,232,.13),transparent 30%),
+  linear-gradient(180deg,rgba(3,8,14,.985),rgba(1,4,8,.995));
+  backdrop-filter:blur(24px);padding:22px}
+.mobile-nav-overlay.open{display:block;animation:mobileNavIn .35s cubic-bezier(.2,.7,.2,1)}
+@keyframes mobileNavIn{from{opacity:0;transform:translateY(-12px)}}
+.mobile-nav-top{display:flex;align-items:center;justify-content:space-between;padding:4px 2px 18px;border-bottom:1px solid rgba(255,255,255,.08)}
+.mobile-nav-close{width:44px;height:44px;background:transparent;color:#fff;font-size:1.8rem;cursor:pointer}
+.mobile-nav-content{height:calc(100% - 70px);display:flex;flex-direction:column;justify-content:center}
+.mobile-nav-kicker{color:var(--blue);font-size:.55rem;font-weight:900;letter-spacing:.18em;margin-bottom:26px}
+.mobile-nav-links{display:flex;flex-direction:column}
+.mobile-nav-links a{display:grid;grid-template-columns:46px 1fr;align-items:center;padding:14px 0;border-top:1px solid rgba(255,255,255,.07);color:#68788a;transition:.2s}
+.mobile-nav-links a:last-child{border-bottom:1px solid rgba(255,255,255,.07)}
+.mobile-nav-links a span{font-size:.54rem;letter-spacing:.12em}
+.mobile-nav-links a b{font-size:clamp(2rem,10vw,3.6rem);line-height:.92;letter-spacing:-.055em}
+.mobile-nav-links a.active,.mobile-nav-links a:hover{color:#fff}
+.mobile-nav-links a.active b{color:var(--blue)}
+.mobile-nav-status{display:flex;align-items:center;gap:12px;margin-top:28px;color:#dce5ec}
+.mobile-nav-status div{display:flex;flex-direction:column;gap:3px}
+.mobile-nav-status b{font-size:.64rem;letter-spacing:.12em}.mobile-nav-status small{color:#667689;font-size:.52rem;letter-spacing:.09em}
+
+.media-console{margin-top:8px}
+.media-tabs{display:grid;grid-template-columns:1fr 1fr;width:min(720px,100%);margin:0 auto 42px;border:1px solid rgba(255,255,255,.10);background:rgba(3,8,13,.62);backdrop-filter:blur(14px)}
+.media-tab{position:relative;min-height:82px;padding:13px 20px;display:grid;grid-template-columns:auto 1fr;grid-template-rows:1fr 1fr;align-items:center;column-gap:12px;text-align:left;color:#68788a;background:transparent;border-right:1px solid rgba(255,255,255,.08);cursor:pointer;transition:.25s}
+.media-tab:last-child{border-right:0}
+.media-tab span{grid-row:1/3;font-size:.56rem;font-weight:900;letter-spacing:.12em}
+.media-tab b{align-self:end;font-size:.88rem;letter-spacing:.08em}
+.media-tab small{align-self:start;color:#536274;font-size:.49rem;letter-spacing:.12em}
+.media-tab::after{content:"";position:absolute;left:20px;right:20px;bottom:-1px;height:2px;background:var(--blue);transform:scaleX(0);transition:.25s}
+.media-tab:hover{color:#dce5ec;background:rgba(255,255,255,.02)}
+.media-tab.active{color:#fff;background:linear-gradient(180deg,rgba(125,203,255,.075),rgba(125,203,255,.018))}
+.media-tab.active::after{transform:scaleX(1)}
+.media-panel{display:none}.media-panel.active{display:block;animation:mediaPanelIn .38s ease}
+@keyframes mediaPanelIn{from{opacity:0;transform:translateY(12px)}}
+
+.shorts-intro{display:flex;justify-content:space-between;align-items:end;gap:32px;padding:42px 0 36px;border-top:1px solid rgba(255,255,255,.08)}
+.shorts-intro h3{margin-top:12px;font-size:clamp(2rem,4vw,3.7rem);line-height:.98;letter-spacing:-.05em}
+.shorts-intro p{max-width:470px;color:var(--muted);font-size:.81rem;line-height:1.75}
+.shorts-reel{display:flex;gap:16px;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;padding-bottom:14px;cursor:grab}
+.shorts-reel::-webkit-scrollbar{display:none}.shorts-reel.dragging{cursor:grabbing;scroll-snap-type:none}
+.short-card{position:relative;flex:0 0 245px;aspect-ratio:9/16;scroll-snap-align:start;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#070c12;cursor:pointer}
+.short-card img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}
+.short-card:hover img{transform:scale(1.035)}
+.short-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 62%)}
+.short-card .video-card-info{left:15px;right:15px;bottom:16px}
+.media-empty{flex:0 0 100%;min-height:190px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;border:1px dashed rgba(125,203,255,.18);background:radial-gradient(circle at 50% 20%,rgba(125,203,255,.05),transparent 38%),rgba(3,8,13,.45);color:#607184;text-align:center;padding:30px}
+.media-empty b{color:#9bb8cd;font-size:.67rem;letter-spacing:.13em}.media-empty span{max-width:500px;font-size:.67rem;line-height:1.65}
+.short-empty{min-width:100%}
+.gallery-sub{margin-top:9px;color:#778697;font-size:.72rem;line-height:1.55}
+
+@media(max-width:980px){
+  .rail-right{gap:8px}.mobile-current{display:block}.mobile-menu{display:block}.rail-status{display:none}
+  .media-tabs{margin-bottom:30px}
+  .shorts-intro{display:block}.shorts-intro p{margin-top:18px}
+}
+
+@media(max-width:720px){
+  :root{--max:100%}
+  body{background:#010306}
+  .wrap{width:90vw}
+  .site-header{padding:9px 0}
+  .command-rail{width:94vw;height:58px;padding:0 12px 0 14px;border-color:rgba(255,255,255,.12);box-shadow:0 14px 45px rgba(0,0,0,.48)}
+  .brand-main{font-size:.63rem}.brand-orb{width:7px;height:7px}.brand-sub,.brand-x{display:none}
+  .mobile-current{font-size:.49rem;max-width:72px;overflow:hidden;text-overflow:ellipsis}
+  .mobile-menu{width:36px;height:36px}
+  .hero{min-height:100svh;align-items:flex-end;padding-bottom:8vh}
+  .hero-bg{background-position:63% center}
+  .hero-content{padding-top:130px}
+  .kicker{font-size:.51rem;letter-spacing:.15em}.kicker::before{width:22px}
+  .hero-title{font-size:18.2vw;line-height:.81;margin-top:18px}
+  .hero-byline{display:block;margin-top:19px;font-size:.58rem;line-height:1.6}.hero-byline strong{display:block;font-size:.65rem;margin-top:2px}
+  .hero-sub{font-size:1.1rem;margin-top:17px}
+  .hero-copy{font-size:.80rem;line-height:1.68;max-width:92%}
+  .hero-bottom{margin-top:28px}
+  .count{font-size:16vw}.count-label{font-size:.50rem}
+  .hero-bottom .btn{width:100%;min-height:50px;margin-top:10px}
+  .choice-section{padding:76px 0 84px}
+  .section-head{margin-bottom:36px}.section-head h2{font-size:10.8vw;line-height:1.00}.section-head p{font-size:.78rem;line-height:1.7}
+  .choice-grid{gap:13px}.choice-card{padding:24px 20px;min-height:auto}.choice-card h3{font-size:1.48rem}.choice-lead{font-size:.79rem}.choice-features{font-size:.73rem}.choice-button{margin-top:25px;min-height:52px}
+  .section{padding:78px 0}
+  .story-main{font-size:8.8vw}.story-copy{font-size:.78rem}
+  .anthony{padding:58px 0}.anthony-quote{font-size:9vw}.anthony-copy{font-size:.77rem}
+  .media-section{padding:82px 0 92px}
+  .media-lockup{margin-bottom:27px}.media-lockup .section-head h2{font-size:10.7vw}.archive-code{font-size:.48rem}
+  .social-grid{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none;border:0;gap:10px;margin-bottom:40px;padding-right:6vw}
+  .social-grid::-webkit-scrollbar{display:none}
+  .social-card{flex:0 0 78vw;min-height:155px;border:1px solid rgba(255,255,255,.09);scroll-snap-align:start;padding:23px 20px}
+  .social-card:last-child{border:1px solid rgba(255,255,255,.09)}
+  .social-name{font-size:1.55rem}.social-desc{font-size:.70rem;max-width:85%}
+  .media-tabs{position:sticky;top:78px;z-index:30;width:100%;margin:0 0 25px;background:rgba(3,8,13,.91);box-shadow:0 14px 45px rgba(0,0,0,.34)}
+  .media-tab{min-height:68px;padding:10px 12px;column-gap:8px}.media-tab span{font-size:.48rem}.media-tab b{font-size:.72rem}.media-tab small{font-size:.41rem}
+  .featured-video{min-height:0;margin-bottom:42px}.video-frame{min-height:0;aspect-ratio:16/9}.video-info{min-height:auto;padding:25px 20px}.video-info h3{font-size:1.55rem}.video-info p{font-size:.74rem}
+  .reel-head,.gallery-head{align-items:center}.reel-head h3,.gallery-head h3{font-size:1.75rem}.reel-controls,.gallery-controls{display:none}
+  .media-reel{gap:11px;padding-right:8vw}.video-card{flex:0 0 84vw;aspect-ratio:16/9}
+  .shorts-intro{padding:20px 0 27px}.shorts-intro h3{font-size:9vw}.shorts-intro p{font-size:.74rem}
+  .shorts-reel{gap:11px;padding-right:10vw}.short-card{flex:0 0 58vw}
+  .gallery-wrap{margin-top:60px}.gallery-head{display:block}.gallery-sub{font-size:.68rem;max-width:92%}
+  .gallery-track{gap:10px;padding-right:8vw}.gallery-item{flex:0 0 88vw;aspect-ratio:16/10}
+    .lightbox{padding:12px}.lightbox-img{max-width:94vw;max-height:80vh}.lightbox-close{right:13px;top:10px}
+  .lightbox-nav{top:auto;bottom:20px;transform:none;width:48px;height:48px}.lightbox-prev{left:calc(50% - 58px)}.lightbox-next{right:calc(50% - 58px)}
+  .modal{padding:10px;align-items:flex-end}.modal-box{width:100%;max-height:90svh;padding:28px 20px;border-radius:0;background:#05090e}
+  footer{padding-bottom:88px}.footer-in{display:block;line-height:1.8}
+}
+
+/* CINEMATIC SOUND */
+.sound-control{
+  position:fixed;left:22px;bottom:22px;z-index:145;min-width:154px;height:46px;padding:0 14px;
+  display:flex;align-items:center;gap:11px;color:#d9e5ee;background:rgba(4,9,15,.78);
+  border:1px solid rgba(255,255,255,.12);backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px);
+  box-shadow:0 16px 55px rgba(0,0,0,.38);cursor:pointer;transition:.25s
+}
+.sound-control:hover{border-color:rgba(125,203,255,.38);transform:translateY(-2px)}
+.sound-control.playing{border-color:rgba(125,203,255,.32);background:rgba(6,16,25,.88)}
+.sound-bars{width:20px;height:17px;display:flex;align-items:center;justify-content:center;gap:2px}
+.sound-bars i{display:block;width:2px;height:5px;background:var(--blue);opacity:.55}
+.sound-control.playing .sound-bars i{animation:soundBar .85s ease-in-out infinite alternate}
+.sound-control.playing .sound-bars i:nth-child(2){animation-delay:.12s}
+.sound-control.playing .sound-bars i:nth-child(3){animation-delay:.24s}
+.sound-control.playing .sound-bars i:nth-child(4){animation-delay:.36s}
+@keyframes soundBar{to{height:16px;opacity:1}}
+.sound-copy{display:flex;flex-direction:column;text-align:left;line-height:1}
+.sound-copy b{font-size:.56rem;letter-spacing:.13em}
+.sound-copy small{margin-top:5px;color:#627386;font-size:.46rem;letter-spacing:.10em}
+@media(max-width:720px){
+  .sound-control{left:5vw;bottom:18px;min-width:142px;height:43px;padding:0 12px}
+  .sound-copy b{font-size:.52rem}.sound-copy small{font-size:.42rem}
+}
+
+</style>
+</head>
+
+<body>
+<canvas id="stars"></canvas>
+<div class="bg-aurora"></div>
+<div class="bg-horizon"></div>
+
+<audio id="mission-audio" loop autoplay preload="auto">
+  <source src="media/audio/bg1.mp3" type="audio/mpeg">
+</audio>
+<button class="sound-control playing" id="sound-control" type="button" aria-pressed="true" title="Muzyka w tle">
+  <span class="sound-bars"><i></i><i></i><i></i><i></i></span>
+  <span class="sound-copy"><b id="sound-label">DŹWIĘK WŁ.</b><small>BG1 / MISSION AUDIO</small></span>
+</button>
+
+
+<header class="site-header" id="site-header">
+  <div class="command-rail">
+    <a href="../index.html" class="brand-lockup" title="Ibron Industries — strona główna">
+      <span class="brand-orb"></span>
+      <span class="brand-copy">
+        <span class="brand-main">OLKUSON</span>
+        <span class="brand-x">×</span>
+        <span class="brand-sub">IBRON INDUSTRIES</span>
+      </span>
+    </a>
+
+    <nav class="main-nav" aria-label="Główna nawigacja">
+      <a class="nav-link active" data-nav-target="top" href="#top">MISJA</a>
+      <a class="nav-link" data-nav-target="dolacz" href="#dolacz">POKŁAD</a>
+      <a class="nav-link" data-nav-target="status" href="#status">STATUS</a>
+      <a class="nav-link" data-nav-target="anthony" href="#anthony">ANTHONY</a>
+      <a class="nav-link" data-nav-target="media" href="#media">MEDIA</a>
+    </nav>
+
+    <div class="rail-right">
+      <div class="rail-status">
+        <span class="status-led"></span>
+        <span class="status-copy">
+          <span class="status-title">PROJEKT AKTYWNY</span>
+          <span class="status-phase">FAZA / BUDOWA</span>
+        </span>
+      </div>
+      <span class="mobile-current" id="mobile-current">MISJA</span>
+      <button class="mobile-menu" id="mobile-menu-button" onclick="openMobileNav()" aria-label="Otwórz menu">
+        <span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<div class="mobile-nav-overlay" id="mobile-nav" aria-hidden="true">
+  <div class="mobile-nav-top">
+    <div class="brand-lockup">
+      <span class="brand-orb"></span>
+      <span class="brand-copy"><span class="brand-main">OLKUSON</span><span class="brand-x">×</span><span class="brand-sub">IBRON INDUSTRIES</span></span>
+    </div>
+    <button class="mobile-nav-close" onclick="closeMobileNav()" aria-label="Zamknij menu">×</button>
+  </div>
+
+  <div class="mobile-nav-content">
+    <div class="mobile-nav-kicker">MISSION CONTROL / NAVIGATION</div>
+    <nav class="mobile-nav-links">
+      <a href="#top" data-nav-target="top" onclick="closeMobileNav()"><span>01</span><b>MISJA</b></a>
+      <a href="#dolacz" data-nav-target="dolacz" onclick="closeMobileNav()"><span>02</span><b>POKŁAD</b></a>
+      <a href="#status" data-nav-target="status" onclick="closeMobileNav()"><span>03</span><b>STATUS</b></a>
+      <a href="#anthony" data-nav-target="anthony" onclick="closeMobileNav()"><span>04</span><b>ANTHONY</b></a>
+      <a href="#media" data-nav-target="media" onclick="closeMobileNav()"><span>05</span><b>MEDIA</b></a>
+    </nav>
+    <div class="mobile-nav-status">
+      <span class="status-led"></span>
+      <div><b>PROJEKT AKTYWNY</b><small>MISJA STRATOSFERA / FAZA BUDOWY</small></div>
+    </div>
+  </div>
+</div>
+
+<main>
+<section class="hero" id="top">
+  <div class="hero-bg" id="hero-bg"></div>
+  <div class="hero-scan"></div>
+  <div class="wrap">
+    <div class="hero-content">
+      <div class="kicker">OLKUSON PRESENTS / IBRON INDUSTRIES</div>
+      <h1 class="hero-title"><span>MISJA</span><span>STRATOSFERA</span></h1>
+      <div class="hero-byline"><span>PROJEKT AUTORSKI</span><strong>ALEKSANDER „OLKUSON” IBRON</strong></div>
+      <div class="hero-sub">Polska misja stratosferyczna.</div>
+      <p class="hero-copy">Budujemy własny system lotu, telemetrii i odzysku. Celem jest osiągnięcie stratosfery, wykonanie misji i bezpieczne odzyskanie systemu.</p>
+
+      <div class="hero-bottom">
+        <div>
+          <div class="count" id="crew-count">000000</div>
+          <div class="count-label">OSÓB NA POKŁADZIE</div>
+          <div class="mode" id="mode">ŁĄCZENIE...</div>
+        </div>
+        <a href="#dolacz" class="btn btn-primary">DOŁĄCZ DO MISJI</a>
+        <a href="#media" class="btn">OTWÓRZ MEDIA</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-meta">
+    <span>PROGRAM <b>STRATOSFERA</b></span><span>START <b>POLSKA</b></span>
+    <span>SYSTEM <b>ANTHONY</b></span><span>STATUS <b>W BUDOWIE</b></span>
+  </div>
+</section>
+
+<section class="choice-section" id="dolacz">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <div class="eyebrow">DOŁĄCZ DO POKŁADU</div>
+      <h2>Wybierz swoją drogę na pokład.</h2>
+      <p>Dołącz do oficjalnego manifestu Misji Stratosfera. Nowe osoby zapisują się bezpośrednio, a osoby zgłoszone wcześniej w komentarzach mogą odebrać status <b style="color:var(--gold2)">Wczesnej Załogi</b>.</p>
+    </div>
+
+    <div class="choice-grid reveal">
+      <article class="choice-card" onclick="openStandard()">
+        <div class="choice-badge">01 / NOWY UCZESTNIK</div>
+        <div class="choice-line"></div>
+        <h3>Zapisz się przez stronę</h3>
+        <p class="choice-lead">Najprostsza droga na pokład. Wpisujesz pseudonim i odbierasz własny numer uczestnika oraz kartę pokładową.</p>
+        <div class="choice-features"><div>szybki zapis bez konta</div><div>własny numer uczestnika</div><div>karta pokładowa do pobrania</div></div>
+        <button class="choice-button">WEJDŹ NA POKŁAD</button>
+      </article>
+
+      <article class="choice-card early" onclick="openEarly()">
+        <div class="choice-badge gold">02 / WCZESNA ZAŁOGA</div>
+        <div class="choice-line gold"></div>
+        <h3>Zgłaszałem się wcześniej w mediach</h3>
+        <p class="choice-lead">Zostawiłeś wcześniej komentarz na YouTube lub TikToku? Potwierdź zgłoszenie i odblokuj specjalną kartę <strong>Wczesnej Załogi.</strong></p>
+        <div class="choice-features"><div>weryfikacja przez nick i komentarz</div><div>ekskluzywna karta Wczesnej Załogi</div><div>specjalny status w manifeście</div></div>
+        <button class="choice-button gold">ODBIERZ WYRÓŻNIONY BILET</button>
+      </article>
+    </div>
+    <div class="choice-trust reveal">BEZ KONTA I BEZ HASŁA · MINIMUM DANYCH · CYFROWY MANIFEST MISJI</div>
+  </div>
+</section>
+
+<section class="section reveal" id="misja">
+  <div class="wrap">
+    <div class="story">
+      <div class="eyebrow">MISJA STRATOSFERA</div>
+      <div class="story-main">Nie chcemy tylko wysłać czegoś wysoko.<br><br>Chcemy stworzyć <b>prawdziwy system misji.</b></div>
+      <p class="story-copy">Projekt powstaje publicznie — od elektroniki pokładowej i procedur bezpieczeństwa po Mission Control i przygotowanie do prawdziwego lotu.</p>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="status">
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">STATUS PROGRAMU</div>
+      <h2>Od projektu do lotu.</h2>
+      <p>Bez udawania gotowego systemu. Kolejne etapy odblokowujemy dopiero po testach.</p>
+    </div>
+    <div class="timeline">
+      <div class="tstep done"><span>01</span><strong>PROJEKT</strong></div>
+      <div class="tstep done"><span>02</span><strong>ELEKTRONIKA</strong></div>
+      <div class="tstep"><span>03</span><strong>SYSTEMY</strong></div>
+      <div class="tstep"><span>04</span><strong>TESTY</strong></div>
+      <div class="tstep"><span>05</span><strong>START</strong></div>
+    </div>
+  </div>
+</section>
+
+<section class="section reveal" id="anthony">
+  <div class="wrap">
+    <div class="anthony">
+      <div class="eyebrow">MISSION CONTROL / ANTHONY</div>
+      <div class="anthony-quote">„Panie Aleksandrze, <b>czekam na rozkazy.</b>”</div>
+      <div class="wave"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <p class="anthony-copy">Anthony — „Antek” — ma obserwować dane z misji, informować o jej przebiegu i wspierać operatora. Krytyczne procedury bezpieczeństwa pozostają niezależne od AI.</p>
+    </div>
+  </div>
+</section>
+
+<!-- MEDIA HUB -->
+<section class="media-section reveal" id="media">
+  <div class="wrap">
+    <div class="media-lockup">
+      <div class="section-head">
+        <div class="eyebrow">MEDIA / ARCHIWUM MISJI</div>
+        <h2>Obserwuj projekt. Oglądaj każdy etap.</h2>
+        <p>Filmy, Shortsy, zdjęcia i materiały zza kulis zebrane w jednym, uporządkowanym archiwum Misji Stratosfera.</p>
+      </div>
+      <div class="archive-code">ARCHIVE // MS-01 // 2026</div>
+    </div>
+
+    <div class="social-grid">
+      <a class="social-card" id="social-youtube" href="https://www.youtube.com/@olkuson" target="_blank" rel="noopener">
+        <div class="social-index">01 / VIDEO</div>
+        <div class="social-name">YOUTUBE</div>
+        <div class="social-desc">Pełne filmy, kolejne rozdziały misji i Shortsy.</div>
+        <div class="social-arrow">↗</div>
+      </a>
+      <a class="social-card" id="social-tiktok" href="#" data-placeholder-link>
+        <div class="social-index">02 / SHORT FORM</div>
+        <div class="social-name">TIKTOK</div>
+        <div class="social-desc">Szybkie aktualizacje, testy, momenty z budowy i kulisy.</div>
+        <div class="social-arrow">↗</div>
+      </a>
+      <a class="social-card" id="social-instagram" href="#" data-placeholder-link>
+        <div class="social-index">03 / PHOTO + STORY</div>
+        <div class="social-name">INSTAGRAM</div>
+        <div class="social-desc">Fotografie, Stories i wizualny dziennik projektu.</div>
+        <div class="social-arrow">↗</div>
+      </a>
+    </div>
+
+    <div class="media-console">
+      <div class="media-tabs" role="tablist" aria-label="Rodzaj materiałów">
+        <button class="media-tab active" data-media-tab="films" role="tab" aria-selected="true">
+          <span>01</span><b>FILMY</b><small>DŁUGA FORMA</small>
+        </button>
+        <button class="media-tab" data-media-tab="shorts" role="tab" aria-selected="false">
+          <span>02</span><b>SHORTSY</b><small>KRÓTKA FORMA</small>
+        </button>
+      </div>
+
+      <div class="media-panel active" data-media-panel="films">
+        <div class="featured-video">
+          <div class="video-frame">
+            <iframe src="https://www.youtube-nocookie.com/embed/r4Xcb6-MUxk" title="WYSYŁAM WIDZÓW DO STRATOSFERY" loading="lazy" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          </div>
+          <div class="video-info">
+            <div class="media-label">FEATURED / ROZDZIAŁ 01</div>
+            <h3>WYSYŁAM WIDZÓW DO STRATOSFERY</h3>
+            <p>Film otwierający publiczną historię projektu. Tutaj będą układane kolejne pełne rozdziały Misji Stratosfera — w jednej chronologicznej filmotece.</p>
+            <a href="https://youtu.be/r4Xcb6-MUxk" target="_blank" rel="noopener" class="btn" style="margin-top:25px;align-self:flex-start">OTWÓRZ NA YOUTUBE</a>
+          </div>
+        </div>
+
+        <div class="reel-head">
+          <div>
+            <div class="eyebrow">FILMOTEKA / LONG FORM</div>
+            <h3>Filmy z projektu</h3>
+          </div>
+          <div class="reel-controls">
+            <button class="icon-btn" data-scroll-target="films-reel" data-dir="-1" aria-label="Poprzednie filmy">←</button>
+            <button class="icon-btn" data-scroll-target="films-reel" data-dir="1" aria-label="Następne filmy">→</button>
+          </div>
+        </div>
+        <div class="media-reel" id="films-reel"></div>
+      </div>
+
+      <div class="media-panel" data-media-panel="shorts">
+        <div class="shorts-intro">
+          <div>
+            <div class="media-label">SHORT FORM / QUICK LOG</div>
+            <h3>Shortsy z Misji Stratosfera</h3>
+          </div>
+          <p>Szybkie aktualizacje, testy, fragmenty filmów i momenty z budowy. Na telefonie przewijasz je naturalnie jednym palcem.</p>
+        </div>
+
+        <div class="reel-head shorts-reel-head">
+          <div>
+            <div class="eyebrow">SHORTS ARCHIVE</div>
+            <h3>Krótkie materiały</h3>
+          </div>
+          <div class="reel-controls">
+            <button class="icon-btn" data-scroll-target="shorts-reel" data-dir="-1" aria-label="Poprzednie Shortsy">←</button>
+            <button class="icon-btn" data-scroll-target="shorts-reel" data-dir="1" aria-label="Następne Shortsy">→</button>
+          </div>
+        </div>
+        <div class="shorts-reel" id="shorts-reel"></div>
+      </div>
+    </div>
+
+    <div class="gallery-wrap">
+      <div class="gallery-head">
+        <div>
+          <div class="eyebrow">GALERIA / HIGH QUALITY</div>
+          <h3>Kadry z filmów</h3>
+          <p class="gallery-sub">Wybrane klatki, screeny i materiały wizualne z kolejnych rozdziałów projektu.</p>
+        </div>
+        <div class="gallery-controls">
+          <button class="icon-btn" data-scroll-target="gallery-track" data-dir="-1" aria-label="Poprzednie zdjęcia">←</button>
+          <button class="icon-btn" data-scroll-target="gallery-track" data-dir="1" aria-label="Następne zdjęcia">→</button>
+        </div>
+      </div>
+      <div class="gallery-track" id="gallery-track"></div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer><div class="wrap footer-in"><span>© 2026 OLKUSON × IBRON INDUSTRIES</span><span>MISJA STRATOSFERA / POLSKA</span></div></footer>
+
+<!-- STANDARD -->
+<div class="modal" id="standard-modal"><div class="modal-box">
+  <button class="close" onclick="closeModals()">×</button>
+  <div class="eyebrow">NOWY UCZESTNIK</div><div class="modal-title">Dołącz do pokładu.</div>
+  <p class="modal-copy">Wystarczy imię lub pseudonim. Po zapisaniu otrzymasz własny numer uczestnika i kartę pokładową.</p>
+  <form id="standard-form">
+    <div class="field"><label>IMIĘ / PSEUDONIM</label><input class="input" id="standard-name" maxlength="24" required autocomplete="off" placeholder="np. Olkuson"></div>
+    <label class="check"><input type="checkbox" id="standard-accept" required><span>Rozumiem, że udział oznacza cyfrowy wpis w manifeście, a nie fizyczny lot człowieka.</span></label>
+    <button class="btn btn-primary" id="standard-submit" style="width:100%;margin-top:20px">DOŁĄCZ DO MISJI</button>
+    <div class="message" id="standard-message"></div>
+  </form>
+  <div class="ticket-result" id="standard-ticket-result"><img id="standard-ticket-image" alt="Karta pokładowa"><div class="ticket-actions"><a id="standard-download" class="btn btn-primary" download>POBIERZ BILET</a></div></div>
+</div></div>
+
+<!-- EARLY -->
+<div class="modal" id="early-modal"><div class="modal-box early">
+  <button class="close" onclick="closeModals()">×</button>
+  <div class="eyebrow" style="color:var(--gold2)">WCZESNA ZAŁOGA</div><div class="modal-title">Znajdź swój wpis.</div>
+  <p class="modal-copy">Najpierw wybierz platformę i wpisz nick, pod którym komentowałeś. Gdy znajdziemy Cię na liście, wybierzesz <b>dowolną nazwę, jaka ma pojawić się na bilecie</b>.</p>
+  <form id="early-form">
+    <div class="field"><label>PLATFORMA</label><select class="select" id="early-platform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option></select></div>
+    <div class="field"><label>NICK Z KOMENTARZA</label><input class="input" id="early-handle" maxlength="80" required autocomplete="off" placeholder="np. @twojnick"></div>
+    <div id="early-personalization" style="display:none">
+      <div class="field"><label>NAZWA NA BILECIE</label><input class="input" id="early-ticket-name" maxlength="24" autocomplete="off" placeholder="np. Kuba"></div>
+      <div style="margin-top:10px;color:#7e8b99;font-size:.68rem;line-height:1.55">To tylko napis na bilecie. Nie zmienia Twojego wpisu, numeru uczestnika ani licznika załogi.</div>
+    </div>
+    <button class="btn btn-primary" id="early-submit" style="width:100%;margin-top:20px;background:var(--gold2);border-color:var(--gold2)">SZUKAJ NA LIŚCIE</button>
+    <div class="message" id="early-message"></div>
+  </form>
+  <div class="ticket-result" id="early-ticket-result"><img id="early-ticket-image" alt="Bilet Wczesnej Załogi"><div class="ticket-actions"><a id="early-download" class="btn btn-primary" download style="background:var(--gold2);border-color:var(--gold2)">POBIERZ BILET WCZESNEJ ZAŁOGI</a></div></div>
+</div></div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" onclick="closeLightbox()">×</button>
+  <button class="lightbox-nav lightbox-prev" onclick="shiftLightbox(-1)">‹</button>
+  <img class="lightbox-img" id="lightbox-img" alt="">
+  <button class="lightbox-nav lightbox-next" onclick="shiftLightbox(1)">›</button>
+</div>
+
+<script>
+/* =========================================================
+   CONFIG — tutaj później wpiszemy komplet mediów
+========================================================= */
+const MEDIA_CONFIG = {
+  socials: {
+    youtube: "https://www.youtube.com/@olkuson",
+    tiktok: "https://www.tiktok.com/@olkuson",
+    instagram: "https://www.instagram.com/olkuson/"
+  },
+
+  films: [
+    {
+      type: "FILM GŁÓWNY / NAJNOWSZY",
+      title: "WYSYŁAM WIDZÓW DO STRATOSFERY",
+      url: "https://youtu.be/r4Xcb6-MUxk",
+      thumbnail: "https://i.ytimg.com/vi/r4Xcb6-MUxk/maxresdefault.jpg"
+    },
+    {
+      type: "FILM GŁÓWNY",
+      title: "FILM / ROZDZIAŁ WCZEŚNIEJSZY",
+      url: "https://youtu.be/KOOeGqdDMU8",
+      thumbnail: "https://i.ytimg.com/vi/KOOeGqdDMU8/maxresdefault.jpg"
+    }
+  ],
+
+  shorts: [
+    {
+      type: "SHORT / NAJNOWSZY",
+      title: "SHORT / NAJNOWSZY",
+      url: "https://youtube.com/shorts/P1yTHHiNotg?feature=share",
+      thumbnail: "https://i.ytimg.com/vi/P1yTHHiNotg/maxresdefault.jpg"
+    },
+    {
+      type: "SHORT",
+      title: "SHORT / MISJA STRATOSFERA",
+      url: "https://youtube.com/shorts/SFETUicvOuM?feature=share",
+      thumbnail: "https://i.ytimg.com/vi/SFETUicvOuM/maxresdefault.jpg"
+    },
+    {
+      type: "SHORT",
+      title: "SHORT / MISJA STRATOSFERA",
+      url: "https://youtube.com/shorts/QgBkIYw4Axo?feature=share",
+      thumbnail: "https://i.ytimg.com/vi/QgBkIYw4Axo/maxresdefault.jpg"
+    }
+  ],
+
+  gallery: Array.from({length:14}, (_,i) => ({
+    src: `media/gallery/${String(i+1).padStart(2,"0")}.png`,
+    label: `KADR ${String(i+1).padStart(2,"0")}`
+  }))
+};
+
+/* =========================================================
+   SUPABASE — PRODUKCYJNE POŁĄCZENIE MANIFESTU
+========================================================= */
+const SUPABASE_URL="https://elpedksjfpmsepjiknwy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_WcgvYPzgSVBp-FtHcY3Tew_7mkXrLS2";
+const onlineMode=Boolean(window.supabase && SUPABASE_URL && SUPABASE_PUBLISHABLE_KEY);
+const db=onlineMode?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY):null;
+
+const $=s=>document.querySelector(s);
+const pad=n=>String(n).padStart(6,"0");
+const code=n=>"MS-"+pad(n);
+const clean=v=>v.replace(/\s+/g," ").trim();
+
+/* socials */
+function applySocials(){
+  [["social-youtube","youtube"],["social-tiktok","tiktok"],["social-instagram","instagram"]].forEach(([id,key])=>{
+    const el=document.getElementById(id),url=MEDIA_CONFIG.socials[key];
+    if(url){el.href=url;el.removeAttribute("data-placeholder-link")}
+    else{
+      el.href="#media";
+      el.addEventListener("click",e=>{e.preventDefault();alert("Ten profil podłączymy tutaj po wpisaniu właściwego linku.")})
+    }
+  })
+}
+
+/* media library */
+function createVideoCard(v, shortMode=false){
+  const a=document.createElement("a");
+  a.className=shortMode?"short-card":"video-card";
+  a.href=v.url;a.target="_blank";a.rel="noopener";
+
+  a.innerHTML=`
+    <img src="${v.thumbnail}" alt="${escapeHtml(v.title)}">
+    <div class="video-card-info">
+      <div class="video-card-type">${escapeHtml(v.type)}</div>
+      <div class="video-card-title">${escapeHtml(v.title)}</div>
+    </div>`;
+
+  const img=a.querySelector("img");
+  img.onerror=()=>{
+    img.remove();
+    const p=document.createElement("div");
+    p.className="video-placeholder";
+    p.textContent=shortMode?"SHORT / MEDIA":"FILM / MEDIA";
+    a.prepend(p);
+  };
+  return a;
+}
+
+function renderMediaLibrary(){
+  const films=$("#films-reel");
+  const shorts=$("#shorts-reel");
+  films.innerHTML="";
+  shorts.innerHTML="";
+
+  if(MEDIA_CONFIG.films.length){
+    MEDIA_CONFIG.films.forEach(v=>films.appendChild(createVideoCard(v,false)));
+  }else{
+    films.innerHTML=`<div class="media-empty"><b>FILMOTEKA GOTOWA</b><span>Dodamy tutaj kolejne pełne filmy związane z Misją Stratosfera.</span></div>`;
+  }
+
+  if(MEDIA_CONFIG.shorts.length){
+    MEDIA_CONFIG.shorts.forEach(v=>shorts.appendChild(createVideoCard(v,true)));
+  }else{
+    shorts.innerHTML=`<div class="media-empty short-empty"><b>ARCHIWUM SHORTSÓW GOTOWE</b><span>Gdy dodamy linki do Shortsów, pojawią się tutaj jako pionowa, przewijana filmoteka.</span></div>`;
+  }
+}
+
+function setMediaTab(name){
+  document.querySelectorAll(".media-tab").forEach(btn=>{
+    const active=btn.dataset.mediaTab===name;
+    btn.classList.toggle("active",active);
+    btn.setAttribute("aria-selected",active?"true":"false");
+  });
+  document.querySelectorAll(".media-panel").forEach(panel=>{
+    panel.classList.toggle("active",panel.dataset.mediaPanel===name);
+  });
+}
+document.querySelectorAll(".media-tab").forEach(btn=>{
+  btn.addEventListener("click",()=>setMediaTab(btn.dataset.mediaTab));
+});
+
+/* gallery */
+let galleryValid=[];
+let lightboxIndex=0;
+function renderGallery(){
+  const track=$("#gallery-track");track.innerHTML="";galleryValid=[];
+  MEDIA_CONFIG.gallery.forEach((g,i)=>{
+    const item=document.createElement("div");item.className="gallery-item";
+    const img=document.createElement("img");img.src=g.src;img.alt=g.label;
+    item.append(img);
+    img.onload=()=>{galleryValid.push({src:g.src,label:g.label});item.onclick=()=>openLightboxBySrc(g.src)};
+    img.onerror=()=>{img.remove();const miss=document.createElement("div");miss.className="gallery-missing";miss.innerHTML=`<b>${g.label}</b><span>WRZUĆ PLIK: ${g.src}</span>`;item.prepend(miss);item.style.cursor="default"};
+    track.appendChild(item);
+  })
+}
+function openLightboxBySrc(src){
+  const idx=galleryValid.findIndex(x=>x.src===src);lightboxIndex=Math.max(0,idx);
+  $("#lightbox-img").src=galleryValid[lightboxIndex]?.src||src;$("#lightbox").classList.add("open");document.body.classList.add("lock")
+}
+function closeLightbox(){$("#lightbox").classList.remove("open");document.body.classList.remove("lock")}
+function shiftLightbox(dir){
+  if(!galleryValid.length)return;
+  lightboxIndex=(lightboxIndex+dir+galleryValid.length)%galleryValid.length;
+  $("#lightbox-img").src=galleryValid[lightboxIndex].src;
+}
+window.closeLightbox=closeLightbox;window.shiftLightbox=shiftLightbox;
+
+/* horizontal controls + drag */
+document.querySelectorAll("[data-scroll-target]").forEach(btn=>{
+  btn.addEventListener("click",()=>{
+    const el=document.getElementById(btn.dataset.scrollTarget),dir=Number(btn.dataset.dir);
+    el.scrollBy({left:dir*Math.min(el.clientWidth*.8,520),behavior:"smooth"})
+  })
+});
+function enableDrag(el){
+  let down=false,start=0,scroll=0;
+  el.addEventListener("pointerdown",e=>{down=true;start=e.clientX;scroll=el.scrollLeft;el.classList.add("dragging");el.setPointerCapture(e.pointerId)});
+  el.addEventListener("pointermove",e=>{if(!down)return;el.scrollLeft=scroll-(e.clientX-start)});
+  const end=()=>{down=false;el.classList.remove("dragging")};
+  el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end)
+}
+enableDrag($("#films-reel"));enableDrag($("#shorts-reel"));enableDrag($("#gallery-track"));
+
+/* modal */
+function closeModals(){document.querySelectorAll(".modal").forEach(m=>m.classList.remove("open"));document.body.classList.remove("lock");if(typeof resetEarlyMatch==="function")resetEarlyMatch()}
+function openStandard(){closeModals();$("#standard-modal").classList.add("open");document.body.classList.add("lock")}
+function openEarly(){closeModals();$("#early-modal").classList.add("open");document.body.classList.add("lock")}
+window.closeModals=closeModals;window.openStandard=openStandard;window.openEarly=openEarly;
+document.querySelectorAll(".modal").forEach(m=>m.addEventListener("click",e=>{if(e.target===m)closeModals()}));
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeModals();closeLightbox()}});
+
+/* count */
+async function refreshCount(){
+  let count=0;
+  if(!db){
+    count=Number(localStorage.getItem("ms_demo_standard")||0)+Number(localStorage.getItem("ms_demo_early")||0);
+    $("#mode").textContent="TRYB DEMO";
+  }else{
+    try{const {data,error}=await db.rpc("ms_stats");if(error)throw error;count=Number(data||0);$("#mode").textContent="MANIFEST ONLINE"}
+    catch(err){console.error(err);$("#mode").textContent="BRAK POŁĄCZENIA";return}
+  }
+  $("#crew-count").textContent=pad(count)
+}
+
+/* ticket helpers */
+function loadImage(src){return new Promise((res,rej)=>{const i=new Image();i.onload=()=>res(i);i.onerror=rej;i.src=src})}
+function coverImage(ctx,img,x,y,w,h){const s=Math.max(w/img.width,h/img.height),dw=img.width*s,dh=img.height*s;ctx.drawImage(img,x+(w-dw)/2,y+(h-dh)/2,dw,dh)}
+function fitFont(ctx,text,max,start,min){let s=start;while(s>min){ctx.font=`900 ${s}px Inter,Arial`;if(ctx.measureText(text).width<=max)break;s-=2}return s}
+function makeBarcodeCanvas(value,line="#fff"){
+  const c=document.createElement("canvas");
+  JsBarcode(c,value,{format:"CODE128",displayValue:false,margin:0,height:65,width:2,background:"transparent",lineColor:line});
+  return c
+}
+
+/* standard ticket */
+async function createStandardTicket(t){
+  await document.fonts.ready;
+  const c=document.createElement("canvas");c.width=1920;c.height=1080;const x=c.getContext("2d");
+  x.fillStyle="#02060a";x.fillRect(0,0,1920,1080);
+  try{const bg=await loadImage("ticket-bg.png");coverImage(x,bg,0,0,1920,1080)}catch(e){}
+  const gr=x.createLinearGradient(0,0,1920,0);gr.addColorStop(0,"rgba(0,3,7,.03)");gr.addColorStop(.56,"rgba(0,3,7,.15)");gr.addColorStop(.68,"rgba(0,3,7,.58)");gr.addColorStop(1,"rgba(0,3,7,.98)");x.fillStyle=gr;x.fillRect(0,0,1920,1080);
+  x.strokeStyle="#DFB354";x.lineWidth=2;x.strokeRect(38,38,1844,1004);x.strokeStyle="rgba(223,179,84,.38)";x.strokeRect(62,62,1796,956);
+  x.fillStyle="#F4F6F8";x.font="900 122px Inter,Arial";x.fillText("MISJA",115,205);x.fillStyle="#E2B758";x.font="900 120px Inter,Arial";x.fillText("STRATOSFERA",115,328);
+  x.fillStyle="#EFCA71";x.font="700 31px Inter,Arial";x.fillText("K A R T A   P O K Ł A D O W A",120,390);x.fillStyle="rgba(225,235,244,.55)";x.font="600 15px Inter,Arial";x.fillText("OLKUSON × IBRON INDUSTRIES / PROGRAM STRATOSFERYCZNY",120,430);
+  x.fillStyle="#EFCA71";x.font="700 22px Inter,Arial";x.fillText("TWÓJ WPIS LECI Z MISJĄ STRATOSFERA",120,950);
+  x.fillStyle="rgba(2,7,12,.92)";x.fillRect(1320,62,538,956);x.setLineDash([9,11]);x.strokeStyle="rgba(223,179,84,.62)";x.beginPath();x.moveTo(1320,62);x.lineTo(1320,1018);x.stroke();x.setLineDash([]);
+  const px=1375,name=t.name.toUpperCase();x.fillStyle="#708092";x.font="700 15px Inter,Arial";x.fillText("UCZESTNIK MISJI",px,150);const fs=fitFont(x,name,420,40,22);x.fillStyle="#fff";x.font=`900 ${fs}px Inter,Arial`;x.fillText(name,px,200);
+  x.strokeStyle="rgba(255,255,255,.14)";x.beginPath();x.moveTo(px,230);x.lineTo(1805,230);x.stroke();x.fillStyle="#708092";x.font="700 15px Inter,Arial";x.fillText("NUMER UCZESTNIKA",px,280);x.fillStyle="#EFCA71";x.font="900 32px Inter,Arial";x.fillText(t.code,px,320);
+  const info=[["CEL","STRATOSFERA"],["PUŁAP MISJI","20 000 M"],["SYSTEM MISJI","ANTHONY"],["STATUS","NA POKŁADZIE"],["MIEJSCE STARTU","POLSKA"],["PROGRAM","IBRON INDUSTRIES"]];
+  let y=390;info.forEach((r,i)=>{x.fillStyle="#708092";x.font="700 13px Inter,Arial";x.fillText(r[0],px,y);x.textAlign="right";x.fillStyle=i===3?"#EFCA71":"#F3F6F8";x.font="800 18px Inter,Arial";x.fillText(r[1],1805,y);x.textAlign="left";x.strokeStyle="rgba(255,255,255,.105)";x.beginPath();x.moveTo(px,y+25);x.lineTo(1805,y+25);x.stroke();y+=74});
+  const bc=makeBarcodeCanvas("S-"+t.code);x.drawImage(bc,px,850,420,70);x.fillStyle="#708092";x.font="700 13px Inter,Arial";x.fillText("S-"+t.code,px,950);return c
+}
+
+/* early ticket */
+async function createEarlyTicket(t){
+  await document.fonts.ready;
+  const c=document.createElement("canvas");c.width=1920;c.height=1080;const x=c.getContext("2d");
+  x.fillStyle="#020509";x.fillRect(0,0,1920,1080);
+  try{const bg=await loadImage("ticket-bg.png");coverImage(x,bg,0,300,1920,780)}catch(e){}
+  const sh=x.createLinearGradient(0,0,0,1080);sh.addColorStop(0,"rgba(0,3,8,.99)");sh.addColorStop(.37,"rgba(0,5,12,.82)");sh.addColorStop(.74,"rgba(0,3,7,.25)");sh.addColorStop(1,"rgba(0,2,5,.68)");x.fillStyle=sh;x.fillRect(0,0,1920,1080);
+  x.strokeStyle="#F0CE80";x.lineWidth=4;x.strokeRect(28,28,1864,1024);x.strokeStyle="rgba(240,206,128,.48)";x.lineWidth=1;x.strokeRect(52,52,1816,976);
+  try{const badge=await loadImage("early-badge.png");const bw=880,bh=bw*(badge.height/badge.width);x.drawImage(badge,520,58,bw,bh)}catch(e){x.textAlign="center";x.fillStyle="#F0CE80";x.font="900 70px Inter,Arial";x.fillText("WCZESNA ZAŁOGA",960,235);x.textAlign="left"}
+  x.textAlign="center";x.fillStyle="#F1D48E";x.font="700 65px Inter,Arial";x.fillText("MISJA STRATOSFERA",960,525);x.fillStyle="#F5F6F7";x.font="600 25px Inter,Arial";x.fillText("K A R T A   P O K Ł A D O W A",960,575);x.textAlign="left";
+  x.fillStyle="rgba(3,7,12,.94)";x.fillRect(55,785,1810,220);x.strokeStyle="rgba(240,206,128,.65)";x.beginPath();x.moveTo(55,785);x.lineTo(1865,785);x.stroke();
+  const nm=t.name.toUpperCase(),fs=fitFont(x,nm,360,32,18),cols=[{x:110,l:"UCZESTNIK MISJI",v:nm,fs},{x:540,l:"NUMER UCZESTNIKA",v:t.code},{x:900,l:"STATUS",v:"WCZESNA ZAŁOGA",gold:1},{x:1315,l:"START",v:"POLSKA"},{x:1570,l:"SYSTEM",v:"ANTHONY"}];
+  cols.forEach(o=>{x.fillStyle="#9D8A61";x.font="700 13px Inter,Arial";x.fillText(o.l,o.x,845);x.fillStyle=o.gold?"#F0CE80":"#F4F5F6";x.font=o.fs?`800 ${o.fs}px Inter,Arial`:"800 24px Inter,Arial";x.fillText(o.v,o.x,890)});
+  x.fillStyle="#776745";x.font="700 13px Inter,Arial";x.fillText("ZGŁOSZENIE",110,950);x.fillStyle="#F0CE80";x.font="800 20px Inter,Arial";x.fillText(t.platform.toUpperCase(),110,980);
+  const bc=makeBarcodeCanvas("E-"+t.code,"#F0CE80");x.drawImage(bc,1360,925,420,65);x.fillStyle="#A68D5B";x.font="700 12px Inter,Arial";x.fillText("E-"+t.code,1360,1010);
+  x.textAlign="center";x.fillStyle="#C6A75F";x.font="700 14px Inter,Arial";x.fillText("LOT W STRONĘ LEPSZEGO JUTRA",960,1040);x.textAlign="left";return c
+}
+
+async function outputTicket(canvas,imgSel,downloadSel,file){
+  return new Promise((res,rej)=>canvas.toBlob(blob=>{if(!blob)return rej(new Error("PNG"));const url=URL.createObjectURL(blob);$(imgSel).src=url;$(downloadSel).href=url;$(downloadSel).download=file;res()},"image/png"))
+}
+
+/* forms */
+$("#standard-form").addEventListener("submit",async e=>{
+  e.preventDefault();const name=clean($("#standard-name").value).slice(0,24),msg=$("#standard-message"),btn=$("#standard-submit");
+  if(name.length<2){msg.textContent="Wpisz co najmniej dwa znaki.";return}
+  if(!$("#standard-accept").checked){msg.textContent="Potwierdź zasady manifestu.";return}
+  btn.disabled=true;btn.textContent="DODAWANIE...";
+  try{
+    let id,returned=name;
+    if(db){const {data,error}=await db.rpc("ms_register_standard",{p_display_name:name});if(error)throw error;const row=Array.isArray(data)?data[0]:data;id=Number(row.participant_no);returned=row.display_name}
+    else{id=Number(localStorage.getItem("ms_demo_standard")||0)+1;localStorage.setItem("ms_demo_standard",id)}
+    const t={id,name:returned,code:code(id)};await outputTicket(await createStandardTicket(t),"#standard-ticket-image","#standard-download",`${t.code}_MISJA_STRATOSFERA.png`);
+    $("#standard-download").dataset.participantNo=String(id);
+    $("#standard-download").dataset.ticketKind="standard";
+    $("#standard-ticket-result").classList.add("show");msg.textContent=db?"Witaj na pokładzie.":"TRYB DEMO — zapis lokalny.";await refreshCount()
+  }catch(err){console.error(err);msg.textContent="Nie udało się zapisać."}
+  finally{btn.disabled=false;btn.textContent="DOŁĄCZ DO MISJI"}
+});
+
+let earlyMatch=null;
+
+function resetEarlyMatch(){
+  earlyMatch=null;
+  $("#early-personalization").style.display="none";
+  $("#early-ticket-result").classList.remove("show");
+  $("#early-submit").textContent="SZUKAJ NA LIŚCIE";
+  $("#early-message").textContent="";
+}
+
+$("#early-platform").addEventListener("change",resetEarlyMatch);
+$("#early-handle").addEventListener("input",resetEarlyMatch);
+
+$("#early-form").addEventListener("submit",async e=>{
+  e.preventDefault();
+  const platform=$("#early-platform").value;
+  const handle=clean($("#early-handle").value);
+  const msg=$("#early-message"),btn=$("#early-submit");
+
+  if(handle.replace(/^@+/,"").length<2){msg.textContent="Wpisz swój nick z YouTube lub TikToka.";return}
+
+  if(!earlyMatch){
+    btn.disabled=true;btn.textContent="SZUKAM...";
+    try{
+      if(db){
+        const {data,error}=await db.rpc("ms_claim_early_crew",{p_platform:platform,p_handle:handle});
+        if(error)throw error;
+        const row=Array.isArray(data)?data[0]:data;
+        if(!row||row.status==="NO_MATCH"){msg.textContent="Nie znaleziono tego nicku na liście Wczesnej Załogi.";return}
+        earlyMatch={id:Number(row.participant_no),sourceName:row.display_name,platform:row.platform};
+      }else{
+        earlyMatch={id:100001,sourceName:handle.startsWith("@")?handle:"@"+handle,platform};
+      }
+      const defaultName=(earlyMatch.sourceName||handle).replace(/^@+/,"").slice(0,24);
+      $("#early-ticket-name").value=defaultName;
+      $("#early-personalization").style.display="block";
+      btn.textContent="WYGENERUJ BILET";
+      msg.textContent=`Znaleziono ${earlyMatch.sourceName} • ${code(earlyMatch.id)}. Wybierz teraz nazwę na bilecie.`;
+      return;
+    }catch(err){console.error(err);msg.textContent="Nie udało się wyszukać wpisu.";return}
+    finally{btn.disabled=false;if(!earlyMatch)btn.textContent="SZUKAJ NA LIŚCIE"}
+  }
+
+  const ticketName=clean($("#early-ticket-name").value).slice(0,24);
+  if(ticketName.length<2){msg.textContent="Wpisz co najmniej 2 znaki jako nazwę na bilecie.";return}
+  if(/[<>]/.test(ticketName)){msg.textContent="Ta nazwa zawiera niedozwolone znaki.";return}
+
+  btn.disabled=true;btn.textContent="GENEROWANIE...";
+  try{
+    const t={id:earlyMatch.id,name:ticketName,code:code(earlyMatch.id),platform:earlyMatch.platform};
+    await outputTicket(await createEarlyTicket(t),"#early-ticket-image","#early-download",`${t.code}_WCZESNA_ZALOGA.png`);
+    $("#early-download").dataset.participantNo=String(t.id);
+    $("#early-download").dataset.ticketKind="early";
+    $("#early-ticket-result").classList.add("show");
+    msg.textContent="Bilet gotowy. Możesz zmienić nazwę i wygenerować go ponownie dowolną liczbę razy.";
+  }catch(err){console.error(err);msg.textContent="Nie udało się wygenerować biletu."}
+  finally{btn.disabled=false;btn.textContent="WYGENERUJ BILET"}
+});
+
+/* ticket download statistics */
+async function recordTicketDownload(link){
+  if(!db)return;
+  const participantNo=Number(link.dataset.participantNo||0);
+  const ticketKind=link.dataset.ticketKind||"";
+  if(!participantNo||!["standard","early"].includes(ticketKind))return;
+
+  try{
+    const {error}=await db.rpc("ms_record_ticket_download",{
+      p_participant_no:participantNo,
+      p_ticket_kind:ticketKind
+    });
+    if(error)console.warn("Download stat:",error);
+  }catch(err){
+    console.warn("Download stat:",err);
+  }
+}
+["standard-download","early-download"].forEach(id=>{
+  const link=document.getElementById(id);
+  if(link)link.addEventListener("click",()=>{void recordTicketDownload(link)});
+});
+
+/* cinematic background audio — starts only after user action */
+const missionAudio=$("#mission-audio");
+const soundControl=$("#sound-control");
+const soundLabel=$("#sound-label");
+const AUDIO_PREF_KEY="ibron_audio_enabled";
+const AUDIO_TIME_KEY="ibron_audio_time";
+const audioWanted=()=>localStorage.getItem(AUDIO_PREF_KEY)!=="0";
+
+missionAudio.volume=.30;
+
+function setSoundUI(state){
+  const isOn=state==="on";
+  soundControl.classList.toggle("playing",isOn);
+  soundControl.setAttribute("aria-pressed",isOn?"true":"false");
+  if(state==="on") soundLabel.textContent="DŹWIĘK WŁ.";
+  else if(state==="blocked") soundLabel.textContent="KLIKNIJ — DŹWIĘK";
+  else soundLabel.textContent="DŹWIĘK WYŁ.";
+}
+
+function restoreAudioTime(){
+  const saved=Number(sessionStorage.getItem(AUDIO_TIME_KEY)||0);
+  if(Number.isFinite(saved)&&saved>0&&missionAudio.duration&&saved<missionAudio.duration){
+    missionAudio.currentTime=saved;
+  }
+}
+
+function rememberAudioTime(){
+  if(Number.isFinite(missionAudio.currentTime)){
+    sessionStorage.setItem(AUDIO_TIME_KEY,String(missionAudio.currentTime));
+  }
+}
+
+async function startMissionAudio(){
+  if(!audioWanted()){setSoundUI("off");return false}
+  try{await missionAudio.play();setSoundUI("on");return true}
+  catch(err){setSoundUI("blocked");return false}
+}
+
+async function toggleMissionAudio(e){
+  if(e)e.stopPropagation();
+  if(!missionAudio.paused){
+    missionAudio.pause();
+    localStorage.setItem(AUDIO_PREF_KEY,"0");
+    rememberAudioTime();
+    setSoundUI("off");
+    return;
+  }
+  localStorage.setItem(AUDIO_PREF_KEY,"1");
+  await startMissionAudio();
+}
+
+missionAudio.addEventListener("loadedmetadata",()=>{restoreAudioTime();void startMissionAudio()});
+missionAudio.addEventListener("timeupdate",()=>{if(Math.floor(missionAudio.currentTime)%2===0)rememberAudioTime()});
+window.addEventListener("pagehide",rememberAudioTime);
+soundControl.addEventListener("click",toggleMissionAudio);
+
+const unlockAudio=async()=>{
+  if(audioWanted()&&missionAudio.paused){
+    const ok=await startMissionAudio();
+    if(ok){
+      document.removeEventListener("pointerdown",unlockAudio,true);
+      document.removeEventListener("keydown",unlockAudio,true);
+    }
+  }
+};
+document.addEventListener("pointerdown",unlockAudio,true);
+document.addEventListener("keydown",unlockAudio,true);
+void startMissionAudio();
+
+/* reveal / header / navigation / parallax */
+const observer=new IntersectionObserver(
+  entries=>entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add("visible")}),
+  {threshold:.1}
+);
+document.querySelectorAll(".reveal").forEach(el=>observer.observe(el));
+
+const NAV_SECTIONS=["top","dolacz","status","anthony","media"];
+const NAV_LABELS={top:"MISJA",dolacz:"POKŁAD",status:"STATUS",anthony:"ANTHONY",media:"MEDIA"};
+
+function updateActiveNav(){
+  $("#site-header").classList.toggle("scrolled",scrollY>30);
+
+  const marker=scrollY+Math.min(innerHeight*.34,300);
+  let active="top";
+
+  NAV_SECTIONS.forEach(id=>{
+    const el=document.getElementById(id);
+    if(el && el.offsetTop<=marker) active=id;
+  });
+
+  document.querySelectorAll("[data-nav-target]").forEach(link=>{
+    link.classList.toggle("active",link.dataset.navTarget===active);
+  });
+
+  const current=$("#mobile-current");
+  if(current) current.textContent=NAV_LABELS[active]||"MISJA";
+}
+
+window.addEventListener("scroll",updateActiveNav,{passive:true});
+window.addEventListener("resize",updateActiveNav);
+document.querySelectorAll("[data-nav-target]").forEach(link=>{
+  link.addEventListener("click",()=>{
+    const target=link.dataset.navTarget;
+    document.querySelectorAll("[data-nav-target]").forEach(x=>x.classList.toggle("active",x.dataset.navTarget===target));
+    if($("#mobile-current")) $("#mobile-current").textContent=NAV_LABELS[target]||"MISJA";
+  });
+});
+updateActiveNav();
+
+function openMobileNav(){
+  $("#mobile-nav").classList.add("open");
+  $("#mobile-nav").setAttribute("aria-hidden","false");
+  document.body.classList.add("lock");
+}
+function closeMobileNav(){
+  $("#mobile-nav").classList.remove("open");
+  $("#mobile-nav").setAttribute("aria-hidden","true");
+  document.body.classList.remove("lock");
+}
+window.openMobileNav=openMobileNav;
+window.closeMobileNav=closeMobileNav;
+
+window.addEventListener("mousemove",e=>{
+  if(innerWidth<900) return;
+  const x=(e.clientX/innerWidth-.5)*12,y=(e.clientY/innerHeight-.5)*7;
+  $("#hero-bg").style.backgroundPosition=`calc(50% + ${x}px) calc(50% + ${y}px)`;
+});
+
+/* stars */
+const starCanvas=$("#stars"),starCtx=starCanvas.getContext("2d");let stars=[];
+function setupStars(){const r=devicePixelRatio||1;starCanvas.width=innerWidth*r;starCanvas.height=innerHeight*r;starCanvas.style.width=innerWidth+"px";starCanvas.style.height=innerHeight+"px";starCtx.setTransform(r,0,0,r,0,0);stars=[];for(let i=0;i<Math.floor(innerWidth/7);i++)stars.push({x:Math.random()*innerWidth,y:Math.random()*innerHeight,s:Math.random()*1.2+.2,a:Math.random()*.55+.12,v:Math.random()*.08+.015})}
+function animateStars(){starCtx.clearRect(0,0,innerWidth,innerHeight);stars.forEach(s=>{s.y-=s.v;if(s.y<-3){s.y=innerHeight+3;s.x=Math.random()*innerWidth}starCtx.beginPath();starCtx.arc(s.x,s.y,s.s,0,Math.PI*2);starCtx.fillStyle=`rgba(190,220,255,${s.a})`;starCtx.fill()});requestAnimationFrame(animateStars)}
+window.addEventListener("resize",setupStars);
+
+function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
+
+applySocials();renderMediaLibrary();renderGallery();setupStars();animateStars();refreshCount();updateActiveNav();
+</script>
+</body>
+</html>
