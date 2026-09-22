@@ -478,10 +478,8 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 <div class="bg-aurora"></div>
 <div class="bg-horizon"></div>
 
-<audio id="mission-audio" loop autoplay preload="auto">
-  <source src="media/audio/bg1.mp3" type="audio/mpeg">
-</audio>
-<button class="sound-control playing" id="sound-control" type="button" aria-pressed="true" title="Muzyka w tle">
+<audio id="mission-audio" loop preload="auto"></audio>
+<button class="sound-control playing" id="sound-control" type="button" onclick="toggleMissionAudio(event)" aria-pressed="true" title="Muzyka w tle">
   <span class="sound-bars"><i></i><i></i><i></i><i></i></span>
   <span class="sound-copy"><b id="sound-label">DŹWIĘK WŁ.</b><small>BG1 / MISSION AUDIO</small></span>
 </button>
@@ -857,176 +855,21 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   </div>
 </div>
 
+<script src="media-data.js?v=63"></script>
+
 <script>
 /* =========================================================
    CONFIG — tutaj później wpiszemy komplet mediów
 ========================================================= */
-const MEDIA_CONFIG = {
+const MEDIA_CONFIG = window.MEDIA_CONFIG || {
   socials: {
     youtube: "https://www.youtube.com/@olkuson",
     tiktok: "https://www.tiktok.com/@olkuson",
     instagram: "https://www.instagram.com/olkuson/"
   },
-
-  films: [
-    {
-      type: "FILM GŁÓWNY / NAJNOWSZY",
-      title: "WYSYŁAM WIDZÓW DO STRATOSFERY",
-      url: "https://youtu.be/r4Xcb6-MUxk",
-      thumbnail: "https://i.ytimg.com/vi/r4Xcb6-MUxk/maxresdefault.jpg"
-    },
-    {
-      type: "FILM GŁÓWNY",
-      title: "FILM / ROZDZIAŁ WCZEŚNIEJSZY",
-      url: "https://youtu.be/KOOeGqdDMU8",
-      thumbnail: "https://i.ytimg.com/vi/KOOeGqdDMU8/maxresdefault.jpg"
-    }
-  ],
-
-  shorts: [
-    {
-      type: "SHORT / NAJNOWSZY",
-      title: "SHORT / NAJNOWSZY",
-      url: "https://youtube.com/shorts/P1yTHHiNotg?feature=share",
-      thumbnail: "https://i.ytimg.com/vi/P1yTHHiNotg/maxresdefault.jpg"
-    },
-    {
-      type: "SHORT",
-      title: "SHORT / MISJA STRATOSFERA",
-      url: "https://youtube.com/shorts/SFETUicvOuM?feature=share",
-      thumbnail: "https://i.ytimg.com/vi/SFETUicvOuM/maxresdefault.jpg"
-    },
-    {
-      type: "SHORT",
-      title: "SHORT / MISJA STRATOSFERA",
-      url: "https://youtube.com/shorts/QgBkIYw4Axo?feature=share",
-      thumbnail: "https://i.ytimg.com/vi/QgBkIYw4Axo/maxresdefault.jpg"
-    }
-  ],
-
-  /*
-    GALERIA — tutaj wpisujesz opis każdego zdjęcia.
-    file = nazwa pliku bez rozszerzenia, np. "01"
-    title = tytuł po prawej po kliknięciu zdjęcia
-    date = np. "21.09.2026"
-    place = np. "Krotoszyn, Polska"
-    description = dowolny dłuższy opis
-    videoUrl = opcjonalny link do filmu / Shortsa
-  */
-  gallery: [
-    {
-      file: "01",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "02",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "03",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "04",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "05",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "06",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "07",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "08",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "09",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "10",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "11",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "12",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "13",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    },
-    {
-      file: "14",
-      title: "",
-      date: "",
-      place: "",
-      description: "",
-      videoUrl: ""
-    }
-  ]
+  films: [],
+  shorts: [],
+  gallery: []
 };
 
 /* =========================================================
@@ -1128,8 +971,14 @@ function createVideoCard(v, shortMode=false){
     a.prepend(p);
   };
 
+  a.dataset.mediaUrl=v.url;
+  a.dataset.mediaTitle=v.title||"Materiał";
+  a.dataset.mediaType=v.type||"MEDIA / YOUTUBE";
+  a.dataset.mediaShort=shortMode?"1":"0";
+
   a.addEventListener("click",e=>{
     e.preventDefault();
+    e.stopPropagation();
     openVideoModal(v,shortMode);
   });
 
@@ -1181,7 +1030,7 @@ function openVideoModal(v,shortMode=false){
   $("#video-modal-title").textContent=v.title||"Materiał";
   $("#video-modal-youtube").href=v.url;
   $("#video-modal-frame").classList.toggle("short",Boolean(shortMode));
-  $("#video-modal-iframe").src=`https://www.youtube-nocookie.com/embed/${id}?autoplay=1&rel=0`;
+  $("#video-modal-iframe").src=`https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
   $("#video-modal").classList.add("open");
   $("#video-modal").setAttribute("aria-hidden","false");
   document.body.classList.add("lock");
@@ -1194,6 +1043,21 @@ function closeVideoModal(){
   document.body.classList.remove("lock");
 }
 window.closeVideoModal=closeVideoModal;
+
+document.addEventListener("click",e=>{
+  const card=e.target.closest(".video-card,.short-card");
+  if(!card)return;
+  if(!card.dataset.mediaUrl)return;
+
+  e.preventDefault();
+  e.stopPropagation();
+
+  openVideoModal({
+    url:card.dataset.mediaUrl,
+    title:card.dataset.mediaTitle||"Materiał",
+    type:card.dataset.mediaType||"MEDIA / YOUTUBE"
+  },card.dataset.mediaShort==="1");
+});
 
 $("#video-modal").addEventListener("click",e=>{
   if(e.target.id==="video-modal")closeVideoModal();
@@ -1252,7 +1116,7 @@ function renderGallery(){
         const record=normalizeGalleryItem(g,i,resolved);
         galleryValid.push(record);
         galleryValid.sort((a,b)=>a.index-b.index);
-        item.onclick=()=>openLightboxByIndex(i);
+        item.dataset.galleryIndex=String(i);
       },
       ()=>{
         img.remove();
@@ -1267,6 +1131,15 @@ function renderGallery(){
     track.appendChild(item);
   });
 }
+
+
+document.addEventListener("click",e=>{
+  const item=e.target.closest(".gallery-item");
+  if(!item || item.dataset.galleryIndex===undefined)return;
+  e.preventDefault();
+  e.stopPropagation();
+  openLightboxByIndex(Number(item.dataset.galleryIndex));
+});
 
 function getGalleryByOriginalIndex(originalIndex){
   return galleryValid.find(x=>x.index===originalIndex)||null;
@@ -1292,9 +1165,11 @@ function updateLightbox(record){
   const link=$("#lightbox-video-link");
   if(record.videoUrl){
     link.href=record.videoUrl;
+    link.dataset.videoUrl=record.videoUrl;
     link.style.display="inline-flex";
   }else{
     link.removeAttribute("href");
+    delete link.dataset.videoUrl;
     link.style.display="none";
   }
 
@@ -1326,6 +1201,19 @@ function shiftLightbox(dir){
 }
 window.closeLightbox=closeLightbox;
 window.shiftLightbox=shiftLightbox;
+
+$("#lightbox-video-link").addEventListener("click",e=>{
+  const url=e.currentTarget.dataset.videoUrl||"";
+  const id=youtubeIdFromUrl(url);
+  if(!id)return; // dla zwykłego linku pozwól otworzyć nową kartę
+
+  e.preventDefault();
+  openVideoModal({
+    url,
+    title:$("#lightbox-title").textContent||"Powiązany film",
+    type:"POWIĄZANY FILM"
+  },url.includes("/shorts/"));
+});
 
 $("#lightbox").addEventListener("click",e=>{
   if(e.target.id==="lightbox")closeLightbox();
@@ -1624,18 +1512,29 @@ async function recordTicketDownload(link){
 const missionAudio=$("#mission-audio");
 const soundControl=$("#sound-control");
 const soundLabel=$("#sound-label");
+
 const AUDIO_PREF_KEY="ibron_audio_enabled";
 const AUDIO_TIME_KEY="ibron_audio_time";
-const audioWanted=()=>localStorage.getItem(AUDIO_PREF_KEY)!=="0";
+const AUDIO_CANDIDATES=[
+  "media/audio/bg1.mp3",
+  "audio/bg1.mp3",
+  "bg1.mp3"
+];
+let audioPathIndex=0;
+let audioPathReady=false;
+let audioTrying=false;
 
+const audioWanted=()=>localStorage.getItem(AUDIO_PREF_KEY)!=="0";
 missionAudio.volume=.30;
 
 function setSoundUI(state){
   const isOn=state==="on";
   soundControl.classList.toggle("playing",isOn);
   soundControl.setAttribute("aria-pressed",isOn?"true":"false");
+
   if(state==="on") soundLabel.textContent="DŹWIĘK WŁ.";
   else if(state==="blocked") soundLabel.textContent="KLIKNIJ — DŹWIĘK";
+  else if(state==="missing") soundLabel.textContent="BRAK BG1";
   else soundLabel.textContent="DŹWIĘK WYŁ.";
 }
 
@@ -1652,14 +1551,59 @@ function rememberAudioTime(){
   }
 }
 
+function loadAudioCandidate(index=0){
+  if(index>=AUDIO_CANDIDATES.length){
+    audioTrying=false;
+    audioPathReady=false;
+    setSoundUI("missing");
+    return;
+  }
+
+  audioTrying=true;
+  audioPathIndex=index;
+  audioPathReady=false;
+  missionAudio.src=AUDIO_CANDIDATES[index];
+  missionAudio.load();
+}
+
+missionAudio.addEventListener("canplay",()=>{
+  audioTrying=false;
+  audioPathReady=true;
+  restoreAudioTime();
+  if(audioWanted()) void startMissionAudio();
+});
+
+missionAudio.addEventListener("error",()=>{
+  if(audioTrying || !audioPathReady){
+    loadAudioCandidate(audioPathIndex+1);
+  }
+});
+
 async function startMissionAudio(){
-  if(!audioWanted()){setSoundUI("off");return false}
-  try{await missionAudio.play();setSoundUI("on");return true}
-  catch(err){setSoundUI("blocked");return false}
+  if(!audioWanted()){
+    setSoundUI("off");
+    return false;
+  }
+
+  if(!audioPathReady){
+    if(!audioTrying) loadAudioCandidate(audioPathIndex);
+    setSoundUI("blocked");
+    return false;
+  }
+
+  try{
+    await missionAudio.play();
+    setSoundUI("on");
+    return true;
+  }catch(err){
+    setSoundUI("blocked");
+    return false;
+  }
 }
 
 async function toggleMissionAudio(e){
-  if(e)e.stopPropagation();
+  if(e){e.preventDefault();e.stopPropagation()}
+
   if(!missionAudio.paused){
     missionAudio.pause();
     localStorage.setItem(AUDIO_PREF_KEY,"0");
@@ -1667,27 +1611,31 @@ async function toggleMissionAudio(e){
     setSoundUI("off");
     return;
   }
+
   localStorage.setItem(AUDIO_PREF_KEY,"1");
+
+  if(!audioPathReady && !audioTrying){
+    loadAudioCandidate(0);
+  }
+
   await startMissionAudio();
 }
+window.toggleMissionAudio=toggleMissionAudio;
 
-missionAudio.addEventListener("loadedmetadata",()=>{restoreAudioTime();void startMissionAudio()});
-missionAudio.addEventListener("timeupdate",()=>{if(Math.floor(missionAudio.currentTime)%2===0)rememberAudioTime()});
+missionAudio.addEventListener("timeupdate",()=>{
+  if(Math.floor(missionAudio.currentTime)%2===0)rememberAudioTime();
+});
 window.addEventListener("pagehide",rememberAudioTime);
-soundControl.addEventListener("click",toggleMissionAudio);
 
 const unlockAudio=async()=>{
-  if(audioWanted()&&missionAudio.paused){
-    const ok=await startMissionAudio();
-    if(ok){
-      document.removeEventListener("pointerdown",unlockAudio,true);
-      document.removeEventListener("keydown",unlockAudio,true);
-    }
+  if(audioWanted() && missionAudio.paused){
+    await startMissionAudio();
   }
 };
-document.addEventListener("pointerdown",unlockAudio,true);
-document.addEventListener("keydown",unlockAudio,true);
-void startMissionAudio();
+document.addEventListener("pointerdown",unlockAudio,{capture:true,once:true});
+document.addEventListener("keydown",unlockAudio,{capture:true,once:true});
+
+loadAudioCandidate(0);
 
 /* reveal / header / navigation / parallax */
 const observer=new IntersectionObserver(
@@ -1756,7 +1704,7 @@ window.addEventListener("resize",setupStars);
 
 function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;","'":"&#039;"}[m]))}
 
-applySocials();renderMediaLibrary();renderGallery();setupStars();animateStars();refreshCount();updateActiveNav();
+console.log("MISJA STRATOSFERA BUILD V6.3");applySocials();renderMediaLibrary();renderGallery();setupStars();animateStars();refreshCount();updateActiveNav();
 </script>
 </body>
 </html>
