@@ -349,6 +349,70 @@ img{max-width:100%}
   }
 }
 
+
+/* =========================================================
+   V6.7 — 10 GŁOSÓW / 20 KM
+========================================================= */
+.quote-callout{
+  margin-top:28px;
+  position:relative;
+  overflow:hidden;
+  border:1px solid rgba(125,203,255,.16);
+  background:
+    radial-gradient(circle at 84% 10%,rgba(125,203,255,.10),transparent 31%),
+    linear-gradient(145deg,rgba(125,203,255,.035),rgba(255,255,255,.012));
+  padding:28px 30px;
+  display:grid;
+  grid-template-columns:minmax(0,1fr) auto;
+  gap:28px;
+  align-items:center;
+}
+.quote-callout::after{
+  content:"20 000 M";
+  position:absolute;
+  right:-14px;bottom:-23px;
+  color:rgba(255,255,255,.025);
+  font-size:5.6rem;font-weight:950;letter-spacing:-.07em;
+  pointer-events:none;
+}
+.quote-kicker{color:var(--blue);font-size:.57rem;font-weight:900;letter-spacing:.18em}
+.quote-callout h3{margin-top:8px;font-size:clamp(1.65rem,3.2vw,2.75rem);line-height:1;letter-spacing:-.05em}
+.quote-callout p{margin-top:12px;max-width:780px;color:#8090a1;font-size:.78rem;line-height:1.72}
+.quote-callout strong{color:#e6f4ff}
+.quote-pill{
+  position:relative;z-index:1;
+  min-width:155px;padding:17px 18px;
+  border-left:1px solid rgba(125,203,255,.24);
+}
+.quote-pill b{display:block;color:#fff;font-size:2rem;line-height:1}
+.quote-pill span{display:block;margin-top:7px;color:#647486;font-size:.49rem;font-weight:850;letter-spacing:.14em}
+
+.quote-box{
+  margin-top:22px;padding:18px;
+  border:1px solid rgba(125,203,255,.14);
+  background:rgba(125,203,255,.025);
+}
+.quote-box.gold{
+  border-color:rgba(232,184,75,.18);
+  background:rgba(232,184,75,.025);
+}
+.quote-box-head{display:flex;justify-content:space-between;gap:14px;align-items:end;margin-bottom:9px}
+.quote-box-head b{font-size:.62rem;letter-spacing:.13em;color:#9bd7ff}
+.quote-box.gold .quote-box-head b{color:var(--gold2)}
+.quote-box-head span{font-size:.53rem;color:#5f7183;letter-spacing:.08em}
+.quote-help{margin-top:9px;color:#6f8091;font-size:.63rem;line-height:1.58}
+.quote-consent{margin-top:13px}
+.quote-consent[hidden]{display:none!important}
+.quote-counter.warn{color:#efbc75}
+textarea.input.quote-input{min-height:108px;height:108px;line-height:1.55}
+
+@media(max-width:720px){
+  .quote-callout{grid-template-columns:1fr;padding:23px 20px;gap:18px}
+  .quote-pill{border-left:0;border-top:1px solid rgba(125,203,255,.18);padding:15px 0 0;min-width:0}
+  .quote-callout::after{font-size:4.2rem}
+  .quote-callout h3{font-size:1.75rem}
+}
+
 /* MODALS + FORMS */
 .modal{position:fixed;inset:0;z-index:300;display:none;align-items:center;justify-content:center;padding:22px;background:rgba(0,0,0,.82);backdrop-filter:blur(18px)}
 .modal.open{display:flex}
@@ -657,7 +721,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 
 <header class="site-header" id="site-header">
   <div class="command-rail">
-    <a href="../index.html" class="brand-lockup" title="Ibron Industries — strona główna">
+    <a href="/" class="brand-lockup" title="Ibron Industries — strona główna">
       <span class="brand-orb"></span>
       <span class="brand-copy">
         <span class="brand-main">OLKUSON</span>
@@ -770,6 +834,14 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
         <div class="choice-features"><div>weryfikacja przez nazwę użytkownika @</div><div>ekskluzywna karta Wczesnej Załogi</div><div>specjalny status w manifeście</div></div>
         <button class="choice-button gold">ODBIERZ WYRÓŻNIONY BILET</button>
       </article>
+    </div>
+    <div class="quote-callout reveal">
+      <div>
+        <div class="quote-kicker">10 GŁOSÓW / 20 000 M</div>
+        <h3>Zostaw jedno zdanie, które może polecieć wyżej niż Ty.</h3>
+        <p>Każdy uczestnik — zwykły albo <strong>Wczesna Załoga</strong> — może opcjonalnie zostawić krótki cytat. Przed lotem wybierzemy <strong>10 wiadomości</strong>. Jeżeli Twój cytat trafi do finałowej dziesiątki, Anthony odczyta go po osiągnięciu około <strong>20 km wysokości</strong>.</p>
+      </div>
+      <div class="quote-pill"><b>10</b><span>WIADOMOŚCI ZOSTANIE WYBRANYCH</span></div>
     </div>
     <div class="choice-trust reveal">BEZ KONTA I BEZ HASŁA · MINIMUM DANYCH · CYFROWY MANIFEST MISJI</div>
   </div>
@@ -923,7 +995,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 </section>
 </main>
 
-<footer><div class="wrap footer-in"><span>© 2026 OLKUSON × IBRON INDUSTRIES · <a href="../privacy.html">PRYWATNOŚĆ</a></span><span>MISJA STRATOSFERA / POLSKA</span></div></footer>
+<footer><div class="wrap footer-in"><span>© 2026 OLKUSON × IBRON INDUSTRIES · <a href="/privacy/">PRYWATNOŚĆ</a></span><span>MISJA STRATOSFERA / POLSKA</span></div></footer>
 
 <!-- STANDARD -->
 <div class="modal" id="standard-modal"><div class="modal-box">
@@ -932,6 +1004,18 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   <p class="modal-copy">Wystarczy imię lub pseudonim. Po zapisaniu otrzymasz własny numer uczestnika i kartę pokładową.</p>
   <form id="standard-form">
     <div class="field"><label>IMIĘ / PSEUDONIM</label><input class="input" id="standard-name" maxlength="24" required autocomplete="off" placeholder="np. Olkuson"></div>
+    <div class="quote-box">
+      <div class="quote-box-head">
+        <b>CYTAT DO STRATOSFERY / OPCJONALNIE</b>
+        <span class="quote-counter" id="standard-quote-counter">0 / 180</span>
+      </div>
+      <textarea class="input quote-input" id="standard-quote" maxlength="180" autocomplete="off" placeholder="Np. „Nie bój się zaczynać od nowa. Tym razem nie zaczynasz od zera — zaczynasz z doświadczeniem.”"></textarea>
+      <div class="quote-help">Spośród wszystkich zgłoszeń wybierzemy 10. Cytat nie jest automatycznie publikowany ani odczytywany — najpierw przechodzi ręczny wybór i moderację.</div>
+      <label class="check quote-consent" id="standard-quote-consent-wrap" hidden>
+        <input type="checkbox" id="standard-quote-consent">
+        <span>Zgadzam się, aby ten cytat mógł zostać wybrany, odczytany przez Anthony’ego podczas misji oraz znaleźć się w materiale z lotu.</span>
+      </label>
+    </div>
 
     <!-- Honeypot: normalny użytkownik tego pola nie widzi i nie wypełnia -->
     <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
@@ -945,7 +1029,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
     <label class="check"><input type="checkbox" id="standard-accept" required><span>Rozumiem, że udział oznacza cyfrowy wpis w manifeście, a nie fizyczny lot człowieka.</span></label>
     <button class="btn btn-primary" id="standard-submit" style="width:100%;margin-top:20px">DOŁĄCZ DO MISJI</button>
     <div class="message" id="standard-message"></div>
-    <div style="margin-top:10px;text-align:center;color:#5f6e80;font-size:.62rem;line-height:1.55">Informacje o danych: <a href="../privacy.html" target="_blank" style="color:#8ecfff">Prywatność Misji Stratosfera</a>.</div>
+    <div style="margin-top:10px;text-align:center;color:#5f6e80;font-size:.62rem;line-height:1.55">Informacje o danych: <a href="/privacy/" target="_blank" style="color:#8ecfff">Prywatność Misji Stratosfera</a>.</div>
   </form>
   <div class="ticket-result" id="standard-ticket-result"><img id="standard-ticket-image" alt="Karta pokładowa"><div class="ticket-actions"><a id="standard-download" class="btn btn-primary" download>POBIERZ BILET</a></div></div>
 </div></div>
@@ -961,10 +1045,27 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
     <div id="early-personalization" style="display:none">
       <div class="field"><label>NAZWA NA BILECIE</label><input class="input" id="early-ticket-name" maxlength="24" autocomplete="off" placeholder="np. Kuba"></div>
       <div style="margin-top:10px;color:#7e8b99;font-size:.68rem;line-height:1.55">To tylko napis na bilecie. Nie zmienia Twojego wpisu, numeru uczestnika ani licznika załogi.</div>
+      <div class="quote-box gold">
+        <div class="quote-box-head">
+          <b>CYTAT DO STRATOSFERY / OPCJONALNIE</b>
+          <span class="quote-counter" id="early-quote-counter">0 / 180</span>
+        </div>
+        <textarea class="input quote-input" id="early-quote" maxlength="180" autocomplete="off" placeholder="Jedno krótkie zdanie, które może zostać odczytane na wysokości ok. 20 km."></textarea>
+        <div class="quote-help">Jeżeli zostawisz cytat, możesz później wrócić i zmienić go przed wyborem finałowej dziesiątki.</div>
+        <label class="check quote-consent" id="early-quote-consent-wrap" hidden>
+          <input type="checkbox" id="early-quote-consent">
+          <span>Zgadzam się, aby ten cytat mógł zostać wybrany, odczytany przez Anthony’ego podczas misji oraz znaleźć się w materiale z lotu.</span>
+        </label>
+      </div>
     </div>
+    <div aria-hidden="true" style="position:absolute;left:-10000px;top:auto;width:1px;height:1px;overflow:hidden">
+      <label for="early-website">Website</label>
+      <input id="early-website" name="early-website" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <div id="early-turnstile" style="min-height:1px"></div>
     <button class="btn btn-primary" id="early-submit" style="width:100%;margin-top:20px;background:var(--gold2);border-color:var(--gold2)">SZUKAJ NA LIŚCIE</button>
     <div class="message" id="early-message"></div>
-    <div style="margin-top:10px;text-align:center;color:#6e6654;font-size:.62rem;line-height:1.55">Nazwa użytkownika @ Wczesnej Załogi może pochodzić z publicznego komentarza. <a href="../privacy.html" target="_blank" style="color:#f0ce80">Prywatność</a>.</div>
+    <div style="margin-top:10px;text-align:center;color:#6e6654;font-size:.62rem;line-height:1.55">Nazwa użytkownika @ Wczesnej Załogi może pochodzić z publicznego komentarza. <a href="/privacy/" target="_blank" style="color:#f0ce80">Prywatność</a>.</div>
   </form>
   <div class="ticket-result" id="early-ticket-result"><img id="early-ticket-image" alt="Bilet Wczesnej Załogi"><div class="ticket-actions"><a id="early-download" class="btn btn-primary" download style="background:var(--gold2);border-color:var(--gold2)">POBIERZ BILET WCZESNEJ ZAŁOGI</a></div></div>
 </div></div>
@@ -1054,7 +1155,9 @@ const db=onlineMode?window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHAB
 const TURNSTILE_SITE_KEY="0x4AAAAAAFAZKFbyG2TlSGBt";
 const REGISTER_FUNCTION_URL="https://elpedksjfpmsepjiknwy.supabase.co/functions/v1/register-participant";
 let standardTurnstileWidget=null;
+let earlyTurnstileWidget=null;
 let pendingStandardRegistration=null;
+let pendingEarlyQuote=null;
 
 function initStandardTurnstile(){
   if(!window.turnstile || standardTurnstileWidget!==null)return;
@@ -1078,7 +1181,32 @@ function initStandardTurnstile(){
   });
 }
 
-window.addEventListener("load",initStandardTurnstile);
+function initEarlyTurnstile(){
+  if(!window.turnstile || earlyTurnstileWidget!==null)return;
+  earlyTurnstileWidget=window.turnstile.render("#early-turnstile",{
+    sitekey:TURNSTILE_SITE_KEY,
+    execution:"execute",
+    appearance:"interaction-only",
+    action:"early_quote",
+    callback:token=>void finishEarlyQuote(token),
+    "error-callback":code=>{
+      console.error("Turnstile early error:",code);
+      const msg=$("#early-message"),btn=$("#early-submit");
+      msg.textContent="Nie udało się przeprowadzić kontroli antyspam dla cytatu. Spróbuj ponownie.";
+      btn.disabled=false;
+      btn.textContent="WYGENERUJ BILET";
+      pendingEarlyQuote=null;
+    },
+    "expired-callback":()=>{
+      if(earlyTurnstileWidget!==null)window.turnstile.reset(earlyTurnstileWidget);
+    }
+  });
+}
+
+window.addEventListener("load",()=>{
+  initStandardTurnstile();
+  initEarlyTurnstile();
+});
 
 
 const $=s=>document.querySelector(s);
@@ -1543,12 +1671,42 @@ async function outputTicket(canvas,imgSel,downloadSel,file){
   return new Promise((res,rej)=>canvas.toBlob(blob=>{if(!blob)return rej(new Error("PNG"));const url=URL.createObjectURL(blob);$(imgSel).src=url;$(downloadSel).href=url;$(downloadSel).download=file;res()},"image/png"))
 }
 
+/* quote helpers */
+const QUOTE_MAX=180;
+
+function quoteValue(selector){
+  return clean($(selector)?.value||"").slice(0,QUOTE_MAX);
+}
+
+function updateQuoteUI(inputSelector,counterSelector,consentWrapSelector,consentSelector){
+  const input=$(inputSelector),counter=$(counterSelector),wrap=$(consentWrapSelector);
+  if(!input||!counter||!wrap)return;
+
+  const len=input.value.length;
+  counter.textContent=`${len} / ${QUOTE_MAX}`;
+  counter.classList.toggle("warn",len>155);
+
+  const hasQuote=clean(input.value).length>0;
+  wrap.hidden=!hasQuote;
+
+  if(!hasQuote && $(consentSelector)){
+    $(consentSelector).checked=false;
+  }
+}
+
+$("#standard-quote").addEventListener("input",()=>updateQuoteUI(
+  "#standard-quote","#standard-quote-counter","#standard-quote-consent-wrap","#standard-quote-consent"
+));
+$("#early-quote").addEventListener("input",()=>updateQuoteUI(
+  "#early-quote","#early-quote-counter","#early-quote-consent-wrap","#early-quote-consent"
+));
+
 /* forms */
 async function finishStandardRegistration(turnstileToken){
   const pending=pendingStandardRegistration;
   if(!pending)return;
 
-  const {name,website}=pending;
+  const {name,website,quote}=pending;
   const msg=$("#standard-message"),btn=$("#standard-submit");
 
   try{
@@ -1556,7 +1714,9 @@ async function finishStandardRegistration(turnstileToken){
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
+        action:"standard_register",
         displayName:name,
+        quote,
         turnstileToken,
         website
       })
@@ -1570,6 +1730,8 @@ async function finishStandardRegistration(turnstileToken){
         msg.textContent="Kontrola antyspam nie została zaliczona. Spróbuj ponownie.";
       }else if(result?.error==="invalid_name"){
         msg.textContent="Sprawdź wpisaną nazwę.";
+      }else if(result?.error==="invalid_quote"){
+        msg.textContent="Sprawdź treść cytatu.";
       }else{
         msg.textContent="Nie udało się zapisać. Spróbuj ponownie za chwilę.";
       }
@@ -1590,7 +1752,7 @@ async function finishStandardRegistration(turnstileToken){
     $("#standard-download").dataset.participantNo=String(id);
     $("#standard-download").dataset.ticketKind="standard";
     $("#standard-ticket-result").classList.add("show");
-    msg.textContent="Witaj na pokładzie.";
+    msg.textContent=quote ? "Witaj na pokładzie. Twój cytat został zapisany do wyboru 10 wiadomości." : "Witaj na pokładzie.";
     await refreshCount();
 
   }catch(err){
@@ -1612,6 +1774,7 @@ $("#standard-form").addEventListener("submit",async e=>{
 
   const name=clean($("#standard-name").value).slice(0,24);
   const website=$("#standard-website").value||"";
+  const quote=quoteValue("#standard-quote");
   const msg=$("#standard-message");
   const btn=$("#standard-submit");
 
@@ -1622,6 +1785,16 @@ $("#standard-form").addEventListener("submit",async e=>{
 
   if(!$("#standard-accept").checked){
     msg.textContent="Potwierdź zasady manifestu.";
+    return;
+  }
+
+  if(quote && !$("#standard-quote-consent").checked){
+    msg.textContent="Jeśli dodajesz cytat, zaznacz zgodę pod polem cytatu.";
+    return;
+  }
+
+  if(quote && quote.length<3){
+    msg.textContent="Cytat powinien mieć co najmniej 3 znaki.";
     return;
   }
 
@@ -1637,7 +1810,7 @@ $("#standard-form").addEventListener("submit",async e=>{
     return;
   }
 
-  pendingStandardRegistration={name,website};
+  pendingStandardRegistration={name,website,quote};
   btn.disabled=true;
   btn.textContent="SPRAWDZANIE...";
 
@@ -1656,10 +1829,13 @@ let earlyMatch=null;
 
 function resetEarlyMatch(){
   earlyMatch=null;
+  pendingEarlyQuote=null;
   $("#early-personalization").style.display="none";
   $("#early-ticket-result").classList.remove("show");
   $("#early-submit").textContent="SZUKAJ NA LIŚCIE";
   $("#early-message").textContent="";
+  $("#early-quote").value="";
+  updateQuoteUI("#early-quote","#early-quote-counter","#early-quote-consent-wrap","#early-quote-consent");
 }
 
 $("#early-platform").addEventListener("change",resetEarlyMatch);
@@ -1696,9 +1872,61 @@ $("#early-form").addEventListener("submit",async e=>{
   }
 
   const ticketName=clean($("#early-ticket-name").value).slice(0,24);
+  const quote=quoteValue("#early-quote");
+
   if(ticketName.length<2){msg.textContent="Wpisz co najmniej 2 znaki jako nazwę na bilecie.";return}
   if(/[<>]/.test(ticketName)){msg.textContent="Ta nazwa zawiera niedozwolone znaki.";return}
 
+  if(quote && quote.length<3){
+    msg.textContent="Cytat powinien mieć co najmniej 3 znaki.";
+    return;
+  }
+
+  if(quote && !$("#early-quote-consent").checked){
+    msg.textContent="Jeśli dodajesz cytat, zaznacz zgodę pod polem cytatu.";
+    return;
+  }
+
+  if(!quote){
+    await generateEarlyTicket(ticketName,false);
+    return;
+  }
+
+  if(!window.turnstile){
+    msg.textContent="Ochrona formularza jeszcze się ładuje. Spróbuj za sekundę.";
+    return;
+  }
+
+  initEarlyTurnstile();
+  if(earlyTurnstileWidget===null){
+    msg.textContent="Nie udało się uruchomić ochrony cytatu. Odśwież stronę.";
+    return;
+  }
+
+  pendingEarlyQuote={
+    ticketName,
+    quote,
+    platform,
+    handle,
+    website:$("#early-website").value||""
+  };
+
+  btn.disabled=true;
+  btn.textContent="SPRAWDZANIE CYTATU...";
+
+  try{
+    window.turnstile.execute(earlyTurnstileWidget);
+  }catch(err){
+    console.error(err);
+    pendingEarlyQuote=null;
+    btn.disabled=false;
+    btn.textContent="WYGENERUJ BILET";
+    msg.textContent="Nie udało się uruchomić kontroli antyspam dla cytatu.";
+  }
+});
+
+async function generateEarlyTicket(ticketName,quoteSaved){
+  const msg=$("#early-message"),btn=$("#early-submit");
   btn.disabled=true;btn.textContent="GENEROWANIE...";
   try{
     const t={id:earlyMatch.id,name:ticketName,code:code(earlyMatch.id),platform:earlyMatch.platform};
@@ -1706,10 +1934,73 @@ $("#early-form").addEventListener("submit",async e=>{
     $("#early-download").dataset.participantNo=String(t.id);
     $("#early-download").dataset.ticketKind="early";
     $("#early-ticket-result").classList.add("show");
-    msg.textContent="Bilet gotowy. Możesz zmienić nazwę i wygenerować go ponownie dowolną liczbę razy.";
-  }catch(err){console.error(err);msg.textContent="Nie udało się wygenerować biletu."}
-  finally{btn.disabled=false;btn.textContent="WYGENERUJ BILET"}
-});
+    msg.textContent=quoteSaved
+      ? "Bilet gotowy. Twój cytat został zapisany do wyboru 10 wiadomości."
+      : "Bilet gotowy. Możesz zmienić nazwę i wygenerować go ponownie dowolną liczbę razy.";
+  }catch(err){
+    console.error(err);
+    msg.textContent="Nie udało się wygenerować biletu.";
+  }finally{
+    btn.disabled=false;
+    btn.textContent="WYGENERUJ BILET";
+  }
+}
+
+async function finishEarlyQuote(turnstileToken){
+  const pending=pendingEarlyQuote;
+  if(!pending||!earlyMatch)return;
+
+  const msg=$("#early-message"),btn=$("#early-submit");
+
+  try{
+    const response=await fetch(REGISTER_FUNCTION_URL,{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        action:"early_quote",
+        platform:pending.platform,
+        handle:pending.handle,
+        quote:pending.quote,
+        turnstileToken,
+        website:pending.website
+      })
+    });
+
+    const result=await response.json().catch(()=>({}));
+
+    if(!response.ok){
+      console.error("Early quote function:",response.status,result);
+      if(result?.error==="turnstile_failed"){
+        msg.textContent="Kontrola antyspam cytatu nie została zaliczona. Spróbuj ponownie.";
+      }else if(result?.error==="invalid_quote"){
+        msg.textContent="Sprawdź treść cytatu.";
+      }else if(result?.error==="early_not_found"){
+        msg.textContent="Nie udało się powiązać cytatu z Wczesną Załogą.";
+      }else{
+        msg.textContent="Nie udało się zapisać cytatu. Spróbuj ponownie.";
+      }
+      return;
+    }
+
+    await generateEarlyTicket(pending.ticketName,true);
+
+  }catch(err){
+    console.error(err);
+    msg.textContent="Nie udało się zapisać cytatu.";
+  }finally{
+    pendingEarlyQuote=null;
+
+    if(window.turnstile && earlyTurnstileWidget!==null){
+      window.turnstile.reset(earlyTurnstileWidget);
+    }
+
+    if(!$("#early-ticket-result").classList.contains("show")){
+      btn.disabled=false;
+      btn.textContent="WYGENERUJ BILET";
+    }
+  }
+}
+window.finishEarlyQuote=finishEarlyQuote;
 
 /* ticket download statistics */
 async function recordTicketDownload(link){
@@ -1947,5 +2238,19 @@ function escapeHtml(s){return s.replace(/[&<>"']/g,m=>({"&":"&amp;","<":"&lt;","
 
 console.log("MISJA STRATOSFERA BUILD V6.3");applySocials();renderMediaLibrary();renderGallery();setupStars();animateStars();refreshCount();updateActiveNav();
 </script>
+
+<script>
+  (() => {
+    const p = window.location.pathname;
+    if (p.endsWith("/stratosfera/index.html")) {
+      history.replaceState(
+        null,
+        "",
+        "/stratosfera/" + window.location.search + window.location.hash
+      );
+    }
+  })();
+</script>
+
 </body>
 </html>
