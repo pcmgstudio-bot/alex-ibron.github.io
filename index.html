@@ -549,40 +549,20 @@
     }
 
     /* ===== MISSION AUDIO ===== */
-    .sound-control {
-      position: fixed;
-      left: 22px;
-      bottom: 22px;
-      z-index: 1200;
-      min-width: 154px;
-      height: 46px;
-      padding: 0 14px;
-      display: flex;
-      align-items: center;
-      gap: 11px;
-      color: #d9e5ee;
-      background: rgba(4,9,15,.80);
-      border: 1px solid rgba(255,255,255,.12);
-      border-radius: 999px;
-      backdrop-filter: blur(18px);
-      -webkit-backdrop-filter: blur(18px);
-      box-shadow: 0 16px 55px rgba(0,0,0,.38);
-      cursor: pointer;
-      transition: .25s ease;
-    }
+    
 
-    .sound-control:hover { border-color: rgba(125,203,255,.38); transform: translateY(-2px); }
-    .sound-control.playing { border-color: rgba(125,203,255,.34); background: rgba(6,16,25,.90); }
-    .sound-bars { width:20px;height:17px;display:flex;align-items:center;justify-content:center;gap:2px; }
-    .sound-bars i { display:block;width:2px;height:5px;background:#7dcbff;opacity:.55; }
-    .sound-control.playing .sound-bars i { animation:soundBar .85s ease-in-out infinite alternate; }
-    .sound-control.playing .sound-bars i:nth-child(2){animation-delay:.12s}
-    .sound-control.playing .sound-bars i:nth-child(3){animation-delay:.24s}
-    .sound-control.playing .sound-bars i:nth-child(4){animation-delay:.36s}
+    
+    
+    
+    
+    
+    
+    
+    
     @keyframes soundBar { to { height:16px;opacity:1; } }
-    .sound-copy { display:flex;flex-direction:column;text-align:left;line-height:1; }
-    .sound-copy b { font-size:.56rem;letter-spacing:.13em; }
-    .sound-copy small { margin-top:5px;color:#627386;font-size:.46rem;letter-spacing:.10em; }
+    
+    
+    
 
 
     /* ===== FOOTER ===== */
@@ -657,16 +637,10 @@
       .mission-specs { display: none; }
       .mission-status { font-size: .51rem; padding: 8px 10px; }
 
-      .sound-control {
-        left: 14px;
-        bottom: 14px;
-        min-width: 142px;
-        height: 43px;
-        padding: 0 12px;
-      }
+      
 
-      .sound-copy b { font-size:.52rem; }
-      .sound-copy small { font-size:.42rem; }
+      
+      
     }
   
     /* V6.5 — mobile safe fit for Misja Stratosfera portal */
@@ -717,16 +691,8 @@
     <source src="videobg.mp4" type="video/mp4">
   </video>
   <div class="video-overlay"></div>
-
-  <audio id="mission-audio" src="stratosfera/media/audio/bg1.mp3?v=65" loop preload="auto" playsinline></audio>
-  <button class="sound-control" id="sound-control" type="button" aria-pressed="false" title="Muzyka w tle">
-    <span class="sound-bars"><i></i><i></i><i></i><i></i></span>
-    <span class="sound-copy"><b id="sound-label">KLIKNIJ — DŹWIĘK</b><small>BG1 / MISSION AUDIO</small></span>
-  </button>
-
-
-  <header class="header" id="main-header">
-    <a href="index.html" class="logo">
+<header class="header" id="main-header">
+    <a href="/" class="logo">
       IBRON INDUSTRIES
     </a>
     
@@ -763,7 +729,7 @@
       </div>
 
       <div class="mission-stage">
-        <a href="./stratosfera/index.html" class="mission-launch" aria-label="Wejdź do programu Misja Stratosfera">
+        <a href="/stratosfera/" class="mission-launch" aria-label="Wejdź do programu Misja Stratosfera">
           <div class="mission-main">
             <div class="mission-kicker">
               <span class="lang-pl">OLKUSON PRESENTS / PROGRAM STRATOSFERYCZNY</span>
@@ -867,7 +833,7 @@
 
   <footer>
     <div class="container">
-      &copy; 2026 Ibron Industries. Absolute Privacy. &nbsp;·&nbsp; <a href="privacy.html">Prywatność</a>
+      &copy; 2026 Ibron Industries. Absolute Privacy. &nbsp;·&nbsp; <a href="/privacy/">Prywatność</a>
     </div>
   </footer>
 
@@ -898,144 +864,16 @@
       setLang(initialLang);
     });
 
-    /* 3. MISSION AUDIO — V6.5 ROBUST */
-    const missionAudio = document.getElementById('mission-audio');
-    const soundControl = document.getElementById('sound-control');
-    const soundLabel = document.getElementById('sound-label');
+    </script>
 
-    const AUDIO_PREF_KEY = 'ibron_audio_enabled';
-    const AUDIO_TIME_KEY = 'ibron_audio_time';
-    const AUDIO_SRC = 'stratosfera/media/audio/bg1.mp3?v=65';
-    let audioRestoreDone = false;
-
-    const audioWanted = () => localStorage.getItem(AUDIO_PREF_KEY) !== '0';
-    missionAudio.volume = 0.30;
-
-    function setSoundUI(state) {
-      const isOn = state === 'on';
-      soundControl.classList.toggle('playing', isOn);
-      soundControl.setAttribute('aria-pressed', isOn ? 'true' : 'false');
-
-      if(state === 'on') soundLabel.textContent = 'DŹWIĘK WŁ.';
-      else if(state === 'loading') soundLabel.textContent = 'ŁADOWANIE...';
-      else if(state === 'error') soundLabel.textContent = 'SPRÓBUJ PONOWNIE';
-      else if(state === 'off') soundLabel.textContent = 'DŹWIĘK WYŁ.';
-      else soundLabel.textContent = 'KLIKNIJ — DŹWIĘK';
-    }
-
-    function restoreAudioTime() {
-      if(audioRestoreDone) return;
-      audioRestoreDone = true;
-
-      const saved = Number(sessionStorage.getItem(AUDIO_TIME_KEY) || 0);
-      if(Number.isFinite(saved) && saved > 0 && Number.isFinite(missionAudio.duration) && saved < missionAudio.duration) {
-        try { missionAudio.currentTime = saved; } catch(e) {}
+  <script>
+    (() => {
+      const p = window.location.pathname;
+      if (p === "/index.html" || p.endsWith("/index.html") && p.split("/").filter(Boolean).length === 1) {
+        history.replaceState(null, "", "/" + window.location.search + window.location.hash);
       }
-    }
-
-    function rememberAudioTime() {
-      if(Number.isFinite(missionAudio.currentTime)) {
-        sessionStorage.setItem(AUDIO_TIME_KEY, String(missionAudio.currentTime));
-      }
-    }
-
-    function resetAudioSource() {
-      const saved = Number(sessionStorage.getItem(AUDIO_TIME_KEY) || 0);
-      missionAudio.pause();
-      missionAudio.src = AUDIO_SRC;
-      missionAudio.load();
-
-      const restore = () => {
-        if(Number.isFinite(saved) && saved > 0 && Number.isFinite(missionAudio.duration) && saved < missionAudio.duration) {
-          try { missionAudio.currentTime = saved; } catch(e) {}
-        }
-        missionAudio.removeEventListener('loadedmetadata', restore);
-      };
-      missionAudio.addEventListener('loadedmetadata', restore);
-    }
-
-    async function startMissionAudio() {
-      if(!audioWanted()) {
-        setSoundUI('off');
-        return false;
-      }
-
-      try {
-        if(missionAudio.error) resetAudioSource();
-        const playPromise = missionAudio.play();
-        if(playPromise) await playPromise;
-        setSoundUI('on');
-        return true;
-      } catch(err) {
-        console.warn('Mission audio:', err);
-        setSoundUI('blocked');
-        return false;
-      }
-    }
-
-    async function toggleMissionAudio(event) {
-      if(event) {
-        event.preventDefault();
-        event.stopPropagation();
-      }
-
-      if(!missionAudio.paused && !missionAudio.ended) {
-        rememberAudioTime();
-        missionAudio.pause();
-        localStorage.setItem(AUDIO_PREF_KEY, '0');
-        setSoundUI('off');
-        return;
-      }
-
-      localStorage.setItem(AUDIO_PREF_KEY, '1');
-      setSoundUI('loading');
-
-      if(missionAudio.error) resetAudioSource();
-      await startMissionAudio();
-    }
-
-    missionAudio.addEventListener('loadedmetadata', restoreAudioTime);
-    missionAudio.addEventListener('playing', () => setSoundUI('on'));
-    missionAudio.addEventListener('waiting', () => {
-      if(audioWanted() && !missionAudio.paused) setSoundUI('loading');
-    });
-    missionAudio.addEventListener('stalled', () => {
-      if(audioWanted()) setSoundUI('loading');
-    });
-    missionAudio.addEventListener('error', () => {
-      console.warn('BG1 audio load error', missionAudio.error);
-      setSoundUI('error');
-    });
-    missionAudio.addEventListener('timeupdate', () => {
-      if(Math.floor(missionAudio.currentTime) % 3 === 0) rememberAudioTime();
-    });
-
-    window.addEventListener('pagehide', rememberAudioTime);
-    soundControl.addEventListener('click', toggleMissionAudio);
-
-    /*
-      Nie uruchamiamy audio na pointerdown, jeśli użytkownik właśnie naciska
-      przycisk dźwięku. W starej wersji ten sam gest potrafił najpierw uruchomić,
-      a następnie natychmiast wyłączyć muzykę.
-    */
-    const unlockAudio = async event => {
-      if(event.target && event.target.closest && event.target.closest('#sound-control')) return;
-
-      if(audioWanted() && missionAudio.paused) {
-        const ok = await startMissionAudio();
-        if(ok) {
-          document.removeEventListener('pointerdown', unlockAudio, true);
-          document.removeEventListener('keydown', unlockAudio, true);
-        }
-      }
-    };
-
-    document.addEventListener('pointerdown', unlockAudio, true);
-    document.addEventListener('keydown', unlockAudio, true);
-
-    if(audioWanted()) void startMissionAudio();
-    else setSoundUI('off');
-
+    })();
   </script>
+
 </body>
 </html>
