@@ -593,6 +593,29 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   .gallery-item{flex-basis:80vw}
 }
 
+
+/* =========================================================
+   V6.5 — MOBILE HERO TITLE SAFE FIT
+========================================================= */
+@media(max-width:720px){
+  .hero-title{
+    width:100%;
+    max-width:100%;
+    font-size:16vw;
+    letter-spacing:-.07em;
+    overflow:visible;
+  }
+  .hero-title span:last-child{
+    font-size:.76em;
+    letter-spacing:-.045em;
+    white-space:nowrap;
+  }
+}
+@media(max-width:430px){
+  .hero-title{font-size:15.5vw}
+  .hero-title span:last-child{font-size:.75em}
+}
+
 /* CINEMATIC SOUND */
 .sound-control{
   position:fixed;left:22px;bottom:22px;z-index:145;min-width:154px;height:46px;padding:0 14px;
@@ -625,10 +648,10 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 <div class="bg-aurora"></div>
 <div class="bg-horizon"></div>
 
-<audio id="mission-audio" loop preload="auto"></audio>
-<button class="sound-control playing" id="sound-control" type="button" onclick="toggleMissionAudio(event)" aria-pressed="true" title="Muzyka w tle">
+<audio id="mission-audio" src="media/audio/bg1.mp3?v=65" loop preload="auto" playsinline></audio>
+<button class="sound-control" id="sound-control" type="button" onclick="toggleMissionAudio(event)" aria-pressed="false" title="Muzyka w tle">
   <span class="sound-bars"><i></i><i></i><i></i><i></i></span>
-  <span class="sound-copy"><b id="sound-label">DŹWIĘK WŁ.</b><small>BG1 / MISSION AUDIO</small></span>
+  <span class="sound-copy"><b id="sound-label">KLIKNIJ — DŹWIĘK</b><small>BG1 / MISSION AUDIO</small></span>
 </button>
 
 
@@ -744,7 +767,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
         <div class="choice-line gold"></div>
         <h3>Zgłaszałem się wcześniej w mediach</h3>
         <p class="choice-lead">Zostawiłeś wcześniej komentarz na YouTube lub TikToku? Potwierdź zgłoszenie i odblokuj specjalną kartę <strong>Wczesnej Załogi.</strong></p>
-        <div class="choice-features"><div>weryfikacja przez nick i komentarz</div><div>ekskluzywna karta Wczesnej Załogi</div><div>specjalny status w manifeście</div></div>
+        <div class="choice-features"><div>weryfikacja przez nazwę użytkownika @</div><div>ekskluzywna karta Wczesnej Załogi</div><div>specjalny status w manifeście</div></div>
         <button class="choice-button gold">ODBIERZ WYRÓŻNIONY BILET</button>
       </article>
     </div>
@@ -931,17 +954,17 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 <div class="modal" id="early-modal"><div class="modal-box early">
   <button class="close" onclick="closeModals()">×</button>
   <div class="eyebrow" style="color:var(--gold2)">WCZESNA ZAŁOGA</div><div class="modal-title">Znajdź swój wpis.</div>
-  <p class="modal-copy">Najpierw wybierz platformę i wpisz nick, pod którym komentowałeś. Gdy znajdziemy Cię na liście, wybierzesz <b>dowolną nazwę, jaka ma pojawić się na bilecie</b>.</p>
+  <p class="modal-copy">Najpierw wybierz platformę i wpisz <b>nazwę użytkownika widoczną po znaku @</b>. Przykład: jeśli profil pokazuje „Olek” i <b>@olo123</b>, wpisz <b>@olo123</b>. Gdy znajdziemy Cię na liście, wybierzesz dowolną nazwę na bilecie.</p>
   <form id="early-form">
     <div class="field"><label>PLATFORMA</label><select class="select" id="early-platform"><option value="youtube">YouTube</option><option value="tiktok">TikTok</option></select></div>
-    <div class="field"><label>NICK Z KOMENTARZA</label><input class="input" id="early-handle" maxlength="80" required autocomplete="off" placeholder="np. @twojnick"></div>
+    <div class="field"><label>NAZWA UŻYTKOWNIKA Z @</label><input class="input" id="early-handle" maxlength="80" required autocomplete="off" placeholder="np. @olo123"><div style="margin-top:8px;color:#6f8091;font-size:.61rem;line-height:1.55">Wpisz nazwę widoczną po znaku @ na YouTube lub TikToku. Możesz wpisać ją także bez @ — system sam ją rozpozna.</div></div>
     <div id="early-personalization" style="display:none">
       <div class="field"><label>NAZWA NA BILECIE</label><input class="input" id="early-ticket-name" maxlength="24" autocomplete="off" placeholder="np. Kuba"></div>
       <div style="margin-top:10px;color:#7e8b99;font-size:.68rem;line-height:1.55">To tylko napis na bilecie. Nie zmienia Twojego wpisu, numeru uczestnika ani licznika załogi.</div>
     </div>
     <button class="btn btn-primary" id="early-submit" style="width:100%;margin-top:20px;background:var(--gold2);border-color:var(--gold2)">SZUKAJ NA LIŚCIE</button>
     <div class="message" id="early-message"></div>
-    <div style="margin-top:10px;text-align:center;color:#6e6654;font-size:.62rem;line-height:1.55">Nick Wczesnej Załogi może pochodzić z publicznego komentarza. <a href="../privacy.html" target="_blank" style="color:#f0ce80">Prywatność</a>.</div>
+    <div style="margin-top:10px;text-align:center;color:#6e6654;font-size:.62rem;line-height:1.55">Nazwa użytkownika @ Wczesnej Załogi może pochodzić z publicznego komentarza. <a href="../privacy.html" target="_blank" style="color:#f0ce80">Prywatność</a>.</div>
   </form>
   <div class="ticket-result" id="early-ticket-result"><img id="early-ticket-image" alt="Bilet Wczesnej Załogi"><div class="ticket-actions"><a id="early-download" class="btn btn-primary" download style="background:var(--gold2);border-color:var(--gold2)">POBIERZ BILET WCZESNEJ ZAŁOGI</a></div></div>
 </div></div>
@@ -1648,7 +1671,7 @@ $("#early-form").addEventListener("submit",async e=>{
   const handle=clean($("#early-handle").value);
   const msg=$("#early-message"),btn=$("#early-submit");
 
-  if(handle.replace(/^@+/,"").length<2){msg.textContent="Wpisz swój nick z YouTube lub TikToka.";return}
+  if(handle.replace(/^@+/,"").length<2){msg.textContent="Wpisz swoją nazwę użytkownika z YouTube lub TikToka, np. @olo123.";return}
 
   if(!earlyMatch){
     btn.disabled=true;btn.textContent="SZUKAM...";
@@ -1657,7 +1680,7 @@ $("#early-form").addEventListener("submit",async e=>{
         const {data,error}=await db.rpc("ms_claim_early_crew",{p_platform:platform,p_handle:handle});
         if(error)throw error;
         const row=Array.isArray(data)?data[0]:data;
-        if(!row||row.status==="NO_MATCH"){msg.textContent="Nie znaleziono tego nicku na liście Wczesnej Załogi.";return}
+        if(!row||row.status==="NO_MATCH"){msg.textContent="Nie znaleziono tej nazwy użytkownika @ na liście Wczesnej Załogi.";return}
         earlyMatch={id:Number(row.participant_no),sourceName:row.display_name,platform:row.platform};
       }else{
         earlyMatch={id:100001,sourceName:handle.startsWith("@")?handle:"@"+handle,platform};
@@ -1717,14 +1740,8 @@ const soundLabel=$("#sound-label");
 
 const AUDIO_PREF_KEY="ibron_audio_enabled";
 const AUDIO_TIME_KEY="ibron_audio_time";
-const AUDIO_CANDIDATES=[
-  "media/audio/bg1.mp3",
-  "audio/bg1.mp3",
-  "bg1.mp3"
-];
-let audioPathIndex=0;
-let audioPathReady=false;
-let audioTrying=false;
+const AUDIO_SRC="media/audio/bg1.mp3?v=65";
+let audioRestoreDone=false;
 
 const audioWanted=()=>localStorage.getItem(AUDIO_PREF_KEY)!=="0";
 missionAudio.volume=.30;
@@ -1735,15 +1752,19 @@ function setSoundUI(state){
   soundControl.setAttribute("aria-pressed",isOn?"true":"false");
 
   if(state==="on") soundLabel.textContent="DŹWIĘK WŁ.";
-  else if(state==="blocked") soundLabel.textContent="KLIKNIJ — DŹWIĘK";
-  else if(state==="missing") soundLabel.textContent="BRAK BG1";
-  else soundLabel.textContent="DŹWIĘK WYŁ.";
+  else if(state==="loading") soundLabel.textContent="ŁADOWANIE...";
+  else if(state==="error") soundLabel.textContent="SPRÓBUJ PONOWNIE";
+  else if(state==="off") soundLabel.textContent="DŹWIĘK WYŁ.";
+  else soundLabel.textContent="KLIKNIJ — DŹWIĘK";
 }
 
 function restoreAudioTime(){
+  if(audioRestoreDone)return;
+  audioRestoreDone=true;
+
   const saved=Number(sessionStorage.getItem(AUDIO_TIME_KEY)||0);
-  if(Number.isFinite(saved)&&saved>0&&missionAudio.duration&&saved<missionAudio.duration){
-    missionAudio.currentTime=saved;
+  if(Number.isFinite(saved)&&saved>0&&Number.isFinite(missionAudio.duration)&&saved<missionAudio.duration){
+    try{missionAudio.currentTime=saved}catch(_){}
   }
 }
 
@@ -1753,33 +1774,20 @@ function rememberAudioTime(){
   }
 }
 
-function loadAudioCandidate(index=0){
-  if(index>=AUDIO_CANDIDATES.length){
-    audioTrying=false;
-    audioPathReady=false;
-    setSoundUI("missing");
-    return;
-  }
-
-  audioTrying=true;
-  audioPathIndex=index;
-  audioPathReady=false;
-  missionAudio.src=AUDIO_CANDIDATES[index];
+function resetAudioSource(){
+  const saved=Number(sessionStorage.getItem(AUDIO_TIME_KEY)||0);
+  missionAudio.pause();
+  missionAudio.src=AUDIO_SRC;
   missionAudio.load();
+
+  const restore=()=>{
+    if(Number.isFinite(saved)&&saved>0&&Number.isFinite(missionAudio.duration)&&saved<missionAudio.duration){
+      try{missionAudio.currentTime=saved}catch(_){}
+    }
+    missionAudio.removeEventListener("loadedmetadata",restore);
+  };
+  missionAudio.addEventListener("loadedmetadata",restore);
 }
-
-missionAudio.addEventListener("canplay",()=>{
-  audioTrying=false;
-  audioPathReady=true;
-  restoreAudioTime();
-  if(audioWanted()) void startMissionAudio();
-});
-
-missionAudio.addEventListener("error",()=>{
-  if(audioTrying || !audioPathReady){
-    loadAudioCandidate(audioPathIndex+1);
-  }
-});
 
 async function startMissionAudio(){
   if(!audioWanted()){
@@ -1787,57 +1795,88 @@ async function startMissionAudio(){
     return false;
   }
 
-  if(!audioPathReady){
-    if(!audioTrying) loadAudioCandidate(audioPathIndex);
-    setSoundUI("blocked");
-    return false;
-  }
-
   try{
-    await missionAudio.play();
+    if(missionAudio.error){
+      resetAudioSource();
+    }
+
+    const playPromise=missionAudio.play();
+    if(playPromise)await playPromise;
     setSoundUI("on");
     return true;
   }catch(err){
+    console.warn("Mission audio:",err);
     setSoundUI("blocked");
     return false;
   }
 }
 
 async function toggleMissionAudio(e){
-  if(e){e.preventDefault();e.stopPropagation()}
+  if(e){
+    e.preventDefault();
+    e.stopPropagation();
+  }
 
-  if(!missionAudio.paused){
+  if(!missionAudio.paused&&!missionAudio.ended){
+    rememberAudioTime();
     missionAudio.pause();
     localStorage.setItem(AUDIO_PREF_KEY,"0");
-    rememberAudioTime();
     setSoundUI("off");
     return;
   }
 
   localStorage.setItem(AUDIO_PREF_KEY,"1");
+  setSoundUI("loading");
 
-  if(!audioPathReady && !audioTrying){
-    loadAudioCandidate(0);
+  if(missionAudio.error){
+    resetAudioSource();
   }
 
   await startMissionAudio();
 }
 window.toggleMissionAudio=toggleMissionAudio;
 
+missionAudio.addEventListener("loadedmetadata",restoreAudioTime);
+missionAudio.addEventListener("playing",()=>setSoundUI("on"));
+missionAudio.addEventListener("waiting",()=>{
+  if(audioWanted()&&!missionAudio.paused)setSoundUI("loading");
+});
+missionAudio.addEventListener("stalled",()=>{
+  if(audioWanted())setSoundUI("loading");
+});
+missionAudio.addEventListener("error",()=>{
+  console.warn("BG1 audio load error",missionAudio.error);
+  setSoundUI("error");
+});
 missionAudio.addEventListener("timeupdate",()=>{
-  if(Math.floor(missionAudio.currentTime)%2===0)rememberAudioTime();
+  if(Math.floor(missionAudio.currentTime)%3===0)rememberAudioTime();
 });
 window.addEventListener("pagehide",rememberAudioTime);
 
-const unlockAudio=async()=>{
-  if(audioWanted() && missionAudio.paused){
-    await startMissionAudio();
+/*
+  Ważne:
+  wcześniejsza wersja próbowała uruchomić muzykę już na POINTERDOWN w fazie capture.
+  Gdy użytkownik naciskał sam przycisk audio, muzyka potrafiła wystartować na
+  pointerdown, a chwilę później click wyłączał ją ponownie.
+  Dlatego auto-unlock IGNORUJE kliknięcie przycisku audio.
+*/
+const unlockAudio=async e=>{
+  if(e.target&&e.target.closest&&e.target.closest("#sound-control"))return;
+  if(audioWanted()&&missionAudio.paused){
+    const ok=await startMissionAudio();
+    if(ok){
+      document.removeEventListener("pointerdown",unlockAudio,true);
+      document.removeEventListener("keydown",unlockAudio,true);
+    }
   }
 };
-document.addEventListener("pointerdown",unlockAudio,{capture:true,once:true});
-document.addEventListener("keydown",unlockAudio,{capture:true,once:true});
 
-loadAudioCandidate(0);
+document.addEventListener("pointerdown",unlockAudio,true);
+document.addEventListener("keydown",unlockAudio,true);
+
+/* Próbujemy automatycznie, ale przeglądarka może wymagać pierwszego gestu użytkownika. */
+if(audioWanted())void startMissionAudio();
+else setSoundUI("off");
 
 /* reveal / header / navigation / parallax */
 const observer=new IntersectionObserver(
