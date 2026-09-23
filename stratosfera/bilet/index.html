@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="pl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#020407">
+<title>Weryfikacja biletu | Misja Stratosfera</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+:root{--bg:#020407;--text:#f7f9fb;--blue:#7dcbff;--gold:#efd080;--line:rgba(255,255,255,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{min-height:100svh;background:radial-gradient(circle at 78% 14%,rgba(64,160,230,.13),transparent 30%),radial-gradient(circle at 20% 90%,rgba(239,208,128,.05),transparent 25%),var(--bg);color:var(--text);font-family:Inter,system-ui,sans-serif;display:grid;place-items:center;padding:24px}
+a{color:inherit;text-decoration:none}.shell{width:min(720px,100%)}
+.brand{display:flex;justify-content:space-between;gap:18px;margin-bottom:18px;color:#617284;font-size:.58rem;font-weight:800;letter-spacing:.14em}
+.card{position:relative;overflow:hidden;border:1px solid var(--line);background:rgba(5,10,16,.92);padding:clamp(26px,6vw,54px);box-shadow:0 40px 120px rgba(0,0,0,.5)}
+.card::after{content:"MS";position:absolute;right:-18px;bottom:-55px;font-size:15rem;font-weight:950;letter-spacing:-.1em;color:rgba(255,255,255,.018);pointer-events:none}
+.kicker{font-size:.58rem;font-weight:900;letter-spacing:.18em;color:var(--blue)}
+.icon{width:70px;height:70px;border-radius:50%;border:1px solid rgba(125,203,255,.3);display:grid;place-items:center;margin:22px 0 24px;font-size:1.7rem;background:rgba(125,203,255,.05)}
+h1{font-size:clamp(2.1rem,8vw,4.7rem);line-height:.9;letter-spacing:-.065em}
+.status{margin-top:18px;color:#91a1b0;font-size:.82rem;line-height:1.7}
+.data{margin-top:32px;border-top:1px solid var(--line)}.row{display:flex;justify-content:space-between;gap:22px;padding:17px 0;border-bottom:1px solid var(--line)}
+.row span{color:#607183;font-size:.57rem;font-weight:850;letter-spacing:.13em}.row b{font-size:.82rem;text-align:right}.row b.gold{color:var(--gold)}
+.note{margin-top:25px;color:#657587;font-size:.68rem;line-height:1.65}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}.btn{display:inline-flex;align-items:center;justify-content:center;min-height:48px;padding:0 18px;border:1px solid rgba(255,255,255,.12);font-size:.62rem;font-weight:900;letter-spacing:.1em}.btn.primary{background:#fff;color:#020407}
+.invalid .kicker{color:#e49a9a}.invalid .icon{border-color:rgba(228,154,154,.3);background:rgba(228,154,154,.05)}
+@media(max-width:520px){.brand{display:block;line-height:1.8}.card{padding:28px 22px}.row{display:block}.row b{display:block;text-align:left;margin-top:7px}}
+</style>
+</head>
+<body>
+<main class="shell">
+  <div class="brand"><span>OLKUSON × IBRON INDUSTRIES</span><span>MISJA STRATOSFERA / TICKET VERIFY</span></div>
+  <section class="card" id="card">
+    <div class="kicker" id="kicker">WERYFIKACJA / MANIFEST ONLINE</div>
+    <div class="icon" id="icon">⌁</div>
+    <h1 id="title">SPRAWDZAM BILET...</h1>
+    <p class="status" id="status">Łączenie z manifestem Misji Stratosfera.</p>
+    <div class="data" id="data" hidden>
+      <div class="row"><span>NUMER UCZESTNIKA</span><b class="gold" id="number">—</b></div>
+      <div class="row"><span>KATEGORIA</span><b id="kind">—</b></div>
+      <div class="row"><span>STATUS</span><b>WPIS ISTNIEJE W MANIFEŚCIE</b></div>
+    </div>
+    <p class="note">Weryfikacja potwierdza istnienie numeru biletu w manifeście Misji Stratosfera. Nie potwierdza tożsamości osoby okazującej bilet i nie ujawnia nazwy, handle'u ani cytatu uczestnika.</p>
+    <div class="actions">
+      <a class="btn primary" href="/stratosfera/">MISJA STRATOSFERA</a>
+      <a class="btn" href="/privacy.html">PRYWATNOŚĆ</a>
+    </div>
+  </section>
+</main>
+<script>
+const SUPABASE_URL="https://elpedksjfpmsepjiknwy.supabase.co";
+const SUPABASE_PUBLISHABLE_KEY="sb_publishable_WcgvYPzgSVBp-FtHcY3Tew_7mkXrLS2";
+const db=window.supabase.createClient(SUPABASE_URL,SUPABASE_PUBLISHABLE_KEY);
+const $=s=>document.querySelector(s);
+const token=new URLSearchParams(location.search).get("v")||"";
+const uuid=/^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
+
+function invalid(message){
+  $("#card").classList.add("invalid");
+  $("#kicker").textContent="WERYFIKACJA / BRAK POTWIERDZENIA";
+  $("#icon").textContent="×";
+  $("#title").textContent="BILET NIEPOTWIERDZONY";
+  $("#status").textContent=message;
+  $("#data").hidden=true;
+}
+
+async function verifyTicket(){
+  if(!uuid.test(token)){
+    invalid("Ten link nie zawiera prawidłowego tokenu weryfikacyjnego. Zeskanuj kod QR bezpośrednio z biletu.");
+    return;
+  }
+
+  try{
+    const {data,error}=await db.rpc("ms_verify_ticket",{p_token:token});
+    if(error)throw error;
+
+    const row=Array.isArray(data)?data[0]:data;
+    if(!row){
+      invalid("Nie znaleziono biletu odpowiadającego temu kodowi QR.");
+      return;
+    }
+
+    $("#icon").textContent="✓";
+    $("#title").textContent="BILET POTWIERDZONY";
+    $("#status").textContent="Kod QR odpowiada aktywnemu wpisowi w manifeście Misji Stratosfera.";
+    $("#number").textContent=`MS-${String(Number(row.participant_no)).padStart(6,"0")}`;
+    $("#kind").textContent=row.crew_type==="early"?"WCZESNA ZAŁOGA":"UCZESTNIK MISJI";
+    $("#data").hidden=false;
+  }catch(err){
+    console.error(err);
+    invalid("Nie udało się połączyć z manifestem. Spróbuj ponownie za chwilę.");
+  }
+}
+verifyTicket();
+</script>
+</body>
+</html>
