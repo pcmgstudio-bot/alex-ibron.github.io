@@ -1683,6 +1683,34 @@ async function outputTicket(canvas,imgSel,downloadSel,file){
   return new Promise((res,rej)=>canvas.toBlob(blob=>{if(!blob)return rej(new Error("PNG"));const url=URL.createObjectURL(blob);$(imgSel).src=url;$(downloadSel).href=url;$(downloadSel).download=file;res()},"image/png"))
 }
 
+/* V6.8.1 — po wygenerowaniu biletu przewiń modal prosto do podglądu biletu */
+function scrollToGeneratedTicket(selector){
+  const result=$(selector);
+  if(!result)return;
+
+  requestAnimationFrame(()=>{
+    setTimeout(()=>{
+      const modalBox=result.closest(".modal-box");
+
+      if(modalBox){
+        const boxRect=modalBox.getBoundingClientRect();
+        const resultRect=result.getBoundingClientRect();
+        const targetTop=modalBox.scrollTop+(resultRect.top-boxRect.top)-18;
+
+        modalBox.scrollTo({
+          top:Math.max(0,targetTop),
+          behavior:"smooth"
+        });
+      }else{
+        result.scrollIntoView({
+          behavior:"smooth",
+          block:"start"
+        });
+      }
+    },120);
+  });
+}
+
 /* quote helpers */
 const QUOTE_MAX=180;
 
@@ -1768,6 +1796,7 @@ async function finishStandardRegistration(turnstileToken){
     $("#standard-download").dataset.ticketKind="standard";
     $("#standard-ticket-result").classList.add("show");
     msg.textContent=quote ? "Witaj na pokładzie. Cytat zapisany. QR na bilecie potwierdza numer w manifeście." : "Witaj na pokładzie. QR na bilecie potwierdza numer w manifeście.";
+    scrollToGeneratedTicket("#standard-ticket-result");
     await refreshCount();
 
   }catch(err){
@@ -1961,6 +1990,7 @@ async function generateEarlyTicket(ticketName,quoteSaved,verifyToken,serverParti
     $("#early-download").dataset.participantNo=String(t.id);
     $("#early-download").dataset.ticketKind="early";
     $("#early-ticket-result").classList.add("show");
+    scrollToGeneratedTicket("#early-ticket-result");
 
     msg.textContent=quoteSaved
       ? "Bilet gotowy. Cytat zapisany. QR na bilecie potwierdza numer w manifeście."
