@@ -67,6 +67,7 @@
       <li>przy zwykłym zapisie: podany pseudonim/nazwa, numer uczestnika, źródło zapisu i czas utworzenia wpisu;</li>
       <li>dla Wczesnej Załogi: publiczny handle/nick z YouTube lub TikToka, platforma, numer uczestnika oraz informacja, czy wpis był już użyty do wygenerowania biletu;</li>
       <li>statystyki techniczne związane z pobieraniem biletu;</li>
+      <li>losowy token weryfikacyjny biletu, używany wyłącznie do potwierdzenia ważności biletu po zeskanowaniu kodu QR;</li>
       <li>jeśli dobrowolnie dodasz cytat do stratosfery: treść cytatu, jego powiązanie z numerem uczestnika oraz status wyboru lub odczytania;</li>
       <li>po uruchomieniu ochrony antybotowej: niezbędne sygnały techniczne przetwarzane przez Cloudflare Turnstile w celu rozróżnienia użytkowników od automatycznych botów.</li>
     </ul>
@@ -151,14 +152,24 @@
   <section>
     <h2>10. Lokalna pamięć przeglądarki</h2>
     <p>
-      Strona wykorzystuje lokalną pamięć przeglądarki do zapamiętania ustawienia języka,
-      stanu muzyki oraz jej pozycji przy przechodzeniu między podstronami. Te informacje
-      służą wyłącznie wygodzie działania strony i nie są wykorzystywane do reklam ani profilowania.
+      Strona może wykorzystywać lokalną pamięć przeglądarki wyłącznie do ustawień technicznych
+      potrzebnych do wygodnego działania interfejsu. Informacje te nie są wykorzystywane
+      do reklam ani profilowania.
     </p>
   </section>
 
   <section>
-    <h2>11. Zautomatyzowane decyzje</h2>
+    <h2>11. Weryfikacja biletu QR</h2>
+    <p>
+      Bilet może zawierać losowy token zapisany w kodzie QR. Po zeskanowaniu publiczna strona
+      weryfikacyjna pokazuje wyłącznie, czy bilet istnieje w manifeście, jego numer uczestnika
+      oraz kategorię wpisu (uczestnik albo Wczesna Załoga). Nie pokazuje nazwy, handle'u ani cytatu.
+      Weryfikacja biletu nie jest potwierdzeniem tożsamości osoby, która go okazuje.
+    </p>
+  </section>
+
+  <section>
+    <h2>12. Zautomatyzowane decyzje</h2>
     <p>
       Nie podejmujemy wobec uczestników decyzji wywołujących skutki prawne wyłącznie w sposób zautomatyzowany.
       Mechanizm antybotowy służy jedynie ochronie formularzy przed nadużyciami.
