@@ -186,8 +186,8 @@ img{max-width:100%}
 .video-card{position:relative;flex:0 0 min(390px,80vw);aspect-ratio:16/9;scroll-snap-align:start;overflow:hidden;border:1px solid rgba(255,255,255,.09);background:#080d13;cursor:pointer}
 .video-card img{width:100%;height:100%;object-fit:cover;display:block;transition:.45s}
 .video-card:hover img{transform:scale(1.035)}
-.video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent 62%)}
-.video-card-info{position:absolute;left:18px;right:18px;bottom:16px;z-index:2}
+.video-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.88),transparent 62%);pointer-events:none}
+.video-card-info{position:absolute;left:18px;right:18px;bottom:16px;z-index:2;pointer-events:none}
 .video-card-type{color:var(--blue);font-size:.50rem;font-weight:850;letter-spacing:.14em}
 .video-card-title{margin-top:6px;font-size:.92rem;font-weight:800;line-height:1.25}
 .video-placeholder{display:flex;align-items:center;justify-content:center;height:100%;background:radial-gradient(circle at 70% 30%,rgba(125,203,255,.10),transparent 35%),#060b11;color:#637386;font-size:.61rem;letter-spacing:.15em}
@@ -385,7 +385,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 .short-card{position:relative;flex:0 0 245px;aspect-ratio:9/16;scroll-snap-align:start;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:#070c12;cursor:pointer}
 .short-card img{width:100%;height:100%;object-fit:cover;display:block;transition:.4s}
 .short-card:hover img{transform:scale(1.035)}
-.short-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 62%)}
+.short-card::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.9),transparent 62%);pointer-events:none}
 .short-card .video-card-info{left:15px;right:15px;bottom:16px}
 .media-empty{flex:0 0 100%;min-height:190px;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;border:1px dashed rgba(125,203,255,.18);background:radial-gradient(circle at 50% 20%,rgba(125,203,255,.05),transparent 38%),rgba(3,8,13,.45);color:#607184;text-align:center;padding:30px}
 .media-empty b{color:#9bb8cd;font-size:.67rem;letter-spacing:.13em}.media-empty span{max-width:500px;font-size:.67rem;line-height:1.65}
@@ -1238,11 +1238,66 @@ document.querySelectorAll("[data-scroll-target]").forEach(btn=>{
   })
 });
 function enableDrag(el){
-  let down=false,start=0,scroll=0;
-  el.addEventListener("pointerdown",e=>{down=true;start=e.clientX;scroll=el.scrollLeft;el.classList.add("dragging");el.setPointerCapture(e.pointerId)});
-  el.addEventListener("pointermove",e=>{if(!down)return;el.scrollLeft=scroll-(e.clientX-start)});
-  const end=()=>{down=false;el.classList.remove("dragging")};
-  el.addEventListener("pointerup",end);el.addEventListener("pointercancel",end)
+  let down=false,start=0,scroll=0,dragged=false,pointerId=null;
+  const THRESHOLD=8;
+
+  el.addEventListener("pointerdown",e=>{
+    if(e.button!==undefined && e.button!==0)return;
+    down=true;
+    dragged=false;
+    pointerId=e.pointerId;
+    start=e.clientX;
+    scroll=el.scrollLeft;
+  });
+
+  el.addEventListener("pointermove",e=>{
+    if(!down)return;
+
+    const delta=e.clientX-start;
+
+    /* Bardzo ważne:
+       NIE przechwytujemy wskaźnika przy zwykłym kliknięciu.
+       Dopiero faktyczne przeciągnięcie aktywuje drag.
+       Dzięki temu klik w film / Short / zdjęcie dociera do kafelka. */
+    if(!dragged && Math.abs(delta)>THRESHOLD){
+      dragged=true;
+      el.classList.add("dragging");
+      try{el.setPointerCapture(pointerId)}catch(_){}
+    }
+
+    if(dragged){
+      el.scrollLeft=scroll-delta;
+      e.preventDefault();
+    }
+  });
+
+  const end=e=>{
+    if(!down)return;
+    down=false;
+
+    if(dragged){
+      try{
+        if(el.hasPointerCapture(pointerId))el.releasePointerCapture(pointerId);
+      }catch(_){}
+      /* blokujemy przypadkowy click po prawdziwym przeciągnięciu */
+      el.dataset.justDragged="1";
+      setTimeout(()=>delete el.dataset.justDragged,80);
+    }
+
+    dragged=false;
+    pointerId=null;
+    el.classList.remove("dragging");
+  };
+
+  el.addEventListener("pointerup",end);
+  el.addEventListener("pointercancel",end);
+
+  el.addEventListener("click",e=>{
+    if(el.dataset.justDragged==="1"){
+      e.preventDefault();
+      e.stopPropagation();
+    }
+  },true);
 }
 enableDrag($("#films-reel"));enableDrag($("#shorts-reel"));enableDrag($("#gallery-track"));
 
