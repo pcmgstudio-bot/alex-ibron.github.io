@@ -195,11 +195,22 @@ img{max-width:100%}
 .gallery-wrap{margin-top:78px}
 .gallery-track{gap:12px}
 .gallery-item{position:relative;flex:0 0 min(520px,86vw);aspect-ratio:16/10;scroll-snap-align:start;border:1px solid rgba(255,255,255,.09);overflow:hidden;background:#050a10;cursor:pointer}
-.gallery-item img{width:100%;height:100%;display:block;object-fit:cover;transition:.45s}
-.gallery-item:hover img{transform:scale(1.025)}
+.gallery-item img{width:100%;height:100%;display:block;object-fit:contain;object-position:center;background:#020407;transition:.45s}
+.gallery-item:hover img{transform:scale(1.008)}
 .gallery-item::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(0,0,0,.08),transparent 35%);pointer-events:none}
 .gallery-missing{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:9px;background:radial-gradient(circle at 50% 45%,rgba(125,203,255,.08),transparent 34%),#060b11;color:#526274}
 .gallery-missing b{font-size:.66rem;letter-spacing:.13em}.gallery-missing span{font-size:.54rem;color:#455567}
+
+
+/* V6.4 — zdjęcia bez przycinania */
+.gallery-item{
+  background:
+    radial-gradient(circle at 50% 45%,rgba(125,203,255,.045),transparent 45%),
+    #020407;
+}
+.gallery-item img{
+  padding:0;
+}
 
 /* LIGHTBOX */
 .lightbox{position:fixed;inset:0;z-index:400;display:none;align-items:center;justify-content:center;padding:32px;background:rgba(0,0,0,.93);backdrop-filter:blur(18px)}
@@ -289,6 +300,53 @@ img{max-width:100%}
   .lightbox-meta{grid-template-columns:1fr}
   .lightbox-nav{top:24svh}
   .video-modal-frame.short{max-height:68vh}
+}
+
+
+@media(max-width:900px){
+  .lightbox-shell{
+    width:min(94vw,760px);
+    min-height:0;
+    max-height:96svh;
+    overflow:auto;
+  }
+  .lightbox-visual{
+    height:min(52svh,560px);
+    min-height:280px;
+  }
+  .lightbox-img{
+    width:100%;
+    height:100%;
+    object-fit:contain;
+    object-position:center;
+    background:#000;
+  }
+  .lightbox-details{
+    padding:25px 21px 28px;
+  }
+  .lightbox-details h3{
+    font-size:clamp(1.55rem,7vw,2.25rem);
+  }
+  .lightbox-description{
+    font-size:.72rem;
+    line-height:1.68;
+  }
+}
+@media(max-width:600px){
+  .lightbox{
+    padding:8px;
+  }
+  .lightbox-shell{
+    width:96vw;
+    max-height:97svh;
+  }
+  .lightbox-visual{
+    height:44svh;
+    min-height:230px;
+  }
+  .lightbox-details{
+    padding:22px 18px 25px;
+  }
 }
 
 /* MODALS + FORMS */
@@ -444,6 +502,95 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
   .lightbox-nav{top:auto;bottom:20px;transform:none;width:48px;height:48px}.lightbox-prev{left:calc(50% - 58px)}.lightbox-next{right:calc(50% - 58px)}
   .modal{padding:10px;align-items:flex-end}.modal-box{width:100%;max-height:90svh;padding:28px 20px;border-radius:0;background:#05090e}
   footer{padding-bottom:88px}.footer-in{display:block;line-height:1.8}
+}
+
+
+/* =========================================================
+   V6.4 — MOBILE COMPACT / BETTER SCALE
+   Delikatnie mniejsze elementy na telefonie.
+========================================================= */
+@media(max-width:720px){
+  .wrap{width:86vw}
+
+  .command-rail{
+    width:92vw;
+    height:54px;
+    padding:0 10px 0 12px;
+  }
+
+  .hero{padding-bottom:7vh}
+  .hero-content{padding-top:118px}
+  .hero-title{font-size:16.4vw;line-height:.82}
+  .hero-sub{font-size:1.02rem}
+  .hero-copy{font-size:.75rem;line-height:1.62;max-width:96%}
+  .hero-bottom{margin-top:24px;gap:22px}
+  .count{font-size:14.2vw}
+  .hero-bottom .btn{min-height:47px}
+
+  .choice-section{padding:66px 0 72px}
+  .section{padding:68px 0}
+  .section-head{margin-bottom:31px}
+  .section-head h2{font-size:9.7vw}
+  .section-head p{font-size:.73rem}
+  .choice-card{padding:21px 18px}
+  .choice-card h3{font-size:1.36rem}
+  .choice-lead{font-size:.74rem}
+  .choice-features{font-size:.69rem}
+  .choice-button{min-height:48px}
+
+  .story-main{font-size:8vw}
+  .story-copy{font-size:.73rem}
+  .anthony{padding:51px 0}
+  .anthony-quote{font-size:8.1vw}
+  .anthony-copy{font-size:.72rem}
+
+  .media-section{padding:70px 0 78px}
+  .media-lockup .section-head h2{font-size:9.6vw}
+  .social-card{flex-basis:72vw;min-height:142px;padding:20px 18px}
+  .social-name{font-size:1.38rem}
+
+  .media-tabs{top:70px;margin-bottom:21px}
+  .media-tab{min-height:61px;padding:8px 9px}
+  .media-tab b{font-size:.67rem}
+
+  .featured-video{margin-bottom:36px}
+  .video-info{padding:21px 17px}
+  .video-info h3{font-size:1.38rem}
+  .video-info p{font-size:.70rem}
+
+  .reel-head h3,.gallery-head h3{font-size:1.55rem}
+  .media-reel{gap:9px;padding-right:7vw}
+  .video-card{flex-basis:78vw}
+
+  .shorts-intro{padding:17px 0 23px}
+  .shorts-intro h3{font-size:8.2vw}
+  .short-card{flex-basis:52vw}
+
+  .gallery-wrap{margin-top:50px}
+  .gallery-track{gap:9px;padding-right:7vw}
+  .gallery-item{
+    flex-basis:82vw;
+    aspect-ratio:16/10;
+  }
+
+  .sound-control{
+    transform:scale(.92);
+    transform-origin:left bottom;
+  }
+
+  .modal-box{padding:24px 18px}
+}
+
+/* Jeszcze ciaśniej dla małych telefonów */
+@media(max-width:430px){
+  .wrap{width:84vw}
+  .hero-title{font-size:15.7vw}
+  .hero-copy{font-size:.72rem}
+  .section-head h2{font-size:9.2vw}
+  .media-lockup .section-head h2{font-size:9.1vw}
+  .video-card{flex-basis:76vw}
+  .short-card{flex-basis:49vw}
+  .gallery-item{flex-basis:80vw}
 }
 
 /* CINEMATIC SOUND */
