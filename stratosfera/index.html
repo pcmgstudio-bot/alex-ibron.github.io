@@ -13,6 +13,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script src="https://cdn.jsdelivr.net/npm/jsbarcode@3.11.6/dist/JsBarcode.all.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/qrious@4.0.2/dist/qrious.min.js"></script>
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" defer></script>
 
 <style>
@@ -960,7 +961,7 @@ footer{padding:31px 0 42px;border-top:1px solid rgba(255,255,255,.065);color:#56
 </section>
 </main>
 
-<footer><div class="wrap footer-in"><span>© 2026 OLKUSON × IBRON INDUSTRIES · <a href="/privacy.html">PRYWATNOŚĆ</a></span><span>MISJA STRATOSFERA / POLSKA</span></div></footer>
+<footer><div class="wrap footer-in"><span>© 2026 OLKUSON × IBRON INDUSTRIES · <a href="/privacy.html">PRYWATNOŚĆ</a> · <a href="/stratosfera/bilet/">WERYFIKUJ BILET</a></span><span>MISJA STRATOSFERA / POLSKA</span></div></footer>
 
 <!-- STANDARD -->
 <div class="modal" id="standard-modal"><div class="modal-box">
@@ -1122,7 +1123,7 @@ const REGISTER_FUNCTION_URL="https://elpedksjfpmsepjiknwy.supabase.co/functions/
 let standardTurnstileWidget=null;
 let earlyTurnstileWidget=null;
 let pendingStandardRegistration=null;
-let pendingEarlyQuote=null;
+let pendingEarlyTicket=null;
 
 function initStandardTurnstile(){
   if(!window.turnstile || standardTurnstileWidget!==null)return;
@@ -1152,15 +1153,15 @@ function initEarlyTurnstile(){
     sitekey:TURNSTILE_SITE_KEY,
     execution:"execute",
     appearance:"interaction-only",
-    action:"early_quote",
-    callback:token=>void finishEarlyQuote(token),
+    action:"early_ticket",
+    callback:token=>void finishEarlyTicket(token),
     "error-callback":code=>{
       console.error("Turnstile early error:",code);
       const msg=$("#early-message"),btn=$("#early-submit");
-      msg.textContent="Nie udało się przeprowadzić kontroli antyspam dla cytatu. Spróbuj ponownie.";
+      msg.textContent="Nie udało się przeprowadzić kontroli antyspam. Spróbuj ponownie.";
       btn.disabled=false;
       btn.textContent="WYGENERUJ BILET";
-      pendingEarlyQuote=null;
+      pendingEarlyTicket=null;
     },
     "expired-callback":()=>{
       if(earlyTurnstileWidget!==null)window.turnstile.reset(earlyTurnstileWidget);
@@ -1595,6 +1596,24 @@ function makeBarcodeCanvas(value,line="#fff"){
   return c
 }
 
+function ticketVerificationUrl(token){
+  if(!token)return "";
+  return `https://ibronindustries.pl/stratosfera/bilet/?v=${encodeURIComponent(token)}`;
+}
+
+function makeQrCanvas(value,size=160){
+  if(!value || typeof QRious==="undefined")return null;
+  const qr=new QRious({
+    value,
+    size,
+    level:"H",
+    background:"#ffffff",
+    foreground:"#000000",
+    padding:10
+  });
+  return qr.canvas;
+}
+
 /* standard ticket */
 async function createStandardTicket(t){
   await document.fonts.ready;
@@ -1611,7 +1630,21 @@ async function createStandardTicket(t){
   x.strokeStyle="rgba(255,255,255,.14)";x.beginPath();x.moveTo(px,230);x.lineTo(1805,230);x.stroke();x.fillStyle="#708092";x.font="700 15px Inter,Arial";x.fillText("NUMER UCZESTNIKA",px,280);x.fillStyle="#EFCA71";x.font="900 32px Inter,Arial";x.fillText(t.code,px,320);
   const info=[["CEL","STRATOSFERA"],["PUŁAP MISJI","20 000 M"],["SYSTEM MISJI","ANTHONY"],["STATUS","NA POKŁADZIE"],["MIEJSCE STARTU","POLSKA"],["PROGRAM","IBRON INDUSTRIES"]];
   let y=390;info.forEach((r,i)=>{x.fillStyle="#708092";x.font="700 13px Inter,Arial";x.fillText(r[0],px,y);x.textAlign="right";x.fillStyle=i===3?"#EFCA71":"#F3F6F8";x.font="800 18px Inter,Arial";x.fillText(r[1],1805,y);x.textAlign="left";x.strokeStyle="rgba(255,255,255,.105)";x.beginPath();x.moveTo(px,y+25);x.lineTo(1805,y+25);x.stroke();y+=74});
-  const bc=makeBarcodeCanvas("S-"+t.code);x.drawImage(bc,px,850,420,70);x.fillStyle="#708092";x.font="700 13px Inter,Arial";x.fillText("S-"+t.code,px,950);return c
+  const verifyUrl=ticketVerificationUrl(t.verifyToken);
+  const qr=makeQrCanvas(verifyUrl,160);
+
+  const bc=makeBarcodeCanvas("S-"+t.code);
+  x.drawImage(bc,px,875,250,60);
+  x.fillStyle="#708092";x.font="700 12px Inter,Arial";x.fillText("S-"+t.code,px,958);
+
+  x.fillStyle="#708092";x.font="700 11px Inter,Arial";x.fillText("SCAN / VERIFY",1660,842);
+  if(qr){
+    x.fillStyle="#fff";x.fillRect(1655,852,154,154);
+    x.drawImage(qr,1658,855,148,148);
+  }else{
+    x.strokeStyle="rgba(255,255,255,.18)";x.strokeRect(1655,852,154,154);
+  }
+  return c
 }
 
 /* early ticket */
@@ -1628,7 +1661,21 @@ async function createEarlyTicket(t){
   const nm=t.name.toUpperCase(),fs=fitFont(x,nm,360,32,18),cols=[{x:110,l:"UCZESTNIK MISJI",v:nm,fs},{x:540,l:"NUMER UCZESTNIKA",v:t.code},{x:900,l:"STATUS",v:"WCZESNA ZAŁOGA",gold:1},{x:1315,l:"START",v:"POLSKA"},{x:1570,l:"SYSTEM",v:"ANTHONY"}];
   cols.forEach(o=>{x.fillStyle="#9D8A61";x.font="700 13px Inter,Arial";x.fillText(o.l,o.x,845);x.fillStyle=o.gold?"#F0CE80":"#F4F5F6";x.font=o.fs?`800 ${o.fs}px Inter,Arial`:"800 24px Inter,Arial";x.fillText(o.v,o.x,890)});
   x.fillStyle="#776745";x.font="700 13px Inter,Arial";x.fillText("ZGŁOSZENIE",110,950);x.fillStyle="#F0CE80";x.font="800 20px Inter,Arial";x.fillText(t.platform.toUpperCase(),110,980);
-  const bc=makeBarcodeCanvas("E-"+t.code,"#F0CE80");x.drawImage(bc,1360,925,420,65);x.fillStyle="#A68D5B";x.font="700 12px Inter,Arial";x.fillText("E-"+t.code,1360,1010);
+  const verifyUrl=ticketVerificationUrl(t.verifyToken);
+  const qr=makeQrCanvas(verifyUrl,132);
+
+  const bc=makeBarcodeCanvas("E-"+t.code,"#F0CE80");
+  x.drawImage(bc,1315,940,340,54);
+  x.fillStyle="#A68D5B";x.font="700 11px Inter,Arial";x.fillText("E-"+t.code,1315,1011);
+
+  x.fillStyle="#A68D5B";x.font="700 10px Inter,Arial";x.fillText("SCAN / VERIFY",1713,809);
+  if(qr){
+    x.fillStyle="#fff";x.fillRect(1705,818,136,136);
+    x.drawImage(qr,1708,821,130,130);
+  }else{
+    x.strokeStyle="rgba(240,206,128,.35)";x.strokeRect(1705,818,136,136);
+  }
+
   x.textAlign="center";x.fillStyle="#C6A75F";x.font="700 14px Inter,Arial";x.fillText("LOT W STRONĘ LEPSZEGO JUTRA",960,1040);x.textAlign="left";return c
 }
 
@@ -1706,7 +1753,10 @@ async function finishStandardRegistration(turnstileToken){
     const id=Number(result.participant_no);
     const returned=String(result.display_name||name);
 
-    const t={id,name:returned,code:code(id)};
+    const verifyToken=String(result.verification_token||"");
+    if(!verifyToken)throw new Error("Brak tokenu weryfikacji biletu");
+
+    const t={id,name:returned,code:code(id),verifyToken};
     await outputTicket(
       await createStandardTicket(t),
       "#standard-ticket-image",
@@ -1717,7 +1767,7 @@ async function finishStandardRegistration(turnstileToken){
     $("#standard-download").dataset.participantNo=String(id);
     $("#standard-download").dataset.ticketKind="standard";
     $("#standard-ticket-result").classList.add("show");
-    msg.textContent=quote ? "Witaj na pokładzie. Twój cytat został zapisany do wyboru 10 wiadomości." : "Witaj na pokładzie.";
+    msg.textContent=quote ? "Witaj na pokładzie. Cytat zapisany. QR na bilecie potwierdza numer w manifeście." : "Witaj na pokładzie. QR na bilecie potwierdza numer w manifeście.";
     await refreshCount();
 
   }catch(err){
@@ -1794,7 +1844,7 @@ let earlyMatch=null;
 
 function resetEarlyMatch(){
   earlyMatch=null;
-  pendingEarlyQuote=null;
+  pendingEarlyTicket=null;
   $("#early-personalization").style.display="none";
   $("#early-ticket-result").classList.remove("show");
   $("#early-submit").textContent="SZUKAJ NA LIŚCIE";
@@ -1852,11 +1902,6 @@ $("#early-form").addEventListener("submit",async e=>{
     return;
   }
 
-  if(!quote){
-    await generateEarlyTicket(ticketName,false);
-    return;
-  }
-
   if(!window.turnstile){
     msg.textContent="Ochrona formularza jeszcze się ładuje. Spróbuj za sekundę.";
     return;
@@ -1864,11 +1909,11 @@ $("#early-form").addEventListener("submit",async e=>{
 
   initEarlyTurnstile();
   if(earlyTurnstileWidget===null){
-    msg.textContent="Nie udało się uruchomić ochrony cytatu. Odśwież stronę.";
+    msg.textContent="Nie udało się uruchomić ochrony biletu. Odśwież stronę.";
     return;
   }
 
-  pendingEarlyQuote={
+  pendingEarlyTicket={
     ticketName,
     quote,
     platform,
@@ -1877,31 +1922,49 @@ $("#early-form").addEventListener("submit",async e=>{
   };
 
   btn.disabled=true;
-  btn.textContent="SPRAWDZANIE CYTATU...";
+  btn.textContent="SPRAWDZANIE...";
 
   try{
     window.turnstile.execute(earlyTurnstileWidget);
   }catch(err){
     console.error(err);
-    pendingEarlyQuote=null;
+    pendingEarlyTicket=null;
     btn.disabled=false;
     btn.textContent="WYGENERUJ BILET";
-    msg.textContent="Nie udało się uruchomić kontroli antyspam dla cytatu.";
+    msg.textContent="Nie udało się uruchomić kontroli antyspam.";
   }
 });
 
-async function generateEarlyTicket(ticketName,quoteSaved){
+async function generateEarlyTicket(ticketName,quoteSaved,verifyToken,serverParticipantNo=null){
   const msg=$("#early-message"),btn=$("#early-submit");
   btn.disabled=true;btn.textContent="GENEROWANIE...";
+
   try{
-    const t={id:earlyMatch.id,name:ticketName,code:code(earlyMatch.id),platform:earlyMatch.platform};
-    await outputTicket(await createEarlyTicket(t),"#early-ticket-image","#early-download",`${t.code}_WCZESNA_ZALOGA.png`);
+    const participantNo=Number(serverParticipantNo||earlyMatch.id);
+    const t={
+      id:participantNo,
+      name:ticketName,
+      code:code(participantNo),
+      platform:earlyMatch.platform,
+      verifyToken:String(verifyToken||"")
+    };
+
+    if(!t.verifyToken)throw new Error("Brak tokenu weryfikacji biletu");
+
+    await outputTicket(
+      await createEarlyTicket(t),
+      "#early-ticket-image",
+      "#early-download",
+      `${t.code}_WCZESNA_ZALOGA.png`
+    );
+
     $("#early-download").dataset.participantNo=String(t.id);
     $("#early-download").dataset.ticketKind="early";
     $("#early-ticket-result").classList.add("show");
+
     msg.textContent=quoteSaved
-      ? "Bilet gotowy. Twój cytat został zapisany do wyboru 10 wiadomości."
-      : "Bilet gotowy. Możesz zmienić nazwę i wygenerować go ponownie dowolną liczbę razy.";
+      ? "Bilet gotowy. Cytat zapisany. QR na bilecie potwierdza numer w manifeście."
+      : "Bilet gotowy. QR na bilecie pozwala potwierdzić numer w manifeście.";
   }catch(err){
     console.error(err);
     msg.textContent="Nie udało się wygenerować biletu.";
@@ -1911,8 +1974,8 @@ async function generateEarlyTicket(ticketName,quoteSaved){
   }
 }
 
-async function finishEarlyQuote(turnstileToken){
-  const pending=pendingEarlyQuote;
+async function finishEarlyTicket(turnstileToken){
+  const pending=pendingEarlyTicket;
   if(!pending||!earlyMatch)return;
 
   const msg=$("#early-message"),btn=$("#early-submit");
@@ -1922,7 +1985,7 @@ async function finishEarlyQuote(turnstileToken){
       method:"POST",
       headers:{"Content-Type":"application/json"},
       body:JSON.stringify({
-        action:"early_quote",
+        action:"early_ticket",
         platform:pending.platform,
         handle:pending.handle,
         quote:pending.quote,
@@ -1934,26 +1997,34 @@ async function finishEarlyQuote(turnstileToken){
     const result=await response.json().catch(()=>({}));
 
     if(!response.ok){
-      console.error("Early quote function:",response.status,result);
+      console.error("Early ticket function:",response.status,result);
+
       if(result?.error==="turnstile_failed"){
-        msg.textContent="Kontrola antyspam cytatu nie została zaliczona. Spróbuj ponownie.";
+        msg.textContent="Kontrola antyspam nie została zaliczona. Spróbuj ponownie.";
       }else if(result?.error==="invalid_quote"){
         msg.textContent="Sprawdź treść cytatu.";
       }else if(result?.error==="early_not_found"){
-        msg.textContent="Nie udało się powiązać cytatu z Wczesną Załogą.";
+        msg.textContent="Nie udało się powiązać biletu z Wczesną Załogą.";
+      }else if(result?.error==="quote_locked"){
+        msg.textContent="Ten cytat jest już zamknięty po moderacji.";
       }else{
-        msg.textContent="Nie udało się zapisać cytatu. Spróbuj ponownie.";
+        msg.textContent="Nie udało się przygotować weryfikowanego biletu. Spróbuj ponownie.";
       }
       return;
     }
 
-    await generateEarlyTicket(pending.ticketName,true);
+    await generateEarlyTicket(
+      pending.ticketName,
+      Boolean(result.quote_saved),
+      result.verification_token,
+      result.participant_no
+    );
 
   }catch(err){
     console.error(err);
-    msg.textContent="Nie udało się zapisać cytatu.";
+    msg.textContent="Nie udało się przygotować biletu.";
   }finally{
-    pendingEarlyQuote=null;
+    pendingEarlyTicket=null;
 
     if(window.turnstile && earlyTurnstileWidget!==null){
       window.turnstile.reset(earlyTurnstileWidget);
@@ -1965,7 +2036,7 @@ async function finishEarlyQuote(turnstileToken){
     }
   }
 }
-window.finishEarlyQuote=finishEarlyQuote;
+window.finishEarlyTicket=finishEarlyTicket;
 
 /* ticket download statistics */
 async function recordTicketDownload(link){
