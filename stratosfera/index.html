@@ -2174,232 +2174,295 @@ console.log("MISJA STRATOSFERA BUILD V6.3");applySocials();renderMediaLibrary();
   })();
 </script>
 
-<!-- MISSION 01 / CINEMATIC MANIFEST COUNTDOWN
-     Wklej TEN blok jednokrotnie bezpośrednio przed końcowym </body>
-     w pliku: stratosfera/index.html
-     Zamknięcie: 21.10.2026, 00:00 czasu Europe/Warsaw (20.10 o 24:00).
-     UWAGA: blokada w przeglądarce to nie blokada Supabase Edge Function! -->
+<!-- ============================================================
+  IBRON INDUSTRIES / MISSION 01 — CINEMATIC COUNTDOWN V2
+  WKLEJ RAZ, BEZPOŚREDNIO PRZED </body> w stratosfera/index.html.
+  Jeśli był wklejony poprzedni licznik, USUŃ JEGO CAŁY BLOK najpierw.
+  Termin: 20.10.2026, godz. 24:00 w Polsce
+          = 21.10.2026 00:00 CEST = 20.10.2026 22:00 UTC.
+  UWAGA: backend Supabase również musi zablokować standard_register.
+============================================================ -->
 <style>
-  .m01-deadline {
+  /* Jedna filmowa ramka, bez kafelków i paska postępu. */
+  #ii-m01-cinema {
     position: absolute;
-    right: max(4.3vw, calc((100vw - 1490px)/2));
-    bottom: clamp(120px, 15vh, 168px);
-    z-index: 5;
-    width: 395px;
-    max-width: calc(100vw - 38px);
-    padding: 26px 28px 22px;
+    z-index: 8;
+    right: clamp(28px, 4.5vw, 105px);
+    bottom: clamp(142px, 18vh, 195px);
+    width: min(31vw, 480px);
+    min-width: 400px;
+    padding: 29px 29px 24px;
+    color: #f6f9ff;
+    text-align: center;
+    border: 1px solid rgba(207, 227, 245, .33);
+    background: linear-gradient(150deg, rgba(7, 16, 27, .76), rgba(1, 6, 13, .66));
+    -webkit-backdrop-filter: blur(12px);
+    backdrop-filter: blur(12px);
+    box-shadow: 0 18px 70px rgba(0,0,0,.38), inset 0 1px 0 rgba(255,255,255,.05);
+    box-sizing: border-box;
     isolation: isolate;
-    color: #f5f8fb;
-    border: 1px solid rgba(162, 201, 231, .27);
-    border-top-color: rgba(201, 228, 248, .65);
-    background: linear-gradient(147deg, rgba(15, 31, 49, .92), rgba(2, 7, 15, .92) 75%);
-    box-shadow: 0 32px 85px rgba(0, 0, 0, .53), 0 0 65px rgba(52, 144, 226, .12), inset 0 1px rgba(255, 255, 255, .06);
-    backdrop-filter: blur(24px);
-    -webkit-backdrop-filter: blur(24px);
-    animation: m01-appear 1s cubic-bezier(.16,.8,.2,1) both;
+    animation: ii-m01-enter 1.2s cubic-bezier(.2,.7,.2,1) both;
   }
-  .m01-deadline::before {
+  #ii-m01-cinema::before,
+  #ii-m01-cinema::after {
     content: "";
     position: absolute;
-    inset: 0;
-    z-index: -1;
+    height: 1px;
+    width: 62px;
+    background: #d8bd92;
+    box-shadow: 0 0 18px rgba(228, 190, 132, .38);
     pointer-events: none;
-    background: radial-gradient(circle at 100% 0%, rgba(83, 180, 250, .14), transparent 60%);
   }
-  .m01-head {display: flex; justify-content: space-between; gap: 12px; align-items: center;}
-  .m01-eyebrow {font-size: 10px; font-weight: 800; letter-spacing: .19em; color: #a6cae4;}
-  .m01-live {display: flex; align-items: center; gap: 7px; font-size: 9px; font-weight: 850; letter-spacing: .12em; color: #e7c78d; white-space: nowrap;}
-  .m01-live-dot {width: 6px; height: 6px; border-radius: 50%; background: #e3b96d; box-shadow: 0 0 13px #e3b96d; animation: m01-pulse 2.2s infinite;}
-  .m01-rule {height: 1px; margin-top: 17px; background: linear-gradient(90deg, rgba(230, 196, 132, .66), rgba(169, 213, 244, .16), transparent);}
-  .m01-heading {margin: 22px 0 7px; font-size: clamp(21px, 2vw, 25px); font-weight: 900; letter-spacing: -.052em; line-height: 1.08;}
-  .m01-description {color: #a4b3c2; font-size: 11px; line-height: 1.6;}
-  .m01-grid {display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 6px; margin-top: 22px;}
-  .m01-cell {min-width: 0; padding: 12px 2px 10px; text-align: center; border: 1px solid rgba(161, 197, 227, .12); background: rgba(133, 174, 220, .045);}
-  .m01-value {display: block; font-size: clamp(25px, 2.3vw, 33px); font-weight: 900; letter-spacing: -.055em; font-variant-numeric: tabular-nums; line-height: 1.12;}
-  .m01-unit {display: block; margin-top: 8px; color: #7c94aa; font-size: 9px; font-weight: 800; letter-spacing: .13em;}
-  .m01-value.m01-tick {animation: m01-tick .28s ease-out;}
-  .m01-close-date {margin-top: 17px; color: #edc78d; font-size: 10px; font-weight: 800; letter-spacing: .095em; text-align: center;}
-  .m01-progress-track {margin-top: 17px; height: 2px; background: rgba(255,255,255,.085); overflow: hidden;}
-  .m01-progress {height: 100%; width: 100%; background: linear-gradient(90deg,#7dc8ff,#efd09c); box-shadow: 0 0 15px rgba(157,207,250,.7); transition: width 1s linear;}
-  .m01-footnote {display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; color: #91a8ba; font-size: 10px; line-height: 1.5;}
-  .m01-lock {color: #f0cf94; font-size: 14px; line-height: 1;}
-  .m01-completed {display: none; margin: 23px 0 0; padding: 18px 15px; border: 1px solid rgba(237, 202, 140, .19); background: rgba(237, 202, 140, .05);}
-  .m01-completed strong {display: block; color: #efcf95; font-size: 21px; font-weight: 900; letter-spacing: -.04em;}
-  .m01-completed span {display: block; margin-top: 10px; font-size: 11px; color: #b1becb; line-height: 1.7;}
-  .m01-deadline.m01-closed .m01-grid,
-  .m01-deadline.m01-closed .m01-progress-track {display: none;}
-  .m01-deadline.m01-closed .m01-completed {display: block;}
-  .m01-deadline.m01-closed .m01-live-dot {background: #9aa6b3; box-shadow: none; animation: none;}
-  .m01-deadline.m01-closed .m01-live {color: #b2b9c3;}
-  .m01-choice-disabled {cursor: default!important; opacity: .77;}
-  .m01-choice-disabled:hover {transform:none!important; box-shadow:none!important;}
-  .m01-choice-disabled .choice-button {cursor:default; opacity:.65;}
-  @keyframes m01-appear {from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes m01-tick {from{opacity:.5;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
-  @keyframes m01-pulse {50%{opacity:.35;transform:scale(.75)}}
-  @media (max-width: 1480px) {
-    .m01-deadline {position: relative; right: auto; bottom: auto; width: min(100%,510px); margin: 35px 0 24px;}
-    .hero {min-height: auto;}
-    .hero .wrap {padding-bottom: 90px;}
-    .hero-meta {bottom: 21px;}
+  #ii-m01-cinema::before {top: -1px; left: 50%; transform: translateX(-50%);}
+  #ii-m01-cinema::after {bottom: -1px; left: 50%; transform: translateX(-50%);}
+  #ii-m01-cinema .ii-m01-overline {
+    margin: 0 0 14px;
+    color: #d9c4a2;
+    font-size: 9px;
+    font-weight: 800;
+    letter-spacing: .32em;
+    text-transform: uppercase;
   }
-  @media (max-width: 720px) {
-    .m01-deadline {width:100%; padding: 22px 19px 19px; margin: 31px 0 15px;}
-    .m01-heading {font-size:23px;}
-    .m01-value {font-size:clamp(23px,7vw,32px);}
-    .m01-unit {font-size:8px;letter-spacing:.07em;}
-    .hero .wrap {padding-bottom: 100px;}
+  #ii-m01-cinema .ii-m01-title {
+    margin: 0;
+    color: #f5f6f8;
+    font-size: clamp(14px, 1.24vw, 18px);
+    line-height: 1.25;
+    letter-spacing: .15em;
+    font-weight: 850;
+    text-transform: uppercase;
+    text-wrap: balance;
+  }
+  #ii-m01-cinema .ii-m01-numbers {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 23px 0 0;
+    gap: 0;
+    align-items: start;
+    font-variant-numeric: tabular-nums lining-nums;
+  }
+  #ii-m01-cinema .ii-m01-segment {
+    min-width: 0;
+    position: relative;
+    text-align: center;
+  }
+  #ii-m01-cinema .ii-m01-segment:not(:last-child)::after {
+    content: ":";
+    position: absolute;
+    top: 2px;
+    right: -5px;
+    color: rgba(216, 189, 146, .68);
+    font-size: clamp(29px, 2.6vw, 39px);
+    font-weight: 350;
+    line-height: 1;
+  }
+  #ii-m01-cinema .ii-m01-num {
+    display: block;
+    color: #f9fbff;
+    font-size: clamp(38px, 3vw, 51px);
+    font-weight: 850;
+    letter-spacing: -.065em;
+    line-height: 1;
+    text-shadow: 0 0 28px rgba(194,225,255,.15);
+  }
+  #ii-m01-cinema .ii-m01-unit {
+    display: block;
+    margin-top: 13px;
+    color: #99a7b8;
+    font-size: 9px;
+    font-weight: 750;
+    letter-spacing: .19em;
+    text-transform: uppercase;
+  }
+  #ii-m01-cinema .ii-m01-fineprint {
+    margin: 23px 0 0;
+    font-size: 9px;
+    font-weight: 650;
+    color: rgba(213,222,233,.65);
+    letter-spacing: .17em;
+  }
+  #ii-m01-cinema .ii-m01-closed {display: none;}
+  #ii-m01-cinema.is-closed .ii-m01-numbers,
+  #ii-m01-cinema.is-closed .ii-m01-fineprint,
+  #ii-m01-cinema.is-closed .ii-m01-title {display: none;}
+  #ii-m01-cinema.is-closed .ii-m01-closed {display: block;}
+  #ii-m01-cinema.is-closed .ii-m01-closed strong {
+    display: block;
+    font-size: clamp(20px, 2vw, 28px);
+    letter-spacing: .1em;
+    line-height: 1.25;
+  }
+  #ii-m01-cinema.is-closed .ii-m01-closed small {
+    display: block;
+    margin-top: 13px;
+    font-size: 10px;
+    letter-spacing: .09em;
+    line-height: 1.65;
+    color: #acbccc;
+  }
+  @keyframes ii-m01-enter {
+    from {opacity: 0; transform: translateY(15px);}
+    to {opacity: 1; transform: translateY(0);}
+  }
+  @media (max-width: 1150px) {
+    #ii-m01-cinema {
+      position: relative;
+      right: auto;
+      bottom: auto;
+      min-width: 0;
+      width: min(100%, 560px);
+      margin: 36px auto 22px;
+    }
+    #ii-m01-cinema .ii-m01-title {font-size: 17px;}
+    #ii-m01-cinema .ii-m01-num {font-size: clamp(37px, 6.5vw, 53px);}
+    #ii-m01-cinema .ii-m01-segment:not(:last-child)::after {font-size: 38px;}
+    #top .hero-meta {display: none;}
+  }
+  @media (max-width: 540px) {
+    #ii-m01-cinema {
+      width: 100%;
+      margin: 30px auto 6px;
+      padding: 25px 14px 23px;
+      background: rgba(3, 11, 21, .76);
+    }
+    #ii-m01-cinema .ii-m01-overline {font-size: 8px; letter-spacing: .27em; margin-bottom: 13px;}
+    #ii-m01-cinema .ii-m01-title {font-size: clamp(13px, 3.9vw, 17px); letter-spacing: .12em;}
+    #ii-m01-cinema .ii-m01-numbers {margin-top: 22px;}
+    #ii-m01-cinema .ii-m01-num {font-size: clamp(34px, 10vw, 49px);}
+    #ii-m01-cinema .ii-m01-segment:not(:last-child)::after {font-size: 31px; top: 3px; right: -4px;}
+    #ii-m01-cinema .ii-m01-unit {font-size: 8px; letter-spacing: .12em; margin-top: 11px;}
+    #ii-m01-cinema .ii-m01-fineprint {font-size: 8px; margin-top: 22px;}
+    #top {min-height: 100svh; height: auto;}
   }
   @media (prefers-reduced-motion: reduce) {
-    .m01-deadline, .m01-live-dot, .m01-value.m01-tick {animation: none!important;}
-    .m01-progress {transition:none;}
+    #ii-m01-cinema {animation: none;}
   }
 </style>
 <script>
 (function () {
-  "use strict";
-  // 20 października o 24:00 w Polsce = 21 października o 00:00 CEST.
-  const DEADLINE = Date.parse("2026-10-21T00:00:00+02:00");
-  const CAMPAIGN_START = Date.parse("2026-10-13T00:00:00+02:00");
-  const hero = document.querySelector(".hero");
-  const wrap = hero && hero.querySelector(".wrap");
-  if (!wrap || document.getElementById("m01-deadline")) return;
+  'use strict';
 
-  const panel = document.createElement("aside");
-  panel.id = "m01-deadline";
-  panel.className = "m01-deadline";
-  panel.setAttribute("aria-label", "Odliczanie do zamknięcia zapisów MISSION 01");
-  panel.innerHTML = `
-    <div class="m01-head">
-      <span class="m01-eyebrow">MISSION 01 / MANIFEST</span>
-      <span class="m01-live"><i class="m01-live-dot" aria-hidden="true"></i><span id="m01-live-label">OSTATNIE DNI</span></span>
+  // Jedna globalna chwila zamknięcia, niezależna od strefy czasowej telefonu.
+  const CUTOFF = Date.parse('2026-10-20T22:00:00Z');
+  const hero = document.querySelector('#top');
+  const wrap = hero && hero.querySelector('.wrap');
+  if (!wrap || document.getElementById('ii-m01-cinema')) return;
+
+  const box = document.createElement('aside');
+  box.id = 'ii-m01-cinema';
+  box.setAttribute('aria-label', 'Odliczanie do zakończenia zapisów na Misję Stratosfera');
+  box.innerHTML = `
+    <p class="ii-m01-overline">IBRON INDUSTRIES / MISSION 01</p>
+    <h2 class="ii-m01-title">Zamknięcie zapisów za</h2>
+    <div class="ii-m01-numbers" role="timer" aria-label="Dni, godziny, minuty, sekundy">
+      <div class="ii-m01-segment"><span class="ii-m01-num" data-ii-m01="d">00</span><span class="ii-m01-unit">dni</span></div>
+      <div class="ii-m01-segment"><span class="ii-m01-num" data-ii-m01="h">00</span><span class="ii-m01-unit">godz.</span></div>
+      <div class="ii-m01-segment"><span class="ii-m01-num" data-ii-m01="m">00</span><span class="ii-m01-unit">min.</span></div>
+      <div class="ii-m01-segment"><span class="ii-m01-num" data-ii-m01="s">00</span><span class="ii-m01-unit">sek.</span></div>
     </div>
-    <div class="m01-rule"></div>
-    <h2 class="m01-heading">ZAMKNIĘCIE ZAPISÓW</h2>
-    <p class="m01-description">Ostatni etap rekrutacji do cyfrowej załogi.</p>
-    <div class="m01-grid" role="timer" aria-label="Czas pozostały do zamknięcia zapisów">
-      <div class="m01-cell"><span class="m01-value" data-m01="days">00</span><span class="m01-unit">DNI</span></div>
-      <div class="m01-cell"><span class="m01-value" data-m01="hours">00</span><span class="m01-unit">GODZ.</span></div>
-      <div class="m01-cell"><span class="m01-value" data-m01="minutes">00</span><span class="m01-unit">MIN.</span></div>
-      <div class="m01-cell"><span class="m01-value" data-m01="seconds">00</span><span class="m01-unit">SEK.</span></div>
-    </div>
-    <div class="m01-completed" id="m01-completed"><strong>MANIFEST ZAMKNIĘTY</strong><span>Nowe zgłoszenia zostały zakończone. Wcześniej zapisani uczestnicy zachowują swoje miejsca. Odbiór biletów Wczesnej Załogi pozostaje dostępny.</span></div>
-    <p class="m01-close-date">20 PAŹDZIERNIKA 2026 · 24:00 · POLSKA</p>
-    <div class="m01-progress-track"><div class="m01-progress" id="m01-progress"></div></div>
-    <div class="m01-footnote"><span class="m01-lock" aria-hidden="true">⌁</span><span>Po zamknięciu manifestu nadal będzie dostępny odbiór biletów wcześniej zapisanej Wczesnej Załogi.</span></div>
+    <p class="ii-m01-fineprint">20 PAŹDZIERNIKA 2026 / 24:00 / POLSKA</p>
+    <div class="ii-m01-closed"><strong>MANIFEST ZAMKNIĘTY</strong><small>Zapisy zakończone · Odbiór istniejących biletów nadal dostępny</small></div>
   `;
-  wrap.appendChild(panel);
+  // Na telefonie licznik będzie tuż pod opisem, zanim pojawią się przyciski.
+  const heroBottom = hero.querySelector('.hero-bottom');
+  if (heroBottom) heroBottom.before(box);
+  else wrap.appendChild(box);
 
-  const digits = {};
-  for (const key of ["days", "hours", "minutes", "seconds"]) {
-    digits[key] = panel.querySelector(`[data-m01="${key}"]`);
-  }
-  const originalOpenStandard = window.openStandard;
-  let markedClosed = false;
-  let serverOffset = 0;
-  const now = () => Date.now() + serverOffset;
+  const els = Object.fromEntries(['d','h','m','s'].map(k => [k, box.querySelector(`[data-ii-m01="${k}"]`)]));
+  let basis = {time: Date.now(), perf: performance.now()};
+  const clock = () => basis.time + (performance.now() - basis.perf);
+  let closed = false;
 
-  // Opcjonalna synchronizacja z czasem odpowiedzi serwera (zegar urządzenia może się spieszyć).
-  async function syncTime() {
+  // Próba wyrównania czasu według odpowiedzi serwera strony; przy braku sieci działa zegar urządzenia.
+  async function syncClock() {
     try {
-      const started = Date.now();
-      const response = await fetch(location.pathname + "?mission_clock=1", { method: "HEAD", cache: "no-store" });
-      const dateHeader = response.headers.get("Date");
-      const ended = Date.now();
-      if (response.ok && dateHeader) {
-        const offset = Date.parse(dateHeader) - Math.floor((started + ended) / 2);
-        if (Number.isFinite(offset) && Math.abs(offset) < 24 * 60 * 60 * 1000) serverOffset = offset;
+      const url = location.pathname + '?m01_clock=' + Date.now();
+      const sent = performance.now();
+      const res = await fetch(url, {method: 'HEAD', cache: 'no-store'});
+      const received = performance.now();
+      const date = res.headers.get('date');
+      const age = Number(res.headers.get('age') || 0);
+      if (res.ok && date && Number.isFinite(age) && age < 30) {
+        const t = Date.parse(date);
+        if (Number.isFinite(t)) basis = {time: t + 500 + (received - sent) / 2, perf: received};
       }
-    } catch (_) { /* Offline: zegar urządzenia. Serwer nadal musi egzekwować termin. */ }
-    render();
+    } catch (_) { /* Offline: pozostała ostatnia synchronizacja lub czas systemowy. */ }
+    update();
   }
 
-  function closeStandardSignup() {
-    if (markedClosed) return;
-    markedClosed = true;
-    panel.classList.add("m01-closed");
-    const live = panel.querySelector("#m01-live-label");
-    if (live) live.textContent = "ZAMKNIĘTE";
-    const description = panel.querySelector(".m01-description");
-    if (description) description.textContent = "Pierwsza lista uczestników została zamknięta.";
-    const heroAction = document.querySelector('.hero-bottom a[href="#dolacz"]');
-    if (heroAction) heroAction.textContent = "ODBIERZ BILET";
+  // Zmiana widoku po terminie. Prawdziwa blokada zapisów musi istnieć też w Supabase.
+  function closeSignup() {
+    if (closed) return;
+    closed = true;
+    box.classList.add('is-closed');
+    const primary = document.querySelector('.hero-bottom a[href="#dolacz"]');
+    if (primary) primary.textContent = 'ODBIERZ BILET';
 
-    const standardCard = document.querySelector(".choice-card:not(.early)");
-    if (standardCard) {
-      standardCard.removeAttribute("onclick");
-      standardCard.onclick = null;
-      standardCard.classList.add("m01-choice-disabled");
-      const badge = standardCard.querySelector(".choice-badge");
-      const title = standardCard.querySelector("h3");
-      const lead = standardCard.querySelector(".choice-lead");
-      const button = standardCard.querySelector(".choice-button");
-      if (badge) badge.textContent = "01 / ZAPISY ZAMKNIĘTE";
-      if (title) title.textContent = "Lista uczestników zamknięta";
-      if (lead) lead.textContent = "Nowe zgłoszenia nie są już przyjmowane. Dotychczasowe wpisy, numery uczestników i cytaty zostają zachowane.";
-      if (button) {button.textContent = "REJESTRACJA ZAKOŃCZONA"; button.disabled = true;}
+    const standard = document.querySelector('.choice-card:not(.early)');
+    if (standard) {
+      standard.removeAttribute('onclick');
+      standard.onclick = null;
+      standard.style.cursor = 'default';
+      const badge = standard.querySelector('.choice-badge');
+      const title = standard.querySelector('h3');
+      const lead = standard.querySelector('.choice-lead');
+      const button = standard.querySelector('.choice-button');
+      if (badge) badge.textContent = '01 / LISTA ZAMKNIĘTA';
+      if (title) title.textContent = 'Rejestracja zakończona';
+      if (lead) lead.textContent = 'Nowe zgłoszenia zakończone. Dotychczasowi uczestnicy i ich cytaty pozostają zapisani.';
+      if (button) {button.textContent = 'ZAPISY ZAMKNIĘTE'; button.disabled = true;}
     }
-    const head = document.querySelector(".choice-section .section-head");
-    if (head) {
-      const eyebrow = head.querySelector(".eyebrow");
-      const title = head.querySelector("h2");
-      const desc = head.querySelector("p");
-      if (eyebrow) eyebrow.textContent = "MANIFEST / ARCHIWUM ZAŁOGI";
-      if (title) title.textContent = "Lista zamknięta. Bilety pozostają.";
-      if (desc) desc.textContent = "Zapisy do MISSION 01 dobiegły końca. Osoby wcześniej zgłoszone do Wczesnej Załogi mogą nadal odnaleźć swój wpis i odebrać specjalny bilet.";
+    const section = document.querySelector('.choice-section .section-head');
+    if (section) {
+      const title = section.querySelector('h2');
+      const desc = section.querySelector('p');
+      if (title) title.textContent = 'Lista zamknięta. Bilety pozostają.';
+      if (desc) desc.textContent = 'Osoby z Wczesnej Załogi nadal mogą odnaleźć swój wpis i odebrać bilet.';
     }
-    if (typeof window.closeModals === "function") {
-      const standardModal = document.getElementById("standard-modal");
-      if (standardModal && standardModal.classList.contains("open")) window.closeModals();
-    }
+    const standardModal = document.getElementById('standard-modal');
+    if (standardModal && standardModal.classList.contains('open') && typeof window.closeModals === 'function') window.closeModals();
   }
 
+  const openStandardOriginal = window.openStandard;
   window.openStandard = function () {
-    if (now() >= DEADLINE) { closeStandardSignup(); return; }
-    if (typeof originalOpenStandard === "function") originalOpenStandard();
+    if (clock() >= CUTOFF) {closeSignup(); return;}
+    if (typeof openStandardOriginal === 'function') openStandardOriginal();
   };
+  const form = document.getElementById('standard-form');
+  if (form) form.addEventListener('submit', e => {
+    if (clock() >= CUTOFF) {
+      e.preventDefault();
+      e.stopImmediatePropagation();
+      closeSignup();
+    }
+  }, true);
 
-  const standardForm = document.getElementById("standard-form");
-  if (standardForm) {
-    standardForm.addEventListener("submit", function (event) {
-      if (now() >= DEADLINE) {
-        event.preventDefault();
-        event.stopImmediatePropagation();
-        closeStandardSignup();
-      }
-    }, true);
-  }
-
-  function tick(el, val) {
-    const formatted = String(val).padStart(2, "0");
-    if (el.textContent !== formatted) {
-      el.textContent = formatted;
-      el.classList.remove("m01-tick");
-      void el.offsetWidth;
-      el.classList.add("m01-tick");
+  function update() {
+    const remaining = CUTOFF - clock();
+    if (remaining <= 0) {closeSignup(); return;}
+    const s = Math.ceil(remaining / 1000);
+    const parts = {d: Math.floor(s / 86400), h: Math.floor(s / 3600) % 24, m: Math.floor(s / 60) % 60, s: s % 60};
+    for (const [key, value] of Object.entries(parts)) {
+      const formatted = String(value).padStart(2, '0');
+      if (els[key].textContent !== formatted) els[key].textContent = formatted;
     }
   }
-  function render() {
-    const current = now();
-    if (current >= DEADLINE) {closeStandardSignup(); return;}
-    const diff = Math.max(0, DEADLINE - current);
-    const s = Math.floor(diff / 1000);
-    tick(digits.days, Math.floor(s / 86400));
-    tick(digits.hours, Math.floor(s / 3600) % 24);
-    tick(digits.minutes, Math.floor(s / 60) % 60);
-    tick(digits.seconds, s % 60);
-    const progress = panel.querySelector("#m01-progress");
-    if (progress) {
-      const remain = Math.max(0, Math.min(1, (DEADLINE - current) / (DEADLINE - CAMPAIGN_START)));
-      progress.style.width = (remain * 100).toFixed(3) + "%";
-    }
+
+  let timer;
+  function loop() {
+    update();
+    const untilNextSecond = 1000 - (clock() % 1000) + 22;
+    timer = setTimeout(loop, Math.max(70, untilNextSecond));
   }
-  render();
-  setInterval(render, 1000);
-  void syncTime();
-  document.addEventListener("visibilitychange", function () {if (!document.hidden) {render();void syncTime();}});
+  loop();
+  void syncClock();
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden) {clearTimeout(timer); loop(); void syncClock();}
+  });
+  window.addEventListener('pageshow', () => {clearTimeout(timer); loop();});
 })();
 </script>
+
   
 </body>
 </html>
