@@ -2174,5 +2174,232 @@ console.log("MISJA STRATOSFERA BUILD V6.3");applySocials();renderMediaLibrary();
   })();
 </script>
 
+<!-- MISSION 01 / CINEMATIC MANIFEST COUNTDOWN
+     Wklej TEN blok jednokrotnie bezpośrednio przed końcowym </body>
+     w pliku: stratosfera/index.html
+     Zamknięcie: 21.10.2026, 00:00 czasu Europe/Warsaw (20.10 o 24:00).
+     UWAGA: blokada w przeglądarce to nie blokada Supabase Edge Function! -->
+<style>
+  .m01-deadline {
+    position: absolute;
+    right: max(4.3vw, calc((100vw - 1490px)/2));
+    bottom: clamp(120px, 15vh, 168px);
+    z-index: 5;
+    width: 395px;
+    max-width: calc(100vw - 38px);
+    padding: 26px 28px 22px;
+    isolation: isolate;
+    color: #f5f8fb;
+    border: 1px solid rgba(162, 201, 231, .27);
+    border-top-color: rgba(201, 228, 248, .65);
+    background: linear-gradient(147deg, rgba(15, 31, 49, .92), rgba(2, 7, 15, .92) 75%);
+    box-shadow: 0 32px 85px rgba(0, 0, 0, .53), 0 0 65px rgba(52, 144, 226, .12), inset 0 1px rgba(255, 255, 255, .06);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    animation: m01-appear 1s cubic-bezier(.16,.8,.2,1) both;
+  }
+  .m01-deadline::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    background: radial-gradient(circle at 100% 0%, rgba(83, 180, 250, .14), transparent 60%);
+  }
+  .m01-head {display: flex; justify-content: space-between; gap: 12px; align-items: center;}
+  .m01-eyebrow {font-size: 10px; font-weight: 800; letter-spacing: .19em; color: #a6cae4;}
+  .m01-live {display: flex; align-items: center; gap: 7px; font-size: 9px; font-weight: 850; letter-spacing: .12em; color: #e7c78d; white-space: nowrap;}
+  .m01-live-dot {width: 6px; height: 6px; border-radius: 50%; background: #e3b96d; box-shadow: 0 0 13px #e3b96d; animation: m01-pulse 2.2s infinite;}
+  .m01-rule {height: 1px; margin-top: 17px; background: linear-gradient(90deg, rgba(230, 196, 132, .66), rgba(169, 213, 244, .16), transparent);}
+  .m01-heading {margin: 22px 0 7px; font-size: clamp(21px, 2vw, 25px); font-weight: 900; letter-spacing: -.052em; line-height: 1.08;}
+  .m01-description {color: #a4b3c2; font-size: 11px; line-height: 1.6;}
+  .m01-grid {display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 6px; margin-top: 22px;}
+  .m01-cell {min-width: 0; padding: 12px 2px 10px; text-align: center; border: 1px solid rgba(161, 197, 227, .12); background: rgba(133, 174, 220, .045);}
+  .m01-value {display: block; font-size: clamp(25px, 2.3vw, 33px); font-weight: 900; letter-spacing: -.055em; font-variant-numeric: tabular-nums; line-height: 1.12;}
+  .m01-unit {display: block; margin-top: 8px; color: #7c94aa; font-size: 9px; font-weight: 800; letter-spacing: .13em;}
+  .m01-value.m01-tick {animation: m01-tick .28s ease-out;}
+  .m01-close-date {margin-top: 17px; color: #edc78d; font-size: 10px; font-weight: 800; letter-spacing: .095em; text-align: center;}
+  .m01-progress-track {margin-top: 17px; height: 2px; background: rgba(255,255,255,.085); overflow: hidden;}
+  .m01-progress {height: 100%; width: 100%; background: linear-gradient(90deg,#7dc8ff,#efd09c); box-shadow: 0 0 15px rgba(157,207,250,.7); transition: width 1s linear;}
+  .m01-footnote {display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; color: #91a8ba; font-size: 10px; line-height: 1.5;}
+  .m01-lock {color: #f0cf94; font-size: 14px; line-height: 1;}
+  .m01-completed {display: none; margin: 23px 0 0; padding: 18px 15px; border: 1px solid rgba(237, 202, 140, .19); background: rgba(237, 202, 140, .05);}
+  .m01-completed strong {display: block; color: #efcf95; font-size: 21px; font-weight: 900; letter-spacing: -.04em;}
+  .m01-completed span {display: block; margin-top: 10px; font-size: 11px; color: #b1becb; line-height: 1.7;}
+  .m01-deadline.m01-closed .m01-grid,
+  .m01-deadline.m01-closed .m01-progress-track {display: none;}
+  .m01-deadline.m01-closed .m01-completed {display: block;}
+  .m01-deadline.m01-closed .m01-live-dot {background: #9aa6b3; box-shadow: none; animation: none;}
+  .m01-deadline.m01-closed .m01-live {color: #b2b9c3;}
+  .m01-choice-disabled {cursor: default!important; opacity: .77;}
+  .m01-choice-disabled:hover {transform:none!important; box-shadow:none!important;}
+  .m01-choice-disabled .choice-button {cursor:default; opacity:.65;}
+  @keyframes m01-appear {from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes m01-tick {from{opacity:.5;transform:translateY(-3px)}to{opacity:1;transform:translateY(0)}}
+  @keyframes m01-pulse {50%{opacity:.35;transform:scale(.75)}}
+  @media (max-width: 1480px) {
+    .m01-deadline {position: relative; right: auto; bottom: auto; width: min(100%,510px); margin: 35px 0 24px;}
+    .hero {min-height: auto;}
+    .hero .wrap {padding-bottom: 90px;}
+    .hero-meta {bottom: 21px;}
+  }
+  @media (max-width: 720px) {
+    .m01-deadline {width:100%; padding: 22px 19px 19px; margin: 31px 0 15px;}
+    .m01-heading {font-size:23px;}
+    .m01-value {font-size:clamp(23px,7vw,32px);}
+    .m01-unit {font-size:8px;letter-spacing:.07em;}
+    .hero .wrap {padding-bottom: 100px;}
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .m01-deadline, .m01-live-dot, .m01-value.m01-tick {animation: none!important;}
+    .m01-progress {transition:none;}
+  }
+</style>
+<script>
+(function () {
+  "use strict";
+  // 20 października o 24:00 w Polsce = 21 października o 00:00 CEST.
+  const DEADLINE = Date.parse("2026-10-21T00:00:00+02:00");
+  const CAMPAIGN_START = Date.parse("2026-10-13T00:00:00+02:00");
+  const hero = document.querySelector(".hero");
+  const wrap = hero && hero.querySelector(".wrap");
+  if (!wrap || document.getElementById("m01-deadline")) return;
+
+  const panel = document.createElement("aside");
+  panel.id = "m01-deadline";
+  panel.className = "m01-deadline";
+  panel.setAttribute("aria-label", "Odliczanie do zamknięcia zapisów MISSION 01");
+  panel.innerHTML = `
+    <div class="m01-head">
+      <span class="m01-eyebrow">MISSION 01 / MANIFEST</span>
+      <span class="m01-live"><i class="m01-live-dot" aria-hidden="true"></i><span id="m01-live-label">OSTATNIE DNI</span></span>
+    </div>
+    <div class="m01-rule"></div>
+    <h2 class="m01-heading">ZAMKNIĘCIE ZAPISÓW</h2>
+    <p class="m01-description">Ostatni etap rekrutacji do cyfrowej załogi.</p>
+    <div class="m01-grid" role="timer" aria-label="Czas pozostały do zamknięcia zapisów">
+      <div class="m01-cell"><span class="m01-value" data-m01="days">00</span><span class="m01-unit">DNI</span></div>
+      <div class="m01-cell"><span class="m01-value" data-m01="hours">00</span><span class="m01-unit">GODZ.</span></div>
+      <div class="m01-cell"><span class="m01-value" data-m01="minutes">00</span><span class="m01-unit">MIN.</span></div>
+      <div class="m01-cell"><span class="m01-value" data-m01="seconds">00</span><span class="m01-unit">SEK.</span></div>
+    </div>
+    <div class="m01-completed" id="m01-completed"><strong>MANIFEST ZAMKNIĘTY</strong><span>Nowe zgłoszenia zostały zakończone. Wcześniej zapisani uczestnicy zachowują swoje miejsca. Odbiór biletów Wczesnej Załogi pozostaje dostępny.</span></div>
+    <p class="m01-close-date">20 PAŹDZIERNIKA 2026 · 24:00 · POLSKA</p>
+    <div class="m01-progress-track"><div class="m01-progress" id="m01-progress"></div></div>
+    <div class="m01-footnote"><span class="m01-lock" aria-hidden="true">⌁</span><span>Po zamknięciu manifestu nadal będzie dostępny odbiór biletów wcześniej zapisanej Wczesnej Załogi.</span></div>
+  `;
+  wrap.appendChild(panel);
+
+  const digits = {};
+  for (const key of ["days", "hours", "minutes", "seconds"]) {
+    digits[key] = panel.querySelector(`[data-m01="${key}"]`);
+  }
+  const originalOpenStandard = window.openStandard;
+  let markedClosed = false;
+  let serverOffset = 0;
+  const now = () => Date.now() + serverOffset;
+
+  // Opcjonalna synchronizacja z czasem odpowiedzi serwera (zegar urządzenia może się spieszyć).
+  async function syncTime() {
+    try {
+      const started = Date.now();
+      const response = await fetch(location.pathname + "?mission_clock=1", { method: "HEAD", cache: "no-store" });
+      const dateHeader = response.headers.get("Date");
+      const ended = Date.now();
+      if (response.ok && dateHeader) {
+        const offset = Date.parse(dateHeader) - Math.floor((started + ended) / 2);
+        if (Number.isFinite(offset) && Math.abs(offset) < 24 * 60 * 60 * 1000) serverOffset = offset;
+      }
+    } catch (_) { /* Offline: zegar urządzenia. Serwer nadal musi egzekwować termin. */ }
+    render();
+  }
+
+  function closeStandardSignup() {
+    if (markedClosed) return;
+    markedClosed = true;
+    panel.classList.add("m01-closed");
+    const live = panel.querySelector("#m01-live-label");
+    if (live) live.textContent = "ZAMKNIĘTE";
+    const description = panel.querySelector(".m01-description");
+    if (description) description.textContent = "Pierwsza lista uczestników została zamknięta.";
+    const heroAction = document.querySelector('.hero-bottom a[href="#dolacz"]');
+    if (heroAction) heroAction.textContent = "ODBIERZ BILET";
+
+    const standardCard = document.querySelector(".choice-card:not(.early)");
+    if (standardCard) {
+      standardCard.removeAttribute("onclick");
+      standardCard.onclick = null;
+      standardCard.classList.add("m01-choice-disabled");
+      const badge = standardCard.querySelector(".choice-badge");
+      const title = standardCard.querySelector("h3");
+      const lead = standardCard.querySelector(".choice-lead");
+      const button = standardCard.querySelector(".choice-button");
+      if (badge) badge.textContent = "01 / ZAPISY ZAMKNIĘTE";
+      if (title) title.textContent = "Lista uczestników zamknięta";
+      if (lead) lead.textContent = "Nowe zgłoszenia nie są już przyjmowane. Dotychczasowe wpisy, numery uczestników i cytaty zostają zachowane.";
+      if (button) {button.textContent = "REJESTRACJA ZAKOŃCZONA"; button.disabled = true;}
+    }
+    const head = document.querySelector(".choice-section .section-head");
+    if (head) {
+      const eyebrow = head.querySelector(".eyebrow");
+      const title = head.querySelector("h2");
+      const desc = head.querySelector("p");
+      if (eyebrow) eyebrow.textContent = "MANIFEST / ARCHIWUM ZAŁOGI";
+      if (title) title.textContent = "Lista zamknięta. Bilety pozostają.";
+      if (desc) desc.textContent = "Zapisy do MISSION 01 dobiegły końca. Osoby wcześniej zgłoszone do Wczesnej Załogi mogą nadal odnaleźć swój wpis i odebrać specjalny bilet.";
+    }
+    if (typeof window.closeModals === "function") {
+      const standardModal = document.getElementById("standard-modal");
+      if (standardModal && standardModal.classList.contains("open")) window.closeModals();
+    }
+  }
+
+  window.openStandard = function () {
+    if (now() >= DEADLINE) { closeStandardSignup(); return; }
+    if (typeof originalOpenStandard === "function") originalOpenStandard();
+  };
+
+  const standardForm = document.getElementById("standard-form");
+  if (standardForm) {
+    standardForm.addEventListener("submit", function (event) {
+      if (now() >= DEADLINE) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        closeStandardSignup();
+      }
+    }, true);
+  }
+
+  function tick(el, val) {
+    const formatted = String(val).padStart(2, "0");
+    if (el.textContent !== formatted) {
+      el.textContent = formatted;
+      el.classList.remove("m01-tick");
+      void el.offsetWidth;
+      el.classList.add("m01-tick");
+    }
+  }
+  function render() {
+    const current = now();
+    if (current >= DEADLINE) {closeStandardSignup(); return;}
+    const diff = Math.max(0, DEADLINE - current);
+    const s = Math.floor(diff / 1000);
+    tick(digits.days, Math.floor(s / 86400));
+    tick(digits.hours, Math.floor(s / 3600) % 24);
+    tick(digits.minutes, Math.floor(s / 60) % 60);
+    tick(digits.seconds, s % 60);
+    const progress = panel.querySelector("#m01-progress");
+    if (progress) {
+      const remain = Math.max(0, Math.min(1, (DEADLINE - current) / (DEADLINE - CAMPAIGN_START)));
+      progress.style.width = (remain * 100).toFixed(3) + "%";
+    }
+  }
+  render();
+  setInterval(render, 1000);
+  void syncTime();
+  document.addEventListener("visibilitychange", function () {if (!document.hidden) {render();void syncTime();}});
+})();
+</script>
+  
 </body>
 </html>
